@@ -24,6 +24,6 @@ export default class JsonqlForbiddenError extends Error {
   }
 
   static get name() {
-    return 'JsonqlForbiddenError';
+    return 'JsonqlForbiddenError'
   }
 }
