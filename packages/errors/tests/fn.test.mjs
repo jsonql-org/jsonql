@@ -1,14 +1,14 @@
 // use this to test out the individual functions exports
-
-const test = require('ava')
-
-const {
+import test from 'ava'
+import {
   JsonqlAuthorisationError,
   JsonqlContractAuthError,
   JsonqlResolverAppError,
   JsonqlResolverNotFoundError,
+} from '../src/index.mjs'
+import {
   getErrorNameByInstance
-} = require('../index')
+} from '../src/get-error-name-by-instance.mjs'
 
 
 test(`It should able to grab the error and return its name`, t => {

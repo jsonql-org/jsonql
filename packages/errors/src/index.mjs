@@ -1,22 +1,22 @@
 // server side
-import Jsonql406Error from './406-error'
-import Jsonql500Error from './500-error'
+import Jsonql406Error from './406-error.mjs'
+import Jsonql500Error from './500-error.mjs'
 
-import JsonqlForbiddenError from './forbidden-error'
-import JsonqlAuthorisationError from './authorisation-error'
-import JsonqlContractAuthError from './contract-auth-error'
-import JsonqlResolverAppError from './resolver-app-error'
-import JsonqlResolverNotFoundError from './resolver-not-found-error'
+import JsonqlForbiddenError from './forbidden-error.mjs'
+import JsonqlAuthorisationError from './authorisation-error.mjs'
+import JsonqlContractAuthError from './contract-auth-error.mjs'
+import JsonqlResolverAppError from './resolver-app-error.mjs'
+import JsonqlResolverNotFoundError from './resolver-not-found-error.mjs'
 
 // check options error
-import JsonqlEnumError from './enum-error'
-import JsonqlTypeError from './type-error'
-import JsonqlCheckerError from './checker-error'
+import JsonqlEnumError from './enum-error.mjs'
+import JsonqlTypeError from './type-error.mjs'
+import JsonqlCheckerError from './checker-error.mjs'
 // share
-import JsonqlValidationError from './validation-error'
-import JsonqlError from './error'
+import JsonqlValidationError from './validation-error.mjs'
+import JsonqlError from './error.mjs'
 
-import JsonqlServerError from './server-error'
+import JsonqlServerError from './server-error.mjs'
 
 export {
   Jsonql406Error,

@@ -1,4 +1,4 @@
-import { SERVER_INTERNAL_STATUS } from './constants'
+import { SERVER_INTERNAL_STATUS } from './constants.mjs'
 
 /**
  * This is a custom error to throw when server throw a 500

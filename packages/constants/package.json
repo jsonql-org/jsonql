@@ -27,14 +27,7 @@
   ],
   "author": "to1source <to1source@foxmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com:jsonql-org/jsonql.git"
-  },
-  "homepage": "jsonql.org",
-  "bugs": {
-    "url": "https://gitee.com/to1source/jsonql/issues"
-  },
+  "homepage": "https://jsonql.org",
   "devDependencies": {
     "esm": "^3.2.25"
   }

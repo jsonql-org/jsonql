@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "ava"
+    "test:ava": "ava",
+    "test": "nyc ava"
   },
   "keywords": [
     "node.js",
@@ -15,8 +16,27 @@
     "errors"
   ],
   "author": "Joel Chu <joelchu@foxmail.com>",
+  "homepage": "https://jsonql.org",
   "license": "MIT",
   "dependencies": {
     "@jsonql/constants": "workspace:^0.1.0"
+  },
+  "ava": {
+    "files": [
+      "tests/*.test.js"
+    ],
+    "ignoredByWatcher": [
+      "tests/helpers/*.*",
+      "tests/fixtures/*.*"
+    ],
+    "cache": true,
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": false,
+    "tap": false,
+    "verbose": true,
+    "require": [
+      "esbuild-register"
+    ]
   }
 }

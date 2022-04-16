@@ -5,7 +5,7 @@ import {
   NOT_FOUND_STATUS,
   NOT_ACCEPTABLE_STATUS,
   SERVER_INTERNAL_STATUS
-} from './constants'
+} from './constants.mjs'
 
 
 /**

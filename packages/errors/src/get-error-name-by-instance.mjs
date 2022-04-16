@@ -1,5 +1,5 @@
 // get error name by instance
-import { UNKNOWN_ERROR } from './constants'
+import { UNKNOWN_ERROR } from './constants.mjs'
 
 /**
  * @param {array} errs list of errors to compare from
@@ -7,6 +7,7 @@ import { UNKNOWN_ERROR } from './constants'
  * @return {array} filtered with name as value
  */
 function mapErrToName(errs, e) {
+
   return errs.filter(err => e instanceof err)
     .map(err => err.name)
 }
@@ -18,6 +19,7 @@ function mapErrToName(errs, e) {
  */
 function getErrorNameByInstance(errs, e) {
   let error = mapErrToName(errs, e)
+
   return error.length ? error[0] : UNKNOWN_ERROR
 }
 
@@ -29,6 +31,7 @@ function getErrorNameByInstance(errs, e) {
  */
 function getErrorNameByInstanceWithDefault(errs, e) {
   let name = getErrorNameByInstance(errs, e)
+
   return name === UNKNOWN_ERROR ? 'JsonqlError' : name
 }
 

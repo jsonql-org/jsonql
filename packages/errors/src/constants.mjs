@@ -7,7 +7,7 @@ import {
   SERVER_INTERNAL_STATUS,
   NO_STATUS_CODE,
   NO_ERROR_MSG
-} from '@jsonql/constants/base'
+} from '@jsonql/constants/src/base.mjs'
 
 const UNKNOWN_ERROR = 'unknown_error'
 const JSONQL_ERRORS_INFO = '__PLACEHOLDER__'

@@ -1,4 +1,4 @@
-import { FORBIDDEN_STATUS } from './constants'
+import { FORBIDDEN_STATUS } from './constants.mjs'
 /**
  * this is the 403 Forbidden error
  * that means this user is not login

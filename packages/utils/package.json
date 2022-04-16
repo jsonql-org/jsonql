@@ -38,14 +38,7 @@
   ],
   "author": "Joel Chu <joelchu@foxmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com:jsonql-org/jsonql.git"
-  },
-  "homepage": "jsonql.org",
-  "bugs": {
-    "url": "https://gitee.com/to1source/jsonql/issues"
-  },
+  "homepage": "https://jsonql.org",
   "ava": {
     "files": [
       "tests/*.test.js"
@@ -66,8 +59,8 @@
     "verbose": true
   },
   "dependencies": {
-    "jsonql-constants": "^2.1.1",
-    "jsonql-errors": "^1.2.1",
+    "@jsonql/constants": "workspace:^0.1.0",
+    "@jsonql/errors": "workspace:^0.1.0",
     "lodash-es": "^4.17.15"
   },
   "devDependencies": {
