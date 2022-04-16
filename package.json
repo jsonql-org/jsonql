@@ -1,0 +1,28 @@
+{
+  "name": "jsonql",
+  "version": "2.0.0-alpha",
+  "description": "JSONQL main mono repo (Javascript)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+github.com:jsonql-org/jsonql.git"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "jsonql"
+  ],
+  "author": "to1source <to1source@foxmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@swc/core": "^1.2.165",
+    "esbuild": "^0.14.28",
+    "esbuild-register": "^3.3.2",
+    "fs-extra": "^10.0.1",
+    "typescript": "^4.6.3"
+  }
+}

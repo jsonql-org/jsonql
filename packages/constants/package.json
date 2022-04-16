@@ -1,0 +1,44 @@
+{
+  "name": "jsonql-constants",
+  "version": "2.1.3",
+  "description": "All the share constants for jsonql modules",
+  "main": "main.js",
+  "module": "index.js",
+  "browser": "browser.js",
+  "files": [
+    "main.js",
+    "index.js",
+    "base.js",
+    "prop.js",
+    "socket.js",
+    "validation.js",
+    "constants.json"
+  ],
+  "scripts": {
+    "build": "node ./build.js",
+    "prepare": "npm run build",
+    "test": "node ./test.js"
+  },
+  "keywords": [
+    "jsonql",
+    "constants"
+  ],
+  "author": "to1source <hello@to1source.cn>",
+  "license": "MIT",
+  "engine": {
+    "node": ">=8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitee.com:to1source/jsonql.git"
+  },
+  "homepage": "jsonql.org",
+  "bugs": {
+    "url": "https://gitee.com/to1source/jsonql/issues"
+  },
+  "devDependencies": {
+    "fs-extra": "^8.1.0",
+    "esm": "^3.2.25"
+  },
+  "dependencies": {}
+}
