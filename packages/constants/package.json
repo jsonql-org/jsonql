@@ -13,7 +13,7 @@
     "constants.json"
   ],
   "scripts": {
-    "build": "node ./build.cjs",
+    "build": "node ./build.js",
     "prepublishOnly": "npm run build",
     "postpublish": "pnpm updateDeps",
     "updateDeps": "node ../../update-deps.js constants",

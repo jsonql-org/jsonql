@@ -1,15 +1,15 @@
 // jsonql-errors module interface
-import getErrorByStatus from './src/get-error-by-status'
-import clientErrorsHandler from './src/client-errors-handler'
+import getErrorByStatus from './src/get-error-by-status.mjs'
+import clientErrorsHandler from './src/client-errors-handler.mjs'
 import {
   getErrorNameByInstance,
   getErrorNameByInstanceWithDefault
-} from './src/get-error-name-by-instance'
-import finalCatch from './src/final-catch.js'
+} from './src/get-error-name-by-instance.mjs'
+import finalCatch from './src/final-catch.mjs'
 import {
   JSONQL_ERRORS_INFO,
   UNKNOWN_ERROR,
-} from './src/constants'
+} from './src/constants.mjs'
 
 import {
   Jsonql406Error,

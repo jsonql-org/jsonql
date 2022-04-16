@@ -1,5 +1,5 @@
 /* base */
-
+console.log('call index.js')
 export const EXT = 'js' // we might do a ts in the future
 export const TS_EXT = 'ts'
 
@@ -251,18 +251,18 @@ export const ENABLE_SPLIT_TASK_PROP_KEY = 'enableSplitTask'
 
 export const CONNECTED_PROP_KEY = 'connected'
 
-// share naming to id the cache store object 
+// share naming to id the cache store object
 export const CACHE_STORE_PROP_KEY = 'cacheStore'
 export const EVENT_EMITTER_PROP_KEY = 'eventEmitter'
 // track this key if we want to suspend event on start
 export const SUSPEND_EVENT_PROP_KEY = 'suspendOnStart'
 // if we want to enable caching the resolver or not
 export const ENABLE_CACHE_RESOLVER_PROP_KEY = 'enableCacheResolver'
-// we could pass the token in the header instead when init the WebSocket 
+// we could pass the token in the header instead when init the WebSocket
 export const TOKEN_DELIVER_LOCATION_PROP_KEY = 'tokenDeliverLocation'
 
 export const COOKIE_PROP_KEY = 'cookie'
-// for tracking the login and connect state for socket client 
+// for tracking the login and connect state for socket client
 export const IS_READY_PROP_KEY = 'isReady'
 export const IS_LOGIN_PROP_KEY = 'isLogin'/* socket */
 
@@ -289,11 +289,11 @@ export const SOCKET_CLIENT_TS_KEY = '__socket_client_ts_key__'
 // although it should never happens, but in some edge case might want to
 // disconnect from the current server, then re-establish connection later
 export const CONNECT_EVENT_NAME = '__connect__'
-// we still need the connected event because after the connection establish 
-// we need to change a state within the client to let the front end know that 
-// it's current hook up to the server but we don't want to loop back the client 
-// inside the setup phrase, intead just trigger a connected event and the listener 
-// setup this property 
+// we still need the connected event because after the connection establish
+// we need to change a state within the client to let the front end know that
+// it's current hook up to the server but we don't want to loop back the client
+// inside the setup phrase, intead just trigger a connected event and the listener
+// setup this property
 export const CONNECTED_EVENT_NAME = '__connected__'
 export const DISCONNECT_EVENT_NAME = '__disconnect__'
 // instead of using an event name in place of resolverName in the param
@@ -335,9 +335,9 @@ export const USERDATA_PROP_NAME = 'userdata'
 // this is somewhat vague about what is suppose to do
 export const EMIT_REPLY_TYPE = 'emit_reply'
 // this is a new event for a may be feature
-export const EMIT_SEND_TYPE = 'emit_send' 
+export const EMIT_SEND_TYPE = 'emit_send'
 export const ACKNOWLEDGE_REPLY_TYPE = 'emit_acknowledge'
-// this is for inter communication 
+// this is for inter communication
 export const INTER_EMIT_SEND_TYPE = 'inter_emit_send'
 export const INTER_EMIT_REPLY_TYPE = 'inter_emit_reply'
 
@@ -413,11 +413,11 @@ export const NUMBER_TYPE = 'number'
 export const NUMBER_TYPES = ['int', 'integer', 'float', 'double', 'decimal']
 // supported types
 export const SUPPORTED_TYPES = [
-  NUMBER_TYPE, 
-  STRING_TYPE, 
-  BOOLEAN_TYPE, 
-  ARRAY_TYPE, 
-  OBJECT_TYPE, 
+  NUMBER_TYPE,
+  STRING_TYPE,
+  BOOLEAN_TYPE,
+  ARRAY_TYPE,
+  OBJECT_TYPE,
   ANY_TYPE
 ]
 

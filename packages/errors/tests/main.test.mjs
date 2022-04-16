@@ -6,9 +6,10 @@ import {
   JsonqlError
 } from '../src/index.mjs'
 import finalCatch from '../src/final-catch.mjs'
-import resolver from './fixtures/resolver'
+import resolver from './fixtures/resolver.mjs'
+
 import debug from 'debug'
-import justThrow from './helpers/throw-some-error'
+import justThrow from './helpers/throw-some-error.mjs'
 
 const debugFn = debug('jsonql-errors:test:main')
 

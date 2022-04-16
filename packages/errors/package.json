@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Jsonql Errors class",
   "main": "index.js",
+  "module": "./src/index.mjs",
   "directories": {
     "test": "tests"
   },
