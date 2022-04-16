@@ -6,18 +6,16 @@
   "module": "index.mjs",
   "browser": "browser.js",
   "files": [
+    "src",
     "main.js",
     "index.js",
-    "base.js",
-    "prop.js",
-    "socket.js",
-    "validation.js",
+    "index.mjs",
     "constants.json"
   ],
   "scripts": {
-    "build": "node ./build.js",
+    "build": "node ./build.cjs",
     "prepublishOnly": "npm run build",
-    "postpublish": "",
+    "postpublish": "pnpm updateDeps",
     "updateDeps": "node ../../update-deps.js constants",
     "test": "node ./test.js"
   },
@@ -38,8 +36,6 @@
     "url": "https://gitee.com/to1source/jsonql/issues"
   },
   "devDependencies": {
-    "fs-extra": "^8.1.0",
     "esm": "^3.2.25"
-  },
-  "dependencies": {}
+  }
 }

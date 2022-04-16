@@ -1,7 +1,7 @@
 {
-  "name": "jsonql-utils",
-  "version": "1.2.7",
-  "description": "This is a jsonql dependency module, not for generate use.",
+  "name": "@jsonql/utils",
+  "version": "1.0.0-alpha.1",
+  "description": "This is jsonql dependency util methods. See documentation for further info.",
   "main": "main.js",
   "module": "index.js",
   "browser": "browser.js",
@@ -37,13 +37,10 @@
     "utils"
   ],
   "author": "Joel Chu <joelchu@foxmail.com>",
-  "license": "ISC",
-  "engine": {
-    "node": ">=8"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitee.com:to1source/jsonql.git"
+    "url": "git+ssh://git@github.com:jsonql-org/jsonql.git"
   },
   "homepage": "jsonql.org",
   "bugs": {

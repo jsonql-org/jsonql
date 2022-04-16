@@ -2,26 +2,28 @@
 // @2.0.0 we split in files into sections
 const fsx = require('fs-extra')
 const { join } = require('path')
+const importFn = require('./import')
+// props
 const ext = 'mjs'
-const src = join(__dirname, 'src')
+const srcDir = join(__dirname, 'src')
 const files = [
   'base',
   'prop',
   'socket',
   'validation'
 ]
-const importFn = require('./import')
+
 // just concat the file together as on for index.js
 // keep getting prop not export by file error by rollup
 const indexOutput = files.map(file => (
-  `/* ${file} */\n\n` + fsx.readFileSync(join(src, [file, ext].join('.')), { encoding: 'utf8'})
+  `/* ${file} */\n\n` + fsx.readFileSync(join(srcDir, [file, ext].join('.')), { encoding: 'utf8'})
 )).reduce((a, b) => a + '\r' + b, '')
 
 let readme = '\n'
 
 const allProps = files.map(file => {
 
-  let props = importFn(join(__dirname, file))
+  let props = importFn(join(srcDir, [file, ext].join('.')))
 
   // create README output
   readme += `### ${file.replace('.js', '').toUpperCase()}\n\n`
@@ -34,7 +36,6 @@ const allProps = files.map(file => {
 readme = readme.replace(/\,\-/g, '-')
 
 const strJson = `${JSON.stringify(allProps, null, 4)}`
-
 const cjs = `module.exports = ${strJson}`
 const browser = `var jsonqlConstants = ${strJson}`
 
@@ -42,19 +43,27 @@ const browser = `var jsonqlConstants = ${strJson}`
 fsx.outputFileSync(join(__dirname, 'index.js'), indexOutput)
 // output to README
 const tpl = fsx.readFileSync(join(__dirname, 'README_TEMPLATE.md'))
-const content = tpl.toString().replace('[REPLACE]', readme)
-fsx.outputFileSync(join(__dirname, 'README.md'), content)
-// out put the cjs main.js
-fsx.outputFileSync(join(__dirname, 'main.js'), cjs)
-// output to browser.js
-fsx.outputFileSync(join(__dirname, 'browser.js'), browser)
-// output to constants.json
-fsx.outputJson(join(__dirname, 'constants.json'), allProps, { spaces: 2 }, err => {
-  if (err) {
-    console.log('ERROR:', err)
-    process.exit()
-    return
-  }
+const content = tpl.toString()
+                   .replace('[REPLACE]', readme)
+                   .replace('[YEAR]', (new Date).getFullYear())
+                   .replace('[LAST_UPDATE]', Date.now())
 
-  console.log('[ contants.json generated ]')
+Promise.all([
+  fsx.outputFile(join(__dirname, 'README.md'), content),
+  // out put the cjs main.js
+  fsx.outputFile(join(__dirname, 'main.js'), cjs),
+  // output to browser.js
+  fsx.outputFile(join(__dirname, 'browser.js'), browser)
+]).then(results => {
+  // create a minify version
+    // output to constants.json
+    fsx.outputJson(join(__dirname, 'constants.json'), allProps, { spaces: 2 }, err => {
+      if (err) {
+        console.log('ERROR:', err)
+        process.exit()
+        return
+      }
+
+      console.log('[ contants.json generated ]')
+    })
 })

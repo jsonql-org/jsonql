@@ -1,4 +1,4 @@
-/* base.js */
+/* base */
 
 export const EXT = 'js' // we might do a ts in the future
 export const TS_EXT = 'ts'
@@ -141,7 +141,7 @@ export const CSRF_HEADER_KEY = 'X-CSRF-Token'
 export const ORIGIN_HEADER_KEYS = ['Origin']
 export const WILD_CARD_CHAR = '*'
 
-/* prop.js */
+/* prop */
 
 // this is all the key name for the config check map
 // all subfix with prop_key
@@ -264,7 +264,7 @@ export const TOKEN_DELIVER_LOCATION_PROP_KEY = 'tokenDeliverLocation'
 export const COOKIE_PROP_KEY = 'cookie'
 // for tracking the login and connect state for socket client 
 export const IS_READY_PROP_KEY = 'isReady'
-export const IS_LOGIN_PROP_KEY = 'isLogin'/* socket.js */
+export const IS_LOGIN_PROP_KEY = 'isLogin'/* socket */
 
 // the constants file is gettig too large
 // we need to split up and group the related constant in one file
@@ -395,7 +395,7 @@ export const NSP_CLIENT = 'nspClient'
 export const TOKEN_IN_HEADER = 'header'
 export const TOKEN_IN_URL = 'url'
 
-/* validation.js */
+/* validation */
 
 // validation related constants
 

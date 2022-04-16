@@ -1,20 +1,18 @@
-[![NPM](https://nodei.co/npm/jsonql-constants.png?compact=true)](https://npmjs.org/package/jsonql-constants)
-
-# jsonql-constants
+# @jsonql/constants
 
 This is a module export all the share constant use across all the
 [jsonql](https://jsonql.org) modules.
 
-Use it only when you want to develop your jsonql compatible module. 
-If you are not using javascript to develop your module. 
-You can also use the included `constants.json`.
+Use it only when you want to develop your jsonql compatible module.
+You can also use the included `constants.json`, if you are not using
+Javascript to develop your module.
 
-As of Version 2, we split up the constants into sections:
+We split up the constants into sections:
 
 - base
-- prop 
-- socket 
-- validation 
+- prop
+- socket
+- validation
 
 Please consult the detail break down below.
 
@@ -273,4 +271,5 @@ Please consult the detail break down below.
 
 MIT
 
-to1source / newbran ltd (c) 2019
+[TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022 
+1650114877426
