@@ -1,85 +1,22 @@
 {
-  "name": "jsonql-errors",
-  "version": "1.2.1",
-  "description": "Jsonql js error classes use across the projects",
-  "main": "dist/jsonql-errors.cjs.js",
-  "module": "index.js",
-  "browser": "dist/jsonql-errors.umd.js",
+  "name": "@jsonql/errors",
+  "version": "0.1.0",
+  "description": "Jsonql Errors class",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
-    "prepare": "npm run build",
-    "test": "ava",
-    "test:debug": "DEBUG=jsonql* ava",
-    "test:server": "ava ./tests/server.test.js",
-    "test:run": "node ./tests/helpers/run.js",
-    "test:fn": "ava ./tests/fn.test.js",
-    "build:prod": "TARGET=cjs rollup -c",
-    "build:umd": "TARGET=umd rollup -c",
-    "build:gen": "TARGET=general rollup -c",
-    "build": "npm run build:prod && npm run build:umd"
+    "test": "ava"
   },
-  "files": [
-    "dist",
-    "src",
-    "index.js",
-    "general.js"
-  ],
   "keywords": [
+    "node.js",
     "jsonql",
-    "Error"
+    "errors"
   ],
-  "devDependencies": {
-    "acorn": "^7.1.1",
-    "ava": "^3.5.0",
-    "debug": "^4.1.1",
-    "esm": "^3.2.25",
-    "fs-extra": "^8.1.0",
-    "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
-    "rollup": "^2.0.6",
-    "rollup-plugin-alias": "^2.2.0",
-    "rollup-plugin-async": "^1.2.0",
-    "rollup-plugin-buble": "^0.19.8",
-    "rollup-plugin-bundle-size": "^1.0.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-serve": "^1.0.1",
-    "rollup-plugin-terser": "^5.3.0",
-    "superkoa": "^1.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitee.com:to1source/jsonql.git"
-  },
-  "ava": {
-    "files": [
-      "tests/*.test.js"
-    ],
-    "ignoredByWatcher": [
-      "tests/helpers/*.*",
-      "tests/fixtures/*.*"
-    ],
-    "cache": true,
-    "concurrency": 5,
-    "failFast": true,
-    "failWithoutAssertions": false,
-    "tap": false,
-    "verbose": true,
-    "require": [
-      "esm"
-    ]
-  },
-  "engine": {
-    "node": ">=8"
-  },
-  "homepage": "jsonql.org",
   "author": "Joel Chu <joelchu@foxmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "jsonql-constants": "^2.0.2"
+    "@jsonql/constants": "workspace:^0.1.0"
   }
 }
