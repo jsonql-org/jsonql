@@ -5,23 +5,22 @@
  * from client or server
  *
  */
-
 const isBrowser = () => {
   try {
     if (window || document) {
-      return true;
+      return true
     }
   } catch(e) {}
-  return false;
+  return false
 }
 
 const isNode = () => {
   try {
     if (!isBrowser() && global) {
-      return true;
+      return true
     }
   } catch(e) {}
-  return false;
+  return false
 }
 
 export default function whereAmI() {

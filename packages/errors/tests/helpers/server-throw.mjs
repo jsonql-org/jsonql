@@ -55,7 +55,7 @@ const middleMiddleware = function(index) {
 }
 
 // export
-module.exports = (extra = false) => {
+export default function(extra = false) {
   const app = new Koa();
   app.use(bodyparser());
   /*

@@ -1,14 +1,17 @@
 // just to throw a few and test them out
-const test = require('ava')
-const {
+import test from 'ava'
+import {
   JsonqlResolverAppError,
   JsonqlResolverNotFoundError,
-  finalCatch,
   JsonqlError
-} = require('../dist/jsonql-errors.cjs')
-const resolver = require('./fixtures/resolver')
-const debug = require('debug')('jsonql-errors:test:main')
-const justThrow = require('./helpers/throw-some-error')
+} from '../src/index.mjs'
+import finalCatch from '../src/final-catch.mjs'
+import resolver from './fixtures/resolver'
+import debug from 'debug'
+import justThrow from './helpers/throw-some-error'
+
+const debugFn = debug('jsonql-errors:test:main')
+
 
 const isObjectHasKey = (obj, key) => {
   const keys = Object.keys(obj);
@@ -19,7 +22,6 @@ const isObjectHasKey = (obj, key) => {
 test('Just need to test this isObjectHasKey function', t => {
   let obj = {error: false};
   t.is(true, isObjectHasKey(obj, 'error'))
-
 })
 
 
@@ -27,7 +29,7 @@ test('It should throw a resolver application error', t => {
 
   const error = t.throws( () => {
     return resolver();
-  } , /* JsonqlResolverAppError */ null, 'Throw a dummy error')
+  } , JsonqlResolverAppError, 'Throw a dummy error')
 
   t.is('JsonqlResolverAppError', error.className)
 
@@ -38,12 +40,12 @@ test('It should throw a resolver application error', t => {
 })
 
 test('It should throw a JsonqlResolverNotFoundError with the wrong name', t => {
-  const name = 'wrongName';
+  const name = 'wrongName'
   const fn = () => {
     try {
       const contract = {query: {whatever: {public: true}}}
-      const type = 'queryx';
-      return contract[type][name];
+      const type = 'queryx'
+      return contract[type][name]
     } catch(e) {
       throw new JsonqlResolverNotFoundError(name, e)
     }
