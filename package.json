@@ -1,7 +1,7 @@
 {
   "name": "jsonql",
   "version": "2.0.0-alpha",
-  "description": "JSONQL main mono repo (Javascript)",
+  "description": "JSONQL main mono repo",
   "main": "index.js",
   "directories": {
     "doc": "docs"
@@ -11,7 +11,8 @@
     "url": "git+github.com:jsonql-org/jsonql.git"
   },
   "scripts": {
-    "test": "ava"
+    "push": "git push gh main",
+    "pd": "git push gh dev"
   },
   "keywords": [
     "jsonql"
