@@ -1,0 +1,99 @@
+{
+  "name": "jsonql-utils",
+  "version": "1.2.7",
+  "description": "This is a jsonql dependency module, not for generate use.",
+  "main": "main.js",
+  "module": "index.js",
+  "browser": "browser.js",
+  "files": [
+    "src",
+    "browser.js",
+    "browser.js.map",
+    "debug.js",
+    "index.js",
+    "main.js",
+    "main.js.map",
+    "module.js"
+  ],
+  "scripts": {
+    "test": "ava",
+    "prepare": "npm run build && npm run test",
+    "build:cjs": "rollup -c",
+    "build:umd": "NODE_ENV=BROWSER rollup -c",
+    "build:client": "NODE_ENV=CLIENT rollup -c",
+    "build": "npm run build:cjs && npm run build:umd",
+    "test:path": "ava ./tests/get-fn-by-path.test.js",
+    "test:socket": "DEBUG=jsonql-utils* ava ./tests/socket.test.js",
+    "test:define": "DEBUG=jsonql* ava ./tests/define-property.test.js",
+    "test:params": "DEBUG=jsonql* ava ./tests/params-api.test.js",
+    "test:chain": "DEBUG=jsonql-utils* ava ./tests/chain-fn.test.js",
+    "test:ns": "DEBUG=jsonql-utils* ava ./tests/namespace.test.js",
+    "test:config": "DEBUG=jsonql-utils* ava ./tests/config.test.js",
+    "test:regex": "DEBUG=jsonql-utils* ava ./tests/regex.test.js",
+    "test:con": "DEBUG=jsonql-utils* ava ./tests/construct.test.js"
+  },
+  "keywords": [
+    "jsonql",
+    "utils"
+  ],
+  "author": "Joel Chu <joelchu@foxmail.com>",
+  "license": "ISC",
+  "engine": {
+    "node": ">=8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitee.com:to1source/jsonql.git"
+  },
+  "homepage": "jsonql.org",
+  "bugs": {
+    "url": "https://gitee.com/to1source/jsonql/issues"
+  },
+  "ava": {
+    "files": [
+      "tests/*.test.js"
+    ],
+    "ignoredByWatcher": [
+      "tests/fixtures/*.*",
+      "tests/browser/*.*",
+      "tests/qunit/*.*"
+    ],
+    "require": [
+      "esm"
+    ],
+    "cache": false,
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": false,
+    "tap": false,
+    "verbose": true
+  },
+  "dependencies": {
+    "jsonql-constants": "^2.1.1",
+    "jsonql-errors": "^1.2.1",
+    "lodash-es": "^4.17.15"
+  },
+  "devDependencies": {
+    "acorn": "^7.1.1",
+    "acorn-dynamic-import": "^4.0.0",
+    "ava": "^3.5.2",
+    "debug": "^4.1.1",
+    "esm": "^3.2.25",
+    "fs-extra": "^9.0.0",
+    "jsonql-params-validator": "^1.6.2",
+    "rollup": "^2.3.2",
+    "rollup-plugin-alias": "^2.2.0",
+    "rollup-plugin-analyzer": "^3.2.2",
+    "rollup-plugin-async": "^1.2.0",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^5.3.0"
+  }
+}
