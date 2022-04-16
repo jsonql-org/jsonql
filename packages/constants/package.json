@@ -17,9 +17,13 @@
   "scripts": {
     "build": "node ./build.js",
     "prepublishOnly": "npm run build",
+    "postpublish": "",
+    "updateDeps": "node ../../update-deps.js constants",
     "test": "node ./test.js"
   },
   "keywords": [
+    "nodejs",
+    "framework",
     "jsonql",
     "constants"
   ],
@@ -27,7 +31,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitee.com:to1source/jsonql.git"
+    "url": "git+ssh://git@github.com:jsonql-org/jsonql.git"
   },
   "homepage": "jsonql.org",
   "bugs": {
