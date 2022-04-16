@@ -11,7 +11,7 @@
     "url": "git+github.com:jsonql-org/jsonql.git"
   },
   "scripts": {
-    "push": "git push gh main",
+    "push": "git push gh main && git push gt main",
     "pd": "git push gh dev",
     "plop": "plop"
   },
