@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test:ava": "ava",
-    "test": "nyc ava"
+    "test": "nyc ava",
+    "postpublish": "pnpm updateDeps",
+    "updateDeps": "node ../../update-deps.js errors"
   },
   "keywords": [
     "node.js",
