@@ -30,7 +30,8 @@
   "homepage": "",
   "dependencies": {
     "@jsonql/constants": "workspace:^0.1.0",
-    "@jsonql/errors": "workspace:^0.1.0"
+    "@jsonql/errors": "workspace:^0.1.0",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
