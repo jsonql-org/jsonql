@@ -1,8 +1,8 @@
 // test with the server side throw error
 import test from 'ava'
-import server from './helpers/server-throw'
-import superkoa from './superkoa'
-import { SERVER_INTERNAL_STATUS } from '@jsonql/constants'
+import superkoa from 'superkoa'
+import server from './helpers/server-throw.mjs'
+import { SERVER_INTERNAL_STATUS } from '@jsonql/constants/index.mjs'
 
 test.before( t => {
   t.context.app = server(true)
@@ -19,8 +19,7 @@ test('It should able to catch the 500 and extract a payload', async t => {
       }
     })
 
-
-    // also test the jsonql-constants
+  // also test the @jsonql/constants
   t.is(res.status, SERVER_INTERNAL_STATUS)
 
 })

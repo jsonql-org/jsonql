@@ -35,9 +35,7 @@ function getErrorNameByInstanceWithDefault(errs, e) {
   return name === UNKNOWN_ERROR ? 'JsonqlError' : name
 }
 
-
 export {
   getErrorNameByInstanceWithDefault,
-  getErrorNameByInstance,
-  UNKNOWN_ERROR
+  getErrorNameByInstance
 }

@@ -1,8 +1,8 @@
 // create a basic koa server here for testing purpose
 import Koa from 'koa'
 import bodyparser from 'koa-bodyparser'
-import errors from '../../src/index.mjs'
-const { JsonqlServerError, getErrorByStatus } = errors
+import { JsonqlServerError, getErrorByStatus } from '../../index.mjs'
+// const { JsonqlServerError, getErrorByStatus } = errors
 
 const thrower = function() {
   // basically just throw error here
