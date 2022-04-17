@@ -15,7 +15,7 @@ import JsonqlError from './error.mjs'
 
 import JsonqlServerError from './server-error.mjs'
 
-import { NO_ERROR_MSG } from '@jsonql/constants'
+import { NO_ERROR_MSG } from './constants.mjs'
 
 /**
  * If using the instance of could not find the actual error then

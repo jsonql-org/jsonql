@@ -29,12 +29,10 @@ test('Just need to test this isObjectHasKey function', t => {
 test('It should throw a resolver application error', t => {
 
   const error = t.throws( () => {
-    return resolver();
-  } , JsonqlResolverAppError, 'Throw a dummy error')
+    return resolver()
+  } , /* JsonqlResolverAppError */ undefined, 'Throw a dummy error')
 
   t.is('JsonqlResolverAppError', error.className)
-
-
   t.is(error.className, 'JsonqlResolverAppError')
   t.true(typeof error.detail === 'object')
   t.is(error.message, 'Dummy')
@@ -53,7 +51,7 @@ test('It should throw a JsonqlResolverNotFoundError with the wrong name', t => {
   }
   const error = t.throws(() => {
     fn();
-  }, /* JsonqlResolverNotFoundError*/ null, 'It should throw a JsonqlResolverNotFoundError')
+  }, /* JsonqlResolverNotFoundError*/ undefined, 'It should throw a JsonqlResolverNotFoundError')
 
   // t.is(error.where, 'node')
 
@@ -66,7 +64,7 @@ test("Very dummy test to test the test Error instance", async t => {
 
   let error = await t.throwsAsync(async () => {
     return await justThrow().catch(finalCatch)
-  }, /* JsonqlError */ null, 'just throw a JsonqlError')
+  }, /* JsonqlError */ undefined , 'just throw a JsonqlError')
 
   t.is('JsonqlError', error.className)
 
