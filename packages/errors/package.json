@@ -22,7 +22,7 @@
   "homepage": "https://jsonql.org",
   "license": "MIT",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.1.0"
+    "@jsonql/constants": "workspace:^0.2.0"
   },
   "ava": {
     "files": [
