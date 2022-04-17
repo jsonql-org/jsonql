@@ -21,6 +21,7 @@
   "author": "to1source <to1source@foxmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.165",
     "ava": "^4.2.0",
     "esbuild": "^0.14.28",

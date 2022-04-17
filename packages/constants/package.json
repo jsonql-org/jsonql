@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "node ./build.js",
+    "swcbuild": "npx swc ./index.mjs -o ./out.js",
     "prepublishOnly": "npm run build",
     "postpublish": "pnpm updateDeps",
     "updateDeps": "node ../../update-deps.js constants",

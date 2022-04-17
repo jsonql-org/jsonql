@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@swc/cli': ^0.1.57
   '@swc/core': ^1.2.165
   ava: ^4.2.0
   esbuild: ^0.14.28
@@ -12,6 +13,7 @@ specifiers:
   plop: ^3.0.5
 
 devDependencies:
+  '@swc/cli': 0.1.57_@swc+core@1.2.165
   '@swc/core': 1.2.165
   ava: 4.2.0
   esbuild: 0.14.28
@@ -269,6 +271,24 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
+    dev: true
+
+  /@swc/cli/0.1.57_@swc+core@1.2.165:
+    resolution: {integrity: sha512-HxM8TqYHhAg+zp7+RdTU69bnkl4MWdt1ygyp6BDIPjTiaJVH6Dizn2ezbgDS8mnFZI1FyhKvxU/bbaUs8XhzQg==}
+    engines: {node: '>= 12.13'}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': ^1.2.66
+      chokidar: ^3.5.1
+    peerDependenciesMeta:
+      chokidar:
+        optional: true
+    dependencies:
+      '@swc/core': 1.2.165
+      commander: 7.2.0
+      fast-glob: 3.2.11
+      slash: 3.0.0
+      source-map: 0.7.3
     dev: true
 
   /@swc/core-android-arm-eabi/1.2.165:
@@ -924,6 +944,11 @@ packages:
 
   /commander/2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    dev: true
+
+  /commander/7.2.0:
+    resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
+    engines: {node: '>= 10'}
     dev: true
 
   /commander/9.2.0:
