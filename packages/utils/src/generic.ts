@@ -1,96 +1,83 @@
 // bunch of generic helpers
-
-import isArray from 'lodash-es/isArray'
+// import isArray from 'lodash-es/isArray'
 import isPlainObject from 'lodash-es/isPlainObject'
 import trim from 'lodash-es/trim'
 
 /**
  * DIY in Array
- * @param {array} arr to check from
- * @param {*} value to check against
- * @return {boolean} true on found
+ * @_param {array} arr to check from
+ * @_param {*} value to check against
+ * @_return {boolean} true on found
  */
-export const inArray = (arr, value) => !!arr.filter(a => a === value).length
+export const inArray = (arr: any[], value: any) => !!arr.filter(a => a === value).length
 
 // quick and dirty to turn non array to array
-export const toArray = (arg) => isArray(arg) ? arg : [arg]
+export const toArray = (arg: any) => Array.isArray(arg) ? arg : [arg]
 
 /**
  * parse string to json or just return the original value if error happened
- * @param {*} n input
- * @param {boolean} [t=true] or throw
- * @return {*} json object on success
+ * @_param {*} n input
+ * @_param {boolean} [t=true] pass through or throw
+ * @_return {*} json object on success
  */
-export const parseJson = function(n, t=true) {
+export const parseJson = (n: any, t=true) => {
   try {
-    return JSON.parse(n)
+    return JSON.parse(JSON.stringify(n))
   } catch(e) {
     if (t) {
       return n
     }
-    throw new Error(e)
+    throw e // just rethrow it
   }
 }
 
 /**
- * @param {object} obj for search
- * @param {string} key target
- * @return {boolean} true on success
+ * @_param {object} obj for search
+ * @_param {string} key target
+ * @_return {boolean} true on success
  */
-export const isObjectHasKey = function(obj, key) {
+export const isObjectHasKey = (obj: object, key: string | symbol) => {
   try {
     const keys = Object.keys(obj)
     return inArray(keys, key)
   } catch(e) {
-    // @BUG when the obj is not an OBJECT we got some weird output
+    // @_BUG when the obj is not an OBJECT we got some weird output
     return false
   }
 }
 
 /**
  * create a event name
- * @param {string[]} args
- * @return {string} event name for use
+ * @_param {string[]} args
+ * @_return {string} event name for use
  */
-export const createEvt = (...args) => args.join('_')
+export const createEvtName = (...args: string[]) => args.join('_')
 
 /**
  * simple util method to get the value
- * @param {string} name of the key
- * @param {object} obj to take value from
- * @return {*} the object value id by name or undefined
+ * @_param {string} name of the key
+ * @_param {object} obj to take value from
+ * @_return {*} the object value id by name or undefined
  */
-export const getConfigValue = (name, obj) => (
+export const getConfigValue = (name: string, obj: object) => (
   obj && isPlainObject(obj) ? ( (name in obj) ? obj[name] : undefined ) : undefined
 )
 
 /**
- * small util to make sure the return value is valid JSON object
- * @param {*} n input
- * @return {object} correct JSON object
- */
-export const toJson = n => {
-  if (typeof n === 'string') {
-    return parseJson(n)
-  }
-  return parseJson(JSON.stringify(n))
-}
-
-/**
  * Check several parameter that there is something in the param
- * @param {*} param input
- * @return {boolean}
+ * @_param {*} param input
+ * @_return {boolean}
  */
-export const isNotEmpty = function(param) {
+export const isNotEmpty = function(param: any) {
   return param !== undefined && param !== false && param !== null && trim(param) !== ''
 }
 
 /**
  * Simple check if the prop is function
- * @param {*} prop input
- * @return {boolean} true on success
+ * @_param {*} prop input
+ * @_return {boolean} true on success
  */
-export const isFunc = prop => {
+export const isFunc = (prop: any) => {
   if (typeof prop === 'function') {
     return true
   }
@@ -100,18 +87,20 @@ export const isFunc = prop => {
 
 /**
  * Shorthand method for Object.assign
- * @param {array} args
- * @return {object} merge together object by key
+ * @_param {array} args
+ * @_return {object} merge together object by key
  */
-export const assign = (...args) => Reflect.apply(Object.assign, Object, args)
+export const assign = (...args: any[]) => Reflect.apply(Object.assign, Object, args)
 
 /**
  * generic placeholder function
- * @return {boolean} false
+ * @_return {boolean} false
  */
 export const nil = () => false
 
 /**
  * generic turn config into immutatble
  */
-export const freeze = config => Object.freeze(config)
+export const freeze = (config: object): void => {
+  Object.freeze(config)
+}

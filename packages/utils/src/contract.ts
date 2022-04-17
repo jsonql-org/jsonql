@@ -1,15 +1,17 @@
 // split the contract into the node side and the generic side
 import { isObjectHasKey } from './generic'
 import isPlainObject from 'lodash-es/isPlainObject'
-import {
+import * as constants from '@jsonql/constants'
+const {
   QUERY_NAME,
   MUTATION_NAME,
   SOCKET_NAME,
   QUERY_ARG_NAME,
   PAYLOAD_PARAM_NAME,
   CONDITION_PARAM_NAME
-} from 'jsonql-constants'
-import { JsonqlError, JsonqlResolverNotFoundError } from 'jsonql-errors'
+} = constants
+
+import { JsonqlError, JsonqlResolverNotFoundError } from '@jsonql/errors'
 /**
  * Check if the json is a contract file or not
  * @param {object} contract json object

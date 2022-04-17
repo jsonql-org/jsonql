@@ -7,11 +7,11 @@ import merge from 'lodash-es/merge'
 /**
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it
- * @param {array} promises array of unresolved promises
- * @param {boolean} asObject if true then merge the result object
- * @return {object} promise resolved with the array of promises resolved results
+ * @_param {array} promises array of unresolved promises
+ * @_param {boolean} asObject if true then merge the result object
+ * @_return {object} promise resolved with the array of promises resolved results
  */
-export function chainPromises(promises, asObject = false) {
+export function chainPromises(promises: Array<Promise<any>>, asObject = false) {
   return promises.reduce((promiseChain, currentTask) => (
     promiseChain.then(chainResults => (
       currentTask.then(currentResult => (
@@ -23,18 +23,17 @@ export function chainPromises(promises, asObject = false) {
   ))
 }
 
-
 /**
  * This one return a different result from the chainPromises
  * it will be the same like chainFns that take one promise resolve as the next fn parameter
- * @param {function} initPromise a function that accept param and resolve result
- * @param {array} promises array of function pass that resolve promises
- * @return {promise} resolve the processed result
+ * @_param {function} initPromise a function that accept param and resolve result
+ * @_param {array} promises array of function pass that resolve promises
+ * @_return {promise} resolve the processed result
  */
-export function chainProcessPromises(initPromise, ...promises) {
-  return (...args) => (
+export function chainProcessPromises(initPromise: Function, ...promises: Array<Function>) {
+  return (...args: any[]) => (
       promises.reduce((promiseChain, currentTask) => (
-        promiseChain.then(chainResult => (
+        promiseChain.then((chainResult: any) => (
           currentTask(chainResult)
         )
       )
