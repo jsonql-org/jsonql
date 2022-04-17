@@ -1,4 +1,3 @@
-console.log('call main.js')
 module.exports = {
     "EXT": "js",
     "TS_EXT": "ts",
