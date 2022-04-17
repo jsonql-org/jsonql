@@ -15,7 +15,7 @@ if (!pkgDir) {
   return
 }
 const rootPkgJson = fs.readJsonSync(join(__dirname, 'package.json'))
-let rootPkgName = rootPkgName.name
+let rootPkgName = rootPkgJson.name
 if (rootPkgName.substr(0,1) !== '@') {
   rootPkgName = '@' + rootPkgName
 }
