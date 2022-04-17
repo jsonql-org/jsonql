@@ -1,8 +1,16 @@
-# jsonql-errors
+# @jsonql/errors
 
-This module exports a bunch of custom Error class for developer to use.
+**This package was call jsonql-errors and now publish under the @jsonql scope.
+The old package offer several different format for use. But now only offer as `.mjs`
+Javascript module (because this is not really a standalone package and mainly use for develop other modules)
+**
+---
+
+This module exports custom Error class for developer to use.
 When the server side throw error, the client side will try to throw exactly
 the same error and as developer you can clearly understand what is happening.
+
+
 
 ## Example
 
@@ -45,9 +53,15 @@ client.query.getSomething(1)
 - JsonqlError
 - JsonqlServerError
 
+### general error
+
+This is a standalone error type for use in a different type of module.
+
+- GeneralError
+
 ## Functions
 
-This package also export several useful help functions, and we use this
+This package also export several useful functions, and we use this
 across multiple jsonql modules.
 
 ### getErrorByStatus
@@ -99,14 +113,8 @@ There are two constants export from this module as well
 - `JSONQL_ERRORS_INFO` gives you the version number
 - `UNKNOWN_ERROR` this is to use with the `getErrorNameByInstance` when we could not determine what type of error it is.
 
-### general error
 
-This is a standalone error type for use in a different type of module.
-This is not export from the default export path, therefore you need to import it directly:
 
-```js
-import GeneralError from 'jsonql-errors/general'
-```
 
 ---
 

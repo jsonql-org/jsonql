@@ -1,6 +1,13 @@
 
 // export all errors classes
 export * from './src/index.mjs'
+import GeneralError from './src/general.mjs'
+
+import {
+  UNKNOWN_ERROR,
+  JSONQL_ERRORS_INFO
+} from './src/constants.mjs'
+
 // export all the functions
 
 import finalCatch from './src/final-catch.mjs'
@@ -14,5 +21,8 @@ export {
   finalCatch,
   getErrorByStatus,
   getErrorNameByInstance,
-  getErrorNameByInstanceWithDefault
+  getErrorNameByInstanceWithDefault,
+  UNKNOWN_ERROR,
+  JSONQL_ERRORS_INFO ,
+  GeneralError
 }
