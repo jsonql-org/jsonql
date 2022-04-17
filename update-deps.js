@@ -14,8 +14,16 @@ if (!pkgDir) {
   process.exit(1)
   return
 }
+const rootPkgJson = fs.readJsonSync(join(__dirname, 'package.json'))
+let rootPkgName = rootPkgName.name
+if (rootPkgName.substr(0,1) !== '@') {
+  rootPkgName = '@' + rootPkgName
+}
+// We should read the root package.json then take the name (the scope root)
+// then construct the package name
+const pkgName = `${rootPkgName}/${args[1] ? args[1] : pkgDir}`
 
-const pkgName = `@velocejs/${args[1] ? args[1] : pkgDir}`
+console.log('Searching for ', pkgName)
 
 glob(join(pkgsDir, '**!(node_modules)', 'package.json'), function(err, files) {
   if (err) {
