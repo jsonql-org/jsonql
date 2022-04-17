@@ -1,5 +1,5 @@
 // ported from the jsonql-jwt
-import { BASE64_FORMAT } from 'jsonql-constants'
+import { BASE64_FORMAT } from '@jsonql/constants'
 /**
  * create a buffer from string
  * @param {string} str to transform

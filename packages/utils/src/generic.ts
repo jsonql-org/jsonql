@@ -1,13 +1,9 @@
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 import isPlainObject from 'lodash-es/isPlainObject'
-import trim from 'lodash-es/trim'
 
 /**
  * DIY in Array
- * @_param {array} arr to check from
- * @_param {*} value to check against
- * @_return {boolean} true on found
  */
 export const inArray = (arr: any[], value: any) => !!arr.filter(a => a === value).length
 
@@ -16,9 +12,6 @@ export const toArray = (arg: any) => Array.isArray(arg) ? arg : [arg]
 
 /**
  * parse string to json or just return the original value if error happened
- * @_param {*} n input
- * @_param {boolean} [t=true] pass through or throw
- * @_return {*} json object on success
  */
 export const parseJson = (n: any, t=true) => {
   try {
@@ -32,11 +25,9 @@ export const parseJson = (n: any, t=true) => {
 }
 
 /**
- * @_param {object} obj for search
- * @_param {string} key target
- * @_return {boolean} true on success
+ * check if the key existing in an object
  */
-export const isObjectHasKey = (obj: object, key: string | symbol) => {
+export const isObjectHasKey = (obj: object, key: string): boolean => {
   try {
     const keys = Object.keys(obj)
     return inArray(keys, key)
@@ -47,17 +38,12 @@ export const isObjectHasKey = (obj: object, key: string | symbol) => {
 }
 
 /**
- * create a event name
- * @_param {string[]} args
- * @_return {string} event name for use
+ * create an event name
  */
 export const createEvtName = (...args: string[]) => args.join('_')
 
 /**
- * simple util method to get the value
- * @_param {string} name of the key
- * @_param {object} obj to take value from
- * @_return {*} the object value id by name or undefined
+ * simple util method to get the value from the config object
  */
 export const getConfigValue = (name: string, obj: object) => (
   obj && isPlainObject(obj) ? ( (name in obj) ? obj[name] : undefined ) : undefined
@@ -65,17 +51,16 @@ export const getConfigValue = (name: string, obj: object) => (
 
 /**
  * Check several parameter that there is something in the param
- * @_param {*} param input
- * @_return {boolean}
  */
-export const isNotEmpty = function(param: any) {
-  return param !== undefined && param !== false && param !== null && trim(param) !== ''
-}
+export const isNotEmpty = (param: any) => (
+  param !== undefined &&
+  param !== false &&
+  param !== null &&
+  (param+'').trim() !== ''
+)
 
 /**
  * Simple check if the prop is function
- * @_param {*} prop input
- * @_return {boolean} true on success
  */
 export const isFunc = (prop: any) => {
   if (typeof prop === 'function') {
@@ -87,20 +72,18 @@ export const isFunc = (prop: any) => {
 
 /**
  * Shorthand method for Object.assign
- * @_param {array} args
- * @_return {object} merge together object by key
  */
 export const assign = (...args: any[]) => Reflect.apply(Object.assign, Object, args)
 
 /**
  * generic placeholder function
- * @_return {boolean} false
  */
 export const nil = () => false
 
 /**
- * generic turn config into immutatble
+ * Shorthand method to turn config into immutatble (readonly)
+ * was call freeze 
  */
-export const freeze = (config: object): void => {
+export const readOnly = (config: object): void => {
   Object.freeze(config)
 }
