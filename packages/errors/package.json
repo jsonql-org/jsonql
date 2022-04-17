@@ -5,14 +5,17 @@
   "main": "index.js",
   "module": "./src/index.mjs",
   "types": "./tmp/index.d.mts",
-  "directories": {
-    "test": "tests"
-  },
+  "files": [
+    "src",
+    "tmp",
+    "index.js"
+  ],
   "scripts": {
     "test:ava": "ava",
     "test": "nyc ava",
-    "postpublish": "pnpm updateDeps",
-    "updateDeps": "node ../../update-deps.js errors"
+    "updateDeps": "node ../../update-deps.js errors",
+    "prepublishOnly": "tsc && pnpm test",
+    "postpublish": "pnpm updateDeps"
   },
   "keywords": [
     "node.js",
