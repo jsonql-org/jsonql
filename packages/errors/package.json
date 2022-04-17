@@ -4,6 +4,7 @@
   "description": "Jsonql Errors class",
   "main": "index.js",
   "module": "./src/index.mjs",
+  "types": "./tmp/index.d.mts",
   "directories": {
     "test": "tests"
   },
@@ -26,7 +27,7 @@
   },
   "ava": {
     "files": [
-      "tests/*.test.js"
+      "tests/*.test.mjs"
     ],
     "ignoredByWatcher": [
       "tests/helpers/*.*",
