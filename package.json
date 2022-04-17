@@ -13,7 +13,8 @@
   "scripts": {
     "push": "git push gh main && git push gt main",
     "pd": "git push gh dev",
-    "plop": "plop"
+    "plop": "plop",
+    "convert": "node ./tots.js"
   },
   "keywords": [
     "jsonql"
