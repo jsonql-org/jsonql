@@ -7,7 +7,6 @@
   "browser": "browser.js",
   "files": [
     "src",
-    "dist",
     "main.js",
     "index.js",
     "index.mjs",
