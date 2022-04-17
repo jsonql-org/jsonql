@@ -3,9 +3,10 @@ import test from 'ava'
 import {
   JsonqlResolverAppError,
   JsonqlResolverNotFoundError,
-  JsonqlError
+  JsonqlError,
+  finalCatch
 } from '../src/index.mjs'
-import finalCatch from '../src/final-catch.mjs'
+
 import resolver from './fixtures/resolver.mjs'
 
 import debug from 'debug'

@@ -1,8 +1,8 @@
 {
   "name": "@jsonql/errors",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Jsonql Errors class",
-  "main": "index.mjs",
+  "main": "index.js",
   "module": "./src/index.mjs",
   "directories": {
     "test": "tests"

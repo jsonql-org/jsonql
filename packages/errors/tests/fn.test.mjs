@@ -5,10 +5,8 @@ import {
   JsonqlContractAuthError,
   JsonqlResolverAppError,
   JsonqlResolverNotFoundError,
-} from '../src/index.mjs'
-import {
   getErrorNameByInstance
-} from '../src/get-error-name-by-instance.mjs'
+} from '../src/index.mjs'
 
 
 test(`It should able to grab the error and return its name`, t => {

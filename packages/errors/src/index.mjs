@@ -14,19 +14,19 @@ import JsonqlCheckerError from './checker-error.mjs'
 import JsonqlValidationError from './validation-error.mjs'
 import JsonqlError from './error.mjs'
 import JsonqlServerError from './server-error.mjs'
-import GeneralError from './src/general.mjs'
+import GeneralError from './general.mjs'
 // constants
 import {
   UNKNOWN_ERROR,
   JSONQL_ERRORS_INFO
-} from './src/constants.mjs'
+} from './constants.mjs'
 // export all the functions
-import finalCatch from './src/final-catch.mjs'
-import getErrorByStatus from './src/get-error-by-status.mjs'
+import finalCatch from './final-catch.mjs'
+import getErrorByStatus from './get-error-by-status.mjs'
 import {
   getErrorNameByInstanceWithDefault,
   getErrorNameByInstance,
-} from './src/get-error-name-by-instance.mjs'
+} from './get-error-name-by-instance.mjs'
 // export
 export {
   Jsonql406Error,
