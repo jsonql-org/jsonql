@@ -37,7 +37,7 @@ readme = readme.replace(/\,\-/g, '-')
 
 const strJson = `${JSON.stringify(allProps, null, 4)}`
 const cjs = `module.exports = ${strJson}`
-const browser = `var jsonqlConstants = ${strJson}`
+// const browser = `var jsonqlConstants = ${strJson}`
 
 // output to index
 fsx.outputFileSync(join(__dirname, 'index.js'), indexOutput)
@@ -53,7 +53,7 @@ Promise.all([
   // out put the cjs main.js
   fsx.outputFile(join(__dirname, 'main.js'), cjs),
   // output to browser.js
-  fsx.outputFile(join(__dirname, 'browser.js'), browser)
+  // fsx.outputFile(join(__dirname, 'browser.js'), browser)
 ]).then(results => {
   // create a minify version
     // output to constants.json

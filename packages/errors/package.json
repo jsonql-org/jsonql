@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/errors",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Jsonql Errors class",
   "main": "dist/index.js",
   "module": "./src/index",
@@ -13,12 +13,13 @@
     "test:ava": "ava",
     "test": "nyc ava",
     "build:ts": "tsc",
-    "build:browser": "echo '@TODO'",
+    "build:browser": "esbuild ./src/index.ts --bundle --outfile=./browser.js",
     "build": "pnpm build:ts && pnpm build:browser",
     "updateDeps": "node ../../update-deps.js errors",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm updateDeps",
-    "ts": "node -r esbuild-register"
+    "ts": "node -r esbuild-register",
+    "build:swc": "swc ./src -d ./js"
   },
   "keywords": [
     "node.js",
