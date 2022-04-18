@@ -2,19 +2,21 @@
   "name": "@jsonql/errors",
   "version": "0.3.0",
   "description": "Jsonql Errors class",
-  "main": "index.js",
-  "module": "./src/index.mjs",
-  "types": "./tmp/index.d.mts",
+  "main": "dist/index.js",
+  "module": "./src/index",
   "files": [
+    "dist",
     "src",
-    "tmp",
     "index.js"
   ],
   "scripts": {
     "test:ava": "ava",
     "test": "nyc ava",
+    "build:ts": "tsc",
+    "build:browser": "echo '@TODO'",
+    "build": "build:tsc && build:browser",
     "updateDeps": "node ../../update-deps.js errors",
-    "prepublishOnly": "tsc && pnpm test",
+    "prepublishOnly": "build && pnpm test",
     "postpublish": "pnpm updateDeps",
     "ts": "node -r esbuild-register"
   },
