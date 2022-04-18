@@ -1,18 +1,20 @@
 // this methos was in the node-koa before
 // but they should be generic to use across different modules
 import { isHeaderPresent } from './node-middleware'
-import { Context } from 'koa'
+declare type KoaContext = {
+  [key: string]: any
+}
 
 /**
  * @TODO need to be more flexible
  */
-export const isJsonqlPath = (ctx: Context, opts: any): boolean => ctx.path === opts.jsonqlPath
+export const isJsonqlPath = (ctx: KoaContext, opts: any): boolean => ctx.path === opts.jsonqlPath
 
 /**
  * combine two check in one and save time
  * @return {boolean} check result
  */
-export const isJsonqlRequest = (ctx: Context, opts: any): boolean => {
+export const isJsonqlRequest = (ctx: KoaContext, opts: any): boolean => {
   const header = isHeaderPresent(ctx.request, opts.contentType)
   if (header) {
 
@@ -25,6 +27,6 @@ export const isJsonqlRequest = (ctx: Context, opts: any): boolean => {
 /**
  * check if this is point to the jsonql console
  */
-export const isJsonqlConsoleUrl = (ctx: Context, opts: any): boolean => (
+export const isJsonqlConsoleUrl = (ctx: KoaContext, opts: any): boolean => (
   ctx.method === 'GET' && isJsonqlPath(ctx, opts)
 )
