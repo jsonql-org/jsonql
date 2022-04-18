@@ -23,10 +23,11 @@ import { NO_ERROR_MSG } from '../constants'
  * we need to use a different way to analysis the error object to find the exact
  * Error type
  */
+ /*
 function getErrorByObject(e: any, msg: any, detail: any) {
   // @TODO
 }
-
+*/
 
 /**
  * this will put into generator call at the very end and catch
