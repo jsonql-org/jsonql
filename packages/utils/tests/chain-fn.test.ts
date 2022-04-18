@@ -6,12 +6,13 @@ const debug = debugFn('jsonql-utils:test:chain-fn')
 import test from 'ava'
 import { chainFns, chainPromises, chainProcessPromises } from '../src'
 
-
+declare type testNumFn = (num: number) => number
+declare type testArrNumFn = (num: number, base: number) => number[]
 
 test('It should able to accept more than one functions after the first one', t => {
-  const baseFn = (num) => num * 10;
-  const add1 = (num) => num + 1;
-  const add2 = (num) => num + 2;
+  const baseFn: testNumFn = (num) => num * 10;
+  const add1: testNumFn = (num) => num + 1;
+  const add2: testNumFn = (num) => num + 2;
 
   const fn = chainFns(baseFn, add1, add2)
   const result = fn(10)
@@ -19,14 +20,14 @@ test('It should able to accept more than one functions after the first one', t =
 })
 
 test(`It should able to accept the last array return as spread input`, t => {
-  const baseFn = (num, base) => {
+  const baseFn: testArrNumFn = (num, base) => {
     return [num + base, base]
   }
-  const add1 = (num, base) => {
+  const add1: testArrNumFn = (num, base) => {
     debug(num, base)
     return [num*base, base]
   }
-  const add2 = (num, base) => {
+  const add2: (a: number, b: number) => number = (num, base) => {
     debug(num, base)
     return num - base;
   }
@@ -50,17 +51,17 @@ test(`It should able to merge the promise result together as one object`, async 
 
 test(`It should able to take one promise result as the next promise result parameter and return one result`, async t => {
   // init function
-  const fn = (x, y) => {
+  const fn = async (x: any, y: any) => {
     return Promise.resolve({x, y})
   }
 
   // expect an object
-  const fn1 = ({x, y}) => {
+  const fn1 = async ({x, y}) => {
     debug('x', x, 'y', y)
     return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
 
-  const fn2 = ({x, y, z}) => {
+  const fn2 = async ({x, y, z}) => {
     debug('x', x, 'y', y, 'z', z)
     return Promise.resolve(x + y + z)
   }

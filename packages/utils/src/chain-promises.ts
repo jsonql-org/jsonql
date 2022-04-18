@@ -10,7 +10,7 @@ import {
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it
  */
-export function chainPromises(promises: Array<Promise<any>>, asObject = false) {
+export function chainPromises(promises: Array<Promise<any>>, asObject: boolean | object = false) {
   return promises.reduce((promiseChain, currentTask) => (
     promiseChain.then(chainResults => (
       currentTask.then(currentResult => (
