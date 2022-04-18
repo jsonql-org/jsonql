@@ -16,7 +16,7 @@
     "build:browser": "echo '@TODO'",
     "build": "build:tsc && build:browser",
     "updateDeps": "node ../../update-deps.js errors",
-    "prepublishOnly": "build && pnpm test",
+    "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm updateDeps",
     "ts": "node -r esbuild-register"
   },
