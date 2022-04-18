@@ -17,6 +17,7 @@
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
+    "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --log-limit=0 --outfile=./browser.js",
     "update:version": "node ../../update-devs.js server",
     "clean:dist": "rimraf ./dist",
     "build": "pnpm clean:dist && pnpm build:tsc",
