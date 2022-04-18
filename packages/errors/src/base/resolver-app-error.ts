@@ -1,4 +1,4 @@
-import { SERVER_INTERNAL_STATUS } from './constants.mjs'
+import { SERVER_INTERNAL_STATUS } from '../constants'
 /**
  * This is a custom error to throw when the resolver throw error and capture inside the middleware
  * This help us to capture the right error, due to the call happens in sequence
@@ -6,7 +6,10 @@ import { SERVER_INTERNAL_STATUS } from './constants.mjs'
  * @param {mixed} extra things we want to add, 500?
  */
 export default class JsonqlResolverAppError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
 
     this.message = args[0]
@@ -21,9 +24,5 @@ export default class JsonqlResolverAppError extends Error {
 
   static get statusCode() {
     return SERVER_INTERNAL_STATUS
-  }
-
-  static get name() {
-    return 'JsonqlResolverAppError'
   }
 }

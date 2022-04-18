@@ -2,8 +2,10 @@
 // but we will use it in other external modules
 
 export default class GeneralError extends Error {
+  detail: any
+  className: string
 
-  constructor(...args) {
+  constructor(...args: any[]) {
     super(...args)
 
     this.message = args[0]
@@ -15,9 +17,4 @@ export default class GeneralError extends Error {
       Error.captureStackTrace(this, GeneralError)
     }
   }
-
-  static get name() {
-    return 'GeneralError'
-  }
-
 }

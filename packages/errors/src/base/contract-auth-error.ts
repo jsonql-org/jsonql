@@ -1,4 +1,4 @@
-import { UNAUTHORIZED_STATUS } from './constants.mjs'
+import { UNAUTHORIZED_STATUS } from '../constants'
 
 /**
  * This is a custom error when not supply the credential and try to get contract
@@ -7,7 +7,10 @@ import { UNAUTHORIZED_STATUS } from './constants.mjs'
  * @param {mixed} extra things we want to add, 500?
  */
 export default class JsonqlContractAuthError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
     this.message = args[0]
     this.detail = args[1]
@@ -23,7 +26,4 @@ export default class JsonqlContractAuthError extends Error {
     return UNAUTHORIZED_STATUS
   }
 
-  static get name() {
-    return 'JsonqlContractAuthError'
-  }
 }

@@ -1,4 +1,4 @@
-import { UNAUTHORIZED_STATUS  } from './constants'
+import { UNAUTHORIZED_STATUS  } from '../constants'
 /**
  * This is a custom error to throw when pass credential but fail
  * This help us to capture the right error, due to the call happens in sequence

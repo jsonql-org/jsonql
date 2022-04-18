@@ -1,4 +1,4 @@
-import { NO_STATUS_CODE } from './constants.mjs'
+import { NO_STATUS_CODE } from '../constants'
 
 /**
  * This is a custom error to throw whenever a error happen inside the jsonql
@@ -7,7 +7,10 @@ import { NO_STATUS_CODE } from './constants.mjs'
  * @param {mixed} extra things we want to add, 500?
  */
 export default class JsonqlError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
 
     this.message = args[0]
@@ -19,10 +22,6 @@ export default class JsonqlError extends Error {
       Error.captureStackTrace(this, JsonqlError)
       // this.detail = this.stack;
     }
-  }
-
-  static get name() {
-    return 'JsonqlError'
   }
 
   static get statusCode() {

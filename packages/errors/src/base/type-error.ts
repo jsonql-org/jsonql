@@ -1,6 +1,9 @@
 // this will throw from inside the checkOptions
 export default class JsonqlTypeError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
 
     this.message = args[0]
@@ -11,9 +14,5 @@ export default class JsonqlTypeError extends Error {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, JsonqlTypeError)
     }
-  }
-
-  static get name() {
-    return 'JsonqlTypeError'
   }
 }

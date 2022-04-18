@@ -1,4 +1,4 @@
-import { FORBIDDEN_STATUS } from './constants.mjs'
+import { FORBIDDEN_STATUS } from '../constants'
 /**
  * this is the 403 Forbidden error
  * that means this user is not login
@@ -7,7 +7,10 @@ import { FORBIDDEN_STATUS } from './constants.mjs'
  * @param {mixed} extra things we want to add, 500?
  */
 export default class JsonqlForbiddenError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
     this.message = args[0]
     this.detail = args[1]
@@ -21,9 +24,5 @@ export default class JsonqlForbiddenError extends Error {
 
   static get statusCode() {
     return FORBIDDEN_STATUS
-  }
-
-  static get name() {
-    return 'JsonqlForbiddenError'
   }
 }

@@ -1,6 +1,9 @@
 // this get throw from within the checkOptions when run through the enum failed
 export default class JsonqlEnumError extends Error {
-  constructor(...args) {
+  detail: any
+  className: string
+
+  constructor(...args: any[]) {
     super(...args)
 
     this.message = args[0]
@@ -13,7 +16,4 @@ export default class JsonqlEnumError extends Error {
     }
   }
 
-  static get name() {
-    return 'JsonqlEnumError'
-  }
 }
