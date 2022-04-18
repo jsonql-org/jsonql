@@ -1,32 +1,34 @@
 // server side
-import Jsonql406Error from './406-error.mjs'
-import Jsonql500Error from './500-error.mjs'
-import JsonqlForbiddenError from './forbidden-error.mjs'
-import JsonqlAuthorisationError from './authorisation-error.mjs'
-import JsonqlContractAuthError from './contract-auth-error.mjs'
-import JsonqlResolverAppError from './resolver-app-error.mjs'
-import JsonqlResolverNotFoundError from './resolver-not-found-error.mjs'
+import {
+ Jsonql406Error,
+ Jsonql500Error,
+ JsonqlForbiddenError,
+ JsonqlAuthorisationError,
+ JsonqlContractAuthError,
+ JsonqlResolverAppError,
+ JsonqlResolverNotFoundError,
 // check options error
-import JsonqlEnumError from './enum-error.mjs'
-import JsonqlTypeError from './type-error.mjs'
-import JsonqlCheckerError from './checker-error.mjs'
+ JsonqlEnumError,
+ JsonqlTypeError,
+ JsonqlCheckerError,
 // share
-import JsonqlValidationError from './validation-error.mjs'
-import JsonqlError from './error.mjs'
-import JsonqlServerError from './server-error.mjs'
-import GeneralError from './general.mjs'
+ JsonqlValidationError,
+ JsonqlError,
+ JsonqlServerError,
+ GeneralError
+} from './base'
 // constants
 import {
   UNKNOWN_ERROR,
   JSONQL_ERRORS_INFO
-} from './constants.mjs'
+} from './constants'
 // export all the functions
-import finalCatch from './final-catch.mjs'
-import getErrorByStatus from './get-error-by-status.mjs'
+import finalCatch from './fn/final-catch'
+import getErrorByStatus from './fn/get-error-by-status'
 import {
   getErrorNameByInstanceWithDefault,
   getErrorNameByInstance,
-} from './get-error-name-by-instance.mjs'
+} from './fn/get-error-name-by-instance'
 // export
 export {
   Jsonql406Error,
