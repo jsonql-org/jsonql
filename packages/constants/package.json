@@ -1,24 +1,22 @@
 {
   "name": "@jsonql/constants",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "All the share constants for jsonql modules",
   "main": "main.js",
   "module": "index.mjs",
-  "browser": "browser.js",
   "files": [
     "src",
     "main.js",
     "index.js",
     "index.mjs",
     "index.d.ts",
-    "browser.js",
     "constants.json"
   ],
   "scripts": {
     "build:tsc": "tsc && node ./tsc.js",
     "build:js": "node ./build.js",
     "build:browser": "esbuild ./index.mjs --bundle --outfile=./browser.js",
-    "build": "pnpm build:tsc && pnpm build:js && pnpm build:browser",
+    "build": "pnpm build:tsc && pnpm build:js",
     "swcbuild": "npx swc ./index.mjs -o ./out.js",
     "prepublishOnly": "npm run build",
     "postpublish": "pnpm updateDeps",
