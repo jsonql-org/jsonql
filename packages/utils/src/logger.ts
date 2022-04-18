@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    DEBUG?: any
+    JSONQL_DEBUG?: any
+  }
+}
+
 /**
  * simple for browser console.info wrapper
  */
