@@ -8,7 +8,7 @@ export default class JsonqlServerError extends Error {
   statusCode: string | number
   className: string
 
-  constructor(statusCode: string | number, message: string) {
+  constructor(statusCode: string | number, message?: string) {
     super(message)
     this.statusCode = statusCode
     this.className = JsonqlServerError.name
