@@ -37,7 +37,7 @@ export {
   getLogger
 } from './logger'
 export {
-  groupPublicNamespace,
+  // groupPublicNamespace,
   groupByNamespace,
   getNamespaceInOrder,
   getNamespace,
@@ -60,7 +60,7 @@ export {
   createMutation,
   createMutationStr,
   getQueryFromArgs,
-  processPayload,
+  // processPayload,
   getQueryFromPayload,
   getMutationFromArgs,
   getMutationFromPayload
@@ -78,7 +78,7 @@ export {
 } from './results'
 export {
   createSendPayload,
-  getTsFieldFromData,
+  // getTsFieldFromData,
   createWsReply,
   createReplyMsg,
   createAcknowledgeMsg,

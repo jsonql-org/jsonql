@@ -1,15 +1,16 @@
 // testing the client utils methods
-const test = require('ava')
-const { chainPromises, VERSION } = require('../main')
-const { join } = require('path')
-const fsx = require('fs-extra')
+
 const pkg = fsx.readJsonSync(join(__dirname, '..', 'package.json'))
 
-
+import test from 'ava'
+import { chainPromises } from '../src'
+import { join } from 'path'
+import fsx from 'fs-extra'
+/*
 test(`It should have the version field`, t => {
   t.is(VERSION, pkg.version)
 })
-
+*/
 
 test.cb('The promises should be resolve one after the other even the early one resolve in a timer', t => {
   t.plan(3)

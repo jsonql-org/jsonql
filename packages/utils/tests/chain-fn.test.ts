@@ -1,10 +1,11 @@
 // need to test the chain-fns because of the way we change the lodash import
-const test = require('ava')
 
-const { chainFns } = require('../src/chain-fns')
-const { chainPromises, chainProcessPromises } = require('../src/chain-promises')
+import debugFn from 'debug'
+const debug = debugFn('jsonql-utils:test:chain-fn')
 
-const debug = require('debug')('jsonql-utils:test:chain-fn')
+import test from 'ava'
+import { chainFns, chainPromises, chainProcessPromises } from '../src'
+
 
 
 test('It should able to accept more than one functions after the first one', t => {
