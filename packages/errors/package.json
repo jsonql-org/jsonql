@@ -15,7 +15,8 @@
     "test": "nyc ava",
     "updateDeps": "node ../../update-deps.js errors",
     "prepublishOnly": "tsc && pnpm test",
-    "postpublish": "pnpm updateDeps"
+    "postpublish": "pnpm updateDeps",
+    "ts": "node -r esbuild-register"
   },
   "keywords": [
     "node.js",
