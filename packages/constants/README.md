@@ -7,6 +7,8 @@ Use it only when you want to develop your jsonql compatible module.
 You can also use the included `constants.json`, if you are not using
 Javascript to develop your module.
 
+_As of 0.4.0, we no longer export the brower.js (it creates more problem then it solve)_
+
 We split up the constants into sections:
 
 - base
@@ -271,5 +273,5 @@ Please consult the detail break down below.
 
 MIT
 
-[TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022 
-1650286602133
+[TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
+1650287294281
