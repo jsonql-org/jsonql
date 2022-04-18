@@ -14,7 +14,7 @@
     "test": "nyc ava",
     "build:ts": "tsc",
     "build:browser": "echo '@TODO'",
-    "build": "build:tsc && build:browser",
+    "build": "build:ts && build:browser",
     "updateDeps": "node ../../update-deps.js errors",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm updateDeps",
