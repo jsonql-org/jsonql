@@ -30,12 +30,12 @@
     "@jsonql/constants": "workspace:^0.2.0"
   },
   "ava": {
-    "files": [
-      "tests/*.test.ts"
-    ],
     "ignoredByWatcher": [
       "tests/helpers/*.*",
       "tests/fixtures/*.*"
+    ],
+    "extension": [
+      "ts"
     ],
     "cache": true,
     "concurrency": 5,

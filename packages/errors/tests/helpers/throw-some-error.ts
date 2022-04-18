@@ -1,11 +1,11 @@
 // just throw some error from within
-import { JsonqlError } from '../../src/index.mjs'
+import { JsonqlError } from '../../src'
 
 function base() {
   return Promise.resolve(123)
 }
 
-export default function() {
+export default async function throwSomeError() {
 
   return base()
     .then(num => {

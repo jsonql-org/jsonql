@@ -1,4 +1,4 @@
-import { JsonqlError } from '../../src/index.mjs'
+import { JsonqlError } from '../../src'
 
 /**
  * Throw a generic error here
