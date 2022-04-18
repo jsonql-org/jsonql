@@ -1,6 +1,6 @@
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
-import isPlainObject from 'lodash-es/isPlainObject'
+import { isPlainObject } from './lodash'
 
 /**
  * DIY in Array
@@ -30,6 +30,7 @@ export const parseJson = (n: any, t=true) => {
 export const isObjectHasKey = (obj: object, key: string): boolean => {
   try {
     const keys = Object.keys(obj)
+    
     return inArray(keys, key)
   } catch(e) {
     // @_BUG when the obj is not an OBJECT we got some weird output
@@ -82,7 +83,7 @@ export const nil = () => false
 
 /**
  * Shorthand method to turn config into immutatble (readonly)
- * was call freeze 
+ * was call freeze
  */
 export const readOnly = (config: object): void => {
   Object.freeze(config)

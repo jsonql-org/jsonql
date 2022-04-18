@@ -1,9 +1,7 @@
 /**
  * simple for browser console.info wrapper
- * @param {array} args
- * @return {void}
  */
-export function logger(...args) {
+export function logger(...args: any[]): void {
   try {
     if (window && window.DEBUG) {
       Reflect.apply(console.log, console, args)
@@ -13,12 +11,10 @@ export function logger(...args) {
 
 /**
  * generic logger method can control via global property
- * @param {string} name of this logger to prepend to the output
- * @return {function} the logging method 
  */
-export const getLogger = name => {
+export const getLogger = (name: string) => {
   let base = [name]
-  return (...args) => {
+  return (...args: any[]) => {
     try {
       if (window && window.JSONQL_DEBUG) {
         Reflect.apply(console.info, console, base.concat(args))

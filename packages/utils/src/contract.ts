@@ -1,7 +1,6 @@
 // split the contract into the node side and the generic side
+import { isPlainObject } from './lodash'
 import { isObjectHasKey } from './generic'
-import isPlainObject from 'lodash-es/isPlainObject'
-import * as constants from '@jsonql/constants'
 const {
   QUERY_NAME,
   MUTATION_NAME,
@@ -9,15 +8,17 @@ const {
   QUERY_ARG_NAME,
   PAYLOAD_PARAM_NAME,
   CONDITION_PARAM_NAME
-} = constants
+} from '@jsonql/constants'
+import {
+  JsonqlError,
+  JsonqlResolverNotFoundError
+} from '@jsonql/errors'
+import { JsonqlContract } from './types'
 
-import { JsonqlError, JsonqlResolverNotFoundError } from '@jsonql/errors'
 /**
  * Check if the json is a contract file or not
- * @param {object} contract json object
- * @return {boolean} true
  */
-export function checkIsContract(contract) {
+export function checkIsContract(contract: JsonqlContract): boolean {
   return isPlainObject(contract)
   && (
     isObjectHasKey(contract, QUERY_NAME)
@@ -28,21 +29,18 @@ export function checkIsContract(contract) {
 
 /**
  * Wrapper method that check if it's contract then return the contract or false
- * @param {object} contract the object to check
- * @return {boolean | object} false when it's not
  */
-export function isContract(contract) {
+export function isContract(contract: JsonqlContract): JsonqlContract | boolean {
   return checkIsContract(contract) ? contract : false
 }
 
 /**
  * Ported from jsonql-params-validator but different
  * if we don't find the socket part then return false
- * @param {object} contract the contract object
- * @return {object|boolean} false on failed
  */
-export function extractSocketPart(contract) {
+export function extractSocketPart(contract: JsonqlContract): any {
   if (isObjectHasKey(contract, SOCKET_NAME)) {
+
     return contract[SOCKET_NAME]
   }
   return false
@@ -50,11 +48,8 @@ export function extractSocketPart(contract) {
 
 /**
  * Extract the args from the payload
- * @param {object} payload to work with
- * @param {string} type of call
- * @return {array} args
  */
-export function extractArgsFromPayload(payload, type) {
+export function extractArgsFromPayload(payload: any, type: string): Array<any> {
   switch (type) {
     case QUERY_NAME:
       return payload[QUERY_ARG_NAME]
@@ -69,13 +64,9 @@ export function extractArgsFromPayload(payload, type) {
 }
 
 /**
- * Like what the name said
- * @param {object} contract the contract json
- * @param {string} type query|mutation
- * @param {string} name of the function
- * @return {object} the params part of the contract
+ * extract the param from a contracct
  */
-export function extractParamsFromContract(contract, type, name) {
+export function extractParamsFromContract(contract: JsonqlContract, type: string, name: string): any {
   try {
     const result = contract[type][name]
     // debug('extractParamsFromContract', result)

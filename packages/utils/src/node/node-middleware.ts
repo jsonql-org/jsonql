@@ -2,7 +2,7 @@
 // should be good to use in Koa or Express
 import fs from 'fs'
 import { join } from 'path'
-import { dasherize } from './dasherize'
+import { dasherize } from '../dasherize'
 import {
   EXT,
   INDEX_KEY,
@@ -23,7 +23,7 @@ export const getDocLen = (doc: string): number => Buffer.byteLength(doc, 'utf8')
  * The koa ctx object is not returning what it said on the documentation
  * So I need to write a custom parser to check the request content-type
  */
-export const headerParser = (req: any, type: string): Array<string> => {
+export const headerParser = (req: any, type: string): any[] => {
   try {
     const headers = req.headers.accept.split(',')
     if (type) {
