@@ -13,7 +13,7 @@
     "test:ava": "ava",
     "test": "nyc ava",
     "build:ts": "tsc",
-    "build:browser": "esbuild ./src/index.ts --bundle --outfile=./browser.js",
+    "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --log-limit=0 --outfile=./browser.js",
     "build": "pnpm build:ts && pnpm build:browser",
     "updateDeps": "node ../../update-deps.js errors",
     "prepublishOnly": "pnpm build && pnpm test",
