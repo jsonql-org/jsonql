@@ -1,32 +1,29 @@
-import Jsonql406Error from './406-error.mjs'
-import Jsonql500Error from './500-error.mjs'
-import JsonqlForbiddenError from './forbidden-error.mjs'
-import JsonqlAuthorisationError from './authorisation-error.mjs'
-import JsonqlContractAuthError from './contract-auth-error.mjs'
-import JsonqlResolverAppError from './resolver-app-error.mjs'
-import JsonqlResolverNotFoundError from './resolver-not-found-error.mjs'
+import {
+ Jsonql406Error,
+ Jsonql500Error,
+ JsonqlForbiddenError,
+ JsonqlAuthorisationError,
+ JsonqlContractAuthError,
+ JsonqlResolverAppError,
+ JsonqlResolverNotFoundError,
 // check options error
-import JsonqlEnumError from './enum-error.mjs'
-import JsonqlTypeError from './type-error.mjs'
-import JsonqlCheckerError from './checker-error.mjs'
+ JsonqlEnumError,
+ JsonqlTypeError,
+ JsonqlCheckerError,
 // share
-import JsonqlValidationError from './validation-error.mjs'
-import JsonqlError from './error.mjs'
+ JsonqlValidationError,
+ JsonqlError,
+ JsonqlServerError,
+} from '../base'
+import { NO_ERROR_MSG } from '../constants'
 
-import JsonqlServerError from './server-error.mjs'
-
-import { NO_ERROR_MSG } from './constants.mjs'
 
 /**
  * If using the instance of could not find the actual error then
  * we need to use a different way to analysis the error object to find the exact
  * Error type
- * @param {object} e error
- * @param {*} msg message
- * @param {*} detail the full detail
- * @return {boolean} if this is false then not found
  */
-function getErrorByObject(e, msg, detail) {
+function getErrorByObject(e: any, msg: any, detail: any) {
   // @TODO
 }
 
@@ -36,10 +33,8 @@ function getErrorByObject(e, msg, detail) {
  * the error throw from inside then throw again
  * this is necessary because we split calls inside and the throw
  * will not reach the actual client unless we do it this way
- * @param {object} e Error
- * @return {void} just throw
  */
-export default function finalCatch(e) {
+export default function finalCatch(e: any) {
   // this is a hack to get around the validateAsync not actually throw error
   // instead it just rejected it with the array of failed parameters
   if (Array.isArray(e)) {
