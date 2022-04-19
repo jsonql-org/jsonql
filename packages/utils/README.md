@@ -4,12 +4,17 @@
 
 Please check [jsonql](https://jsonql.js.org) for more information.
 
-## complete list of all available functions
+### How to use
+
+When using purely in browser environment, you should use `@jsonql/utils/browser`
+
+When using it within your JS / TS development, most of the methods can be found in `@jsonql/utils`
+Where the node only methods will be in `@jsonql/utils/node`
+
+## Complete list of all available functions
 
 When use with build tool, for better tree shaking. You need to import them directly.
 Please reference which functions in what file below
-
-### Browser and node.ts
 
 #### src/chain-fns.ts
 
