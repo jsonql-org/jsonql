@@ -77,8 +77,9 @@ module.exports = function(plop) {
             templateFile: join(tmplRoot, 'package.json.tpl'),
             path: join(projectRoot, 'package.json'),
             data: {
-              // need to make it a scope package name 
+              // need to make it a scope package name
               name: ['@' + rootPkgJson.name, camelCase(answers.projectName)].join('/'),
+              projectName: answers.projectName,
               author: rootPkgJson.author,
               license: rootPkgJson.license,
               homepage: rootPkgJson.homepage
