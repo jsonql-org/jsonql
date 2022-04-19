@@ -1,6 +1,6 @@
 // the import module keep complaining some of the module is not exported by the module.js ?
 import test from 'ava'
-const { urlParams, cacheBurstUrl } = require('../module')
+import { urlParams, cacheBurstUrl } from '../src'
 
 test(`It should able to create an url using the params`, t => {
 

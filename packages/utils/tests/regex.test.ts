@@ -1,7 +1,7 @@
 // testing the regex functions
 import test from 'ava'
 
-const { isRegExp, getRegex } = require('../src/regex')
+import { isRegExp, getRegex } from '../src'
 
 test(`isRegExp should able to work`, t => {
 

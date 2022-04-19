@@ -1,21 +1,26 @@
 // just general test to make sure all the functions are presented before publish
 import test from 'ava'
-const utilFns = require('../main')
-const { merge } = require('lodash-es')
-const debug = require('debug')('jsonql-utils:test:ns')
-const { NSP_GROUP, PUBLIC_NAMESPACE } = require('jsonql-constants')
+
+import * as utilFns from '../src'
+import { merge } from '../src/lodash'
+import debugFn from 'debug'
+import * as fsx from 'fs-extra'
+import { join } from 'path'
+import { NSP_GROUP, PUBLIC_NAMESPACE } from '@jsonql/constants'
 const { groupByNamespace, getNspInfoByConfig } = utilFns
-const { join } = require('path')
-const fsx = require('fs-extra')
+
+const debug = debugFn('jsonql-utils:test:ns')
 
 const contract = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
 const publicOnlyContract = fsx.readJsonSync(join(__dirname, 'fixtures', 'public-only-contract.json'))
 
 test.before(t => {
-
+  // @ts-ignore
   t.context.opts = {name: 'some name'}
+  // @ts-ignore
   t.context.constProps = {contract: {query: {}, mutation: {}}}
-  t.context.checkOptionsFn = (a, b, c) => merge({}, a, b, c)
+  // @ts-ignore
+  t.context.checkOptionsFn = (a: object, b: object, c: object) => merge({}, a, b, c)
 })
 
 test(`It should have certain functions in the export`, t => {
