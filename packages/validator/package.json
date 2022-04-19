@@ -25,12 +25,9 @@
     "minor": "npm version minor",
     "major": "npm version major"
   },
-  "author": "to1source &lt;to1source@foxmail.com&gt;",
+  "author": "to1source <to1source@foxmail.com>",
   "license": "MIT",
-  "homepage": "",
-  "dependencies": {
-
-  },
+  "homepage": "https://jsonql.org",
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
     "@types/node": "^17.0.23",
@@ -55,5 +52,8 @@
     "require": [
       "esbuild-register"
     ]
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
   }
 }
