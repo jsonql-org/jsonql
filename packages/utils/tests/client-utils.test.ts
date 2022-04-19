@@ -1,6 +1,6 @@
 // testing the client utils methods
 import test from 'ava'
-import { chainPromises, isEmptyObj } from '../src'
+import { chainPromises, isEmptyObj, dasherize } from '../src'
 
 /*
 import { join } from 'path'
@@ -17,6 +17,15 @@ test(`Should able to tell if any object is empty`, t => {
   t.true(isEmptyObj({}))
 
   t.false(isEmptyObj({a: '1'}))
+})
+
+test(`Dasherize should able to handle different situation`, t => {
+
+  const a1 = dasherize('I am a boy')
+  const a2 = dasherize(' I am not a boy')
+  t.is(a1, 'i-am-a-boy')
+  t.is(a2, 'i-am-not-a-boy')
+
 })
 
 
