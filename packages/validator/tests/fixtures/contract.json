@@ -1,0 +1,355 @@
+{
+  "query": {
+    "helloWorld": {
+      "description": "This is the stock resolver for testing purpose",
+      "params": [],
+      "returns": [
+        {
+          "type": [ "string" ],
+          "description": "stock message"
+        }
+      ]
+    },
+    "arrayOfParams": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/query/array-of-params.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "array.<number>"
+          ],
+          "name": "userIds",
+          "description": "array of user ids"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "array.<string>"
+          ],
+          "description": "return a list of username"
+        }
+      ]
+    },
+    "getAnything": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/query/get-anything.js",
+      "description": "A function without any parameters",
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "variable": true,
+          "description": "that doesn't existed yet",
+          "name": "args"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "a message"
+        }
+      ]
+    },
+    "getOthers": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/query/get-others/index.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "any"
+          ],
+          "name": "param1",
+          "description": "anything 1"
+        },
+        {
+          "type": [
+            "any"
+          ],
+          "name": "param2",
+          "description": "anything 2"
+        },
+        {
+          "type": [
+            "any"
+          ],
+          "name": "param3",
+          "description": "anything 3"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "object"
+          ],
+          "description": "param as key with value"
+        }
+      ]
+    },
+    "getSomethingElse": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/query/get-something-else.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "first",
+          "name": "param1"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "optional": true,
+          "defaultvalue": 10,
+          "description": "second",
+          "name": "param2"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "sum of both"
+        }
+      ]
+    },
+    "getSomething": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/query/get-something.js",
+      "description": "First line of comment to explain this function",
+      "params": [
+        {
+          "type": [
+            "number",
+            "string"
+          ],
+          "name": "param1",
+          "description": "parameter one"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "param2",
+          "optional": true,
+          "defaultvalue": 10,
+          "description": "parameter two"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "param3",
+          "optional": true,
+          "description": "optional param3"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "param4",
+          "optional": true,
+          "description": "optional param4"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "sum of both"
+        }
+      ]
+    }
+  },
+  "mutation": {
+    "setDetailObj": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/mutation/set-detail-obj.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "object"
+          ],
+          "name": "payload",
+          "keys": [
+            {
+              "type": [
+                "string"
+              ],
+              "description": "the payload key",
+              "name": "key",
+              "parent": "payload"
+            },
+            {
+              "type": [
+                "any"
+              ],
+              "description": "the date time object",
+              "name": "update",
+              "parent": "payload"
+            }
+          ]
+        },
+        {
+          "type": [
+            "object"
+          ],
+          "name": "condition",
+          "keys": [
+            {
+              "type": [
+                "array.<number>"
+              ],
+              "description": "the id",
+              "name": "id",
+              "parent": "condition"
+            }
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "true on success or error message"
+        }
+      ]
+    },
+    "setJustObj": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/mutation/set-just-obj.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "object"
+          ],
+          "name": "payload",
+          "description": "the payload"
+        },
+        {
+          "type": [
+            "object"
+          ],
+          "name": "condition",
+          "description": "the condition to apply the mutation"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "boolean"
+          ],
+          "description": "true on success"
+        }
+      ]
+    },
+    "setWithDestruction": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/mutation/set-with-destruction.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "object"
+          ],
+          "name": "payload",
+          "keys": [
+            {
+              "type": [
+                "string"
+              ],
+              "name": "title",
+              "parent": "payload"
+            },
+            {
+              "type": [
+                "string"
+              ],
+              "name": "content",
+              "parent": "payload"
+            }
+          ]
+        },
+        {
+          "type": [
+            "object"
+          ],
+          "name": "condition"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "id"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "boolean"
+          ],
+          "description": "true on success"
+        }
+      ]
+    }
+  },
+  "auth": {
+    "issuer": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/auth/issuer.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "username",
+          "description": "user name"
+        },
+        {
+          "type": [
+            "string"
+          ],
+          "name": "password",
+          "description": "pass"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "boolean"
+          ],
+          "description": "result"
+        }
+      ]
+    },
+    "validator": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/contract-cli/tests/fixtures/auth/validator/index.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "token",
+          "description": "token"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "boolean"
+          ],
+          "description": "true on success"
+        }
+      ]
+    }
+  },
+  "timestamp": 1555936100460
+}

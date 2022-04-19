@@ -14,7 +14,8 @@
     "push": "git push gh main && git push gt main",
     "pd": "git push gh dev",
     "plop": "plop",
-    "convert": "node ./tots.js"
+    "convert": "node ./tots.js",
+    "rename": "node ./rename.js"
   },
   "keywords": [
     "jsonql"
