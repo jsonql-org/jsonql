@@ -21,14 +21,14 @@ const debug = debugFn('jsonql:params-api')
 import { JsonqlValidationError } from '@jsonql/errors'
 
 
-test.only('It should able to construct correct query argument and extract from the other side', t => {
+test('It should able to construct correct query argument and extract from the other side', t => {
 
   let name = 'getUser'
   let args = [1]
   const query = createQueryStr(name, args)
   t.true(typeof query === 'string')
   const result = getQueryFromPayload(query)
-  
+
   debug(result)
 
   t.is(result[RESOLVER_PARAM_NAME], name)

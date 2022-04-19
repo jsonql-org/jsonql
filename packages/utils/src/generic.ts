@@ -1,6 +1,6 @@
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
-import { isPlainObject } from './lodash'
+import { isPlainObject, isString } from './lodash'
 
 /**
  * DIY in Array
@@ -15,7 +15,9 @@ export const toArray = (arg: any) => Array.isArray(arg) ? arg : [arg]
  */
 export const parseJson = (n: any, t=true) => {
   try {
-    return JSON.parse(JSON.stringify(n))
+    return isString(n) ?
+      JSON.parse(n) :
+      JSON.parse(JSON.stringify(n))
   } catch(e) {
     if (t) {
       return n
