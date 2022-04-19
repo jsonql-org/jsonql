@@ -8,9 +8,9 @@ const UNUSUAL_CASE_ERR = 'This is an unusual situation where the arguments are m
 const RETURNS_NAME = 'returns'
 
 import {
-  
+
   DEFAULT_TYPE, // this is a mistake should move back to the validation
-  DATA_KEY, 
+  DATA_KEY,
   ERROR_KEY,
 
   TYPE_KEY,
@@ -22,7 +22,7 @@ import {
 
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
-  
+
   ARRAY_TYPE,
   OBJECT_TYPE,
   STRING_TYPE,
@@ -30,9 +30,9 @@ import {
   NUMBER_TYPE,
   KEY_WORD,
   OR_SEPERATOR
-} from 'jsonql-constants'
+} from '@jsonql/constants'
 
-// group all export in one 
+// group all export in one
 export {
   ARGS_NOT_ARRAY_ERR,
   PARAMS_NOT_ARRAY_ERR,
@@ -57,6 +57,6 @@ export {
 
   RETURNS_NAME,
 
-  DATA_KEY, 
-  ERROR_KEY 
+  DATA_KEY,
+  ERROR_KEY
 }

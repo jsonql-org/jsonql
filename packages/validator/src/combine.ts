@@ -7,10 +7,8 @@ import { NUMBER_TYPE, STRING_TYPE, BOOLEAN_TYPE } from './constants'
 
 /**
  * this is a wrapper method to call different one based on their type
- * @param {string} type to check
- * @return {function} a function to handle the type
  */
-const combineFn = function(type) {
+export default function combineFn(type: string) {
   switch (type) {
     case NUMBER_TYPE:
       return checkIsNumber
@@ -22,5 +20,3 @@ const combineFn = function(type) {
       return checkIsAny
   }
 }
-
-export default combineFn

@@ -1,10 +1,6 @@
 /**
- * @param {array} arr Array for check
- * @param {*} value target
- * @return {boolean} true on successs
+in array
  */
-const isInArray = function(arr, value) {
+export default  function isInArray(arr: any[], value: any): boolean {
   return !!arr.filter(a => a === value).length
 }
-
-export default isInArray

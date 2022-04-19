@@ -1,11 +1,8 @@
 // check for boolean
 
 /**
- * @param {boolean} value expected
- * @return {boolean} true if OK
+ * if something is a boolean
  */
-const checkIsBoolean = function(value) {
+export default function checkIsBoolean(value: any): boolean {
   return value !== null && value !== undefined && typeof value === 'boolean'
 }
-
-export default checkIsBoolean

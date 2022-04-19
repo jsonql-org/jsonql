@@ -1,15 +1,15 @@
-import trim from 'lodash-es/trim'
-import isArray from 'lodash-es/isArray'
+
 /**
  * Check several parameter that there is something in the param
- * @param {*} param input
- * @return {boolean}
+ this is problematic should rename to isNotEmptyParam
+ and we should check if its array is it empty array
+ if it's object then if its empty object 
  */
- const isNotEmpty = a => {
-  if (isArray(a)) {
-    return true;
-  }
-  return a !== undefined && a !== null && trim(a) !== ''
-}
+ export default function isNotEmpty(a: any) {
+  if (Array.isArray(a)) {
 
-export default isNotEmpty
+    return true
+  }
+
+  return a !== undefined && a !== null && (a+'').trim() !== ''
+}
