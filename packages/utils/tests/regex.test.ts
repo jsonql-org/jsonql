@@ -1,5 +1,5 @@
 // testing the regex functions
-const test = require('ava')
+import test from 'ava'
 
 const { isRegExp, getRegex } = require('../src/regex')
 

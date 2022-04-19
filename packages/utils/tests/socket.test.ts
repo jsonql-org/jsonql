@@ -1,6 +1,6 @@
 // move the test from ws-server-core here
 // just testing the timestamp prop and see how we could develop it further 
-const test = require('ava')
+import test from 'ava'
 const { EMIT_REPLY_TYPE, EMIT_SEND_TYPE, TIMESTAMP_PARAM_NAME } = require('jsonql-constants')
 const { toJson, createWsReply, extractWsPayload, createSendPayload } = require('../main')
 const debug = require('debug')('jsonql-utils:test:socket')

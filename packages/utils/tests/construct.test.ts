@@ -1,16 +1,19 @@
 // this is ported back from jsonql-params-validator
-const test = require('ava')
-const { isContract, isObjectHasKey, assign, freeze } = require('../main')
-const debug = require('debug')('jsonql-utils:construct')
+import test from 'ava'
+import { isContract, isObjectHasKey, assign, readOnly } from '../src'
+import debugFn from 'debug'
+
+const debug = debugFn('jsonql-utils:construct')
 
 test("It should able to check if an object is contract or not", t => {
-
+    // @ts-ignore
     t.false(isContract('contract'))
+    // @ts-ignore
     t.false(isContract([]))
     t.false(isContract({}))
 
     const contract = {query: {getSomething: {}}}
-
+    
     t.deepEqual(isContract(contract), contract)
 })
 
@@ -30,7 +33,7 @@ test(`Testing the assign method`, t => {
     .map((num, i) => {
       debug(i, num)
       return {
-        [keys[i]]: num 
+        [keys[i]]: num
       }
     })
     .reduce(assign, {})
@@ -48,7 +51,7 @@ test(`Testing the freeze method`, t => {
 
   let obj = {name: 'Joel', id: 1}
 
-  obj = freeze(obj)
+  obj = readOnly(obj)
 
   const check = Object.isFrozen(obj)
 
@@ -58,7 +61,7 @@ test(`Testing the freeze method`, t => {
 
   t.is(obj.name, 'Joel', 'Can not change the property')
 
-  obj = freeze(obj)
+  obj = readOnly(obj)
 
   debug(`freeze it again make no different`, obj)
 

@@ -5,15 +5,11 @@ export {
   isJsonqlConsoleUrl
 } from './jsonql-handlers'
 export {
-  replaceErrors,
-  printError
-} from './node-errors'
-export {
-  findFromContract
-} from './node-find-from-contracts'
-export {
   getDocLen,
   headerParser,
   isHeaderPresent,
   getPathToFn,
+  replaceErrors,
+  printError,
+  findFromContract
 } from './node-middleware'

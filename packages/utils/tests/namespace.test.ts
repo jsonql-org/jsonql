@@ -1,5 +1,5 @@
 // just general test to make sure all the functions are presented before publish
-const test = require('ava')
+import test from 'ava'
 const utilFns = require('../main')
 const { merge } = require('lodash-es')
 const debug = require('debug')('jsonql-utils:test:ns')

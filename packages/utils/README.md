@@ -56,7 +56,7 @@ Please reference which functions in what file below
 - isFunc
 - nil (placeholder function always return false)
 - assign (alias to Object.assign)
-- freeze (alias to Object.freeze)
+- readOnly (alias to Object.freeze)
 
 #### src/logger.ts
 

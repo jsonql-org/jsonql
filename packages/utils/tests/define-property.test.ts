@@ -1,7 +1,7 @@
 // need to test the two new object define property methods
 
-const test = require('ava')
-const { injectToFn, objDefineProps, objHasProp } = require('../main')
+import test from 'ava'
+import { injectToFn, objDefineProps, objHasProp } from '../src'
 
 
 test(`It should able to overwrite with the flag`, t => {
@@ -22,7 +22,7 @@ test(`It should able to overwrite with the flag`, t => {
 test(`It should never allow to overwrite the setter or getter`, t => {
   let baseFn = () => 'that is cool'
   let key = 'seriousProp'
-  let setter = (value) => {
+  let setter = (value: any) => {
     console.info(value)
   }
   let fn1 = objDefineProps(baseFn, key, setter)
@@ -35,11 +35,12 @@ test(`It should able to check the property using objHasProp`, t => {
   let value = 1234
   let result1 = objHasProp(baseObj, key)
   t.falsy(result1)
+  // @ts-ignore
   baseObj = injectToFn(baseObj, key, value)
   let result2 = objHasProp(baseObj, key)
 
   t.is(result2, value)
-  
+
 })
 
 
@@ -50,7 +51,7 @@ test(`Testing a new concept about setting a property for internal use`, t => {
     if (someFunction.max > -1) {
       let values = args.filter((arg, i) => i < someFunction.max)
       return values.length
-    } 
+    }
     return args.length
   }
 
@@ -60,9 +61,9 @@ test(`Testing a new concept about setting a property for internal use`, t => {
     someFunction.container = value
     // console.log(someFunction.container, value)
   }, function getter() {
-    return someFunction.container 
+    return someFunction.container
   })
-  
+
   t.is(someFunction.max, -1, 'Check if the default value is set')
 
   someFunction.max = 2

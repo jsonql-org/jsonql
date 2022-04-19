@@ -14,6 +14,23 @@ import {
 
 const DOT = '.'
 
+import { JsonqlContract } from '../types'
+/**
+ * ported from jsonql-resolver
+ * Using the contract to find the function to call
+ */
+export function findFromContract(type: string, name: string, contract: JsonqlContract): string | boolean {
+  if (contract[type] && contract[type][name] && contract[type][name].file) {
+    if (fs.existsSync(contract[type][name].file)) {
+
+      return contract[type][name].file
+    }
+  }
+
+  return false
+}
+
+
 /**
  * Get document (string) byte length for use in header
  */
@@ -71,4 +88,30 @@ export const getPathToFn = function(name: string, type: string, opts: any): stri
   }
 
   return false
+}
+
+/**
+ * Port this from the CIS App
+ * Note the original call singature has a param call `key` but never used
+ */
+export const replaceErrors = function(value: any): any {
+  if (value instanceof Error) {
+    var error = {}
+    Object.getOwnPropertyNames(value).forEach(function (key) {
+      error[key] = value[key]
+    })
+
+    return error
+  }
+
+  return value
+}
+
+/**
+ * create readible string version of the error object
+ */
+export const printError = function(error: Error): string {
+  //return 'MASKED'; //error.toString();
+  return JSON.stringify(error, replaceErrors)
+  // return inspect(error, false, null, true)
 }
