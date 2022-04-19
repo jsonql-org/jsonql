@@ -17,7 +17,9 @@ exports.toArray = toArray;
  */
 const parseJson = (n, t = true) => {
     try {
-        return JSON.parse(JSON.stringify(n));
+        return (0, lodash_1.isString)(n) ?
+            JSON.parse(n) :
+            JSON.parse(JSON.stringify(n));
     }
     catch (e) {
         if (t) {
@@ -84,7 +86,5 @@ exports.nil = nil;
  * Shorthand method to turn config into immutatble (readonly)
  * was call freeze
  */
-const readOnly = (config) => {
-    Object.freeze(config);
-};
+const readOnly = (config) => Object.freeze(config);
 exports.readOnly = readOnly;

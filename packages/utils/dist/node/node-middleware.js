@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPathToFn = exports.isHeaderPresent = exports.headerParser = exports.getDocLen = void 0;
+exports.printError = exports.replaceErrors = exports.getPathToFn = exports.isHeaderPresent = exports.headerParser = exports.getDocLen = exports.findFromContract = void 0;
 const tslib_1 = require("tslib");
 // this is a collection of middleware methods
 // should be good to use in Koa or Express
@@ -9,6 +9,19 @@ const path_1 = require("path");
 const dasherize_1 = require("../dasherize");
 const constants_1 = require("@jsonql/constants");
 const DOT = '.';
+/**
+ * ported from jsonql-resolver
+ * Using the contract to find the function to call
+ */
+function findFromContract(type, name, contract) {
+    if (contract[type] && contract[type][name] && contract[type][name].file) {
+        if (fs_1.default.existsSync(contract[type][name].file)) {
+            return contract[type][name].file;
+        }
+    }
+    return false;
+}
+exports.findFromContract = findFromContract;
 /**
  * Get document (string) byte length for use in header
  */
@@ -63,3 +76,27 @@ const getPathToFn = function (name, type, opts) {
     return false;
 };
 exports.getPathToFn = getPathToFn;
+/**
+ * Port this from the CIS App
+ * Note the original call singature has a param call `key` but never used
+ */
+const replaceErrors = function (value) {
+    if (value instanceof Error) {
+        var error = {};
+        Object.getOwnPropertyNames(value).forEach(function (key) {
+            error[key] = value[key];
+        });
+        return error;
+    }
+    return value;
+};
+exports.replaceErrors = replaceErrors;
+/**
+ * create readible string version of the error object
+ */
+const printError = function (error) {
+    //return 'MASKED'; //error.toString();
+    return JSON.stringify(error, exports.replaceErrors);
+    // return inspect(error, false, null, true)
+};
+exports.printError = printError;

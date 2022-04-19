@@ -39,4 +39,4 @@ export declare const nil: () => boolean;
  * Shorthand method to turn config into immutatble (readonly)
  * was call freeze
  */
-export declare const readOnly: (config: object) => void;
+export declare const readOnly: (config: object) => any;
