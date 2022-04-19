@@ -10,6 +10,11 @@ export const inArray = (arr: any[], value: any) => !!arr.filter(a => a === value
 // quick and dirty to turn non array to array
 export const toArray = (arg: any) => Array.isArray(arg) ? arg : [arg]
 
+// check if an obj is empty, ported from Velocejs
+export const isEmptyObj = (obj: any): boolean => (
+  obj && Object.keys(obj).length === 0 && obj.constructor === Object
+)
+
 /**
  * parse string to json or just return the original value if error happened
  */

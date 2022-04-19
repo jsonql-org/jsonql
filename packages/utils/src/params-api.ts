@@ -11,7 +11,7 @@ import {
 import { JsonqlValidationError } from '@jsonql/errors'
 import { isPlainObject, isString } from './lodash'
 import { timestamp } from './timestamp'
-import { parseJson } from './generic'
+import { parseJson } from './common'
 
 /**
  * check if the payload has a timestamp field, then append a new timestamp to it

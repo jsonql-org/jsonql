@@ -16,7 +16,7 @@ import {
 } from '@jsonql/errors'
 import { isString } from './lodash'
 import { createDeliverable, formatPayload } from './params-api'
-import { parseJson, isObjectHasKey, nil } from './generic'
+import { parseJson, isObjectHasKey, nil } from './common'
 import { timestamp } from './timestamp'
 
 const PAYLOAD_NOT_DECODED_ERR = 'payload can not decoded'
@@ -144,7 +144,7 @@ export const extractWsPayload = (payload: any, cb = nil) => {
     }
     throw new JsonqlError(PAYLOAD_NOT_DECODED_ERR, payload)
   } catch(e) {
-    
+
     return Reflect.apply(cb, null, [ERROR_KEY, e])
   }
 }

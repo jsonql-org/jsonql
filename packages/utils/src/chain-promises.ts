@@ -1,11 +1,7 @@
 // break it out on its own because
 // it's building from the lodash-es from scratch
 // according to this discussion https://github.com/lodash/lodash/issues/3298
-import {
-  isPlainObject, merge
-} from './lodash'
-
-
+import { isPlainObject, merge } from './lodash'
 /**
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it

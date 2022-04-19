@@ -17,6 +17,7 @@ export {
 export {
   inArray,
   toArray,
+  isEmptyObj,
   parseJson,
   isObjectHasKey,
   createEvtName,
@@ -26,7 +27,7 @@ export {
   assign,
   nil,
   readOnly
-} from './generic'
+} from './common'
 export {
   buff,
   base64Encode,

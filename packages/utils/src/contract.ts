@@ -1,6 +1,6 @@
-// split the contract into the node side and the generic side
+// split the contract into the node side and the common side
 import { isPlainObject } from './lodash'
-import { isObjectHasKey } from './generic'
+import { isObjectHasKey } from './common'
 import {
   QUERY_NAME,
   MUTATION_NAME,

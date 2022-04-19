@@ -7,7 +7,7 @@ import {
   ERROR_KEY,
   TIMESTAMP_PARAM_NAME
 } from '@jsonql/constants'
-import { isObjectHasKey } from './generic'
+import { isObjectHasKey } from './common'
 import { timestamp } from './timestamp'
 import { merge } from './lodash'
 

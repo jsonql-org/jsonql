@@ -1,4 +1,4 @@
-import { toArray } from './generic'
+import { toArray } from './common'
 /**
  * using just the map reduce to chain multiple functions together
  * @_param {function} mainFn the init function

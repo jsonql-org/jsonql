@@ -1,6 +1,6 @@
 // testing the client utils methods
 import test from 'ava'
-import { chainPromises } from '../src'
+import { chainPromises, isEmptyObj } from '../src'
 
 /*
 import { join } from 'path'
@@ -11,6 +11,14 @@ test(`It should have the version field`, t => {
   t.is(VERSION, pkg.version)
 })
 */
+
+test(`Should able to tell if any object is empty`, t => {
+
+  t.true(isEmptyObj({}))
+
+  t.false(isEmptyObj({a: '1'}))
+})
+
 
 test('The promises should be resolve one after the other even the early one resolve in a timer', async (t) => {
   t.plan(3)
