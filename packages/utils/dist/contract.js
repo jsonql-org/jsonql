@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extractParamsFromContract = exports.extractArgsFromPayload = exports.extractSocketPart = exports.isContract = exports.checkIsContract = void 0;
-// split the contract into the node side and the generic side
+// split the contract into the node side and the common side
 const lodash_1 = require("./lodash");
-const generic_1 = require("./generic");
+const common_1 = require("./common");
 const constants_1 = require("@jsonql/constants");
 const errors_1 = require("@jsonql/errors");
 /**
@@ -11,9 +11,9 @@ const errors_1 = require("@jsonql/errors");
  */
 function checkIsContract(contract) {
     return (0, lodash_1.isPlainObject)(contract)
-        && ((0, generic_1.isObjectHasKey)(contract, constants_1.QUERY_NAME)
-            || (0, generic_1.isObjectHasKey)(contract, constants_1.MUTATION_NAME)
-            || (0, generic_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME));
+        && ((0, common_1.isObjectHasKey)(contract, constants_1.QUERY_NAME)
+            || (0, common_1.isObjectHasKey)(contract, constants_1.MUTATION_NAME)
+            || (0, common_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME));
 }
 exports.checkIsContract = checkIsContract;
 /**
@@ -28,7 +28,7 @@ exports.isContract = isContract;
  * if we don't find the socket part then return false
  */
 function extractSocketPart(contract) {
-    if ((0, generic_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME)) {
+    if ((0, common_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME)) {
         return contract[constants_1.SOCKET_NAME];
     }
     return false;

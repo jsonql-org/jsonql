@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.chainFns = void 0;
-const generic_1 = require("./generic");
+const common_1 = require("./common");
 /**
  * using just the map reduce to chain multiple functions together
  * @_param {function} mainFn the init function
@@ -10,5 +10,5 @@ const generic_1 = require("./generic");
  */
 const chainFns = (mainFn, ...moreFns) => ((...args) => (moreFns.reduce((value, nextFn) => (
 // change here to check if the return value is array then we spread it
-Reflect.apply(nextFn, null, (0, generic_1.toArray)(value))), Reflect.apply(mainFn, null, args))));
+Reflect.apply(nextFn, null, (0, common_1.toArray)(value))), Reflect.apply(mainFn, null, args))));
 exports.chainFns = chainFns;

@@ -15,10 +15,12 @@ if (!pkgDir) {
   return
 }
 const rootPkgJson = fs.readJsonSync(join(__dirname, 'package.json'))
-let rootPkgName = rootPkgJson.name
+let rootPkgName = '@' + rootPkgJson.name
+/*
 if (rootPkgName.substr(0,1) !== '@') {
   rootPkgName = '@' + rootPkgName
 }
+*/
 // We should read the root package.json then take the name (the scope root)
 // then construct the package name
 const pkgName = `${rootPkgName}/${args[1] ? args[1] : pkgDir}`

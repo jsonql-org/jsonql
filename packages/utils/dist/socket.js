@@ -7,7 +7,7 @@ const constants_1 = require("@jsonql/constants");
 const errors_1 = require("@jsonql/errors");
 const lodash_1 = require("./lodash");
 const params_api_1 = require("./params-api");
-const generic_1 = require("./generic");
+const common_1 = require("./common");
 const timestamp_1 = require("./timestamp");
 const PAYLOAD_NOT_DECODED_ERR = 'payload can not decoded';
 const WS_KEYS = [
@@ -59,7 +59,7 @@ const getTsFieldFromData = (data) => {
  * so we have to DIY one for ws and other that doesn't have it
  */
 const createWsReply = (type, resolverName, data, ts = []) => {
-    const obj = getTsFieldFromData((0, generic_1.parseJson)(data));
+    const obj = getTsFieldFromData((0, common_1.parseJson)(data));
     ts = ts.concat(obj[constants_1.TIMESTAMP_PARAM_NAME]);
     if (!ts.length) {
         ts.push((0, timestamp_1.timestamp)());
@@ -83,10 +83,10 @@ exports.createAcknowledgeMsg = createAcknowledgeMsg;
  * Check if this is a ws reply
  */
 const isWsReply = (payload) => {
-    const json = (0, lodash_1.isString)(payload) ? (0, generic_1.parseJson)(payload) : payload;
+    const json = (0, lodash_1.isString)(payload) ? (0, common_1.parseJson)(payload) : payload;
     const { data } = json;
     if (data) {
-        let result = WS_KEYS.filter(key => (0, generic_1.isObjectHasKey)(data, key));
+        let result = WS_KEYS.filter(key => (0, common_1.isObjectHasKey)(data, key));
         return (result.length === WS_KEYS.length) ? data : false;
     }
     return false;
@@ -95,16 +95,16 @@ exports.isWsReply = isWsReply;
 /**
  * Extract data from ws payload
  */
-const extractWsPayload = (payload, cb = generic_1.nil) => {
+const extractWsPayload = (payload, cb = common_1.nil) => {
     try {
-        const json = (0, generic_1.parseJson)(payload);
+        const json = (0, common_1.parseJson)(payload);
         // now handle the data
         let _data;
         if ((_data = (0, exports.isWsReply)(json)) !== false) {
             // note the ts property is on its own
             Reflect.apply(cb, null, ['_data', _data]);
             return {
-                data: (0, generic_1.parseJson)(_data[constants_1.WS_DATA_NAME]),
+                data: (0, common_1.parseJson)(_data[constants_1.WS_DATA_NAME]),
                 resolverName: _data[constants_1.WS_EVT_NAME],
                 type: _data[constants_1.WS_REPLY_TYPE]
             };

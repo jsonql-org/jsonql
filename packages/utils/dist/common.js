@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.nil = exports.assign = exports.isFunc = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.isObjectHasKey = exports.parseJson = exports.toArray = exports.inArray = void 0;
+exports.readOnly = exports.nil = exports.assign = exports.isFunc = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.isObjectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
@@ -12,6 +12,9 @@ exports.inArray = inArray;
 // quick and dirty to turn non array to array
 const toArray = (arg) => Array.isArray(arg) ? arg : [arg];
 exports.toArray = toArray;
+// check if an obj is empty, ported from Velocejs
+const isEmptyObj = (obj) => (obj && Object.keys(obj).length === 0 && obj.constructor === Object);
+exports.isEmptyObj = isEmptyObj;
 /**
  * parse string to json or just return the original value if error happened
  */

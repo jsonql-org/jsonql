@@ -3,6 +3,7 @@
  */
 export declare const inArray: (arr: any[], value: any) => boolean;
 export declare const toArray: (arg: any) => any[];
+export declare const isEmptyObj: (obj: any) => boolean;
 /**
  * parse string to json or just return the original value if error happened
  */

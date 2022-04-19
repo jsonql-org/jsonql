@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resultHandler = exports.packError = exports.isJsonqlErrorObj = exports.packResult = exports.getCallMethod = void 0;
 // break up from node-middleware
 const constants_1 = require("@jsonql/constants");
-const generic_1 = require("./generic");
+const common_1 = require("./common");
 const timestamp_1 = require("./timestamp");
 const lodash_1 = require("./lodash");
 /**
@@ -38,10 +38,10 @@ exports.packResult = packResult;
  */
 const isJsonqlErrorObj = (e) => {
     const searchFields = ['detail', 'className'];
-    const test = !!searchFields.filter(field => (0, generic_1.isObjectHasKey)(e, field)).length;
+    const test = !!searchFields.filter(field => (0, common_1.isObjectHasKey)(e, field)).length;
     if (test) {
         return ['className', 'message', 'statusCode']
-            .filter(field => (0, generic_1.isObjectHasKey)(e, field))
+            .filter(field => (0, common_1.isObjectHasKey)(e, field))
             .map(field => ({
             [field]: typeof e[field] === 'object' ? e[field].toString() : e[field]
         }))
@@ -68,6 +68,6 @@ exports.packError = packError;
  * handle the return data
  * @TODO how to handle the return timestamp and calculate the diff?
  */
-const resultHandler = (result) => (((0, generic_1.isObjectHasKey)(result, constants_1.DATA_KEY) &&
-    !(0, generic_1.isObjectHasKey)(result, constants_1.ERROR_KEY)) ? result[constants_1.DATA_KEY] : result);
+const resultHandler = (result) => (((0, common_1.isObjectHasKey)(result, constants_1.DATA_KEY) &&
+    !(0, common_1.isObjectHasKey)(result, constants_1.ERROR_KEY)) ? result[constants_1.DATA_KEY] : result);
 exports.resultHandler = resultHandler;

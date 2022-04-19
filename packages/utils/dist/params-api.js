@@ -8,7 +8,7 @@ const constants_1 = require("@jsonql/constants");
 const errors_1 = require("@jsonql/errors");
 const lodash_1 = require("./lodash");
 const timestamp_1 = require("./timestamp");
-const generic_1 = require("./generic");
+const common_1 = require("./common");
 /**
  * check if the payload has a timestamp field, then append a new timestamp to it
  */
@@ -24,7 +24,7 @@ exports.handleTimestamp = handleTimestamp;
 /**
  * make sure it's an object (it was call formatPayload but it doesn't make sense)
  */
-const toPayload = (payload) => ((0, lodash_1.isString)(payload) ? (0, generic_1.parseJson)(payload) : payload);
+const toPayload = (payload) => ((0, lodash_1.isString)(payload) ? (0, common_1.parseJson)(payload) : payload);
 exports.toPayload = toPayload;
 /**
  * format the payload with QUERY_ARG_NAME key
