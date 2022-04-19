@@ -12,7 +12,7 @@ if (!dir) {
 }
 console.info(`Update all files in ${dir}`)
 // start
-glob(join(__dirname, 'packages', dir, '!(node_modules|dist)**', '*.js'), (err, files) => {
+glob(join(__dirname, 'packages', dir, '!(node_modules|dist)**','**','*.js'), (err, files) => {
   if (err) {
     console.error('oops', err)
     return
@@ -21,7 +21,6 @@ glob(join(__dirname, 'packages', dir, '!(node_modules|dist)**', '*.js'), (err, f
     console.info(`Nothing to update!`)
     return
   }
-
   Promise.all(
     files.map(file => {
       const f = basename(file)
