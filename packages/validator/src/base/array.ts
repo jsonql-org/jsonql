@@ -1,10 +1,10 @@
 // validate array type
-import combineFn from './combine'
+import { combineCheck } from './combine'
 import {
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
   OR_SEPERATOR
-} from '../constants'
+} from '../lib/constants'
 
 /**
  * check if its array or array like
@@ -56,9 +56,16 @@ export function arrayTypeHandler(p: any, type: any | any[]): boolean {
   // we need to test the args instead of the type(s)
   if (type.length > 1) {
     return !arg.filter((v: any) => (
-      !(type.length > type.filter((t: any) => !combineFn(t)(v)).length)
+      !(type.length > type.filter((t: any) => !combineCheck(t)(v)).length)
     )).length
   }
   // type is array so this will be or!
-  return type.length > type.filter((t: any) => !checkIsArray(arg, t)).length
+  return type.length > type.filter((t: any) => !checkArray(arg, t)).length
+}
+
+/**
+in array
+ */
+export function inArray(arr: any[], value: any): boolean {
+  return !!arr.filter(a => a === value).length
 }

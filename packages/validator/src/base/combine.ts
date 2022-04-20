@@ -3,7 +3,7 @@ import { checkNumber } from './number'
 import { checkString } from './string'
 import { checkBoolean } from './boolean'
 import { checkAny } from './any'
-import { NUMBER_TYPE, STRING_TYPE, BOOLEAN_TYPE } from '../constants'
+import { NUMBER_TYPE, STRING_TYPE, BOOLEAN_TYPE } from '../lib/constants'
 
 /**
  * this is a wrapper method to call different one based on their type
