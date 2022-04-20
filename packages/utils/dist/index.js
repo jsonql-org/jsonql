@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCallMethod = exports.getRegex = exports.isRegExp = exports.getMutationFromPayload = exports.getMutationFromArgs = exports.getQueryFromPayload = exports.getQueryFromArgs = exports.createMutationStr = exports.createMutation = exports.createQueryStr = exports.createQuery = exports.createDeliverable = exports.getResolverFromPayload = exports.formatPayload = exports.toPayload = exports.handleTimestamp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getNspInfoByConfig = exports.getPrivateNamespace = exports.getNamespace = exports.getNamespaceInOrder = exports.groupByNamespace = exports.getLogger = exports.logger = exports.base64Decode = exports.base64Encode = exports.buff = exports.readOnly = exports.nil = exports.assign = exports.isFunc = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = exports.dasherize = exports.extractParamsFromContract = exports.extractArgsFromPayload = exports.extractSocketPart = exports.isContract = exports.checkIsContract = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = void 0;
-exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.extractWsPayload = exports.isWsReply = exports.createAcknowledgeMsg = exports.createReplyMsg = exports.createWsReply = exports.createSendPayload = exports.resultHandler = exports.packError = exports.isJsonqlErrorObj = exports.packResult = void 0;
+exports.isRegExp = exports.getMutationFromPayload = exports.getMutationFromArgs = exports.getQueryFromPayload = exports.getQueryFromArgs = exports.createMutationStr = exports.createMutation = exports.createQueryStr = exports.createQuery = exports.createDeliverable = exports.getResolverFromPayload = exports.formatPayload = exports.toPayload = exports.handleTimestamp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getNspInfoByConfig = exports.getPrivateNamespace = exports.getNamespace = exports.getNamespaceInOrder = exports.groupByNamespace = exports.getLogger = exports.logger = exports.base64Decode = exports.base64Encode = exports.buff = exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = exports.dasherize = exports.extractParamsFromContract = exports.extractArgsFromPayload = exports.extractSocketPart = exports.isContract = exports.checkIsContract = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = void 0;
+exports.findKey = exports.omitBy = exports.mapKeys = exports.mapValues = exports.merge = exports.isPlainObject = exports.isString = exports.isNaN = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.extractWsPayload = exports.isWsReply = exports.createAcknowledgeMsg = exports.createReplyMsg = exports.createWsReply = exports.createSendPayload = exports.resultHandler = exports.packError = exports.isJsonqlErrorObj = exports.packResult = exports.getCallMethod = exports.getRegex = void 0;
 // start your project here
 var chain_fns_1 = require("./chain-fns");
 Object.defineProperty(exports, "chainFns", { enumerable: true, get: function () { return chain_fns_1.chainFns; } });
@@ -25,7 +25,9 @@ Object.defineProperty(exports, "objectHasKey", { enumerable: true, get: function
 Object.defineProperty(exports, "createEvtName", { enumerable: true, get: function () { return common_1.createEvtName; } });
 Object.defineProperty(exports, "getConfigValue", { enumerable: true, get: function () { return common_1.getConfigValue; } });
 Object.defineProperty(exports, "isNotEmpty", { enumerable: true, get: function () { return common_1.isNotEmpty; } });
-Object.defineProperty(exports, "isFunc", { enumerable: true, get: function () { return common_1.isFunc; } });
+Object.defineProperty(exports, "notEmpty", { enumerable: true, get: function () { return common_1.notEmpty; } });
+Object.defineProperty(exports, "isEmpty", { enumerable: true, get: function () { return common_1.isEmpty; } });
+Object.defineProperty(exports, "isFunction", { enumerable: true, get: function () { return common_1.isFunction; } });
 Object.defineProperty(exports, "assign", { enumerable: true, get: function () { return common_1.assign; } });
 Object.defineProperty(exports, "nil", { enumerable: true, get: function () { return common_1.nil; } });
 Object.defineProperty(exports, "readOnly", { enumerable: true, get: function () { return common_1.readOnly; } });
@@ -85,3 +87,13 @@ var urls_1 = require("./urls");
 Object.defineProperty(exports, "urlParams", { enumerable: true, get: function () { return urls_1.urlParams; } });
 Object.defineProperty(exports, "cacheBurstUrl", { enumerable: true, get: function () { return urls_1.cacheBurstUrl; } });
 Object.defineProperty(exports, "cacheBurst", { enumerable: true, get: function () { return urls_1.cacheBurst; } });
+// also re-expor this for other project to use
+var lodash_1 = require("./lodash");
+Object.defineProperty(exports, "isNaN", { enumerable: true, get: function () { return lodash_1.isNaN; } });
+Object.defineProperty(exports, "isString", { enumerable: true, get: function () { return lodash_1.isString; } });
+Object.defineProperty(exports, "isPlainObject", { enumerable: true, get: function () { return lodash_1.isPlainObject; } });
+Object.defineProperty(exports, "merge", { enumerable: true, get: function () { return lodash_1.merge; } });
+Object.defineProperty(exports, "mapValues", { enumerable: true, get: function () { return lodash_1.mapValues; } });
+Object.defineProperty(exports, "mapKeys", { enumerable: true, get: function () { return lodash_1.mapKeys; } });
+Object.defineProperty(exports, "omitBy", { enumerable: true, get: function () { return lodash_1.omitBy; } });
+Object.defineProperty(exports, "findKey", { enumerable: true, get: function () { return lodash_1.findKey; } });

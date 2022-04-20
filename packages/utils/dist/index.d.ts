@@ -2,7 +2,7 @@ export { chainFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, } from './chain-promises';
 export { checkIsContract, isContract, extractSocketPart, extractArgsFromPayload, extractParamsFromContract } from './contract';
 export { dasherize } from './dasherize';
-export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, isFunc, assign, nil, readOnly } from './common';
+export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, isFunction, assign, nil, readOnly } from './common';
 export { buff, base64Encode, base64Decode } from './jwt';
 export { logger, getLogger } from './logger';
 export { groupByNamespace, getNamespaceInOrder, getNamespace, getPrivateNamespace, getNspInfoByConfig, } from './namespace';
@@ -13,3 +13,4 @@ export { getCallMethod, packResult, isJsonqlErrorObj, packError, resultHandler, 
 export { createSendPayload, createWsReply, createReplyMsg, createAcknowledgeMsg, isWsReply, extractWsPayload, } from './socket';
 export { timestamp } from './timestamp';
 export { urlParams, cacheBurstUrl, cacheBurst } from './urls';
+export { isNaN, isString, isPlainObject, merge, mapValues, mapKeys, omitBy, findKey, } from './lodash';

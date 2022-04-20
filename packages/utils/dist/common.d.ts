@@ -25,9 +25,17 @@ export declare const getConfigValue: (name: string, obj: object) => any;
  */
 export declare const isNotEmpty: (param: any) => boolean;
 /**
+ * Check several parameter that there is something in the param
+ this is problematic should rename to isNotEmptyParam
+ and we should check if its array is it empty array
+ if it's object then if its empty object
+ */
+export declare function notEmpty(a: any, valueCheck?: boolean): boolean;
+export declare const isEmpty: (value: any, valueCheck?: boolean | undefined) => boolean;
+/**
  * Simple check if the prop is function
  */
-export declare const isFunc: (prop: any) => boolean;
+export declare const isFunction: (prop: any) => boolean;
 /**
  * Shorthand method for Object.assign
  */
