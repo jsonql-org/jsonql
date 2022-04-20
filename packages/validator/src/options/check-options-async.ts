@@ -1,6 +1,6 @@
 /// this is port back from the client to share across all projects
 
-import merge from 'lodash-es/merge'
+import { merge } from '../lib/lodash'
 import { prepareArgsForValidation } from './prepare-args-for-validation'
 import runValidation from './run-validation'
 

@@ -1,13 +1,14 @@
 // breaking the whole thing up to see what cause the multiple calls issue
-
-import isFunction from 'lodash-es/isFunction'
-import merge from 'lodash-es/merge'
-import mapValues from 'lodash-es/mapValues'
-
-import JsonqlEnumError from 'jsonql-errors/src/enum-error'
-import JsonqlTypeError from 'jsonql-errors/src/type-error'
-import JsonqlCheckerError from 'jsonql-errors/src/checker-error'
-
+import {
+  isFunction,
+  merge,
+  mapValues
+} from '../lib/lodash'
+import {
+  JsonqlEnumError,
+  JsonqlTypeError,
+  JsonqlCheckerError
+} from '@jsonql/errors'
 import {
   TYPE_KEY,
   OPTIONAL_KEY,
@@ -15,38 +16,21 @@ import {
   ARGS_KEY,
   CHECKER_KEY,
   KEY_WORD
-} from '../constants'
-import { checkIsArray } from '../array'
+} from '../lib/constants'
+import { checkArray, inArray } from '../base'
+import { toArray } from '@jsonql/utils'
+// types stuff 
+import { DummyFunction } from '../types'
 
 // import debug from 'debug';
 // const debugFn = debug('jsonql-params-validator:options:validation')
 
 /**
- * just make sure it returns an array to use
- * @param {*} arg input
- * @return {array} output
- */
-const toArray = arg => checkIsArray(arg) ? arg : [arg]
-
-/**
- * DIY in array
- * @param {array} arr to check against
- * @param {*} value to check
- * @return {boolean} true on OK
- */
-const inArray = (arr, value) => (
-  !!arr.filter(v => v === value).length
-)
-
-/**
  * break out to make the code easier to read
- * @param {object} value to process
- * @param {function} cb the validateSync
- * @return {array} empty on success
  */
-function validateHandler(value, cb) {
+function validateHandler(value: any, cb: DummyFunction) {
   // cb is the validateSync methods
-  let args = [
+  const args = [
     [ value[ARGS_KEY] ],
     [{
         [TYPE_KEY]: toArray(value[TYPE_KEY]),
@@ -59,12 +43,10 @@ function validateHandler(value, cb) {
 
 /**
  * Check against the enum value if it's provided
- * @param {*} value to check
- * @param {*} enumv to check against if it's not false
- * @return {boolean} true on OK
  */
-const enumHandler = (value, enumv) => {
-  if (checkIsArray(enumv)) {
+const enumHandler = (value: any, enumv: any): boolean => {
+  if (checkArray(enumv)) {
+
     return inArray(enumv, value)
   }
   return true
@@ -75,10 +57,8 @@ const enumHandler = (value, enumv) => {
  * There might be a problem here if the function is incorrect
  * and that will makes it hard to debug what is going on inside
  * @TODO there could be a few feature add to this one under different circumstance
- * @param {*} value to check
- * @param {function} checker for checking
  */
-const checkerHandler = (value, checker) => {
+const checkerHandler = (value: any, checker: DummyFunction): boolean => {
   try {
     return isFunction(checker) ? checker.apply(null, [value]) : false
   } catch (e) {
@@ -88,12 +68,10 @@ const checkerHandler = (value, checker) => {
 
 /**
  * Taken out from the runValidaton this only validate the required values
- * @param {array} args from the config2argsAction
- * @param {function} cb validateSync
- * @return {array} of configuration values
  */
-function runValidationAction(cb) {
-  return (value, key) => {
+function runValidationAction(cb: DummyFunction) {
+
+  return (value: any, key: string) => {
     // debugFn('runValidationAction', key, value)
     if (value[KEY_WORD]) {
       return value[ARGS_KEY]
@@ -116,14 +94,13 @@ function runValidationAction(cb) {
 }
 
 /**
- * @param {object} args from the config2argsAction
- * @param {function} cb validateSync
- * @return {object} of configuration values
+ * finally run the options validation
  */
-export default function runValidation(args, cb) {
+export function runValidation(args: any[], cb: DummyFunction) {
   const [ argsForValidate, pristineValues ] = args
   // turn the thing into an array and see what happen here
   // debugFn('_args', argsForValidate)
   const result = mapValues(argsForValidate, runValidationAction(cb))
+
   return merge(result, pristineValues)
 }

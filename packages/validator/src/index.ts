@@ -1,22 +1,26 @@
 // main export
-import notEmpty from './not-empty'
-
-
-
-
-// re-export
 export {
-  notEmpty,
-
+  // any
   checkAny,
-  checkString,
-  checkBoolean,
-  checkNumber,
+  isNotEmpty,
+  // array
   checkArray,
   isArrayLike,
   arrayTypeHandler,
-  checkIsObject,
+  inArray,
+  // boolean
+  checkBoolean,
+  // number
+  checkNumber,
+  checkInteger,
+  checkFloat,
+  checkUnsigned,
+  // string
+  checkString,
+  // object
+  checkObject,
   objectTypeHandler,
-
+  objectHasKey,
+  // combine 
   combineCheck
-}
+} from './base'

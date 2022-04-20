@@ -8,6 +8,7 @@ import {
 
 /**
  * check if its array or array like
+ * why the type is a not a boolean? 
  */
 export function checkArray(value: any, type='') {
   if (Array.isArray(value)) {
@@ -18,7 +19,7 @@ export function checkArray(value: any, type='') {
     // we test it in reverse
     // @TODO if the type is an array (OR) then what?
     // we need to take into account this could be an array
-    const c = value.filter(v => !combineFn(type)(v))
+    const c = value.filter(v => !combineCheck(type)(v))
 
     return !(c.length > 0)
   }

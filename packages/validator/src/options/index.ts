@@ -7,7 +7,11 @@ import {
   CHECKER_KEY,
   ALIAS_KEY,
   OPTIONAL_KEY
-} from 'jsonql-constants'
+} from '@jsonql/constants'
+
+
+
+
 
 /**
  * This has a different interface
