@@ -2,7 +2,8 @@
 export {
   // any
   checkAny,
-  isNotEmpty,
+  notEmpty,
+  isEmpty,
   // array
   checkArray,
   isArrayLike,
@@ -21,6 +22,15 @@ export {
   checkObject,
   objectTypeHandler,
   objectHasKey,
-  // combine 
+  // combine
   combineCheck
 } from './base'
+// options 
+export {
+  createConfig,
+  constructConfig,
+  getCheckConfigAsync,
+  getCheckConfig,
+} from './options'
+
+export * from './lib/constants'
