@@ -4,12 +4,12 @@ import {
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
   OR_SEPERATOR
-} from './constants'
+} from '../constants'
 
 /**
  * check if its array or array like
  */
-export function checkIsArray(value: any, type='') {
+export function checkArray(value: any, type='') {
   if (Array.isArray(value)) {
     if (type === '' || (type+'').trim() ==='') {
 
@@ -27,6 +27,7 @@ export function checkIsArray(value: any, type='') {
 }
 
 /**
+ * @deprecated
  * check if it matches the array.<T> pattern
  * This method will be deprecated soon - we are not using the jsdoc to get the type any more
  */

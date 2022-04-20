@@ -2,3 +2,10 @@
 
 import isNaN from 'lodash-es/isNaN'
 import isString from 'lodash-es/isString'
+import isPlainObject from 'lodash-es/isPlainObject'
+
+export {
+  isNaN,
+  isString,
+  isPlainObject
+}

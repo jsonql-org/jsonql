@@ -3,6 +3,6 @@
 /**
  * if something is a boolean
  */
-export default function checkIsBoolean(value: any): boolean {
+export function checkBoolean(value: any): boolean {
   return value !== null && value !== undefined && typeof value === 'boolean'
 }
