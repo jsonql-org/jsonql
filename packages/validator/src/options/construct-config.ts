@@ -1,7 +1,7 @@
-// create function to construct the config entry so we don't need to keep building object
-
-import isFunction from 'lodash-es/isFunction'
-import isString from 'lodash-es/isString'
+import {
+  isFunction,
+  isString,
+} from '../lib/lodash'
 import {
   ARGS_KEY,
   TYPE_KEY,
@@ -9,29 +9,31 @@ import {
   ENUM_KEY,
   OPTIONAL_KEY,
   ALIAS_KEY
-} from 'jsonql-constants'
-
-import { checkIsArray } from '../array'
+} from '@jsonql/constants'
+import { checkArray } from '../base'
+import { DummyFunction } from '../types'
 // import checkIsBoolean from '../boolean'
 // import debug from 'debug';
 // const debugFn = debug('jsonql-params-validator:construct-config');
 /**
- * @param {*} args value
- * @param {string} type for value
- * @param {boolean} [optional=false]
- * @param {boolean|array} [enumv=false]
- * @param {boolean|function} [checker=false]
- * @return {object} config entry
+ * create function to construct the config entry so we don't need to keep building object
  */
-export default function constructConfig(args, type, optional=false, enumv=false, checker=false, alias=false) {
-  let base = {
+export function constructConfig(
+  args: any[],
+  type: string | string[],
+  optional?: boolean,
+  enumv?: boolean | any[],
+  checker?: boolean | DummyFunction,
+  alias?: boolean | string 
+) {
+  const base = {
     [ARGS_KEY]: args,
     [TYPE_KEY]: type
   }
   if (optional === true) {
     base[OPTIONAL_KEY] = true
   }
-  if (checkIsArray(enumv)) {
+  if (checkArray(enumv)) {
     base[ENUM_KEY] = enumv
   }
   if (isFunction(checker)) {
@@ -40,5 +42,6 @@ export default function constructConfig(args, type, optional=false, enumv=false,
   if (isString(alias)) {
     base[ALIAS_KEY] = alias
   }
+
   return base
 }

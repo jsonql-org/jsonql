@@ -2,9 +2,9 @@
 // which is not very nice - because it's hard to find
 // now they are on their own file
 // export also create wrapper methods
-import checkOptionsAsync from './check-options-async'
-import checkOptionsSync from './check-options-sync'
-import constructConfigFn from './construct-config'
+import { checkOptionsAsync } from './check-options-async'
+import { checkOptionsSync } from './check-options-sync'
+import { constructConfig } from './construct-config'
 import {
   ENUM_KEY,
   CHECKER_KEY,
@@ -33,7 +33,7 @@ export function createConfig(
     [ALIAS_KEY]: a
   } = params
 
-  return constructConfigFn.apply(null,  [value, type, o, e, c, a])
+  return constructConfig.apply(null,  [value, type, o, e, c, a])
 }
 
 /**

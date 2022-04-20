@@ -20,7 +20,7 @@ export function checkAny(value: any, checkNull = true): boolean {
  and we should check if its array is it empty array
  if it's object then if its empty object
  */
-export function isNotEmpty(a: any, valueCheck = false) {
+export function notEmpty(a: any, valueCheck = false) {
   if (Array.isArray(a)) {
     // @NOTE we now check if its an empty array as well
     return valueCheck ? !!a.length : false
@@ -32,3 +32,6 @@ export function isNotEmpty(a: any, valueCheck = false) {
 
   return a !== undefined && a !== null && (a+'').trim() !== ''
 }
+
+// just not to make my head hurt
+export const isEmpty = (value: any) => !notEmpty(value)

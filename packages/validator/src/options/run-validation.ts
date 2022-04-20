@@ -19,7 +19,7 @@ import {
 } from '../lib/constants'
 import { checkArray, inArray } from '../base'
 import { toArray } from '@jsonql/utils'
-// types stuff 
+// types stuff
 import { DummyFunction } from '../types'
 
 // import debug from 'debug';
@@ -28,7 +28,7 @@ import { DummyFunction } from '../types'
 /**
  * break out to make the code easier to read
  */
-function validateHandler(value: any, cb: DummyFunction) {
+export function validateHandler(value: any, cb: DummyFunction) {
   // cb is the validateSync methods
   const args = [
     [ value[ARGS_KEY] ],
@@ -44,7 +44,7 @@ function validateHandler(value: any, cb: DummyFunction) {
 /**
  * Check against the enum value if it's provided
  */
-const enumHandler = (value: any, enumv: any): boolean => {
+export function enumHandler(value: any, enumv: any): boolean {
   if (checkArray(enumv)) {
 
     return inArray(enumv, value)
@@ -58,10 +58,12 @@ const enumHandler = (value: any, enumv: any): boolean => {
  * and that will makes it hard to debug what is going on inside
  * @TODO there could be a few feature add to this one under different circumstance
  */
-const checkerHandler = (value: any, checker: DummyFunction): boolean => {
+export function checkerHandler(value: any, checker: DummyFunction): boolean {
   try {
+
     return isFunction(checker) ? checker.apply(null, [value]) : false
   } catch (e) {
+
     return false
   }
 }
@@ -69,7 +71,7 @@ const checkerHandler = (value: any, checker: DummyFunction): boolean => {
 /**
  * Taken out from the runValidaton this only validate the required values
  */
-function runValidationAction(cb: DummyFunction) {
+export function runValidationAction(cb: DummyFunction) {
 
   return (value: any, key: string) => {
     // debugFn('runValidationAction', key, value)
@@ -96,7 +98,7 @@ function runValidationAction(cb: DummyFunction) {
 /**
  * finally run the options validation
  */
-export function runValidation(args: any[], cb: DummyFunction) {
+export function runValidation(args: any, cb: DummyFunction) {
   const [ argsForValidate, pristineValues ] = args
   // turn the thing into an array and see what happen here
   // debugFn('_args', argsForValidate)

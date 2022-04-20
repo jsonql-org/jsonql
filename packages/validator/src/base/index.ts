@@ -1,5 +1,5 @@
 // this contains all the primitive types checking methods
-export { checkAny, isNotEmpty } from './any'
+export { checkAny, notEmpty, isEmpty } from './any'
 export { checkArray, isArrayLike, arrayTypeHandler, inArray } from './array'
 export { checkBoolean } from './boolean'
 export { checkNumber, checkInteger, checkFloat, checkUnsigned } from './number'
