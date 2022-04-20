@@ -1,6 +1,6 @@
 // split the contract into the node side and the common side
 import { isPlainObject } from './lodash'
-import { isObjectHasKey } from './common'
+import { objectHasKey } from './common'
 import {
   QUERY_NAME,
   MUTATION_NAME,
@@ -21,9 +21,9 @@ import { JsonqlContract } from './types'
 export function checkIsContract(contract: JsonqlContract): boolean {
   return isPlainObject(contract)
   && (
-    isObjectHasKey(contract, QUERY_NAME)
- || isObjectHasKey(contract, MUTATION_NAME)
- || isObjectHasKey(contract, SOCKET_NAME)
+    objectHasKey(contract, QUERY_NAME)
+ || objectHasKey(contract, MUTATION_NAME)
+ || objectHasKey(contract, SOCKET_NAME)
   )
 }
 
@@ -39,7 +39,7 @@ export function isContract(contract: JsonqlContract): JsonqlContract | boolean {
  * if we don't find the socket part then return false
  */
 export function extractSocketPart(contract: JsonqlContract): any {
-  if (isObjectHasKey(contract, SOCKET_NAME)) {
+  if (objectHasKey(contract, SOCKET_NAME)) {
 
     return contract[SOCKET_NAME]
   }

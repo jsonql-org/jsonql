@@ -86,7 +86,7 @@ const isWsReply = (payload) => {
     const json = (0, lodash_1.isString)(payload) ? (0, common_1.parseJson)(payload) : payload;
     const { data } = json;
     if (data) {
-        let result = WS_KEYS.filter(key => (0, common_1.isObjectHasKey)(data, key));
+        let result = WS_KEYS.filter(key => (0, common_1.objectHasKey)(data, key));
         return (result.length === WS_KEYS.length) ? data : false;
     }
     return false;

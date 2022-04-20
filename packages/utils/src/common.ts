@@ -1,7 +1,6 @@
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 import { isPlainObject, isString } from './lodash'
-
 /**
  * DIY in Array
  */
@@ -34,7 +33,7 @@ export const parseJson = (n: any, t=true) => {
 /**
  * check if the key existing in an object
  */
-export const isObjectHasKey = (obj: object, key: string): boolean => {
+export const objectHasKey = (obj: object, key: string): boolean => {
   try {
     const keys = Object.keys(obj)
 
@@ -62,15 +61,37 @@ export const getConfigValue = (name: string, obj: object) => (
  */
 export const isNotEmpty = (param: any) => (
   param !== undefined &&
-  param !== false &&
+  // param !== false &&
   param !== null &&
   (param+'').trim() !== ''
 )
 
 /**
+ * Check several parameter that there is something in the param
+ this is problematic should rename to isNotEmptyParam
+ and we should check if its array is it empty array
+ if it's object then if its empty object
+ */
+export function notEmpty(a: any, valueCheck = false) {
+  if (Array.isArray(a)) {
+    // @NOTE we now check if its an empty array as well
+    return valueCheck ? !!a.length : false
+  }
+  if (isPlainObject(a)) {
+
+    return valueCheck ? !isEmptyObj(a) : false
+  }
+
+  return isNotEmpty(a)
+}
+
+// just not to make my head hurt
+export const isEmpty = (value: any, valueCheck?: boolean) => !notEmpty(value, valueCheck)
+
+/**
  * Simple check if the prop is function
  */
-export const isFunc = (prop: any) => {
+export const isFunction = (prop: any) => {
   if (typeof prop === 'function') {
     return true
   }

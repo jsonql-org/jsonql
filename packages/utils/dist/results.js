@@ -38,10 +38,10 @@ exports.packResult = packResult;
  */
 const isJsonqlErrorObj = (e) => {
     const searchFields = ['detail', 'className'];
-    const test = !!searchFields.filter(field => (0, common_1.isObjectHasKey)(e, field)).length;
+    const test = !!searchFields.filter(field => (0, common_1.objectHasKey)(e, field)).length;
     if (test) {
         return ['className', 'message', 'statusCode']
-            .filter(field => (0, common_1.isObjectHasKey)(e, field))
+            .filter(field => (0, common_1.objectHasKey)(e, field))
             .map(field => ({
             [field]: typeof e[field] === 'object' ? e[field].toString() : e[field]
         }))
@@ -68,6 +68,6 @@ exports.packError = packError;
  * handle the return data
  * @TODO how to handle the return timestamp and calculate the diff?
  */
-const resultHandler = (result) => (((0, common_1.isObjectHasKey)(result, constants_1.DATA_KEY) &&
-    !(0, common_1.isObjectHasKey)(result, constants_1.ERROR_KEY)) ? result[constants_1.DATA_KEY] : result);
+const resultHandler = (result) => (((0, common_1.objectHasKey)(result, constants_1.DATA_KEY) &&
+    !(0, common_1.objectHasKey)(result, constants_1.ERROR_KEY)) ? result[constants_1.DATA_KEY] : result);
 exports.resultHandler = resultHandler;

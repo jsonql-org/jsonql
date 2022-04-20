@@ -24,7 +24,8 @@ test.before(t => {
 })
 
 test(`It should have certain functions in the export`, t => {
-  t.truthy(utilFns.isFunc, 'There should be a isFunc method exported')
+  t.truthy(utilFns.isFunction, 'There should be a isFunc method exported')
+  t.true(utilFns.isFunction(() => {}))
   t.truthy(utilFns.toArray, 'There should be a toArray method exported')
   t.false(utilFns.isNotEmpty('  '), 'isNotEmpty should able to check empty spaces')
 })

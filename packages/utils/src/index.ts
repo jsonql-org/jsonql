@@ -19,11 +19,13 @@ export {
   toArray,
   isEmptyObj,
   parseJson,
-  isObjectHasKey,
+  objectHasKey,
   createEvtName,
   getConfigValue,
   isNotEmpty,
-  isFunc,
+  notEmpty,
+  isEmpty,
+  isFunction,
   assign,
   nil,
   readOnly
@@ -94,3 +96,15 @@ export {
   cacheBurstUrl,
   cacheBurst
 } from './urls'
+// also re-expor this for other project to use
+export {
+  isNaN,
+  isString,
+  isPlainObject,
+  merge,
+  mapValues,
+  mapKeys,
+  omitBy,
+  findKey,
+  // isEqual
+} from './lodash'

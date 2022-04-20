@@ -7,7 +7,7 @@ import {
   ERROR_KEY,
   TIMESTAMP_PARAM_NAME
 } from '@jsonql/constants'
-import { isObjectHasKey } from './common'
+import { objectHasKey } from './common'
 import { timestamp } from './timestamp'
 import { merge } from './lodash'
 
@@ -47,11 +47,11 @@ export const packResult = function(result: any, ts = false): string {
  */
 export const isJsonqlErrorObj = (e: Error) => {
   const searchFields = ['detail', 'className']
-  const test = !!searchFields.filter(field => isObjectHasKey(e, field)).length
+  const test = !!searchFields.filter(field => objectHasKey(e, field)).length
   if (test) {
 
     return ['className', 'message', 'statusCode']
-      .filter(field => isObjectHasKey(e, field))
+      .filter(field => objectHasKey(e, field))
       .map(field => (
       {
         [field]: typeof e[field] === 'object' ? e[field].toString() : e[field]
@@ -89,7 +89,7 @@ export const packError = function(
  */
 export const resultHandler = (result: any) => (
   (
-    isObjectHasKey(result, DATA_KEY) &&
-    !isObjectHasKey(result, ERROR_KEY)
+    objectHasKey(result, DATA_KEY) &&
+    !objectHasKey(result, ERROR_KEY)
   ) ? result[DATA_KEY] : result
 )

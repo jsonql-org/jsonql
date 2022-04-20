@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.nil = exports.assign = exports.isFunc = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.isObjectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
+exports.readOnly = exports.nil = exports.assign = exports.isFunc = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
@@ -35,7 +35,7 @@ exports.parseJson = parseJson;
 /**
  * check if the key existing in an object
  */
-const isObjectHasKey = (obj, key) => {
+const objectHasKey = (obj, key) => {
     try {
         const keys = Object.keys(obj);
         return (0, exports.inArray)(keys, key);
@@ -45,7 +45,7 @@ const isObjectHasKey = (obj, key) => {
         return false;
     }
 };
-exports.isObjectHasKey = isObjectHasKey;
+exports.objectHasKey = objectHasKey;
 /**
  * create an event name
  */

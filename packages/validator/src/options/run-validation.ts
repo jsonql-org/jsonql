@@ -20,7 +20,7 @@ import {
 import { checkArray, inArray } from '../base'
 import { toArray } from '@jsonql/utils'
 // types stuff
-import { DummyFunction } from '../types'
+import { CallbackFunction } from '../types'
 
 // import debug from 'debug';
 // const debugFn = debug('jsonql-params-validator:options:validation')
@@ -28,7 +28,7 @@ import { DummyFunction } from '../types'
 /**
  * break out to make the code easier to read
  */
-export function validateHandler(value: any, cb: DummyFunction) {
+export function validateHandler(value: any, cb: CallbackFunction) {
   // cb is the validateSync methods
   const args = [
     [ value[ARGS_KEY] ],
@@ -58,7 +58,7 @@ export function enumHandler(value: any, enumv: any): boolean {
  * and that will makes it hard to debug what is going on inside
  * @TODO there could be a few feature add to this one under different circumstance
  */
-export function checkerHandler(value: any, checker: DummyFunction): boolean {
+export function checkerHandler(value: any, checker: CallbackFunction): boolean {
   try {
 
     return isFunction(checker) ? checker.apply(null, [value]) : false
@@ -71,7 +71,7 @@ export function checkerHandler(value: any, checker: DummyFunction): boolean {
 /**
  * Taken out from the runValidaton this only validate the required values
  */
-export function runValidationAction(cb: DummyFunction) {
+export function runValidationAction(cb: CallbackFunction) {
 
   return (value: any, key: string) => {
     // debugFn('runValidationAction', key, value)
@@ -98,7 +98,7 @@ export function runValidationAction(cb: DummyFunction) {
 /**
  * finally run the options validation
  */
-export function runValidation(args: any, cb: DummyFunction) {
+export function runValidation(args: any, cb: CallbackFunction) {
   const [ argsForValidate, pristineValues ] = args
   // turn the thing into an array and see what happen here
   // debugFn('_args', argsForValidate)

@@ -1,6 +1,6 @@
 // this is ported back from jsonql-params-validator
 import test from 'ava'
-import { isContract, isObjectHasKey, assign, readOnly } from '../src'
+import { isContract, objectHasKey, assign, readOnly } from '../src'
 import debugFn from 'debug'
 
 const debug = debugFn('jsonql-utils:construct')
@@ -17,13 +17,13 @@ test("It should able to check if an object is contract or not", t => {
     t.deepEqual(isContract(contract), contract)
 })
 
-test("Test isObjectHasKey is exported or not", t => {
+test("Test objectHasKey is exported or not", t => {
   const client = {query: {}, mutation: false, socket: null};
 
-  t.true(isObjectHasKey(client, 'mutation'))
-  t.true(isObjectHasKey(client, 'socket'))
+  t.true(objectHasKey(client, 'mutation'))
+  t.true(objectHasKey(client, 'socket'))
 
-  t.false(isObjectHasKey(client, 'auth'))
+  t.false(objectHasKey(client, 'auth'))
 
 })
 

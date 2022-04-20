@@ -11,9 +11,9 @@ const errors_1 = require("@jsonql/errors");
  */
 function checkIsContract(contract) {
     return (0, lodash_1.isPlainObject)(contract)
-        && ((0, common_1.isObjectHasKey)(contract, constants_1.QUERY_NAME)
-            || (0, common_1.isObjectHasKey)(contract, constants_1.MUTATION_NAME)
-            || (0, common_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME));
+        && ((0, common_1.objectHasKey)(contract, constants_1.QUERY_NAME)
+            || (0, common_1.objectHasKey)(contract, constants_1.MUTATION_NAME)
+            || (0, common_1.objectHasKey)(contract, constants_1.SOCKET_NAME));
 }
 exports.checkIsContract = checkIsContract;
 /**
@@ -28,7 +28,7 @@ exports.isContract = isContract;
  * if we don't find the socket part then return false
  */
 function extractSocketPart(contract) {
-    if ((0, common_1.isObjectHasKey)(contract, constants_1.SOCKET_NAME)) {
+    if ((0, common_1.objectHasKey)(contract, constants_1.SOCKET_NAME)) {
         return contract[constants_1.SOCKET_NAME];
     }
     return false;

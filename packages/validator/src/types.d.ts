@@ -6,13 +6,13 @@ export declare type JsonqlConfig = {
 export type JsonqlAppProps = JsonqlConfig
 export type JsonqlConstantProps = JsonqlConfig
 
-export declare type DummyFunction = (...args: any[]) => any
+export declare type CallbackFunction = (...args: any[]) => any
 
-export declare type DummyAsyncFunction = (...args: any[]) => Promise<any>
+export declare type AsyncCallbackFunction = (...args: any[]) => Promise<any>
 
 export declare type JsonqlConfigParams = {
   enumv?: any[]
   optional?: boolean
-  checker?: DummyFunction,
+  checker?: CallbackFunction,
   alias?: string
 }

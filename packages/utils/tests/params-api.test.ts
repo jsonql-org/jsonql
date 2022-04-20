@@ -6,7 +6,7 @@ import {
   getMutationFromPayload,
   // getQueryFromArgs,
   // getMutationFromArgs,
-  isObjectHasKey
+  objectHasKey
   // getNameFromPayload
 } from '../src'
 import {
@@ -32,7 +32,7 @@ test('It should able to construct correct query argument and extract from the ot
   debug(result)
 
   t.is(result[RESOLVER_PARAM_NAME], name)
-  t.true(isObjectHasKey(result, TIMESTAMP_PARAM_NAME))
+  t.true(objectHasKey(result, TIMESTAMP_PARAM_NAME))
   t.deepEqual(result.args, args)
 
 })

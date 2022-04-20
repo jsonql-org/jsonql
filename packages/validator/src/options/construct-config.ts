@@ -11,7 +11,7 @@ import {
   ALIAS_KEY
 } from '@jsonql/constants'
 import { checkArray } from '../base'
-import { DummyFunction } from '../types'
+import { CallbackFunction } from '../types'
 // import checkIsBoolean from '../boolean'
 // import debug from 'debug';
 // const debugFn = debug('jsonql-params-validator:construct-config');
@@ -23,7 +23,7 @@ export function constructConfig(
   type: string | string[],
   optional?: boolean,
   enumv?: boolean | any[],
-  checker?: boolean | DummyFunction,
+  checker?: boolean | CallbackFunction,
   alias?: boolean | string 
 ) {
   const base = {

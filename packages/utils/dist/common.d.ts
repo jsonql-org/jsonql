@@ -11,7 +11,7 @@ export declare const parseJson: (n: any, t?: boolean) => any;
 /**
  * check if the key existing in an object
  */
-export declare const isObjectHasKey: (obj: object, key: string) => boolean;
+export declare const objectHasKey: (obj: object, key: string) => boolean;
 /**
  * create an event name
  */

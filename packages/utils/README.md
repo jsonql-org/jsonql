@@ -53,7 +53,7 @@ Please reference which functions in what file below
 
 - inArray
 - toArray
-- isObjectHasKey
+- objectHasKey
 - createEvtName
 - getConfigValue
 - parseJson

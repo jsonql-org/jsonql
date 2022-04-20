@@ -13,7 +13,7 @@ import {
 } from '@jsonql/constants'
 
 // types
-import { JsonqlConfigParams, DummyAsyncFunction, DummyFunction } from '../types'
+import { JsonqlConfigParams, AsyncCallbackFunction, CallbackFunction } from '../types'
 
 /**
  * This has a different interface
@@ -41,7 +41,7 @@ export function createConfig(
  * @param {function} validateSync validation method
  * @return {function} for performaning the actual valdiation
  */
-export function getCheckConfigAsync(validateSync: DummyAsyncFunction): DummyAsyncFunction {
+export function getCheckConfigAsync(validateSync: AsyncCallbackFunction): AsyncCallbackFunction {
 
   return function(config, appProps, constantProps= {}) {
 
@@ -57,7 +57,7 @@ export function getCheckConfigAsync(validateSync: DummyAsyncFunction): DummyAsyn
 /**
  * copy of above but it's sync, rename with prefix get since 1.5.2
  */
-export function getCheckConfig(validateSync: DummyFunction): DummyFunction {
+export function getCheckConfig(validateSync: CallbackFunction): CallbackFunction {
 
   return function(config, appProps, constantProps = {}) {
 

@@ -4,7 +4,7 @@ import { prepareArgsForValidation } from './prepare-args-for-validation'
 import { runValidation } from './run-validation'
 import {
   JsonqlConfig,
-  DummyFunction,
+  CallbackFunction,
   JsonqlAppProps,
   JsonqlConstantProps,
 } from '../types'
@@ -16,7 +16,7 @@ export function checkOptionsSync(
   config: JsonqlConfig,
   appProps: JsonqlAppProps,
   constProps: JsonqlConstantProps,
-  cb: DummyFunction
+  cb: CallbackFunction
 ) {
   
   return merge(

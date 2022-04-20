@@ -16,7 +16,7 @@ import {
 } from '@jsonql/errors'
 import { isString } from './lodash'
 import { createDeliverable, formatPayload } from './params-api'
-import { parseJson, isObjectHasKey, nil } from './common'
+import { parseJson, objectHasKey, nil } from './common'
 import { timestamp } from './timestamp'
 
 const PAYLOAD_NOT_DECODED_ERR = 'payload can not decoded'
@@ -116,7 +116,7 @@ export const isWsReply = (payload: any): any => {
   const json = isString(payload) ? parseJson(payload) : payload
   const { data } = json
   if (data) {
-    let result = WS_KEYS.filter(key => isObjectHasKey(data, key))
+    let result = WS_KEYS.filter(key => objectHasKey(data, key))
 
     return (result.length === WS_KEYS.length) ? data : false
   }
