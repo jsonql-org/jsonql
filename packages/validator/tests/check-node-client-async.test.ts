@@ -1,13 +1,14 @@
 // check the options
-const test = require('ava')
-const {
-  JsonqlTypeError,
-  JsonqlEnumError,
+import test from 'ava'
+import {
+  // JsonqlTypeError,
+  // JsonqlEnumError,
   JsonqlCheckerError
-} = require('jsonql-errors')
-const debug = require('debug')('jsonql-params-validator:check-node-client-async')
-const nodeClientCheckConfig = require('./fixtures/node-client-config')
-const { join, resolve } = require('path')
+} from '@jsonql/errors'
+// import debugFn from 'debug'
+import nodeClientCheckConfig from './fixtures/node-client-config'
+import { join, resolve } from 'path'
+// const debug = debugFn('jsonql-params-validator:check-node-client-async')
 const contractDir = resolve(join(__dirname, 'fixtures'))
 const hostname = 'https://some-where-else.com';
 const contractKey = '12345678'
@@ -18,7 +19,7 @@ test('It should able to apply the default options', async t => {
     hostname,
     contractDir,
     contractKey
-  });
+  })
   t.is(opt.hostname, hostname)
 })
 
@@ -27,7 +28,7 @@ test("It should able to handle the checker error from within the validator", asy
     hostname,
     contractKey,
     contractDir: '/directory/does/not/exist'
-  }).catch(error => {
+  }).catch((error: Error) => {
     t.true(error instanceof JsonqlCheckerError)
     t.is(error.message, 'contractDir')
   })

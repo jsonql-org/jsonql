@@ -9,16 +9,16 @@ import {
   STRING_TYPE,
   NUMBER_TYPE,
   BOOLEAN_TYPE,
-  ANY_TYPE,
+  // ANY_TYPE,
   CHECKER_KEY,
   OPTIONAL_KEY,
   ALIAS_KEY,
   ENUM_KEY
-} from 'jsonql-constants'
+} from '@jsonql/constants'
 // also check if this works or not
 import {
   createConfig
-} from '../../main'
+} from '../../src'
 
 export const constProps = {
   MUTATION_ARGS: ['name', 'payload', 'conditions'],
@@ -53,8 +53,8 @@ export const appProps = {
   checkerProp: {
     args: 'this-is-the-right-key',
     type: STRING_TYPE,
-    [CHECKER_KEY]: function(value) {
-      return value === 'this-is-the-right-key';
+    [CHECKER_KEY]: function(value: string) {
+      return value === 'this-is-the-right-key'
     }
   }
 }

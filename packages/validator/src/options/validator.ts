@@ -1,14 +1,11 @@
 // move the index.js code here that make more sense to find where things are
-
 import {
-  checkIsArray,
+  checkArray,
   isArrayLike,
   arrayTypeHandler,
   objectTypeHandler,
-  combineFn,
-  notEmpty
-} from './index'
-
+  combineCheck,
+} from '../base'
 import {
   DEFAULT_TYPE,
   ARRAY_TYPE,
@@ -16,29 +13,28 @@ import {
   ARGS_NOT_ARRAY_ERR,
   PARAMS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
-  DATA_KEY, 
-  ERROR_KEY 
-} from './constants'
-
-
-import JsonqlValidationError from 'jsonql-errors/src/validation-error'
-import JsonqlError from 'jsonql-errors/src/error'
+  DATA_KEY,
+  ERROR_KEY
+} from '../lib/constants'
+import {
+  JsonqlValidationError,
+  JsonqlError
+} from '@jsonql/errors'
+import { notEmpty } from '@jsonql/utils'
 // import debug from 'debug'
 // const debugFn = debug('jsonql-params-validator:validator')
 // also export this for use in other places
 
 /**
  * We need to handle those optional parameter without a default value
- * @param {object} params from contract.json
- * @return {boolean} for filter operation false is actually OK
  */
-const optionalHandler = function( params ) {
+const optionalHandler = function( params: any ): boolean {
   const { arg, param } = params
   if (notEmpty(arg)) {
     // debug('call optional handler', arg, params);
     // loop through the type in param
-    return !(param.type.length > param.type.filter(type =>
-        validateHandler(type, params)
+    return !(param.type.length > param.type.filter((type: string) =>
+      validateHandler(type, params)
     ).length)
   }
   return false
@@ -46,19 +42,16 @@ const optionalHandler = function( params ) {
 
 /**
  * actually picking the validator
- * @param {*} type for checking
- * @param {*} value for checking
- * @return {boolean} true on OK
  */
-const validateHandler = function(type, value) {
-  let tmp;
+const validateHandler = function(type: any, value: any): boolean {
+  let tmp: any;
   switch (true) {
     case type === OBJECT_TYPE:
       // debugFn('call OBJECT_TYPE')
       return !objectTypeHandler(value)
     case type === ARRAY_TYPE:
       // debugFn('call ARRAY_TYPE')
-      return !checkIsArray(value.arg)
+      return !checkArray(value.arg)
     // @TODO when the type is not present, it always fall through here
     // so we need to find a way to actually pre-check the type first
     // AKA check the contract.json map before running here
@@ -66,17 +59,14 @@ const validateHandler = function(type, value) {
       // debugFn('call ARRAY_LIKE: %O', value)
       return !arrayTypeHandler(value, tmp)
     default:
-      return !combineFn(type)(value.arg)
+      return !combineCheck(type)(value.arg)
   }
 }
 
 /**
  * it get too longer to fit in one line so break it out from the fn below
- * @param {*} arg value
- * @param {object} param config
- * @return {*} value or apply default value
  */
-const getOptionalValue = function(arg, param) {
+const getOptionalValue = function(arg: any, param: any) {
   if (arg !== undefined) {
     return arg
   }
@@ -86,21 +76,18 @@ const getOptionalValue = function(arg, param) {
 /**
  * padding the arguments with defaultValue if the arguments did not provide the value
  * this will be the name export
- * @param {array} args normalized arguments
- * @param {array} params from contract.json
- * @return {array} merge the two together
  */
-export const normalizeArgs = function(args, params) {
+export const normalizeArgs = function(args: any[], params: any[]) {
   // first we should check if this call require a validation at all
   // there will be situation where the function doesn't need args and params
-  if (!checkIsArray(params)) {
+  if (!checkArray(params)) {
     // debugFn('params value', params)
     throw new JsonqlValidationError(PARAMS_NOT_ARRAY_ERR)
   }
   if (params.length === 0) {
     return []
   }
-  if (!checkIsArray(args)) {
+  if (!checkArray(args)) {
     console.info(args)
     throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR)
   }
@@ -170,28 +157,27 @@ export const normalizeArgs = function(args, params) {
 // which is with the optional property if the argument didn't provide it
 /**
  * process the array of params back to their arguments
- * @param {array} result the params result
- * @return {array} arguments
  */
-const processReturn = result => result.map(r => r.arg)
+const processReturn = (result: any[]) => result.map(r => r.arg)
 
 /**
  * validator main interface
- * @param {array} args the arguments pass to the method call
- * @param {array} params from the contract for that method
- * @param {boolean} [withResul=false] if true then this will return the normalize result as well
- * @return {array} empty array on success, or failed parameter and reasons
  */
-export const validateSync = function(args, params, withResult = false) {
+export const validateSync = function(
+  args: any[],
+  params: any[],
+  withResult = false
+) {
   let cleanArgs = normalizeArgs(args, params)
   let checkResult = cleanArgs.filter(p => {
     // v1.4.4 this fixed the problem, the root level optional is from the last fn
+    // @ts-ignore need to fix this later
     if (p.optional === true || p.param.optional === true) {
       return optionalHandler(p)
     }
     // because array of types means OR so if one pass means pass
     return !(p.param.type.length > p.param.type.filter(
-      type => validateHandler(type, p)
+      (type: any) => validateHandler(type, p)
     ).length)
   })
   // using the same convention we been using all this time
@@ -203,12 +189,12 @@ export const validateSync = function(args, params, withResult = false) {
 
 /**
  * A wrapper method that return promise
- * @param {array} args arguments
- * @param {array} params from contract.json
- * @param {boolean} [withResul=false] if true then this will return the normalize result as well
- * @return {object} promise.then or catch
  */
-export const validateAsync = function(args, params, withResult = false) {
+export const validateAsync = function(
+  args: any[],
+  params: any[],
+  withResult = false
+) {
   return new Promise((resolver, rejecter) => {
     const result = validateSync(args, params, withResult)
     if (withResult) {
@@ -216,6 +202,7 @@ export const validateAsync = function(args, params, withResult = false) {
                                       : resolver(result[DATA_KEY])
     }
     // the different is just in the then or catch phrase
+    //  @ts-ignore
     return result.length ? rejecter(result) : resolver([])
   })
 }

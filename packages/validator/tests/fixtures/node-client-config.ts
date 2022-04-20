@@ -1,31 +1,23 @@
-const { join } = require('path');
-const fs = require('fs');
-const {
+import { join } from 'path'
+import * as fs from 'fs'
+import {
   constructConfig,
-  checkConfigAsync
-} = require('../../main');
-// require('../../main');
-const {
+  checkOptionsSync
+} from '../../src'
+import {
   JSONQL_PATH,
   CONTENT_TYPE,
   CLIENT_STORAGE_KEY,
   CLIENT_AUTH_KEY,
   CONTRACT_KEY_NAME,
-  PUBLIC_FILE_NAME,
+  PUBLIC_CONTRACT_FILE_NAME,
   DEFAULT_HEADER,
   DEFAULT_RESOLVER_DIR,
-  DEFAULT_CONTRACT_DIR,
   BOOLEAN_TYPE,
   STRING_TYPE,
-  NUMBER_TYPE,
-  ARGS_KEY,
-  TYPE_KEY,
-  ENUM_KEY,
-  CHECKER_KEY,
-  ACCEPTED_JS_TYPES,
-  CJS_TYPE
-} = require('jsonql-constants');
-const debug = require('debug')('jsonql-node-client:config');
+} from '@jsonql/constants'
+import debugFn from 'debug'
+const debug = debugFn('jsonql-node-client:config')
 // properties
 const constProps = {
   contentType: CONTENT_TYPE,
@@ -49,15 +41,16 @@ const appProps = {
     false,
     false,
    fs.existsSync),
-  contractFileName: constructConfig(PUBLIC_FILE_NAME, STRING_TYPE),
+  contractFileName: constructConfig(PUBLIC_CONTRACT_FILE_NAME, STRING_TYPE),
   // functions
   storeAuthToken: constructConfig(false, BOOLEAN_TYPE),
   getAuthToken: constructConfig(false, BOOLEAN_TYPE),
   defaultHeader: constructConfig(DEFAULT_HEADER, STRING_TYPE)
-};
+}
 // debug('appProps', appProps);
 // export just one method
-module.exports = config => {
-  debug('config', config);
-  return checkConfigAsync(config, appProps, constProps, true);
+export default (config: any) => {
+  debug('config', config)
+  // @TODO don't remember why there is a cb and is it really necessary
+  return checkOptionsSync(config, appProps, constProps,(...args: any[]) => console.log('checkOptionsSync cb', args))
 }

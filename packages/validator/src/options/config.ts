@@ -38,8 +38,6 @@ export function createConfig(
 
 /**
  * construct the actual end user method, rename with prefix get since 1.5.2
- * @param {function} validateSync validation method
- * @return {function} for performaning the actual valdiation
  */
 export function getCheckConfigAsync(validateSync: AsyncCallbackFunction): AsyncCallbackFunction {
 

@@ -18,7 +18,7 @@ export function checkOptionsSync(
   constProps: JsonqlConstantProps,
   cb: CallbackFunction
 ) {
-  
+
   return merge(
     runValidation(
       prepareArgsForValidation(config, appProps),
