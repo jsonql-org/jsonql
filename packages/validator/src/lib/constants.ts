@@ -6,6 +6,7 @@ const EXCEPTION_CASE_ERR = 'Could not understand your arguments and parameter st
 const UNUSUAL_CASE_ERR = 'This is an unusual situation where the arguments are more than the params, but not mark as spread'
 
 const RETURNS_NAME = 'returns'
+const JSONQL_PARAMS_VALIDATOR_INFO = '__PLACEHOLDER__'
 
 import {
 
@@ -58,5 +59,7 @@ export {
   RETURNS_NAME,
 
   DATA_KEY,
-  ERROR_KEY
+  ERROR_KEY,
+
+  JSONQL_PARAMS_VALIDATOR_INFO,
 }
