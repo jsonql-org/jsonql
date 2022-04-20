@@ -1,22 +1,22 @@
 // testing different config check methods
 
-const test = require('ava')
+import test from  'ava'
 
-const {
+import {
   mapAliasConfigKeys,
   preservePristineValues,
-  processConfigAction,
+  // sprocessConfigAction,
   prepareArgsForValidation,
   runValidation
-} = require('./fixtures/utils-cjs')
-const { validateSync } = require('../main')
+} from  './fixtures/utils'
+import { validateSync } from  '../src'
 
-const { appProps } = require('./fixtures/default-options')
-
-const debug = require('debug')('jsonql-params-validator:test:config-values')
+import { appProps } from  './fixtures/default-options'
+import debugFn from 'debug'
+const debug = debugFn('jsonql-params-validator:test:config-values')
 
 // props for testing
-const value = 'some value';
+const value = 'some value'
 let configValues = {otherName: value, enableTimeout: true, keyDontExist: 'whatever', useLocalstorage: false}
 
 test('It should able to just map the alias values', t => {

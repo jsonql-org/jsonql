@@ -1,16 +1,20 @@
 // check the options
-const test = require('ava')
-const {
+
+
+import { checkConfig } from '../src'
+import { appProps, constProps } from './fixtures/default-options'
+
+import test from 'ava'
+/*
+import {
   JsonqlTypeError,
   JsonqlEnumError,
   JsonqlCheckerError
-} = require('jsonql-errors')
+} from '@jsonql/errors'
+*/
 
-const { checkConfig } = require('../dist/jsonql-params-validator.cjs.js')
-
-const { appProps, constProps } = require('./fixtures/export-options')
 const hostname = 'https://some-where-else.com';
-const debug = require('debug')('jsonql-params-validator:check-options')
+// const debug = require('debug')('jsonql-params-validator:check-options')
 
 
 test('It should able to filter out the non default options', async t => {

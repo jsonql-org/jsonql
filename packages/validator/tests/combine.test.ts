@@ -1,11 +1,12 @@
-const test = require('ava')
-const { join } = require('path')
-const { inspect } = require('util')
-const debug = require('debug')('jsonql-params-validator:combine-test')
+import test from 'ava'
+import { join } from 'path'
+// import { inspect } from 'util'
+// const debug from 'debug'
+//('jsonql-params-validator:combine-test')
 // import the test subject
-const { validateSync, normalizeArgs } = require('../index')
+import { validateSync, normalizeArgs } from '../src'
 // get some data to test
-const fsx = require('fs-extra')
+const fsx from 'fs-extra')
 const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
 
 test("It should able to skip checking when the call require no argument", t => {

@@ -29,6 +29,9 @@ export {
   getCheckConfig,
   checkOptionsSync,
   checkOptionsAsync,
+  normalizeArgs,
+  validateSync,
+  validateAsync,
 } from './options'
 
 export * from './lib/constants'

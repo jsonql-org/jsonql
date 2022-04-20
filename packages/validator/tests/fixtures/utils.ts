@@ -6,7 +6,7 @@ import {
   prepareArgsForValidation
 } from '../../src/options/prepare-args-for-validation'
 
-import runValidation from '../../src/options/run-validation'
+import { runValidation } from '../../src/options/run-validation'
 
 export {
   mapAliasConfigKeys,

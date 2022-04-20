@@ -1,9 +1,9 @@
 // testing if it throws or not
-const test = require('ava')
-const { validateSync } = require('../index.js')
+import test from 'ava'
+import { validateSync } from '../src'
 // const debug = require('debug')('jsonql-params-validator:test:throw')
 // const result = validateSync(['1'], [{type: ['number'], name: 'id'}]);
-const { JsonqlValidationError } = require('jsonql-errors')
+import { JsonqlValidationError } from '@jsonql/errors'
 
 
 const fn = () => {
@@ -11,7 +11,7 @@ const fn = () => {
   if (result.length) {
     throw new JsonqlValidationError('Failed!')
   }
-  return true;
+  return true
 }
 
 test('It should able to throw an error', t => {
