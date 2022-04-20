@@ -7,7 +7,7 @@ import * as fsx from  'fs-extra'
 import debugFn from 'debug'
 
 const contract = fsx.readJsonSync(join(__dirname, 'fixtures', 'public-contract.json'))
-const debug = debugFn('jsonql-params-validator:test:mutation'
+const debug = debugFn('jsonql-params-validator:test:mutation')
 
 test(`It should able to handle the mutation validation when only payload has been defined`, t => {
   const param = contract.mutation.updateMsService.params;
