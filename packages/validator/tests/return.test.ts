@@ -1,23 +1,24 @@
 // testing and develop further for the return check methods
-const test = require('ava')
-const { join } = require('path')
-const fsx = require('fs-extra')
-const {
+import test from 'ava'
+import { join } from 'path'
+import * as fsx from 'fs-extra'
+import {
   QUERY_NAME,
   DATA_KEY,
   ERROR_KEY
-} = require('jsonql-constants')
-const { 
+} from '@jsonql/constants'
+import {
   checkResolverReturns,
-  checkResolverReturnsAsync 
-} = require('../dist/jsonql-params-validator.cjs.js')
-const debug = require('debug')('jsonql-params-validator:test:return')
+  checkResolverReturnsAsync
+} from '../src'
+import debugFn from 'debug'
+const debug = debugFn('jsonql-params-validator:test:return')
 
 test.before(t => {
-  t.context.contract = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
-
+  t.context = {
+    contract:  fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
+  }
 })
-
 
 test(`Test the checkResolverReturns`, t => {
 
@@ -26,8 +27,8 @@ test(`Test the checkResolverReturns`, t => {
   // debug('toArray', [...value])
 
   const result = checkResolverReturns(QUERY_NAME, 'getAnything', t.context.contract, value)
-  
-  debug('result', result)  
+
+  debug('result', result)
 
   t.truthy(result[ERROR_KEY].length)
 })
@@ -41,4 +42,3 @@ test.cb(`test the checkResolverReturnsAsync`, t => {
       t.end()
     })
 })
-
