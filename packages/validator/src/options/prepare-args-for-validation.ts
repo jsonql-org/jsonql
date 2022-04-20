@@ -15,8 +15,7 @@ import {
   KEY_WORD,
   ALIAS_KEY
 } from '../lib/constants'
-import { isEmpty, objectHasKey } from '../base'
-import { isEmptyObj } from '@jsonql/utils'
+import { isEmpty, isEmptyObj, objectHasKey } from '@jsonql/utils'
 import {
   JsonqlConfig,
   JsonqlAppProps

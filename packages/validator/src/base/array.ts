@@ -8,7 +8,7 @@ import {
 
 /**
  * check if its array or array like
- * why the type is a not a boolean? 
+ * why the type is a not a boolean?
  */
 export function checkArray(value: any, type='') {
   if (Array.isArray(value)) {
@@ -62,11 +62,4 @@ export function arrayTypeHandler(p: any, type: any | any[]): boolean {
   }
   // type is array so this will be or!
   return type.length > type.filter((t: any) => !checkArray(arg, t)).length
-}
-
-/**
-in array
- */
-export function inArray(arr: any[], value: any): boolean {
-  return !!arr.filter(a => a === value).length
 }

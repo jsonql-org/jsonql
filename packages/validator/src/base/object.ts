@@ -2,8 +2,7 @@
 import { isPlainObject } from '../lib/lodash'
 // import filter from 'lodash-es/filter'
 import { combineCheck } from './combine'
-import { checkArray, isArrayLike, arrayTypeHandler, inArray } from './array'
-
+import { checkArray, isArrayLike, arrayTypeHandler } from './array'
 /**
  * @TODO if provide with the keys then we need to check if the key:value type as well
  */
@@ -19,7 +18,7 @@ export const checkObject = function(value: any, keys?: Array<any>) {
       return !keys.filter(key => {
         const _value = value[key.name];
         return !(key.type.length > key.type.filter(type => {
-          let tmp;
+          let tmp: any
           if (_value !== undefined) {
             if ((tmp = isArrayLike(type)) !== false) {
 
@@ -51,13 +50,4 @@ export const objectTypeHandler = function(p: any) {
   }
   // just simple check
   return Reflect.apply(checkObject, null, _args)
-}
-
-
-// check if a key exist in an object
-// TODO this is a shallow check should this become a recursive check?
-export function objectHasKey(obj: any, key: string | symbol) {
-  const keys = Object.keys(obj)
-
-  return inArray(keys, key)
 }

@@ -17,8 +17,8 @@ import {
   CHECKER_KEY,
   KEY_WORD
 } from '../lib/constants'
-import { checkArray, inArray } from '../base'
-import { toArray } from '@jsonql/utils'
+import { checkArray } from '../base'
+import { toArray, inArray } from '@jsonql/utils'
 // types stuff
 import { CallbackFunction } from '../types'
 
