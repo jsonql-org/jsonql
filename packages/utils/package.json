@@ -32,7 +32,7 @@
   "license": "MIT",
   "homepage": "",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.5.0",
+    "@jsonql/constants": "workspace:^0.5.1",
     "@jsonql/errors": "workspace:^0.5.1",
     "lodash-es": "^4.17.21"
   },

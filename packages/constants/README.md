@@ -268,13 +268,14 @@ Please consult the detail break down below.
 ### VALIDATION
 
 - OR_SEPERATOR
-- FUNCTION_TYPE
-- STRING_TYPE
 - BOOLEAN_TYPE
+- STRING_TYPE
+- NUMBER_TYPE
 - ARRAY_TYPE
 - OBJECT_TYPE
+- FUNCTION_TYPE
 - ANY_TYPE
-- NUMBER_TYPE
+- BASED_PRIMITIVE_TYPES
 - NUMBER_TYPES
 - SUPPORTED_TYPES
 - ARRAY_TS_TYPE_LFT
@@ -288,4 +289,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650500370534
+1650501632612

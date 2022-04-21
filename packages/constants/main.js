@@ -277,13 +277,19 @@ module.exports = {
     "TOKEN_IN_HEADER": "header",
     "TOKEN_IN_URL": "url",
     "OR_SEPERATOR": "|",
-    "FUNCTION_TYPE": "function",
-    "STRING_TYPE": "string",
     "BOOLEAN_TYPE": "boolean",
+    "STRING_TYPE": "string",
+    "NUMBER_TYPE": "number",
     "ARRAY_TYPE": "array",
     "OBJECT_TYPE": "object",
+    "FUNCTION_TYPE": "function",
     "ANY_TYPE": "any",
-    "NUMBER_TYPE": "number",
+    "BASED_PRIMITIVE_TYPES": [
+        "number",
+        "string",
+        "array",
+        "object"
+    ],
     "NUMBER_TYPES": [
         "int",
         "integer",
