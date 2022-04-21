@@ -16,6 +16,7 @@
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
+    "test:swc": "pnpm ts -- ./tests/fixtures/ast.ts",
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js contract",
     "clean:dist": "rimraf ./dist",

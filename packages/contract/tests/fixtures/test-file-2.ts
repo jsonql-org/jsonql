@@ -10,3 +10,14 @@ export default function resolver(arg1: string, arg2: string | number, arg3?: boo
 }
 
 // also export a validator
+export const validate = {
+  arg1: {
+
+  },
+  arg2: {
+
+  },
+  arg3: {
+
+  }
+}

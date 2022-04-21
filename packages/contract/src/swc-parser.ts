@@ -15,14 +15,11 @@ import {
   STR_LIT,
   KEY_TYPE,
   UNION_TYPE,
-  NIL,
 } from '@jsonql/constants'
+const NIL = 'nil'
+const isDebug = true
 
-// wrap the swc
-export async function astParser(infile: string): Promise<object> {
-  if (isDebug) {
-    console.time('ast')
-  }
+export async function initParser(infile: string): Promise<{body: any}> {
   return fs.readFile(infile)
             .then((code: Buffer) => code.toString())
             .then(async (code: string) => {
@@ -36,30 +33,38 @@ export async function astParser(infile: string): Promise<object> {
   // Input source code are treated as module by default
   // isModule: false,
                 })
-                .then((module) => {
+            })
+}
+
+// wrap the swc
+export async function astParser(infile: string): Promise<object> {
+  if (isDebug) {
+    console.time('ast')
+  }
+  return initParser(infile)
+          .then((module) => {
   // console.dir(module.body, { depth: null})
   // we only interested in the Class and what its define within
-                  return module
-                    .body
-                    .filter(body =>
-                      body.type === CLASS_TYPE
-                      ||
-                      (
-                        body.type === EXPORT_TYPE
-                        &&
-                        body.declaration?.type === CLASS_TYPE
-                      )
-                    )
-                })
-                .then(normalize)
-                .then(processArgs)
-                .then(result => {
-                  if (isDebug) {
-                    console.timeEnd('ast')
-                  }
-                  return result
-                })
-            })
+            return module
+              .body
+              .filter(body =>
+                body.type === CLASS_TYPE
+                ||
+                (
+                  body.type === EXPORT_TYPE
+                  &&
+                  body.declaration?.type === CLASS_TYPE
+                )
+              )
+          })
+          .then(normalize)
+          .then(processArgs)
+          .then(result => {
+            if (isDebug) {
+              console.timeEnd('ast')
+            }''
+            return result
+          })
 }
 
 // strip out to make the structure the same to work with
