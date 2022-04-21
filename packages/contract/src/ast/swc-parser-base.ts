@@ -4,24 +4,41 @@
 import * as swc from '@swc/core'
 import fs from 'fs-extra'
 import { JsonqlError } from '@jsonql/errors'
+import { inArray } from '@jsonql/utils'
 
-export async function initParser(infile: string, syntax = 'typescript'): Promise<{body: any}> {
+declare type SwcParserOptions = {
+  syntax?: string
+  comments?: boolean
+  script?: boolean
+  target?: string
+  decorators?: boolean
+  isModule?: boolean
+}
+
+export async function swcParserBase(
+  infile: string,
+  syntax = 'typescript',
+  opts?: SwcParserOptions
+): Promise<{body: any}> {
   const supportedSyntax = ['ecmascript', 'typescript']
-  if (!(supportedSyntax.indexOf(syntax) > -1)) {
-      throw new JsonqlError()
+  if (!inArray(supportedSyntax, syntax)) {
+    throw new JsonqlError('swcParserBase', `${syntax} is not supported!`)
   }
+  const baseOptions = {
+    syntax, // "ecmascript" | "typescript"
+    comments: false,
+    script: true,
+    target: "es5",
+    decorators: true,
+    // Input source code are treated as module by default
+    isModule: true,
+  }
+  const options = opts ? Object.assign(baseOptions, opts) : baseOptions
+
   return fs.readFile(infile)
             .then((code: Buffer) => code.toString())
             .then(async (code: string) => {
-              return swc
-                .parse(code, {
-                  syntax, // "ecmascript" | "typescript"
-                  comments: false,
-                  script: true,
-                  target: "es5",
-                  decorators: true,
-  // Input source code are treated as module by default
-  // isModule: false,
-                })
+              // @ts-ignore annoying diffrent options for different type, it could be same config and ignore it internally, bad design
+              return swc.parse(code, options)
             })
 }
