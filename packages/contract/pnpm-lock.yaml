@@ -2,7 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@ava/typescript': ^3.0.1
-  '@jsonql/constants': workspace:^0.5.0
+  '@jsonql/constants': workspace:^0.5.1
+  '@jsonql/errors': workspace:^0.5.1
   '@jsonql/utils': workspace:^0.3.0
   '@swc/cli': ^0.1.57
   '@swc/core': ^1.2.165
@@ -19,14 +20,15 @@ specifiers:
   typescript: ^4.6.3
 
 dependencies:
+  '@jsonql/constants': link:../constants
+  '@jsonql/errors': link:../errors
+  '@jsonql/utils': link:../utils
   '@swc/cli': 0.1.57_@swc+core@1.2.170
   '@swc/core': 1.2.170
   fs-extra: 10.1.0
 
 devDependencies:
   '@ava/typescript': 3.0.1
-  '@jsonql/constants': link:../constants
-  '@jsonql/utils': link:../utils
   '@types/node': 17.0.25
   '@typescript-eslint/eslint-plugin': 5.20.0_b9ac9b5656ce5dffade639fcf5e491bf
   '@typescript-eslint/parser': 5.20.0_eslint@8.13.0+typescript@4.6.3

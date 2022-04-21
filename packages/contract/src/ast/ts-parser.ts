@@ -1,8 +1,3 @@
-// Using the swc/core to parse the TS file into AST
-// and we extract the method's argument along with their type
-// for validation
-import * as swc from '@swc/core'
-import fs from 'fs-extra'
 import {
   CLASS_TYPE,
   EXPORT_TYPE,
@@ -19,22 +14,6 @@ import {
 const NIL = 'nil'
 const isDebug = true
 
-export async function initParser(infile: string): Promise<{body: any}> {
-  return fs.readFile(infile)
-            .then((code: Buffer) => code.toString())
-            .then(async (code: string) => {
-              return swc
-                .parse(code, {
-                  syntax: "typescript", // "ecmascript" | "typescript"
-                  comments: false,
-                  script: true,
-                  target: "es5",
-                  decorators: true,
-  // Input source code are treated as module by default
-  // isModule: false,
-                })
-            })
-}
 
 // wrap the swc
 export async function astParser(infile: string): Promise<object> {
