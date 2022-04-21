@@ -16,8 +16,7 @@ import {
   KEY_TYPE,
   UNION_TYPE,
   NIL,
-  isDebug
-} from '../../constants'
+} from '@jsonql/constants'
 
 // wrap the swc
 export async function astParser(infile: string): Promise<object> {

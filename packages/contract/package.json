@@ -31,7 +31,9 @@
   "dependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.165",
-    "fs-extra": "^10.0.1"
+    "fs-extra": "^10.0.1",
+    "@jsonql/constants": "workspace:^0.5.0",
+    "@jsonql/utils": "workspace:^0.3.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
