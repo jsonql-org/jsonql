@@ -21,6 +21,20 @@ Please consult the detail break down below.
 ## constants
 
 
+### AST
+
+- CLASS_TYPE
+- EXPORT_TYPE
+- CLASS_METHOD
+- ASSIGN_PATTERN
+- OBJ_EXP
+- ARR_EXP
+- BOO_LIT
+- NUM_LIT
+- STR_LIT
+- KEY_TYPE
+- UNION_TYPE
+
 ### BASE
 
 - EXT
@@ -274,4 +288,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650287294281
+1650500124660
