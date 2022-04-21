@@ -9,8 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "test:ava": "nyc ava",
-    "test": "pnpm build && pnpm test:ava",
+    "test:ava": "ava",
+    "test": "pnpm build && nyc ava",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
     "ts:check": "tsc -noEmit",
@@ -25,9 +25,9 @@
     "minor": "npm version minor",
     "major": "npm version major"
   },
-  "author": "to1source &lt;to1source@foxmail.com&gt;",
+  "author": "Joel Chu <joelchu@foxmail.com>",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://jsonql.org",
   "dependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.165",

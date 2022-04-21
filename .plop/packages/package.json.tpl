@@ -9,8 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "test:ava": "nyc ava",
-    "test": "pnpm build && pnpm test:ava",
+    "test:ava": "ava",
+    "test": "pnpm build && nyc ava",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
     "ts:check": "tsc -noEmit",
@@ -27,7 +27,7 @@
   },
   "author": "{{author}}",
   "license": "{{license}}",
-  "homepage": "{{homepage}}",
+  "homepage": "https://jsonql.org",
   "dependencies": {
 
   },

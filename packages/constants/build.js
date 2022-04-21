@@ -7,6 +7,7 @@ const importFn = require('./import')
 const ext = 'mjs'
 const srcDir = join(__dirname, 'src')
 const files = [
+  'ast',
   'base',
   'prop',
   'socket',
