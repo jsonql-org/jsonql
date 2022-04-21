@@ -3,10 +3,10 @@
 const fsx = require('fs-extra')
 const { join } = require('path')
 
-const targets = ['base', 'prop', 'socket', 'validation']
+const targets = ['ast', 'base', 'prop', 'socket', 'validation']
 Promise.all(
   targets.map(target => {
-    return fsx.readFile(join(__dirname, 'tmp', `${target}.d.mts`))
+    return fsx.readFile(join(__dirname, 'dist', `${target}.d.mts`))
   })
 ).then(results => {
   let content = results.reduce((a, b) => {

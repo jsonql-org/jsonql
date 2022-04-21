@@ -1,11 +1,12 @@
 {
   "name": "@jsonql/constants",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "All the share constants for jsonql modules",
   "main": "main.js",
   "module": "index.mjs",
   "files": [
     "src",
+    "dist",
     "main.js",
     "index.js",
     "index.mjs",
