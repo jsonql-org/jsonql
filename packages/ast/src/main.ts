@@ -7,11 +7,18 @@ import {
   normalize,
   processArgs
 } from './processors'
-import { IS_DEBUG } from './constants'
+import { IS_DEBUG, SYNTAXS } from './constants'
 
 export function jsParser(infile: string) {
   console.log(`@TODO`, infile)
   // "ecmascript" |
+}
+
+/** deal with the function style resolver */
+export async function tsFunctionParser(infile: string) {
+  const parser = getParser('ts')
+
+  return parser(infile)
 }
 
 /** parse ts file */
@@ -35,17 +42,11 @@ export async function tsClassParser(infile: string) {
 
 /** preconfig */
 export function getParser(syntax: string) {
-  const syntaxs = {
-    ts: "typescript",
-    js: "ecmascript"
-  }
-
-  if (!syntaxs[syntax]) {
+  if (!SYNTAXS[syntax]) {
     throw new Error(`Unsupported syntax! Only allow ts or js`)
   }
-
   const options = {
-    syntax: syntaxs[syntax],
+    syntax: SYNTAXS[syntax],
     comments: false,
     script: true,
     target: "es5",

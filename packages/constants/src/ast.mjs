@@ -10,6 +10,7 @@ export const CLASS_TYPE = 'ClassDeclaration'
 export const CLASS_METHOD = 'ClassMethod'
 // why swc came out with different key?
 export const CLASS_EXP = 'ClassExpression'
+export const FUNC_EXP = 'FunctionExpression'
 
 export const ASSIGN_PATTERN = 'AssignmentPattern'
 

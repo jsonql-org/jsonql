@@ -57,6 +57,16 @@ export function processClassModuleBody(module: SwcProcessedModule) {
     )
 }
 
+export function processFunctionModuleBody(module: SwcProcessedModule) {
+
+  return module.body.filter((body: any) =>
+    body.type === EXPORT_DEFAULT_TYPE
+    &&
+    body[DECLARATION_SHORT_NAME].type
+  )
+}
+
+
 // strip out the module.body.body to make the structure the same to work with
 export function normalize(body: Array<any>) {
   if (body.length) {
