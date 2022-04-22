@@ -37,9 +37,13 @@ Please consult the detail break down below.
 - BOO_LIT
 - NUM_LIT
 - STR_LIT
-- KEY_TYPE
-- UNION_TYPE
+- ELEM_TYPE
+- TS_KEY_TYPE
+- TS_UNION_TYPE
+- TS_ARRAY_TYPE
 - TS_ANNO_NAME
+- TS_TYPE_LIT
+- TS_TYPE_REF
 
 ### BASE
 
@@ -295,4 +299,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650611880106
+1650614110865

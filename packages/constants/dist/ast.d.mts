@@ -12,7 +12,11 @@ export const ARR_EXP: "ArrayExpression";
 export const BOO_LIT: "BooleanLiteral";
 export const NUM_LIT: "NumericLiteral";
 export const STR_LIT: "StringLiteral";
-export const KEY_TYPE: "TsKeywordType";
-export const UNION_TYPE: "TsUnionType";
+export const ELEM_TYPE: "elemType";
+export const TS_KEY_TYPE: "TsKeywordType";
+export const TS_UNION_TYPE: "TsUnionType";
+export const TS_ARRAY_TYPE: "TsArrayType";
 export const TS_ANNO_NAME: "TsTypeAnnotation";
+export const TS_TYPE_LIT: "TsTypeLiteral";
+export const TS_TYPE_REF: "TsTypeReference";
 //# sourceMappingURL=ast.d.mts.map

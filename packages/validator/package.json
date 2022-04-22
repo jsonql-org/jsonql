@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.5.4",
+    "@jsonql/constants": "workspace:^0.5.5",
     "@jsonql/errors": "workspace:^0.6.0",
     "@jsonql/utils": "workspace:^0.3.1",
     "reflect-metadata": "^0.1.13"
