@@ -5,7 +5,9 @@ import {
 import {
   processClassModuleBody,
   normalize,
-  processArgs
+  processArgs,
+  processFunctionModuleBody,
+  processArgParams,
 } from './processors'
 import { IS_DEBUG, SYNTAXS } from './constants'
 
@@ -19,6 +21,9 @@ export async function tsFunctionParser(infile: string) {
   const parser = getParser('ts')
 
   return parser(infile)
+    .then(processFunctionModuleBody)
+    .then(normalize)
+    .then(processArgParams)
 }
 
 /** parse ts file */

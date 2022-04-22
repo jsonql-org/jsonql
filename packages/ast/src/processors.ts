@@ -63,7 +63,7 @@ export function processFunctionModuleBody(module: SwcProcessedModule) {
   return module.body.filter((body: any) =>
     body.type === EXPORT_DEFAULT_TYPE
     &&
-    body[DECLARATION_SHORT_NAME].type = FUNC_EXP
+    body[DECLARATION_SHORT_NAME].type === FUNC_EXP
   )
 }
 
@@ -86,7 +86,29 @@ export function normalize(body: Array<any>) {
   throw new Error(`Could not find any code to work with!`)
 }
 
-// break this out from above to processing the arguments
+/** process the function argument params */
+export function processArgParams(body: any) {
+  if (body.params && Array.isArray(body.params)) {
+    return {
+      [body.identifier.value]: body.params
+        .filter((param: any) => param.type === 'Parameter')
+        .map((param: any) => {
+          const { pat } = param
+
+          return {
+            name: pat.value,
+            required: !pat.optional,
+            type: extractTypeAnnotation(pat)
+          }
+        })
+    }
+  }
+  // @TODO this could be a function without any arguments?
+  throw new Error(`params not found in body!`)
+}
+
+
+/** processing the class methods arguments **/
 export function processArgs(classBody: any) {
   if (classBody.body) {
     return classBody.body
