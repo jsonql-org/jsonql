@@ -16,6 +16,9 @@ import {
   CLASS_EXP,
   // representing an object
   ELEM_TYPE,
+  TYPE_NAME,
+  TYPE_PARAMS,
+
   TS_KEY_TYPE,
   TS_UNION_TYPE,
   TS_TYPE_LIT,
@@ -156,7 +159,7 @@ export function extractTypeAnnotation(pat: any) {
     // simple type
     switch (annotation.type) {
       case TS_KEY_TYPE:
-        return { type: annotation.kind }
+        return annotation.kind
       case TS_UNION_TYPE:
         return {
           [TS_TYPE_NAME]: TS_UNION_TYPE,
@@ -164,22 +167,31 @@ export function extractTypeAnnotation(pat: any) {
           type: annotation.types.map((type: any) => type.kind)
         }
       case TS_ARRAY_TYPE:
+        // console.log('--------------- out --------------')
+        // console.dir(annotation, { depth: null })
         return {
           [TS_TYPE_NAME]: TS_ARRAY_TYPE,
           type: 'array',
-          [ELEM_TYPE]: annotation[ELEM_TYPE].type
+          [ELEM_TYPE]: annotation[ELEM_TYPE].type,
+          kind: annotation[ELEM_TYPE].kind,
         }
       case TS_TYPE_REF: // this is problematic one
         return {
           [TS_TYPE_NAME]: TS_TYPE_REF,
-          type:
+          type: 'object', // we treat them all as object regardless
+          // keep this for reference
+          [TYPE_NAME]: annotation[TYPE_NAME].value,
+          [TYPE_PARAMS]: annotation[TYPE_PARAMS]
         }
-
-      // case array
-      // case object
-      default: // @TODO
-
-
+      case TS_TYPE_LIT:
+        return {
+          [TS_TYPE_NAME]: TS_TYPE_LIT,
+          type: 'object',
+          memebers: Array.isArray(annotation.members) ?
+            annotation.members.map((member: any) => stripSpan(member)) :
+            stripSpan(annotation.members)
+        }
+      default: // @TODO should never got here
         return annotation
     }
   }
