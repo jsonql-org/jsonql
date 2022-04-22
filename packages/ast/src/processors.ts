@@ -9,13 +9,16 @@ import {
   BOO_LIT,
   NUM_LIT,
   STR_LIT,
-  KEY_TYPE,
-  UNION_TYPE,
   // this is new when we move here @0.5.4
   EXPORT_DEFAULT_TYPE,
   DECLARATION_NAME,
   DECLARATION_SHORT_NAME,
-  CLASS_EXP
+  CLASS_EXP,
+  // representing an object
+  TS_KEY_TYPE,
+  TS_UNION_TYPE,
+  TS_TYPE_LIT,
+  TS_ARRAY_TYPE
 } from '@jsonql/constants'
 const NIL = 'nil'
 
@@ -99,67 +102,11 @@ export function extractAssignmentPattern(pat: any) {
   return {
     name: pat.left.value, // type === 'Identifier
     required: !pat.optional,
-    types: translateType(pat.right.type),
+    type: translateType(pat.right.type),
     value: extractValue(pat.right)
   }
 }
-// extract the value from the AssignmentPattern
-/* examples: @TODO
-auto = [1]
-{
-        type: 'ArrayExpression',
-        span: { start: 748, end: 751, ctxt: 0 },
-        elements: [
-          {
-            spread: null,
-            expression: {
-              type: 'NumericLiteral',
-              span: { start: 749, end: 750, ctxt: 0 },
-              value: 1,
-              raw: '1'
-            }
-          }
-        ]
-      }
-auto = []
-{
-        type: 'ArrayExpression',
-        span: { start: 748, end: 750, ctxt: 0 },
-        elements: []
-      }
-
-auto = {}
-
-{
-        type: 'ObjectExpression',
-        span: { start: 748, end: 750, ctxt: 0 },
-        properties: []
-      }
-
-auto={a: 1}
-
-{
-        type: 'ObjectExpression',
-        span: { start: 748, end: 754, ctxt: 0 },
-        properties: [
-          {
-            type: 'KeyValueProperty',
-            key: {
-              type: 'Identifier',
-              span: { start: 749, end: 750, ctxt: 0 },
-              value: 'a',
-              optional: false
-            },
-            value: {
-              type: 'NumericLiteral',
-              span: { start: 752, end: 753, ctxt: 0 },
-              value: 1,
-              raw: '1'
-            }
-          }
-        ]
-      }
-*/
+/** extract value from the pat */
 export function extractValue(pat: any) {
   switch (pat.type) {
     case ARR_EXP:
@@ -188,7 +135,6 @@ export function translateType(swcType: string): string {
   }
 }
 
-
 // wrap this in one method to make the code cleaner
 export function extractIdentifier(pat: any) {
   return {
@@ -196,7 +142,7 @@ export function extractIdentifier(pat: any) {
     required: !pat.optional,
     // there might not be a type annotation
     // @TODO need more scenario for testing
-    types: extractTypeAnnotation(pat)
+    type: extractTypeAnnotation(pat)
   }
 }
 
@@ -206,17 +152,20 @@ export function extractTypeAnnotation(pat: any) {
   if (annotation) {
     // simple type
     switch (annotation.type) {
-      case KEY_TYPE:
+      case TS_KEY_TYPE:
         return { type: annotation.kind }
-      case UNION_TYPE:
+      case TS_UNION_TYPE:
         return {
-          type: UNION_TYPE,
+          tstype: TS_UNION_TYPE,
           // @TODO need futher processing
           types: annotation.types.map((type: any) => type.kind)
         }
+      case TS_TYPE_LIT:
       // case array
-      // case object 
+      // case object
       default: // @TODO
+
+
         return annotation
     }
   }

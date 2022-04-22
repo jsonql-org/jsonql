@@ -1,24 +1,23 @@
-[
-  {
+{
     type: 'ExportDefaultDeclaration',
-    span: { start: 26, end: 237, ctxt: 0 },
+    span: { start: 113, end: 518, ctxt: 0 },
     decl: {
       type: 'ClassExpression',
       identifier: {
         type: 'Identifier',
-        span: { start: 47, end: 57, ctxt: 0 },
+        span: { start: 134, end: 144, ctxt: 0 },
         value: 'MyResolver',
         optional: false
       },
-      span: { start: 41, end: 237, ctxt: 0 },
+      span: { start: 128, end: 518, ctxt: 0 },
       decorators: [],
       body: [
         {
           type: 'ClassMethod',
-          span: { start: 85, end: 235, ctxt: 0 },
+          span: { start: 171, end: 516, ctxt: 0 },
           key: {
             type: 'Identifier',
-            span: { start: 92, end: 96, ctxt: 0 },
+            span: { start: 178, end: 182, ctxt: 0 },
             value: 'main',
             optional: false
           },
@@ -26,28 +25,28 @@
             params: [
               {
                 type: 'Parameter',
-                span: { start: 97, end: 119, ctxt: 0 },
+                span: { start: 188, end: 210, ctxt: 0 },
                 decorators: [],
                 pat: {
                   type: 'Identifier',
-                  span: { start: 97, end: 119, ctxt: 0 },
+                  span: { start: 188, end: 210, ctxt: 0 },
                   value: 'arg1',
                   optional: false,
                   typeAnnotation: {
                     type: 'TsTypeAnnotation',
-                    span: { start: 101, end: 119, ctxt: 0 },
+                    span: { start: 192, end: 210, ctxt: 0 },
                     typeAnnotation: {
                       type: 'TsUnionType',
-                      span: { start: 103, end: 119, ctxt: 0 },
+                      span: { start: 194, end: 210, ctxt: 0 },
                       types: [
                         {
                           type: 'TsKeywordType',
-                          span: { start: 103, end: 109, ctxt: 0 },
+                          span: { start: 194, end: 200, ctxt: 0 },
                           kind: 'number'
                         },
                         {
                           type: 'TsKeywordType',
-                          span: { start: 112, end: 119, ctxt: 0 },
+                          span: { start: 203, end: 210, ctxt: 0 },
                           kind: 'boolean'
                         }
                       ]
@@ -57,19 +56,19 @@
               },
               {
                 type: 'Parameter',
-                span: { start: 121, end: 133, ctxt: 0 },
+                span: { start: 216, end: 228, ctxt: 0 },
                 decorators: [],
                 pat: {
                   type: 'Identifier',
-                  span: { start: 121, end: 133, ctxt: 0 },
+                  span: { start: 216, end: 228, ctxt: 0 },
                   value: 'arg2',
                   optional: false,
                   typeAnnotation: {
                     type: 'TsTypeAnnotation',
-                    span: { start: 125, end: 133, ctxt: 0 },
+                    span: { start: 220, end: 228, ctxt: 0 },
                     typeAnnotation: {
                       type: 'TsKeywordType',
-                      span: { start: 127, end: 133, ctxt: 0 },
+                      span: { start: 222, end: 228, ctxt: 0 },
                       kind: 'string'
                     }
                   }
@@ -77,51 +76,156 @@
               },
               {
                 type: 'Parameter',
-                span: { start: 135, end: 147, ctxt: 0 },
+                span: { start: 234, end: 246, ctxt: 0 },
                 decorators: [],
                 pat: {
                   type: 'Identifier',
-                  span: { start: 135, end: 147, ctxt: 0 },
+                  span: { start: 234, end: 246, ctxt: 0 },
                   value: 'arg3',
                   optional: true,
                   typeAnnotation: {
                     type: 'TsTypeAnnotation',
-                    span: { start: 140, end: 147, ctxt: 0 },
+                    span: { start: 239, end: 246, ctxt: 0 },
                     typeAnnotation: {
                       type: 'TsArrayType',
-                      span: { start: 142, end: 147, ctxt: 0 },
+                      span: { start: 241, end: 246, ctxt: 0 },
                       elemType: {
                         type: 'TsKeywordType',
-                        span: { start: 142, end: 145, ctxt: 0 },
+                        span: { start: 241, end: 244, ctxt: 0 },
                         kind: 'any'
                       }
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 252, end: 267, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 252, end: 267, ctxt: 0 },
+                  value: 'arg4',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 257, end: 267, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeReference',
+                      span: { start: 259, end: 267, ctxt: 0 },
+                      typeName: {
+                        type: 'Identifier',
+                        span: { start: 259, end: 267, ctxt: 0 },
+                        value: 'DummyObj',
+                        optional: false
+                      },
+                      typeParams: null
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 273, end: 303, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 273, end: 303, ctxt: 0 },
+                  value: 'arg5',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 278, end: 303, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeLiteral',
+                      span: { start: 280, end: 303, ctxt: 0 },
+                      members: [
+                        {
+                          type: 'TsIndexSignature',
+                          params: [
+                            {
+                              type: 'Identifier',
+                              span: { start: 282, end: 293, ctxt: 0 },
+                              value: 'key',
+                              optional: false,
+                              typeAnnotation: {
+                                type: 'TsTypeAnnotation',
+                                span: { start: 285, end: 293, ctxt: 0 },
+                                typeAnnotation: {
+                                  type: 'TsKeywordType',
+                                  span: { start: 287, end: 293, ctxt: 0 },
+                                  kind: 'string'
+                                }
+                              }
+                            }
+                          ],
+                          typeAnnotation: {
+                            type: 'TsTypeAnnotation',
+                            span: { start: 294, end: 302, ctxt: 0 },
+                            typeAnnotation: {
+                              type: 'TsKeywordType',
+                              span: { start: 296, end: 302, ctxt: 0 },
+                              kind: 'string'
+                            }
+                          },
+                          readonly: false,
+                          static: false,
+                          span: { start: 281, end: 302, ctxt: 0 }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 309, end: 326, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 309, end: 326, ctxt: 0 },
+                  value: 'arg6',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 314, end: 326, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeReference',
+                      span: { start: 316, end: 326, ctxt: 0 },
+                      typeName: {
+                        type: 'Identifier',
+                        span: { start: 316, end: 326, ctxt: 0 },
+                        value: 'StupidType',
+                        optional: false
+                      },
+                      typeParams: null
                     }
                   }
                 }
               }
             ],
             decorators: [],
-            span: { start: 85, end: 235, ctxt: 0 },
+            span: { start: 171, end: 516, ctxt: 0 },
             body: {
               type: 'BlockStatement',
-              span: { start: 149, end: 235, ctxt: 0 },
+              span: { start: 331, end: 516, ctxt: 0 },
               stmts: [
                 {
                   type: 'ReturnStatement',
-                  span: { start: 155, end: 231, ctxt: 0 },
+                  span: { start: 337, end: 512, ctxt: 0 },
                   argument: {
                     type: 'ObjectExpression',
-                    span: { start: 162, end: 231, ctxt: 0 },
+                    span: { start: 344, end: 512, ctxt: 0 },
                     properties: [
                       {
                         type: 'Identifier',
-                        span: { start: 170, end: 174, ctxt: 0 },
+                        span: { start: 352, end: 356, ctxt: 0 },
                         value: 'arg1',
                         optional: false
                       },
                       {
                         type: 'Identifier',
-                        span: { start: 182, end: 186, ctxt: 0 },
+                        span: { start: 364, end: 368, ctxt: 0 },
                         value: 'arg2',
                         optional: false
                       },
@@ -129,39 +233,130 @@
                         type: 'KeyValueProperty',
                         key: {
                           type: 'Identifier',
-                          span: { start: 194, end: 198, ctxt: 0 },
+                          span: { start: 376, end: 380, ctxt: 0 },
                           value: 'arg3',
                           optional: false
                         },
                         value: {
                           type: 'ConditionalExpression',
-                          span: { start: 200, end: 225, ctxt: 0 },
+                          span: { start: 382, end: 407, ctxt: 0 },
                           test: {
                             type: 'Identifier',
-                            span: { start: 200, end: 204, ctxt: 0 },
+                            span: { start: 382, end: 386, ctxt: 0 },
                             value: 'arg3',
                             optional: false
                           },
                           consequent: {
                             type: 'Identifier',
-                            span: { start: 207, end: 211, ctxt: 0 },
+                            span: { start: 389, end: 393, ctxt: 0 },
                             value: 'arg3',
                             optional: false
                           },
                           alternate: {
                             type: 'ArrayExpression',
-                            span: { start: 214, end: 225, ctxt: 0 },
+                            span: { start: 396, end: 407, ctxt: 0 },
                             elements: [
                               {
                                 spread: null,
                                 expression: {
                                   type: 'StringLiteral',
-                                  span: { start: 215, end: 224, ctxt: 0 },
+                                  span: { start: 397, end: 406, ctxt: 0 },
                                   value: 'NOTHING',
                                   raw: "'NOTHING'"
                                 }
                               }
                             ]
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 415, end: 419, ctxt: 0 },
+                          value: 'arg4',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 421, end: 437, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 421, end: 425, ctxt: 0 },
+                            value: 'arg4',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 428, end: 432, ctxt: 0 },
+                            value: 'arg4',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'ObjectExpression',
+                            span: { start: 435, end: 437, ctxt: 0 },
+                            properties: []
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 445, end: 449, ctxt: 0 },
+                          value: 'arg5',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 451, end: 467, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 451, end: 455, ctxt: 0 },
+                            value: 'arg5',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 458, end: 462, ctxt: 0 },
+                            value: 'arg5',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'ObjectExpression',
+                            span: { start: 465, end: 467, ctxt: 0 },
+                            properties: []
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 475, end: 479, ctxt: 0 },
+                          value: 'arg6',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 481, end: 506, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 481, end: 485, ctxt: 0 },
+                            value: 'arg6',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 488, end: 492, ctxt: 0 },
+                            value: 'arg6',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'StringLiteral',
+                            span: { start: 495, end: 506, ctxt: 0 },
+                            value: 'REALLY???',
+                            raw: "'REALLY???'"
                           }
                         }
                       }
@@ -190,4 +385,3 @@
       implements: []
     }
   }
-]
