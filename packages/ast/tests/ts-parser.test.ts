@@ -20,7 +20,7 @@ test(`Should able to get the correct parser`, async t => {
 
   const body = processClassModuleBody(result)
 
-  show(result)
+  show(result.body)
 
   t.truthy(body)
 })

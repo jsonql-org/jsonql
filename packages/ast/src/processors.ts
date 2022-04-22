@@ -17,8 +17,15 @@ import {
 } from '@jsonql/constants'
 const NIL = 'nil'
 
+declare type SwcProcessedModule = {
+  type: string
+  span: { [key: string]: number | string }
+  body: { [key: string]: any } 
+  interpreter: null
+}
+
 /** the first one to get call to take the body out from Class module */
-export function processClassModuleBody(module: {body: any}) {
+export function processClassModuleBody(module: SwcProcessedModule) {
 
   return module
     .body
