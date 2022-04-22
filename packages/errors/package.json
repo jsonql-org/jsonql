@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/errors",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Jsonql Errors class",
   "main": "dist/index.js",
   "module": "./src/index",
