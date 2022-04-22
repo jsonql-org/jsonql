@@ -7,6 +7,7 @@ module.exports = {
     "CLASS_TYPE": "ClassDeclaration",
     "CLASS_METHOD": "ClassMethod",
     "CLASS_EXP": "ClassExpression",
+    "FUNC_EXP": "FunctionExpression",
     "ASSIGN_PATTERN": "AssignmentPattern",
     "OBJ_EXP": "ObjectExpression",
     "ARR_EXP": "ArrayExpression",

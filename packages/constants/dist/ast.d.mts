@@ -6,6 +6,7 @@ export const ANNOTATION_NAME: "typeAnnotation";
 export const CLASS_TYPE: "ClassDeclaration";
 export const CLASS_METHOD: "ClassMethod";
 export const CLASS_EXP: "ClassExpression";
+export const FUNC_EXP: "FunctionExpression";
 export const ASSIGN_PATTERN: "AssignmentPattern";
 export const OBJ_EXP: "ObjectExpression";
 export const ARR_EXP: "ArrayExpression";

@@ -31,6 +31,7 @@ Please consult the detail break down below.
 - CLASS_TYPE
 - CLASS_METHOD
 - CLASS_EXP
+- FUNC_EXP
 - ASSIGN_PATTERN
 - OBJ_EXP
 - ARR_EXP
@@ -302,4 +303,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650634811868
+1650638567696
