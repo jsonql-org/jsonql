@@ -28,7 +28,8 @@ export {
   isFunction,
   assign,
   nil,
-  readOnly
+  readOnly,
+  showDeep,
 } from './common'
 export {
   buff,

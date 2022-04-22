@@ -114,3 +114,8 @@ export const nil = () => false
  * was call freeze
  */
 export const readOnly = (config: object): any => Object.freeze(config)
+
+/** handy method to show deep json structure */
+export const showDeep = (code: any): void => {
+  console.dir(code, { depth: null })
+}

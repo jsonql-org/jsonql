@@ -1,6 +1,12 @@
 import test from 'ava'
 import { join } from 'path'
-import { getParser, tsClassParser } from '../src/main'
+import {
+  getParser,
+  tsClassParser,
+} from '../src/main'
+import {
+  processClassModuleBody
+} from '../src/processors'
 
 const show = (s: any) => console.dir(s, { depth: null })
 
@@ -12,9 +18,11 @@ test(`Should able to get the correct parser`, async t => {
 
   const result = await parser(tsFile)
 
+  const body = processClassModuleBody(result)
+
   show(result)
 
-  t.truthy(result)
+  t.truthy(body)
 })
 
 

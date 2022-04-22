@@ -11,6 +11,9 @@ import {
   STR_LIT,
   KEY_TYPE,
   UNION_TYPE,
+  // this is new when we move here @0.6.0
+  EXPORT_DEFAULT_TYPE,
+  DECLARATION_NAME,
 } from '@jsonql/constants'
 const NIL = 'nil'
 
@@ -26,6 +29,12 @@ export function processClassModuleBody(module: {body: any}) {
         body.type === EXPORT_TYPE
         &&
         body.declaration?.type === CLASS_TYPE
+      )
+      || //(this is a new situation
+      (
+        body.type === EXPORT_DEFAULT_TYPE
+        &&
+        body[DECLARATION_NAME]?.type === CLASS_TYPE
       )
     )
 }

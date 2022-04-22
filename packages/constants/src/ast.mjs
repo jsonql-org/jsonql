@@ -6,8 +6,6 @@ export const EXPORT_DEFAULT_TYPE = 'ExportDefaultDeclaration'
 export const DECLARATION_NAME = 'decl'
 export const ANNOTATION_NAME = 'typeAnnotation'
 
-
-
 export const CLASS_TYPE = 'ClassDeclaration'
 export const CLASS_METHOD = 'ClassMethod'
 
