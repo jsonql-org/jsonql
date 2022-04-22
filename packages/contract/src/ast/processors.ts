@@ -1,3 +1,4 @@
+// collection of processors
 import {
   CLASS_TYPE,
   EXPORT_TYPE,
@@ -12,42 +13,25 @@ import {
   UNION_TYPE,
 } from '@jsonql/constants'
 const NIL = 'nil'
-const isDebug = true
 
+/** the first one to get call to take the body out from Class module */
+export function processClassModuleBody(module: {body: any}) {
 
-// wrap the swc
-export async function astParser(infile: string): Promise<object> {
-  if (isDebug) {
-    console.time('ast')
-  }
-  return initParser(infile)
-          .then((module) => {
-  // console.dir(module.body, { depth: null})
-  // we only interested in the Class and what its define within
-            return module
-              .body
-              .filter(body =>
-                body.type === CLASS_TYPE
-                ||
-                (
-                  body.type === EXPORT_TYPE
-                  &&
-                  body.declaration?.type === CLASS_TYPE
-                )
-              )
-          })
-          .then(normalize)
-          .then(processArgs)
-          .then(result => {
-            if (isDebug) {
-              console.timeEnd('ast')
-            }''
-            return result
-          })
+  return module
+    .body
+    .filter((body: any) =>
+      body.type === CLASS_TYPE
+      ||
+      (
+        body.type === EXPORT_TYPE
+        &&
+        body.declaration?.type === CLASS_TYPE
+      )
+    )
 }
 
 // strip out to make the structure the same to work with
-function normalize(body: Array<any>) {
+export function normalize(body: Array<any>) {
   if (body.length) {
     return body.map(code => {
       if (code.type === EXPORT_TYPE) {
@@ -63,7 +47,7 @@ function normalize(body: Array<any>) {
 }
 
 // break this out from above to processing the arguments
-function processArgs(classBody: any) {
+export function processArgs(classBody: any) {
   if (classBody.body) {
     return classBody.body
       .filter((body: any) => body.type === CLASS_METHOD)
@@ -83,14 +67,14 @@ function processArgs(classBody: any) {
           })
         }
       })
-      .reduce((a, b) => Object.assign(a, b), {})
+      .reduce((a: any, b: any) => Object.assign(a, b), {})
   }
 
   throw new Error(`Could not find body within the class file`)
 }
 
 // this is just assign a value without type info
-function extractAssignmentPattern(pat: any) {
+export function extractAssignmentPattern(pat: any) {
   // console.dir(pat, { depth: null })
   return {
     name: pat.left.value, // type === 'Identifier
@@ -156,7 +140,7 @@ auto={a: 1}
         ]
       }
 */
-function extractValue(pat: any) {
+export function extractValue(pat: any) {
   switch (pat.type) {
     case ARR_EXP:
       return pat.elements
@@ -167,7 +151,7 @@ function extractValue(pat: any) {
   }
 }
 // translate the type name from an AssignmentPattern
-function translateType(swcType: string): string {
+export function translateType(swcType: string): string {
   switch (swcType) {
     case BOO_LIT:
       return 'boolean'
@@ -186,7 +170,7 @@ function translateType(swcType: string): string {
 
 
 // wrap this in one method to make the code cleaner
-function extractIdentifier(pat: any) {
+export function extractIdentifier(pat: any) {
   return {
     name: pat.value,
     required: !pat.optional,
@@ -197,7 +181,7 @@ function extractIdentifier(pat: any) {
 }
 
 // type annotation could have different field structures
-function extractTypeAnnotation(pat: any) {
+export function extractTypeAnnotation(pat: any) {
   const annotation = pat?.typeAnnotation?.typeAnnotation
   if (annotation) {
     // simple type
@@ -208,7 +192,7 @@ function extractTypeAnnotation(pat: any) {
         return {
           type: UNION_TYPE,
           // @TODO need futher processing
-          types: annotation.types.map(type => type.kind)
+          types: annotation.types.map((type: any) => type.kind)
         }
       default: // @TODO
         return annotation

@@ -1,2 +1,3 @@
-// start your project here
-import swc from '@swc/core'
+// @jsonql/contract
+
+export { tsClassParser } from './ast'

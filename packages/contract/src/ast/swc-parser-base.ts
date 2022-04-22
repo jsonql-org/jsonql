@@ -3,8 +3,6 @@
 // for validation
 import * as swc from '@swc/core'
 import fs from 'fs-extra'
-import { JsonqlError } from '@jsonql/errors'
-import { inArray } from '@jsonql/utils'
 
 declare type SwcParserOptions = {
   syntax?: string
@@ -17,24 +15,8 @@ declare type SwcParserOptions = {
 
 export async function swcParserBase(
   infile: string,
-  syntax = 'typescript',
-  opts?: SwcParserOptions
+  options: SwcParserOptions
 ): Promise<{body: any}> {
-  const supportedSyntax = ['ecmascript', 'typescript']
-  if (!inArray(supportedSyntax, syntax)) {
-    throw new JsonqlError('swcParserBase', `${syntax} is not supported!`)
-  }
-  const baseOptions = {
-    syntax, // "ecmascript" | "typescript"
-    comments: false,
-    script: true,
-    target: "es5",
-    decorators: true,
-    // Input source code are treated as module by default
-    isModule: true,
-  }
-  const options = opts ? Object.assign(baseOptions, opts) : baseOptions
-
   return fs.readFile(infile)
             .then((code: Buffer) => code.toString())
             .then(async (code: string) => {
@@ -42,3 +24,24 @@ export async function swcParserBase(
               return swc.parse(code, options)
             })
 }
+
+/*
+
+import { JsonqlError } from '@jsonql/errors'
+import { inArray } from '@jsonql/utils'
+
+const supportedSyntax = ['ecmascript', 'typescript']
+const baseOptions = {
+  syntax, // "ecmascript" | "typescript"
+  comments: false,
+  script: true,
+  target: "es5",
+  decorators: true,
+  // Input source code are treated as module by default
+  isModule: true,
+}
+const options = opts ? Object.assign(baseOptions, opts) : baseOptions
+if (!inArray(supportedSyntax, syntax)) {
+  throw new JsonqlError('swcParserBase', `${syntax} is not supported!`)
+}
+*/
