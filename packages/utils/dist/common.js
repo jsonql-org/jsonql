@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
+exports.showDeep = exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
@@ -111,3 +111,8 @@ exports.nil = nil;
  */
 const readOnly = (config) => Object.freeze(config);
 exports.readOnly = readOnly;
+/** handy method to show deep json structure */
+const showDeep = (code) => {
+    console.dir(code, { depth: null });
+};
+exports.showDeep = showDeep;

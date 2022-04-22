@@ -49,3 +49,5 @@ export declare const nil: () => boolean;
  * was call freeze
  */
 export declare const readOnly: (config: object) => any;
+/** handy method to show deep json structure */
+export declare const showDeep: (code: any) => void;

@@ -2,7 +2,7 @@ export { chainFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, } from './chain-promises';
 export { checkIsContract, isContract, extractSocketPart, extractArgsFromPayload, extractParamsFromContract } from './contract';
 export { dasherize } from './dasherize';
-export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, isFunction, assign, nil, readOnly } from './common';
+export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, isFunction, assign, nil, readOnly, showDeep, } from './common';
 export { buff, base64Encode, base64Decode } from './jwt';
 export { logger, getLogger } from './logger';
 export { groupByNamespace, getNamespaceInOrder, getNamespace, getPrivateNamespace, getNspInfoByConfig, } from './namespace';
