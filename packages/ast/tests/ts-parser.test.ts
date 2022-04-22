@@ -11,7 +11,6 @@ import {
 } from '../src/processors'
 
 const show = (s: any) => console.dir(s, { depth: null })
-
 const tsFile = join(__dirname, 'fixtures', 'test-file-1.ts')
 const tsFuncFile = join(__dirname, 'fixtures', 'test-file-2.ts')
 
@@ -23,17 +22,13 @@ test(`Should able to get the correct parser`, async t => {
 })
 
 test(`Should able to generate AST from a ts file`, async t => {
-
   const result = await tsClassParser(tsFile)
   // show(result)
   t.truthy(result)
 })
 
-test.only(`Testing the tsFunctionParser`, async t => {
-
+test(`Testing the tsFunctionParser`, async t => {
   const result = await tsFunctionParser(tsFuncFile)
-
   show(result)
-
   t.truthy(result)
 })
