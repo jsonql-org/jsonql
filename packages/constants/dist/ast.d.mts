@@ -13,6 +13,8 @@ export const BOO_LIT: "BooleanLiteral";
 export const NUM_LIT: "NumericLiteral";
 export const STR_LIT: "StringLiteral";
 export const ELEM_TYPE: "elemType";
+export const TYPE_NAME: "typeName";
+export const TYPE_PARAMS: "typeParams";
 export const TS_KEY_TYPE: "TsKeywordType";
 export const TS_UNION_TYPE: "TsUnionType";
 export const TS_ARRAY_TYPE: "TsArrayType";

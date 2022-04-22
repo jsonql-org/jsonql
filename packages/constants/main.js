@@ -14,6 +14,8 @@ module.exports = {
     "NUM_LIT": "NumericLiteral",
     "STR_LIT": "StringLiteral",
     "ELEM_TYPE": "elemType",
+    "TYPE_NAME": "typeName",
+    "TYPE_PARAMS": "typeParams",
     "TS_KEY_TYPE": "TsKeywordType",
     "TS_UNION_TYPE": "TsUnionType",
     "TS_ARRAY_TYPE": "TsArrayType",

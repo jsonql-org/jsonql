@@ -38,6 +38,8 @@ Please consult the detail break down below.
 - NUM_LIT
 - STR_LIT
 - ELEM_TYPE
+- TYPE_NAME
+- TYPE_PARAMS
 - TS_KEY_TYPE
 - TS_UNION_TYPE
 - TS_ARRAY_TYPE
@@ -300,4 +302,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650631543727
+1650634811868
