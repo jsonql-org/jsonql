@@ -1,7 +1,8 @@
 module.exports = {
     "EXPORT_TYPE": "ExportDeclaration",
     "EXPORT_DEFAULT_TYPE": "ExportDefaultDeclaration",
-    "DECLARATION_NAME": "decl",
+    "DECLARATION_NAME": "declaration",
+    "DECLARATION_SHORT_NAME": "decl",
     "ANNOTATION_NAME": "typeAnnotation",
     "CLASS_TYPE": "ClassDeclaration",
     "CLASS_METHOD": "ClassMethod",

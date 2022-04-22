@@ -26,6 +26,7 @@ Please consult the detail break down below.
 - EXPORT_TYPE
 - EXPORT_DEFAULT_TYPE
 - DECLARATION_NAME
+- DECLARATION_SHORT_NAME
 - ANNOTATION_NAME
 - CLASS_TYPE
 - CLASS_METHOD
@@ -293,4 +294,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650594763909
+1650611612382
