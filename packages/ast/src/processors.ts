@@ -14,6 +14,7 @@ import {
   DECLARATION_NAME,
   DECLARATION_SHORT_NAME,
   CLASS_EXP,
+  FUNC_EXP,
   // representing an object
   ELEM_TYPE,
   TYPE_NAME,
@@ -62,7 +63,7 @@ export function processFunctionModuleBody(module: SwcProcessedModule) {
   return module.body.filter((body: any) =>
     body.type === EXPORT_DEFAULT_TYPE
     &&
-    body[DECLARATION_SHORT_NAME].type
+    body[DECLARATION_SHORT_NAME].type = FUNC_EXP
   )
 }
 
