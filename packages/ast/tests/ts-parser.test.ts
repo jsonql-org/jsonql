@@ -25,7 +25,7 @@ test.only(`Should able to get the correct parser`, async t => {
 
   t.truthy(body)
 })
-/*
+/*TsTypeReference
 test.only(`Should able to strip out all the span props`, t => {
   const obj = {
       name: 'arg3',

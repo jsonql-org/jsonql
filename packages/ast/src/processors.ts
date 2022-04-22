@@ -214,6 +214,8 @@ export function extractTypeAnnotation(pat: any) {
           // @TODO need futher processing
           types: annotation.types.map((type: any) => type.kind)
         }
+      // case array
+      // case object 
       default: // @TODO
         return annotation
     }
