@@ -14,13 +14,14 @@ import {
   // this is new when we move here @0.6.0
   EXPORT_DEFAULT_TYPE,
   DECLARATION_NAME,
+  DECLARATION_SHORT_NAME
 } from '@jsonql/constants'
 const NIL = 'nil'
 
 declare type SwcProcessedModule = {
   type: string
   span: { [key: string]: number | string }
-  body: { [key: string]: any } 
+  body: { [key: string]: any }
   interpreter: null
 }
 
@@ -35,13 +36,13 @@ export function processClassModuleBody(module: SwcProcessedModule) {
       (
         body.type === EXPORT_TYPE
         &&
-        body.declaration?.type === CLASS_TYPE
+        body[DECLARATION_NAME]?.type === CLASS_TYPE
       )
       || //(this is a new situation
       (
         body.type === EXPORT_DEFAULT_TYPE
         &&
-        body[DECLARATION_NAME]?.type === CLASS_TYPE
+        body[DECLARATION_SHORT_NAME].type === CLASS_TYPE
       )
     )
 }
