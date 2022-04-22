@@ -3,24 +3,17 @@
 // for validation
 import * as swc from '@swc/core'
 import fs from 'fs-extra'
+import { SwcParserOptions, SwcParsedResult } from './types'
 
-declare type SwcParserOptions = {
-  syntax?: string
-  comments?: boolean
-  script?: boolean
-  target?: string
-  decorators?: boolean
-  isModule?: boolean
-}
 
 export async function swcParserBase(
   infile: string,
-  options: SwcParserOptions
-): Promise<{body: any}> {
+  options: any //SwcParserOptions // @TODO
+): Promise<any> { // @TODO
   return fs.readFile(infile)
             .then((code: Buffer) => code.toString())
             .then(async (code: string) => {
-              // @ts-ignore annoying diffrent options for different type, it could be same config and ignore it internally, bad design
+
               return swc.parse(code, options)
             })
 }

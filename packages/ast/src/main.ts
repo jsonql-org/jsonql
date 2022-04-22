@@ -34,14 +34,16 @@ export async function tsClassParser(infile: string) {
 }
 
 /** preconfig */
-function getParser(syntax: string) {
-  if (syntax !== "ts" && syntax !== "js") {
-    throw new Error(`Unsupported syntax!`)
-  }
+export function getParser(syntax: string) {
   const syntaxs = {
     ts: "typescript",
     js: "ecmascript"
   }
+
+  if (!syntaxs[syntax]) {
+    throw new Error(`Unsupported syntax! Only allow ts or js`)
+  }
+
   const options = {
     syntax: syntaxs[syntax],
     comments: false,
@@ -49,10 +51,11 @@ function getParser(syntax: string) {
     target: "es5",
     decorators: true,
     // Input source code are treated as module by default
-    isModule: true,
+    // isModule: true,
   }
 
   return function(infile: string) {
+
     return swcParserBase(infile, options)
   }
 }

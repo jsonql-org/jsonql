@@ -1,15 +1,28 @@
 import test from 'ava'
 import { join } from 'path'
-import { tsClassParser } from '../src'
+import { getParser, tsClassParser } from '../src/main'
+
+const show = (s: any) => console.dir(s, { depth: null })
 
 const tsFile = join(__dirname, 'fixtures', 'test-file-1.ts')
 
+test(`Should able to get the correct parser`, async t => {
 
-test(`Should able to generate AST from a ts file`, async t => {
+  const parser = getParser('ts')
+
+  const result = await parser(tsFile)
+
+  show(result)
+
+  t.truthy(result)
+})
+
+
+test.skip(`Should able to generate AST from a ts file`, async t => {
 
   const result = await tsClassParser(tsFile)
 
-  console.dir(result, { depth: null })
+  show(result)
 
   t.truthy(result)
 })
