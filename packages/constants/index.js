@@ -32,6 +32,8 @@ export const TS_ANNO_NAME = 'TsTypeAnnotation'
 export const TS_TYPE_LIT = 'TsTypeLiteral'
 // when pass a type reference we just treat them as object
 export const TS_TYPE_REF = 'TsTypeReference'
+// this is for us to id what that is 
+export const TS_TYPE_NAME = 'tstype'
 /* base */
 
 export const EXT = 'js' // we might do a ts in the future

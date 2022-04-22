@@ -20,6 +20,7 @@ export const TS_ARRAY_TYPE: "TsArrayType";
 export const TS_ANNO_NAME: "TsTypeAnnotation";
 export const TS_TYPE_LIT: "TsTypeLiteral";
 export const TS_TYPE_REF: "TsTypeReference";
+export const TS_TYPE_NAME: "tstype";
 //# sourceMappingURL=ast.d.mts.map
 export const EXT: "js";
 export const TS_EXT: "ts";

@@ -44,6 +44,7 @@ Please consult the detail break down below.
 - TS_ANNO_NAME
 - TS_TYPE_LIT
 - TS_TYPE_REF
+- TS_TYPE_NAME
 
 ### BASE
 
@@ -299,4 +300,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650614110865
+1650631543727
