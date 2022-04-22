@@ -11,10 +11,11 @@ import {
   STR_LIT,
   KEY_TYPE,
   UNION_TYPE,
-  // this is new when we move here @0.6.0
+  // this is new when we move here @0.5.4
   EXPORT_DEFAULT_TYPE,
   DECLARATION_NAME,
-  DECLARATION_SHORT_NAME
+  DECLARATION_SHORT_NAME,
+  CLASS_EXP
 } from '@jsonql/constants'
 const NIL = 'nil'
 
@@ -38,25 +39,27 @@ export function processClassModuleBody(module: SwcProcessedModule) {
         &&
         body[DECLARATION_NAME]?.type === CLASS_TYPE
       )
-      || //(this is a new situation
+      || // this is a new situation
       (
         body.type === EXPORT_DEFAULT_TYPE
         &&
-        body[DECLARATION_SHORT_NAME].type === CLASS_TYPE
+        body[DECLARATION_SHORT_NAME].type === CLASS_EXP
       )
     )
 }
 
-// strip out to make the structure the same to work with
+// strip out the module.body.body to make the structure the same to work with
 export function normalize(body: Array<any>) {
   if (body.length) {
-    return body.map(code => {
-      if (code.type === EXPORT_TYPE) {
-
-        return code.declaration
+    return body.map((code) => {
+      switch (code.type) {
+        case EXPORT_TYPE:
+          return code[DECLARATION_NAME]
+        case EXPORT_DEFAULT_TYPE:
+          return code[DECLARATION_SHORT_NAME]
+        default:
+          return code
       }
-
-      return code
     })[0]
   }
   // console.dir(body, { depth: null })
@@ -204,7 +207,7 @@ export function extractTypeAnnotation(pat: any) {
     // simple type
     switch (annotation.type) {
       case KEY_TYPE:
-        return {type: annotation.kind}
+        return { type: annotation.kind }
       case UNION_TYPE:
         return {
           type: UNION_TYPE,
@@ -217,4 +220,107 @@ export function extractTypeAnnotation(pat: any) {
   }
   // console.dir('could not find annonation', pat)
   return NIL
+}
+/*
+when pass something like this
+type DummyObj = { [key: string]: number }
+(arg4?: DummyObj)
+
+{
+  type: 'Parameter',
+  span: { start: 218, end: 233, ctxt: 0 },
+  decorators: [],
+  pat: {
+    type: 'Identifier',
+    span: { start: 218, end: 233, ctxt: 0 },
+    value: 'arg4',
+    optional: true,
+    typeAnnotation: {
+      type: 'TsTypeAnnotation',
+      span: { start: 223, end: 233, ctxt: 0 },
+      typeAnnotation: {
+        type: 'TsTypeReference',
+        span: { start: 225, end: 233, ctxt: 0 },
+        typeName: {
+          type: 'Identifier',
+          span: { start: 225, end: 233, ctxt: 0 },
+          value: 'DummyObj',
+          optional: false
+        },
+        typeParams: null
+      }
+    }
+  }
+}
+*/
+
+/*
+when it's something like this
+
+(arg4?: {[key: string]: number})
+
+typeAnnotation: {
+  type: 'TsTypeAnnotation',
+  span: { start: 170, end: 195, ctxt: 0 },
+  typeAnnotation: {
+    type: 'TsTypeLiteral',
+    span: { start: 172, end: 195, ctxt: 0 },
+    members: [
+      {
+        type: 'TsIndexSignature',
+        params: [
+          {
+            type: 'Identifier',
+            span: { start: 174, end: 185, ctxt: 0 },
+            value: 'key',
+            optional: false,
+            typeAnnotation: {
+              type: 'TsTypeAnnotation',
+              span: { start: 177, end: 185, ctxt: 0 },
+              typeAnnotation: {
+                type: 'TsKeywordType',
+                span: { start: 179, end: 185, ctxt: 0 },
+                kind: 'string'
+              }
+            }
+          }
+        ],
+        typeAnnotation: {
+          type: 'TsTypeAnnotation',
+          span: { start: 186, end: 194, ctxt: 0 },
+          typeAnnotation: {
+            type: 'TsKeywordType',
+            span: { start: 188, end: 194, ctxt: 0 },
+            kind: 'number'
+          }
+        },
+        readonly: false,
+        static: false,
+        span: { start: 173, end: 194, ctxt: 0 }
+      }
+    ]
+  }
+*/
+
+
+/** remove all the span props they are no use to us */
+export function stripSpan(obj: any) {
+  const tmp = {}
+  for (const key in obj) {
+    if (key !== 'span') {
+      if (Array.isArray(obj[key])) {
+        tmp[key] = obj[key].map((o: any) => {
+          if (typeof o === 'object') {
+            return stripSpan(o)
+          }
+          return o
+        })
+      } else if (typeof obj[key] === 'object') {
+        tmp[key] = stripSpan(obj[key])
+      } else {
+        tmp[key] = obj[key]
+      }
+    }
+  }
+  return tmp
 }
