@@ -7,7 +7,7 @@ import {
   normalize,
   processArgs
 } from './processors'
-import { IS_DEBUG } from '../constants'
+import { IS_DEBUG } from './constants'
 
 export function jsParser(infile: string) {
   console.log(`@TODO`, infile)
