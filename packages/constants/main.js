@@ -1,6 +1,9 @@
 module.exports = {
-    "CLASS_TYPE": "ClassDeclaration",
     "EXPORT_TYPE": "ExportDeclaration",
+    "EXPORT_DEFAULT_TYPE": "ExportDefaultDeclaration",
+    "DECLARATION_NAME": "decl",
+    "ANNOTATION_NAME": "typeAnnotation",
+    "CLASS_TYPE": "ClassDeclaration",
     "CLASS_METHOD": "ClassMethod",
     "ASSIGN_PATTERN": "AssignmentPattern",
     "OBJ_EXP": "ObjectExpression",
@@ -10,6 +13,7 @@ module.exports = {
     "STR_LIT": "StringLiteral",
     "KEY_TYPE": "TsKeywordType",
     "UNION_TYPE": "TsUnionType",
+    "TS_ANNO_NAME": "TsTypeAnnotation",
     "EXT": "js",
     "TS_EXT": "ts",
     "HELLO": "Hello world!",

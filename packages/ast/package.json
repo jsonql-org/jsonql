@@ -29,7 +29,7 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.5.1",
+    "@jsonql/constants": "workspace:^0.5.2",
     "fs-extra": "^10.0.1"
   },
   "devDependencies": {

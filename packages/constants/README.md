@@ -23,8 +23,11 @@ Please consult the detail break down below.
 
 ### AST
 
-- CLASS_TYPE
 - EXPORT_TYPE
+- EXPORT_DEFAULT_TYPE
+- DECLARATION_NAME
+- ANNOTATION_NAME
+- CLASS_TYPE
 - CLASS_METHOD
 - ASSIGN_PATTERN
 - OBJ_EXP
@@ -34,6 +37,7 @@ Please consult the detail break down below.
 - STR_LIT
 - KEY_TYPE
 - UNION_TYPE
+- TS_ANNO_NAME
 
 ### BASE
 
@@ -289,4 +293,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650501632612
+1650594763909
