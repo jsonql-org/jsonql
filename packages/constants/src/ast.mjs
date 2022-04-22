@@ -20,6 +20,7 @@ export const NUM_LIT = 'NumericLiteral'
 export const STR_LIT = 'StringLiteral'
 // this is not very good but it's a key word from swc
 export const ELEM_TYPE = 'elemType'
+export const TYPE_NAME = 'typeName'
 
 export const TS_KEY_TYPE = 'TsKeywordType'
 export const TS_UNION_TYPE = 'TsUnionType'
@@ -30,5 +31,5 @@ export const TS_ANNO_NAME = 'TsTypeAnnotation'
 export const TS_TYPE_LIT = 'TsTypeLiteral'
 // when pass a type reference we just treat them as object
 export const TS_TYPE_REF = 'TsTypeReference'
-// this is for us to id what that is 
+// this is for us to id what that is
 export const TS_TYPE_NAME = 'tstype'

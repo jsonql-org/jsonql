@@ -15,10 +15,13 @@ import {
   DECLARATION_SHORT_NAME,
   CLASS_EXP,
   // representing an object
+  ELEM_TYPE,
   TS_KEY_TYPE,
   TS_UNION_TYPE,
   TS_TYPE_LIT,
-  TS_ARRAY_TYPE
+  TS_ARRAY_TYPE,
+  TS_TYPE_REF,
+  TS_TYPE_NAME,
 } from '@jsonql/constants'
 const NIL = 'nil'
 
@@ -156,11 +159,22 @@ export function extractTypeAnnotation(pat: any) {
         return { type: annotation.kind }
       case TS_UNION_TYPE:
         return {
-          tstype: TS_UNION_TYPE,
-          // @TODO need futher processing
-          types: annotation.types.map((type: any) => type.kind)
+          [TS_TYPE_NAME]: TS_UNION_TYPE,
+          // @TODO need futher processing to normal JS primitive type
+          type: annotation.types.map((type: any) => type.kind)
         }
-      case TS_TYPE_LIT:
+      case TS_ARRAY_TYPE:
+        return {
+          [TS_TYPE_NAME]: TS_ARRAY_TYPE,
+          type: 'array',
+          [ELEM_TYPE]: annotation[ELEM_TYPE].type
+        }
+      case TS_TYPE_REF: // this is problematic one
+        return {
+          [TS_TYPE_NAME]: TS_TYPE_REF,
+          type:
+        }
+
       // case array
       // case object
       default: // @TODO
