@@ -20,7 +20,9 @@ export const NUM_LIT = 'NumericLiteral'
 export const STR_LIT = 'StringLiteral'
 // this is not very good but it's a key word from swc
 export const ELEM_TYPE = 'elemType'
+// when this is the TsTypeReference
 export const TYPE_NAME = 'typeName'
+export const TYPE_PARAMS = 'typeParams'
 
 export const TS_KEY_TYPE = 'TsKeywordType'
 export const TS_UNION_TYPE = 'TsUnionType'
