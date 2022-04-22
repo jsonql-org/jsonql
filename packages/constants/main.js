@@ -6,6 +6,7 @@ module.exports = {
     "ANNOTATION_NAME": "typeAnnotation",
     "CLASS_TYPE": "ClassDeclaration",
     "CLASS_METHOD": "ClassMethod",
+    "CLASS_EXP": "ClassExpression",
     "ASSIGN_PATTERN": "AssignmentPattern",
     "OBJ_EXP": "ObjectExpression",
     "ARR_EXP": "ArrayExpression",

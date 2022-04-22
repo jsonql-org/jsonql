@@ -30,6 +30,7 @@ Please consult the detail break down below.
 - ANNOTATION_NAME
 - CLASS_TYPE
 - CLASS_METHOD
+- CLASS_EXP
 - ASSIGN_PATTERN
 - OBJ_EXP
 - ARR_EXP
@@ -294,4 +295,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650611612382
+1650611880106
