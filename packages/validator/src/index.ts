@@ -1,37 +1,18 @@
-// main export
-export {
-  // any
-  checkAny,
-  // array
-  checkArray,
-  isArrayLike,
-  arrayTypeHandler,
-  // boolean
-  checkBoolean,
-  // number
-  checkNumber,
-  checkInteger,
-  checkFloat,
-  checkUnsigned,
-  // string
-  checkString,
-  // object
-  checkObject,
-  objectTypeHandler,
-  // combine
-  combineCheck
-} from './base'
+// @jsonql/validator main export only export the Dev used part here
 // options
 export {
   createConfig,
   constructConfig,
-  getCheckConfigAsync,
-  getCheckConfig,
   checkOptionsSync,
   checkOptionsAsync,
-  normalizeArgs,
+} from './options'
+export {
   validateSync,
   validateAsync,
-} from './options'
+  checkReturns,
+  checkReturnsAsync,
+  checkResolverReturns,
+  checkResolverReturnsAsync,
+} from './validator'
 
 export * from './lib/constants'

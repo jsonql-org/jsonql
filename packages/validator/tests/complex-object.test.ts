@@ -6,10 +6,10 @@ import { join } from 'path'
 import {
   checkArray,
   checkObject
-} from '../src'
+} from '../src/base'
 import * as fsx from 'fs-extra'
 
-const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
+const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contracts', 'contract.json'))
 const keys = contractJson.mutation.setDetailObj.params[0].keys
 
 test('Test with a complex array type check', t => {

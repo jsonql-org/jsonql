@@ -16,7 +16,7 @@ const debug = debugFn('jsonql-params-validator:test:return')
 
 test.before(t => {
   t.context = {
-    contract:  fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
+    contract:  fsx.readJsonSync(join(__dirname, 'fixtures', 'contracts','contract.json'))
   }
 })
 
@@ -33,12 +33,11 @@ test(`Test the checkResolverReturns`, t => {
   t.truthy(result[ERROR_KEY].length)
 })
 
-test.cb(`test the checkResolverReturnsAsync`, t => {
+test(`test the checkResolverReturnsAsync`, t => {
   const value = 'whatever'
   t.plan(1)
-  checkResolverReturnsAsync(QUERY_NAME, 'getAnything', t.context.contract, value)
+  return checkResolverReturnsAsync(QUERY_NAME, 'getAnything', t.context.contract, value)
     .then(result => {
       t.truthy(result[DATA_KEY].length)
-      t.end()
     })
 })

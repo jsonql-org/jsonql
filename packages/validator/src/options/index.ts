@@ -1,3 +1,6 @@
+// @jsonql/validator/options
+export { checkOptionsAsync } from './check-options-async'
+export { checkOptionsSync } from './check-options-sync'
 export {
   createConfig,
   getCheckConfigAsync,
@@ -6,8 +9,13 @@ export {
 export {
   constructConfig,
 } from './construct-config'
-export { checkOptionsAsync } from './check-options-async'
-export { checkOptionsSync } from './check-options-sync'
+export {
+  mapAliasConfigKeys,
+  preservePristineValues,
+  processConfigAction,
+  prepareArgsForValidation,
+} from './prepare-args-for-validation'
+
 export {
   validateHandler,
   enumHandler,

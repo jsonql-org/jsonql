@@ -4,7 +4,7 @@ import { join } from 'path'
 import * as fsx from 'fs-extra'
 import { DATA_KEY, ERROR_KEY } from '@jsonql/constants'
 
-const contract = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
+const contract = fsx.readJsonSync(join(__dirname, 'fixtures', 'contracts' ,'contract.json'))
 import {
   validateSync,
   validateAsync

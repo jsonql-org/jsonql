@@ -7,7 +7,7 @@ import {
   checkNumber,
   checkObject,
   checkString,
-} from  '../src'
+} from  '../src/base'
 import { notEmpty } from '@jsonql/utils'
 import debugFn from 'debug'
 const debug = debugFn('jsonql-params-validator:test:primitive-type')
