@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "Generate AST Map using SWC",
   "main": "dist/index.js",
-  "module": "dist/index.ts",
-  "typings": "dist/types.d.ts",
+  "module": "src/index.ts",
   "files": [
     "dist",
     "src"
