@@ -26,6 +26,13 @@ import {
   TS_ARRAY_TYPE,
   TS_TYPE_REF,
   TS_TYPE_NAME,
+  // @0.2.0 instead of treating TS type as object (it could be something else) we treat them all as `any`
+  ANY_TYPE,
+  BOOLEAN_TYPE,
+  STRING_TYPE,
+  NUMBER_TYPE,
+  ARRAY_TYPE,
+  OBJECT_TYPE,
 } from '@jsonql/constants'
 import { NIL } from './constants'
 import { stripSpan } from './common'
@@ -62,7 +69,6 @@ export function processFunctionModuleBody(module: SwcProcessedModule) {
     body[DECLARATION_SHORT_NAME].type === FUNC_EXP
   )
 }
-
 
 // strip out the module.body.body to make the structure the same to work with
 export function normalize(body: Array<any>) {
@@ -156,17 +162,17 @@ export function extractValue(pat: any) {
 export function translateType(swcType: string): string {
   switch (swcType) {
     case BOO_LIT:
-      return 'boolean'
+      return BOOLEAN_TYPE
     case NUM_LIT:
-      return 'number'
+      return NUMBER_TYPE
     case STR_LIT:
-      return 'string'
+      return STRING_TYPE
     case ARR_EXP:
-      return 'array'
+      return ARRAY_TYPE
     case OBJ_EXP:
-      return 'object'
+      return OBJECT_TYPE
     default:
-      return swcType
+      return ANY_TYPE // always return a any type
   }
 }
 
@@ -200,14 +206,14 @@ export function extractTypeAnnotation(pat: any) {
         // console.dir(annotation, { depth: null })
         return {
           [TS_TYPE_NAME]: TS_ARRAY_TYPE,
-          type: 'array',
+          type: ARRAY_TYPE,
           [ELEM_TYPE]: annotation[ELEM_TYPE].type,
           kind: annotation[ELEM_TYPE].kind,
         }
       case TS_TYPE_REF: // this is problematic one
         return {
           [TS_TYPE_NAME]: TS_TYPE_REF,
-          type: 'object', // we treat them all as object regardless
+          type: ANY_TYPE, // we treat them all as object regardless
           // keep this for reference
           [TYPE_NAME]: annotation[TYPE_NAME].value,
           [TYPE_PARAMS]: annotation[TYPE_PARAMS]
@@ -215,7 +221,7 @@ export function extractTypeAnnotation(pat: any) {
       case TS_TYPE_LIT:
         return {
           [TS_TYPE_NAME]: TS_TYPE_LIT,
-          type: 'object',
+          type: ANY_TYPE,
           memebers: Array.isArray(annotation.members) ?
             annotation.members.map((member: any) => stripSpan(member)) :
             stripSpan(annotation.members)
