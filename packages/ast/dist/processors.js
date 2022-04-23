@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pickInputFile = exports.stripSpan = exports.extractTypeAnnotation = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.processArgs = exports.processArgParams = exports.normalize = exports.processFunctionModuleBody = exports.processClassModuleBody = void 0;
+exports.extractTypeAnnotation = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.processArgs = exports.processArgParams = exports.normalize = exports.processFunctionModuleBody = exports.processClassModuleBody = void 0;
 // collection of processors
 const constants_1 = require("@jsonql/constants");
-const NIL = 'nil';
+const constants_2 = require("./constants");
+const common_1 = require("./common");
 /** the first one to get call to take the body out from Class module */
 function processClassModuleBody(module) {
     return module
@@ -115,7 +116,7 @@ function extractValue(pat) {
     }
 }
 exports.extractValue = extractValue;
-// translate the type name from an AssignmentPattern
+/** translate the type name from an AssignmentPattern */
 function translateType(swcType) {
     switch (swcType) {
         case constants_1.BOO_LIT:
@@ -133,7 +134,7 @@ function translateType(swcType) {
     }
 }
 exports.translateType = translateType;
-// wrap this in one method to make the code cleaner
+/** wrap this in one method to make the code cleaner */
 function extractIdentifier(pat) {
     return {
         name: pat.value,
@@ -181,125 +182,14 @@ function extractTypeAnnotation(pat) {
                     [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_LIT,
                     type: 'object',
                     memebers: Array.isArray(annotation.members) ?
-                        annotation.members.map((member) => stripSpan(member)) :
-                        stripSpan(annotation.members)
+                        annotation.members.map((member) => (0, common_1.stripSpan)(member)) :
+                        (0, common_1.stripSpan)(annotation.members)
                 };
             default: // @TODO should never got here
                 return annotation;
         }
     }
     // console.dir('could not find annonation', pat)
-    return NIL;
+    return constants_2.NIL;
 }
 exports.extractTypeAnnotation = extractTypeAnnotation;
-/*
-when pass something like this
-type DummyObj = { [key: string]: number }
-(arg4?: DummyObj)
-
-{
-  type: 'Parameter',
-  span: { start: 218, end: 233, ctxt: 0 },
-  decorators: [],
-  pat: {
-    type: 'Identifier',
-    span: { start: 218, end: 233, ctxt: 0 },
-    value: 'arg4',
-    optional: true,
-    typeAnnotation: {
-      type: 'TsTypeAnnotation',
-      span: { start: 223, end: 233, ctxt: 0 },
-      typeAnnotation: {
-        type: 'TsTypeReference',
-        span: { start: 225, end: 233, ctxt: 0 },
-        typeName: {
-          type: 'Identifier',
-          span: { start: 225, end: 233, ctxt: 0 },
-          value: 'DummyObj',
-          optional: false
-        },
-        typeParams: null
-      }
-    }
-  }
-}
-*/
-/*
-when it's something like this
-
-(arg4?: {[key: string]: number})
-
-typeAnnotation: {
-  type: 'TsTypeAnnotation',
-  span: { start: 170, end: 195, ctxt: 0 },
-  typeAnnotation: {
-    type: 'TsTypeLiteral',
-    span: { start: 172, end: 195, ctxt: 0 },
-    members: [
-      {
-        type: 'TsIndexSignature',
-        params: [
-          {
-            type: 'Identifier',
-            span: { start: 174, end: 185, ctxt: 0 },
-            value: 'key',
-            optional: false,
-            typeAnnotation: {
-              type: 'TsTypeAnnotation',
-              span: { start: 177, end: 185, ctxt: 0 },
-              typeAnnotation: {
-                type: 'TsKeywordType',
-                span: { start: 179, end: 185, ctxt: 0 },
-                kind: 'string'
-              }
-            }
-          }
-        ],
-        typeAnnotation: {
-          type: 'TsTypeAnnotation',
-          span: { start: 186, end: 194, ctxt: 0 },
-          typeAnnotation: {
-            type: 'TsKeywordType',
-            span: { start: 188, end: 194, ctxt: 0 },
-            kind: 'number'
-          }
-        },
-        readonly: false,
-        static: false,
-        span: { start: 173, end: 194, ctxt: 0 }
-      }
-    ]
-  }
-*/
-/** remove all the span props they are no use to us */
-function stripSpan(obj) {
-    const tmp = {};
-    for (const key in obj) {
-        if (key !== 'span') {
-            if (Array.isArray(obj[key])) {
-                tmp[key] = obj[key].map((o) => {
-                    if (typeof o === 'object') {
-                        return stripSpan(o);
-                    }
-                    return o;
-                });
-            }
-            else if (typeof obj[key] === 'object') {
-                tmp[key] = stripSpan(obj[key]);
-            }
-            else {
-                tmp[key] = obj[key];
-            }
-        }
-    }
-    return tmp;
-}
-exports.stripSpan = stripSpan;
-/** take the error stack processor here and see if it works correctly */
-function pickInputFile(e, pattern) {
-    var _a;
-    const stacks = (_a = e.stack) === null || _a === void 0 ? void 0 : _a.split('\n').filter(line => line.indexOf(pattern) > -1);
-    const where = stacks ? stacks[stacks.length - 1].split('(')[1].split(':')[0] : '';
-    return where;
-}
-exports.pickInputFile = pickInputFile;
