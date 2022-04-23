@@ -26,4 +26,15 @@ export default class MyResolver {
       arg6: arg6 ? arg6 : 'REALLY???'
     }
   }
+
+  /** test a method without argument */
+  public another() {
+    return 'This has no params!'
+  }
+
+  /* @TODO test to reject the private and protected methods
+  private aPrivateMethod() {
+
+  }
+  */
 }

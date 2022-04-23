@@ -21,14 +21,13 @@ test(`Should able to get the correct parser`, async t => {
   t.truthy(body)
 })
 
-test(`Should able to generate AST from a ts file`, async t => {
+test.only(`Should able to generate AST from a ts file`, async t => {
   const result = await tsClassParser(tsFile)
-  // show(result)
+  show(result)
   t.truthy(result)
 })
 
 test(`Testing the tsFunctionParser`, async t => {
   const result = await tsFunctionParser(tsFuncFile)
-  show(result)
   t.truthy(result)
 })
