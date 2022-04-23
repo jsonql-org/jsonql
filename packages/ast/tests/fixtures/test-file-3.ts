@@ -1,6 +1,7 @@
 // class method with Decorator
 import { TestDecorator } from './test-decorator'
 
+
 @TestDecorator
 export default class MyApiExample3 {
 

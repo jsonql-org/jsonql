@@ -334,3 +334,11 @@ export function stripSpan(obj: any) {
   }
   return tmp
 }
+
+/** take the error stack processor here and see if it works correctly */
+export function pickInputFile(e: Error, pattern: string) {
+  const stacks = e.stack?.split('\n').filter(line => line.indexOf(pattern) > -1)
+  const where = stacks ? stacks[stacks.length - 1].split('(')[1].split(':')[0] : ''
+  
+  return where
+}
