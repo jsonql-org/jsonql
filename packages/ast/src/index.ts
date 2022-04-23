@@ -1,6 +1,8 @@
-// start your project here
-
-export { tsClassParser } from './main'
+// @jsonql/ast main export 
+export {
+  tsClassParser,
+  tsFunctionParser,
+} from './main'
 
 // this will get use in the other Decorator
-export { pickInputFile } from './processors'
+export { pickInputFile } from './common'
