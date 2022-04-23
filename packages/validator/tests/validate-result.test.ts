@@ -9,8 +9,8 @@ import {
   validateSync,
   validateAsync
 } from '../src'
-import debugFn from 'debug'
-const debug = debugFn('jsonql-params-validator:test:validate-result')
+import { debug as debugFn } from '../src/base'
+const debug = debugFn('test:validate-result')
 
 test.before(t => {
   t.context = {

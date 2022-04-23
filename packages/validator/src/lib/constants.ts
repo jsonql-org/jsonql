@@ -1,13 +1,4 @@
 // Good practice rule - No magic number
-
-const ARGS_NOT_ARRAY_ERR = `args is not an array! You might want to do: ES6 Array.from(arguments) or ES5 Array.prototype.slice.call(arguments)`
-const PARAMS_NOT_ARRAY_ERR = `params is not an array! Did something gone wrong when you generate the contract.json?`
-const EXCEPTION_CASE_ERR = 'Could not understand your arguments and parameter structure!'
-const UNUSUAL_CASE_ERR = 'This is an unusual situation where the arguments are more than the params, but not mark as spread'
-
-const RETURNS_NAME = 'returns'
-const JSONQL_PARAMS_VALIDATOR_INFO = '__PLACEHOLDER__'
-
 import {
 
   DEFAULT_TYPE, // this is a mistake should move back to the validation
@@ -23,6 +14,7 @@ import {
 
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
+  ARRAY_TS_TYPE_LFT,
 
   ARRAY_TYPE,
   OBJECT_TYPE,
@@ -33,6 +25,14 @@ import {
   OR_SEPERATOR
 } from '@jsonql/constants'
 
+const ARGS_NOT_ARRAY_ERR = `args is not an array! You might want to do: ES6 Array.from(arguments) or ES5 Array.prototype.slice.call(arguments)`
+const PARAMS_NOT_ARRAY_ERR = `params is not an array! Did something gone wrong when you generate the contract.json?`
+const EXCEPTION_CASE_ERR = 'Could not understand your arguments and parameter structure!'
+const UNUSUAL_CASE_ERR = 'This is an unusual situation where the arguments are more than the params, but not mark as spread'
+
+const RETURNS_NAME = 'returns'
+const JSONQL_PARAMS_VALIDATOR_INFO = '__PLACEHOLDER__'
+
 // group all export in one
 export {
   ARGS_NOT_ARRAY_ERR,
@@ -42,6 +42,7 @@ export {
   DEFAULT_TYPE,
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
+  ARRAY_TS_TYPE_LFT,
   TYPE_KEY,
   OPTIONAL_KEY,
   ENUM_KEY,

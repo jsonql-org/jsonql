@@ -7,3 +7,4 @@ export { checkString } from './string'
 export { checkObject, objectTypeHandler } from './object'
 // wrapper fn
 export { combineCheck } from './combine'
+export { debug } from './debug'
