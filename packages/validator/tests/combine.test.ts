@@ -6,8 +6,14 @@ import { join } from 'path'
 // import the test subject
 import { validateSync, normalizeArgs } from '../src'
 // get some data to test
-const fsx from 'fs-extra')
-const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contract.json'))
+import * as fsx from 'fs-extra'
+import debugFn from 'debug'
+
+const debug = debugFn('jsonql:validator:test:combine')
+
+const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contracts', 'contract.json'))
+
+
 
 test("It should able to skip checking when the call require no argument", t => {
   t.deepEqual([], validateSync(undefined, contractJson.query.helloWorld.params))

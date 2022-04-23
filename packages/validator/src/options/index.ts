@@ -1,23 +1,17 @@
-import {
+export {
   createConfig,
   getCheckConfigAsync,
   getCheckConfig
 } from './config'
-import {
+export {
   constructConfig,
 } from './construct-config'
-import { checkOptionsAsync } from './check-options-async'
-import { checkOptionsSync } from './check-options-sync'
-import { normalizeArgs, validateSync, validateAsync } from './validator'
-// re-export
+export { checkOptionsAsync } from './check-options-async'
+export { checkOptionsSync } from './check-options-sync'
 export {
-  createConfig,
-  constructConfig,
-  getCheckConfigAsync,
-  getCheckConfig,
-  checkOptionsAsync,
-  checkOptionsSync,
-  normalizeArgs,
-  validateSync,
-  validateAsync
-}
+  validateHandler,
+  enumHandler,
+  checkerHandler,
+  runValidationAction,
+  runValidation,
+} from './run-validation'
