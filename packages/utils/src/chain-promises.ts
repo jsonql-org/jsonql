@@ -32,3 +32,18 @@ export function chainProcessPromises(initPromise: Function, ...promises: Array<F
     ), Reflect.apply(initPromise, null, args))
   )
 }
+
+/**
+ pass an array of promises, when one fail then exit
+ then result return from the success promise will pass to the next one as parameter
+*/
+/*
+export function some(promises: Array<Promise<any>>, acculminator = []) {
+  const fn = promises.shift()
+  return fn()
+    .then((result: any) => {
+
+    })
+
+}
+*/

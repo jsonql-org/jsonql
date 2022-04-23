@@ -1,13 +1,51 @@
 // need to test the chain-fns because of the way we change the lodash import
 
 import debugFn from 'debug'
-const debug = debugFn('jsonql-utils:test:chain-fn')
+const debug = debugFn('jsonql:utils:test:chain-fn')
 
 import test from 'ava'
-import { chainFns, chainPromises, chainProcessPromises } from '../src'
+import {
+  chainFns,
+  chainPromises,
+  chainProcessPromises,
+
+} from '../src'
 
 declare type testNumFn = (num: number) => number
 declare type testArrNumFn = (num: number, base: number) => number[]
+
+test(`Test to see if one of the promise fail and what happen`, async t => {
+
+  const errorMsg = 'FAIL AND EXIT'
+  const fn = async (x: any) => {
+    return Promise.resolve(x)
+  }
+  // expect an object
+  const fn1 = async (x) => {
+    debug('x', x)
+    return Promise.reject(errorMsg)
+    // return Promise.resolve({x: ++x, y: ++y, z: 1})
+  }
+  const fn2 = async ({x, y, z}) => {
+    debug('x', x, 'y', y, 'z', z)
+    return Promise.resolve(x + y + z)
+  }
+  const executor = chainProcessPromises(fn, fn1, fn2)
+
+  return executor(1)
+    .then((result: number) => {
+      console.log(result)
+    })
+    .catch((error: string) => {
+      t.is(error, errorMsg)
+    })
+    /*
+    .finally(() => {
+      t.pass()
+    })
+    */
+})
+
 
 test('It should able to accept more than one functions after the first one', t => {
   const baseFn: testNumFn = (num) => num * 10;
@@ -42,9 +80,7 @@ test(`It should able to merge the promise result together as one object`, async 
     ps.push(Promise.resolve({['key' + i]: i}))
   }
   const result = await chainPromises(ps, {x: 'y'})
-
-  debug(result)
-
+  // debug(result)
   t.truthy( result['key1'] )
   t.true( result.x === 'y' )
 })
@@ -54,21 +90,17 @@ test(`It should able to take one promise result as the next promise result param
   const fn = async (x: any, y: any) => {
     return Promise.resolve({x, y})
   }
-
   // expect an object
   const fn1 = async ({x, y}) => {
     debug('x', x, 'y', y)
     return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
-
   const fn2 = async ({x, y, z}) => {
     debug('x', x, 'y', y, 'z', z)
     return Promise.resolve(x + y + z)
   }
-
   const executor = chainProcessPromises(fn, fn1, fn2)
   const result = await executor(1,2)
 
   t.is(result, 6)
-
 })
