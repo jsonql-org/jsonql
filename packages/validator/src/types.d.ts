@@ -21,6 +21,14 @@ export type JsonqlConstantProps = JsonqlConfigBase
 
 // validation
 
+export declare type JsonqlValidationPlugin = {
+  check: (value: any) => boolean
+}
+
+export declare type JsonqlValidationMap = {
+  [propName: string]: any
+}
+
 export type JsonqlValidationRule = {
   type?: string
   pattern?: string
