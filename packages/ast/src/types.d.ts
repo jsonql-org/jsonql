@@ -1,5 +1,15 @@
 // specify your types here
-// Need to take the original swc types here - its kick itself in the teeth 
+// Need to take the original swc types here - its kick itself in the teeth
+
+export declare type SwcProcessedModule = {
+  type: string
+  span: { [key: string]: number | string }
+  body: { [key: string]: any }
+  interpreter: null
+}
+
+
+
 
 export type SwcSpanObject = {
   [key: string]: number

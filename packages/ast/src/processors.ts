@@ -27,14 +27,10 @@ import {
   TS_TYPE_REF,
   TS_TYPE_NAME,
 } from '@jsonql/constants'
-const NIL = 'nil'
+import { NIL } from './constants'
+import { stripSpan } from './common'
 
-declare type SwcProcessedModule = {
-  type: string
-  span: { [key: string]: number | string }
-  body: { [key: string]: any }
-  interpreter: null
-}
+import { SwcProcessedModule }  from './types'
 
 /** the first one to get call to take the body out from Class module */
 export function processClassModuleBody(module: SwcProcessedModule) {
@@ -156,7 +152,7 @@ export function extractValue(pat: any) {
       return pat.value
   }
 }
-// translate the type name from an AssignmentPattern
+/** translate the type name from an AssignmentPattern */
 export function translateType(swcType: string): string {
   switch (swcType) {
     case BOO_LIT:
@@ -174,7 +170,7 @@ export function translateType(swcType: string): string {
   }
 }
 
-// wrap this in one method to make the code cleaner
+/** wrap this in one method to make the code cleaner */
 export function extractIdentifier(pat: any) {
   return {
     name: pat.value,
@@ -230,115 +226,4 @@ export function extractTypeAnnotation(pat: any) {
   }
   // console.dir('could not find annonation', pat)
   return NIL
-}
-/*
-when pass something like this
-type DummyObj = { [key: string]: number }
-(arg4?: DummyObj)
-
-{
-  type: 'Parameter',
-  span: { start: 218, end: 233, ctxt: 0 },
-  decorators: [],
-  pat: {
-    type: 'Identifier',
-    span: { start: 218, end: 233, ctxt: 0 },
-    value: 'arg4',
-    optional: true,
-    typeAnnotation: {
-      type: 'TsTypeAnnotation',
-      span: { start: 223, end: 233, ctxt: 0 },
-      typeAnnotation: {
-        type: 'TsTypeReference',
-        span: { start: 225, end: 233, ctxt: 0 },
-        typeName: {
-          type: 'Identifier',
-          span: { start: 225, end: 233, ctxt: 0 },
-          value: 'DummyObj',
-          optional: false
-        },
-        typeParams: null
-      }
-    }
-  }
-}
-*/
-
-/*
-when it's something like this
-
-(arg4?: {[key: string]: number})
-
-typeAnnotation: {
-  type: 'TsTypeAnnotation',
-  span: { start: 170, end: 195, ctxt: 0 },
-  typeAnnotation: {
-    type: 'TsTypeLiteral',
-    span: { start: 172, end: 195, ctxt: 0 },
-    members: [
-      {
-        type: 'TsIndexSignature',
-        params: [
-          {
-            type: 'Identifier',
-            span: { start: 174, end: 185, ctxt: 0 },
-            value: 'key',
-            optional: false,
-            typeAnnotation: {
-              type: 'TsTypeAnnotation',
-              span: { start: 177, end: 185, ctxt: 0 },
-              typeAnnotation: {
-                type: 'TsKeywordType',
-                span: { start: 179, end: 185, ctxt: 0 },
-                kind: 'string'
-              }
-            }
-          }
-        ],
-        typeAnnotation: {
-          type: 'TsTypeAnnotation',
-          span: { start: 186, end: 194, ctxt: 0 },
-          typeAnnotation: {
-            type: 'TsKeywordType',
-            span: { start: 188, end: 194, ctxt: 0 },
-            kind: 'number'
-          }
-        },
-        readonly: false,
-        static: false,
-        span: { start: 173, end: 194, ctxt: 0 }
-      }
-    ]
-  }
-*/
-
-
-/** remove all the span props they are no use to us */
-export function stripSpan(obj: any) {
-  const tmp = {}
-  for (const key in obj) {
-    if (key !== 'span') {
-      if (Array.isArray(obj[key])) {
-        tmp[key] = obj[key].map((o: any) => {
-          if (typeof o === 'object') {
-            return stripSpan(o)
-          }
-          return o
-        })
-      } else if (typeof obj[key] === 'object') {
-        tmp[key] = stripSpan(obj[key])
-      } else {
-        tmp[key] = obj[key]
-      }
-    }
-  }
-  return tmp
-}
-
-/** take the error stack processor here and see if it works correctly */
-export function pickInputFile(e: Error, pattern: string) {
-  const stacks = e.stack?.split('\n').filter(line => line.indexOf(pattern) > -1)
-  const where = stacks ? stacks[stacks.length - 1].split('(')[1].split(':')[0] : ''
-  
-  return where
 }
