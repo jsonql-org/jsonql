@@ -120,17 +120,17 @@ exports.extractValue = extractValue;
 function translateType(swcType) {
     switch (swcType) {
         case constants_1.BOO_LIT:
-            return 'boolean';
+            return constants_1.BOOLEAN_TYPE;
         case constants_1.NUM_LIT:
-            return 'number';
+            return constants_1.NUMBER_TYPE;
         case constants_1.STR_LIT:
-            return 'string';
+            return constants_1.STRING_TYPE;
         case constants_1.ARR_EXP:
-            return 'array';
+            return constants_1.ARRAY_TYPE;
         case constants_1.OBJ_EXP:
-            return 'object';
+            return constants_1.OBJECT_TYPE;
         default:
-            return swcType;
+            return constants_1.ANY_TYPE; // always return a any type
     }
 }
 exports.translateType = translateType;
@@ -165,14 +165,14 @@ function extractTypeAnnotation(pat) {
                 // console.dir(annotation, { depth: null })
                 return {
                     [constants_1.TS_TYPE_NAME]: constants_1.TS_ARRAY_TYPE,
-                    type: 'array',
+                    type: constants_1.ARRAY_TYPE,
                     [constants_1.ELEM_TYPE]: annotation[constants_1.ELEM_TYPE].type,
                     kind: annotation[constants_1.ELEM_TYPE].kind,
                 };
             case constants_1.TS_TYPE_REF: // this is problematic one
                 return {
                     [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
-                    type: 'object',
+                    type: constants_1.ANY_TYPE,
                     // keep this for reference
                     [constants_1.TYPE_NAME]: annotation[constants_1.TYPE_NAME].value,
                     [constants_1.TYPE_PARAMS]: annotation[constants_1.TYPE_PARAMS]
@@ -180,7 +180,7 @@ function extractTypeAnnotation(pat) {
             case constants_1.TS_TYPE_LIT:
                 return {
                     [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_LIT,
-                    type: 'object',
+                    type: constants_1.ANY_TYPE,
                     memebers: Array.isArray(annotation.members) ?
                         annotation.members.map((member) => (0, common_1.stripSpan)(member)) :
                         (0, common_1.stripSpan)(annotation.members)
