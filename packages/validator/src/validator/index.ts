@@ -1,5 +1,4 @@
 // @jsonql/validator/validator
-
 export {
   normalizeArgs,
   validateSync,
@@ -11,3 +10,11 @@ export {
   checkResolverReturns,
   checkResolverReturnsAsync,
 } from './returns'
+// class method
+export {
+  ValidatorFactory
+} from './class'
+// decorator also will be here
+export {
+  Validate
+} from './decorator'

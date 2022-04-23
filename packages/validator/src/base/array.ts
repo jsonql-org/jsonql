@@ -31,6 +31,7 @@ export function checkArray(value: any, type='') {
 
   return false
 }
+
 /** Take the string type like array.<T> or Array<T> apart */
 function destructArrayStr(type: string, syntax = 'ts'): Array<string> | boolean {
   const left = STYLES[syntax]
@@ -56,17 +57,18 @@ function destructArrayStr(type: string, syntax = 'ts'): Array<string> | boolean 
  * @TODO 2022-04-23 Instead of deprecated this we need to expand this method to use the swc generated map
  * also make it compatible between the array.<T> and the array<T> style (jsdoc or ts)
  */
-export function isArrayLike(type: string): boolean | any[] {
-  debug(type)
+export function isArrayLike(type: string): boolean | string[] {
+  debugFn(type)
   // check ts first
   const check1 = destructArrayStr(type)
   if (!check1) {
     return destructArrayStr(type, 'jsdoc')
   }
   /**
-  Todo read the swc generate map here 
+  Todo read the swc generate map here
 
   **/
+  return false
 }
 
 /**
