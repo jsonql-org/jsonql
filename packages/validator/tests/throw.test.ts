@@ -17,6 +17,6 @@ const fn = () => {
 test('It should able to throw an error', t => {
   const error = t.throws( () => {
     fn();
-  } , null /*JsonqlValidationError*/, 'pass a string that expected number')
+  } , undefined /*JsonqlValidationError*/, 'pass a string that expected number')
   t.is(error.message, 'Failed!')
 })
