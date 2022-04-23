@@ -32,7 +32,7 @@
   "dependencies": {
     "@jsonql/constants": "workspace:^0.5.8",
     "@jsonql/errors": "workspace:^0.6.0",
-    "@jsonql/utils": "workspace:^0.3.1",
+    "@jsonql/utils": "workspace:^0.3.2",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.165",
     "fs-extra": "^10.0.1"
