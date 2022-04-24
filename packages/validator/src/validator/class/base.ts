@@ -6,6 +6,9 @@ import {
   JsonqlPropertyParamnMap,
   JsonqlClassValidationMap,
 } from '../../types'
+import {
+  chainProcessPromises
+} from '@jsonql/utils'
 
 export class ValidatorFactoryBase {
 
@@ -13,8 +16,9 @@ export class ValidatorFactoryBase {
 
   constructor(private validationMap: JsonqlValidationMap) {}
 
+  /** put the rule in here and make it into an async method */
   protected normalize() {
-    
+
   }
 
   protected generteValidationFn() {
