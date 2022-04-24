@@ -17,25 +17,21 @@ export const checkObject = function(value: any, keys?: Array<any>) {
       // please refer to the contract.json for the keys
       return !keys.filter(key => {
         const _value = value[key.name];
-        return !(key.type.length > key.type.filter(type => {
+        return !(key.type.length > key.type.filter((type: any) => {
           let tmp: any
           if (_value !== undefined) {
             if ((tmp = isArrayLike(type)) !== false) {
-
               return !arrayTypeHandler({arg: _value}, tmp)
               // return tmp.filter(t => !checkArray(_value, t)).length;
               // @TODO there might be an object within an object with keys as well :S
             }
-
             return !combineCheck(type)(_value)
           }
-
           return true
         }).length)
       }).length
     }
   }
-
   return false
 }
 

@@ -20,10 +20,10 @@ const STYLES = {ts: ARRAY_TS_TYPE_LFT, jsdoc: ARRAY_TYPE_LFT}
  */
 export function checkArray(
   value: any,
-  type: string | string[] | null = null // @TODO more combination
+  type?: string | string[] // @TODO more combination
 ) {
   if (Array.isArray(value)) {
-    if (type === null) {
+    if (!type) {
       return true
     }
     // we test it in reverse

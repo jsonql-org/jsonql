@@ -1,6 +1,5 @@
 // Good practice rule - No magic number
-import {
-
+export {
   DEFAULT_TYPE, // this is a mistake should move back to the validation
   DATA_KEY,
   ERROR_KEY,
@@ -39,28 +38,6 @@ export {
   PARAMS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
   UNUSUAL_CASE_ERR,
-  DEFAULT_TYPE,
-  ARRAY_TYPE_LFT,
-  ARRAY_TYPE_RGT,
-  ARRAY_TS_TYPE_LFT,
-  TYPE_KEY,
-  OPTIONAL_KEY,
-  ENUM_KEY,
-  ARGS_KEY,
-  CHECKER_KEY,
-  ALIAS_KEY,
-  ARRAY_TYPE,
-  OBJECT_TYPE,
-  STRING_TYPE,
-  BOOLEAN_TYPE,
-  NUMBER_TYPE,
-  KEY_WORD,
-  OR_SEPERATOR,
-
   RETURNS_NAME,
-
-  DATA_KEY,
-  ERROR_KEY,
-
   JSONQL_PARAMS_VALIDATOR_INFO,
 }
