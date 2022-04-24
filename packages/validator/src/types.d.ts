@@ -49,7 +49,7 @@ export type JsonqlClassValidationMap = {
   [propName: string]: Array<JsonqlPropertyParamnMap>
 }
 
-export type JsonqlCheckObjectKeys = {
+export interface JsonqlCheckObjectKeys {
   name: string
   type: Array<string>
 }

@@ -61,11 +61,16 @@ test('Should able to check basic array type', t => {
 
 
 test(`Test a Array union type`, t => {
-
   const testArr = [1, 'b', 'a', 2]
   t.true(checkArray(testArr,['number', 'string']))
-
   t.false(checkArray(testArr, ['number', 'boolean']))
+})
+
+test.only(`Test the in operator`, t => {
+  const testObj = {prop: 1, notprop: null}
+  const keys = ['prop', 'notpropx']
+
+  t.false(checkObject(testObj, keys))
 
 })
 
