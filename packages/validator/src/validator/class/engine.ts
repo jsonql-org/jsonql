@@ -21,7 +21,7 @@ The input has two styles
 This is the top level method to call,
 Only deal with validating the input and divide the task
 */
-export function normalizeInput(astMap: any, input: any = null) {
+export function normalizeInput(astMap: any, input?: any) {
   if (checkArray(input) && notEmpty(input)) {
 
 
@@ -38,17 +38,21 @@ export function normalizeInput(astMap: any, input: any = null) {
   */
 }
 
+/** generate an automatic valdiation rule using the AST map */
 function createAutomaticRules(astMap: any) {
 
 
 }
 
-
-function normalizeObjectInput() {
-
+/** nomalize the object style rules input */
+function normalizeObjectInput(astMap: any, input: any) {
+  return astMap.map((ast: any, i: number)  => {
+    
+  })
 }
 
-function normalizeArrayInput() {
+/** normalize the array style rules input */
+function normalizeArrayInput(astMap: any, input?: any) {
   // we use the astMap as standard
   return astMap.map((ast: any, i: number) => {
 

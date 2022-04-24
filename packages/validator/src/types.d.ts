@@ -48,3 +48,8 @@ export type JsonqlPropertyParamnMap = {
 export type JsonqlClassValidationMap = {
   [propName: string]: Array<JsonqlPropertyParamnMap>
 }
+
+export type JsonqlCheckObjectKeys = {
+  name: string
+  type: Array<string>
+}

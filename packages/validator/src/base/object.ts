@@ -3,10 +3,16 @@ import { isPlainObject } from '../lib/lodash'
 // import filter from 'lodash-es/filter'
 import { combineCheck } from './combine'
 import { checkArray, isArrayLike, arrayTypeHandler } from './array'
+import { JsonqlCheckObjectKeys } from '../types'
+
 /**
- * @TODO if provide with the keys then we need to check if the key:value type as well
+ * check if the input is object also able to check if key(s) existed in that object
+ @TODO need to rethink about how this checkObject keys should be
  */
-export const checkObject = function(value: any, keys?: Array<any>) {
+export const checkObject = function(
+  value: any,
+  keys?: Array<JsonqlCheckObjectKeys>
+) {
   if (isPlainObject(value)) {
     if (!keys) {
       return true
@@ -15,8 +21,8 @@ export const checkObject = function(value: any, keys?: Array<any>) {
     if (checkArray(keys)) {
       // please note we DON'T care if some is optional
       // please refer to the contract.json for the keys
-      return !keys.filter(key => {
-        const _value = value[key.name];
+      return !keys.filter((key: JsonqlCheckObjectKeys) => {
+        const _value = value[key.name]
         return !(key.type.length > key.type.filter((type: any) => {
           let tmp: any
           if (_value !== undefined) {
