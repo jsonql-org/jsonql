@@ -4,6 +4,7 @@ import {
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
   ARRAY_TS_TYPE_LFT,
+  ARRAY_TYPE,
   OR_SEPERATOR
 } from '../lib/constants'
 import { debug } from './debug'
@@ -15,17 +16,37 @@ const STYLES = {ts: ARRAY_TS_TYPE_LFT, jsdoc: ARRAY_TYPE_LFT}
  * check if its array or array like
  * why the type is a not a boolean?
  */
-export function checkArray(value: any, type='') {
+export function checkArray(
+  value: any,
+  type: string | string[] | null = null // @TODO more combination
+) {
   if (Array.isArray(value)) {
-    if (type === '' || (type+'').trim() ==='') {
-
+    if (type === null) {
       return true
     }
     // we test it in reverse
     // @TODO if the type is an array (OR) then what?
     // we need to take into account this could be an array
-    const c = value.filter(v => !combineCheck(type)(v))
-
+    let c: any[]
+    if (Array.isArray(type)) { // Union type
+      // there is one problem here, it doesn't check Array<Array<t>>
+      c = value.filter((v: any) => {
+        // only need one is correct
+        const ctn = type.length
+        for (let i = 0; i < ctn; ++i) {
+          const t = type[i]
+          if (t === ARRAY_TYPE && Array.isArray(v)) {
+            return false
+          }
+          else if (combineCheck(t)(v)) {
+            return false
+          }
+        }
+        return true
+      })
+    } else {
+      c = value.filter(v => !combineCheck(type)(v))
+    }
     return !(c.length > 0)
   }
 
