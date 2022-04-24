@@ -19,7 +19,7 @@
   @TODO how to integrete this into the contract generator
 */
 import {
-  ValidatorFactoryBase 
+  ValidatorFactoryBase
 } from './base'
 import {
   JsonqlValidationPlugin,
@@ -27,8 +27,6 @@ import {
 } from '../../types'
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
-
-
 
   constructor(validationMap: JsonqlValidationMap) {
     super(validationMap)
