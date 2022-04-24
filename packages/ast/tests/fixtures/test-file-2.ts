@@ -3,15 +3,17 @@
 export default function resolver(
   arg1: string,
   arg2: string | number,
-  arg3?: boolean,
-  arg4?: Array<number | string>
+  arg3?: any[],
+  arg4?: Array<number | string>,
+  arg5?: Array<boolean>
 ) {
 
   return {
     arg1,
     arg2,
     arg3: arg3 ? arg3 : 'NOTHING',
-    arg4: arg4 ? arg4 : []
+    arg4: arg4 ? arg4 : [],
+    arg5: arg5 ? arg5 : [false]
   }
 }
 
@@ -20,5 +22,6 @@ export const validate = {
   arg1: {},
   arg2: {},
   arg3: {},
-  arg4: {}
+  arg4: {},
+  arg5: {}
 }

@@ -72,6 +72,19 @@ export type SwcParserOptions = {
   // Input source code are treated as module by default
   isModule?: boolean | undefined,
 }
+
+export type SwcParamsSpan = {
+  start: number
+  end: number
+  ctxt: number
+}
+
+export type SwcTypeParamsEntry = {
+  type: string
+  span: SwcParamsSpan
+  kind: string
+}
+
 /** after ripping the ast out then transform into this object for use */
 export type JsonqlParamInfo = {
   name: string

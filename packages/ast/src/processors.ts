@@ -38,6 +38,7 @@ import { stripSpan } from './common'
 import {
   SwcProcessedModule,
   JsonqlParamInfo,
+  SwcTypeParamsEntry,
 }  from './types'
 
 /** the first one to get call to take the body out from Class module */
@@ -189,6 +190,45 @@ export function extractIdentifier(pat: any) {
   })
 }
 
+/* take the types value out from the params array */
+export function extractArrayTypes(annotation: any) {
+  const typeParams = annotation[TYPE_PARAMS].params
+  // check the first one
+  const firstEntry = typeParams[0]
+  switch (firstEntry.type) {
+    case TS_UNION_TYPE:
+      return firstEntry.types.map((type: SwcTypeParamsEntry) => type.kind)
+    default:
+      return firstEntry.kind
+  }
+}
+
+/**
+The tstype: TsTypeReference is a very problematic one,
+we need to further process it
+*/
+export function furtherProcessReferenceType(annotation: any) {
+  const typeName = (annotation[TYPE_NAME].value).toLowerCase()
+  switch (typeName) {
+    case ARRAY_TYPE:
+      return {
+        [TS_TYPE_NAME]: TS_TYPE_REF,
+        type: ARRAY_TYPE,
+        types: extractArrayTypes(annotation)
+      }
+    default:
+      return {
+        [TS_TYPE_NAME]: TS_TYPE_REF,
+        type: ANY_TYPE, // we treat them all as object regardless
+        // keep this for reference
+        [TYPE_PARAMS]: {
+          [TYPE_NAME]: annotation[TYPE_NAME].value,
+          [TYPE_PARAMS]: annotation[TYPE_PARAMS]
+        }
+      }
+  }
+}
+
 // type annotation could have different field structures
 export function extractTypeAnnotation(
   pat: any,
@@ -207,26 +247,20 @@ export function extractTypeAnnotation(
             type: annotation.types.map((type: any) => type.kind)
           }
         case TS_ARRAY_TYPE:
-          console.log('--------------- out --------------')
-          console.dir(annotation, { depth: null })
+
           return {
             [TS_TYPE_NAME]: TS_ARRAY_TYPE,
             type: ARRAY_TYPE,
+            types: annotation[ELEM_TYPE].kind,
             [TYPE_PARAMS]: {
               [ELEM_TYPE]: annotation[ELEM_TYPE].type,
               kind: annotation[ELEM_TYPE].kind,
             }
           }
-        case TS_TYPE_REF: // this is problematic one
-          return {
-            [TS_TYPE_NAME]: TS_TYPE_REF,
-            type: ANY_TYPE, // we treat them all as object regardless
-            // keep this for reference
-            [TYPE_PARAMS]: {
-              [TYPE_NAME]: annotation[TYPE_NAME].value,
-              [TYPE_PARAMS]: annotation[TYPE_PARAMS]
-            }
-          }
+        // this is problematic one
+        // It could be a declare type also an Array<> could fall here
+        case TS_TYPE_REF:
+          return furtherProcessReferenceType(annotation)
         case TS_TYPE_LIT:
           return {
             type: ANY_TYPE,
@@ -239,9 +273,10 @@ export function extractTypeAnnotation(
             }
         default: // @TODO should never got here
           console.error(`Something went very wrong in processor.ts`, annotation)
-          return {}
+          // return {}
       }
     }
+    return {}
   })(annotation)
 
   // console.dir('could not find annonation', pat)
