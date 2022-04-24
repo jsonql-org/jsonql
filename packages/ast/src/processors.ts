@@ -212,13 +212,11 @@ export function furtherProcessReferenceType(annotation: any) {
   switch (typeName) {
     case ARRAY_TYPE:
       return {
-        [TS_TYPE_NAME]: TS_TYPE_REF,
         type: ARRAY_TYPE,
         types: extractArrayTypes(annotation)
       }
     default:
       return {
-        [TS_TYPE_NAME]: TS_TYPE_REF,
         type: ANY_TYPE, // we treat them all as object regardless
         // keep this for reference
         [TYPE_PARAMS]: {
@@ -226,6 +224,24 @@ export function furtherProcessReferenceType(annotation: any) {
           [TYPE_PARAMS]: annotation[TYPE_PARAMS]
         }
       }
+  }
+}
+
+/**
+in situtation where the Union type form with complex types
+*/
+export function furtherProcessUnionType(annotation: any) {
+
+  return {
+    type: annotation.types.map((entry: any) => {
+      switch (entry.type) {
+        case TS_TYPE_REF:
+          return furtherProcessReferenceType(entry)
+        case TS_KEY_TYPE:
+        default:
+          return entry.kind
+      }
+    })
   }
 }
 
@@ -241,11 +257,11 @@ export function extractTypeAnnotation(
         case TS_KEY_TYPE:
           return {type: annotation.kind}
         case TS_UNION_TYPE:
-          return {
-            [TS_TYPE_NAME]: TS_UNION_TYPE,
-            // @TODO need futher processing to normal JS primitive type
-            type: annotation.types.map((type: any) => type.kind)
-          }
+          console.dir(annotation, { depth: null })
+          return Object.assign(
+            { [TS_TYPE_NAME]: TS_UNION_TYPE },
+            furtherProcessUnionType(annotation)
+          )
         case TS_ARRAY_TYPE:
 
           return {
@@ -260,7 +276,10 @@ export function extractTypeAnnotation(
         // this is problematic one
         // It could be a declare type also an Array<> could fall here
         case TS_TYPE_REF:
-          return furtherProcessReferenceType(annotation)
+          return Object.assign(
+            { [TS_TYPE_NAME]: TS_TYPE_REF },
+            furtherProcessReferenceType(annotation)
+          )
         case TS_TYPE_LIT:
           return {
             type: ANY_TYPE,
