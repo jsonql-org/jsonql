@@ -66,7 +66,7 @@ test(`Test a Array union type`, t => {
   t.false(checkArray(testArr, ['number', 'boolean']))
 })
 
-test.only(`Test the in operator`, t => {
+test(`Test the in operator`, t => {
   const testObj = {prop: 1, notprop: null}
   const keys = ['prop', 'notpropx']
 
