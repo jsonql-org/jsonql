@@ -18,12 +18,21 @@ export function jsParser(infile: string) {
 
 /** deal with the function style resolver */
 export async function tsFunctionParser(infile: string) {
+  if (IS_DEBUG) {
+    console.time('ast')
+  }
   const parser = getParser('ts')
 
   return parser(infile)
     .then(processFunctionModuleBody)
     .then(normalize)
     .then(processArgParams)
+    .then(result => {
+      if (IS_DEBUG) {
+        console.timeEnd('ast')
+      }
+      return result
+    })
 }
 
 /** parse ts file */

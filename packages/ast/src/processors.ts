@@ -64,6 +64,32 @@ export function processClassModuleBody(
     )
 }
 
+/** processing the class methods arguments **/
+export function processArgs(classBody: any) {
+  if (classBody.body) {
+    return classBody.body
+      .filter((body: any) => body.type === CLASS_METHOD)
+      .map((body: any) => {
+        const propertyName = body.key.value
+        return {
+          [propertyName]: body.function.params.map((params: any) => {
+            const { pat } = params
+            switch (pat.type) {
+              case ASSIGN_PATTERN:
+                return extractAssignmentPattern(pat)
+              default: // Identifier
+                return extractIdentifier(pat)
+            }
+          })
+        }
+      })
+      .reduce((a: any, b: any) => Object.assign(a, b), {})
+  }
+
+  throw new Error(`Could not find body within the class file`)
+}
+
+/** extract ast from function expression */
 export function processFunctionModuleBody(
   module: SwcProcessedModule
 ) {
@@ -73,24 +99,6 @@ export function processFunctionModuleBody(
     &&
     body[DECLARATION_SHORT_NAME].type === FUNC_EXP
   )
-}
-
-// strip out the module.body.body to make the structure the same to work with
-export function normalize(body: Array<any>) {
-  if (body.length) {
-    return body.map((code) => {
-      switch (code.type) {
-        case EXPORT_TYPE:
-          return code[DECLARATION_NAME]
-        case EXPORT_DEFAULT_TYPE:
-          return code[DECLARATION_SHORT_NAME]
-        default:
-          return code
-      }
-    })[0]
-  }
-  // console.dir(body, { depth: null })
-  throw new Error(`Could not find any code to work with!`)
 }
 
 /** process the function argument params */
@@ -113,32 +121,22 @@ export function processArgParams(body: any) {
   throw new Error(`params not found in body!`)
 }
 
-
-/** processing the class methods arguments **/
-export function processArgs(classBody: any) {
-  if (classBody.body) {
-    return classBody.body
-      .filter((body: any) => body.type === CLASS_METHOD)
-      .map((body: any) => {
-        const propertyName = body.key.value
-        return {
-          [propertyName]: body.function.params.map((params: any) => {
-            // console.dir(params,  { depth: null })
-            const { pat } = params
-            switch (pat.type) {
-              case ASSIGN_PATTERN:
-                return extractAssignmentPattern(pat)
-              default:
-                // type === 'Identifier'
-                return extractIdentifier(pat)
-            }
-          })
-        }
-      })
-      .reduce((a: any, b: any) => Object.assign(a, b), {})
+// strip out the module.body.body to make the structure the same to work with
+export function normalize(body: Array<any>) {
+  if (body.length) {
+    return body.map((code) => {
+      switch (code.type) {
+        case EXPORT_TYPE:
+          return code[DECLARATION_NAME]
+        case EXPORT_DEFAULT_TYPE:
+          return code[DECLARATION_SHORT_NAME]
+        default:
+          return code
+      }
+    })[0]
   }
-
-  throw new Error(`Could not find body within the class file`)
+  // console.dir(body, { depth: null })
+  throw new Error(`Could not find any code to work with!`)
 }
 
 // this is just assign a value without type info
@@ -199,10 +197,9 @@ export function extractTypeAnnotation(
   const annotation = pat?.typeAnnotation?.typeAnnotation
   const value = (function(annotation) {
     if (annotation) {
-      // simple type
       switch (annotation.type) {
         case TS_KEY_TYPE:
-          return annotation.kind
+          return {type: annotation.kind}
         case TS_UNION_TYPE:
           return {
             [TS_TYPE_NAME]: TS_UNION_TYPE,
@@ -210,8 +207,8 @@ export function extractTypeAnnotation(
             type: annotation.types.map((type: any) => type.kind)
           }
         case TS_ARRAY_TYPE:
-          // console.log('--------------- out --------------')
-          // console.dir(annotation, { depth: null })
+          console.log('--------------- out --------------')
+          console.dir(annotation, { depth: null })
           return {
             [TS_TYPE_NAME]: TS_ARRAY_TYPE,
             type: ARRAY_TYPE,

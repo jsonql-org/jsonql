@@ -29,6 +29,6 @@ test.only(`Should able to generate AST from a ts file`, async t => {
 
 test(`Testing the tsFunctionParser`, async t => {
   const result = await tsFunctionParser(tsFuncFile)
-  show(result)
+  // show(result)
   t.truthy(result)
 })
