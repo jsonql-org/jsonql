@@ -34,13 +34,16 @@ import {
   ARRAY_TYPE,
   OBJECT_TYPE,
 } from '@jsonql/constants'
-import { NIL } from './constants'
 import { stripSpan } from './common'
-
-import { SwcProcessedModule }  from './types'
+import {
+  SwcProcessedModule,
+  JsonqlParamInfo,
+}  from './types'
 
 /** the first one to get call to take the body out from Class module */
-export function processClassModuleBody(module: SwcProcessedModule) {
+export function processClassModuleBody(
+  module: SwcProcessedModule
+) {
 
   return module
     .body
@@ -61,7 +64,9 @@ export function processClassModuleBody(module: SwcProcessedModule) {
     )
 }
 
-export function processFunctionModuleBody(module: SwcProcessedModule) {
+export function processFunctionModuleBody(
+  module: SwcProcessedModule
+) {
 
   return module.body.filter((body: any) =>
     body.type === EXPORT_DEFAULT_TYPE
@@ -97,11 +102,10 @@ export function processArgParams(body: any) {
         .map((param: any) => {
           const { pat } = param
 
-          return {
+          return extractTypeAnnotation(pat, {
             name: pat.value,
             required: !pat.optional,
-            type: extractTypeAnnotation(pat)
-          }
+          })
         })
     }
   }
@@ -178,58 +182,71 @@ export function translateType(swcType: string): string {
 
 /** wrap this in one method to make the code cleaner */
 export function extractIdentifier(pat: any) {
-  return {
+
+  return extractTypeAnnotation(pat, {
     name: pat.value,
     required: !pat.optional,
     // there might not be a type annotation
     // @TODO need more scenario for testing
-    type: extractTypeAnnotation(pat)
-  }
+  })
 }
 
 // type annotation could have different field structures
-export function extractTypeAnnotation(pat: any) {
+export function extractTypeAnnotation(
+  pat: any,
+  base: JsonqlParamInfo
+) {
   const annotation = pat?.typeAnnotation?.typeAnnotation
-  if (annotation) {
-    // simple type
-    switch (annotation.type) {
-      case TS_KEY_TYPE:
-        return annotation.kind
-      case TS_UNION_TYPE:
-        return {
-          [TS_TYPE_NAME]: TS_UNION_TYPE,
-          // @TODO need futher processing to normal JS primitive type
-          type: annotation.types.map((type: any) => type.kind)
-        }
-      case TS_ARRAY_TYPE:
-        // console.log('--------------- out --------------')
-        // console.dir(annotation, { depth: null })
-        return {
-          [TS_TYPE_NAME]: TS_ARRAY_TYPE,
-          type: ARRAY_TYPE,
-          [ELEM_TYPE]: annotation[ELEM_TYPE].type,
-          kind: annotation[ELEM_TYPE].kind,
-        }
-      case TS_TYPE_REF: // this is problematic one
-        return {
-          [TS_TYPE_NAME]: TS_TYPE_REF,
-          type: ANY_TYPE, // we treat them all as object regardless
-          // keep this for reference
-          [TYPE_NAME]: annotation[TYPE_NAME].value,
-          [TYPE_PARAMS]: annotation[TYPE_PARAMS]
-        }
-      case TS_TYPE_LIT:
-        return {
-          [TS_TYPE_NAME]: TS_TYPE_LIT,
-          type: ANY_TYPE,
-          memebers: Array.isArray(annotation.members) ?
-            annotation.members.map((member: any) => stripSpan(member)) :
-            stripSpan(annotation.members)
-        }
-      default: // @TODO should never got here
-        return annotation
+  const value = (function(annotation) {
+    if (annotation) {
+      // simple type
+      switch (annotation.type) {
+        case TS_KEY_TYPE:
+          return annotation.kind
+        case TS_UNION_TYPE:
+          return {
+            [TS_TYPE_NAME]: TS_UNION_TYPE,
+            // @TODO need futher processing to normal JS primitive type
+            type: annotation.types.map((type: any) => type.kind)
+          }
+        case TS_ARRAY_TYPE:
+          // console.log('--------------- out --------------')
+          // console.dir(annotation, { depth: null })
+          return {
+            [TS_TYPE_NAME]: TS_ARRAY_TYPE,
+            type: ARRAY_TYPE,
+            [TYPE_PARAMS]: {
+              [ELEM_TYPE]: annotation[ELEM_TYPE].type,
+              kind: annotation[ELEM_TYPE].kind,
+            }
+          }
+        case TS_TYPE_REF: // this is problematic one
+          return {
+            [TS_TYPE_NAME]: TS_TYPE_REF,
+            type: ANY_TYPE, // we treat them all as object regardless
+            // keep this for reference
+            [TYPE_PARAMS]: {
+              [TYPE_NAME]: annotation[TYPE_NAME].value,
+              [TYPE_PARAMS]: annotation[TYPE_PARAMS]
+            }
+          }
+        case TS_TYPE_LIT:
+          return {
+            type: ANY_TYPE,
+            [TS_TYPE_NAME]: TS_TYPE_LIT,
+            [TYPE_PARAMS]: {
+              memebers: Array.isArray(annotation.members) ?
+                annotation.members.map((member: any) => stripSpan(member)) :
+                stripSpan(annotation.members)
+              }
+            }
+        default: // @TODO should never got here
+          console.error(`Something went very wrong in processor.ts`, annotation)
+          return {}
+      }
     }
-  }
+  })(annotation)
+
   // console.dir('could not find annonation', pat)
-  return NIL
+  return Object.assign(base, value)
 }

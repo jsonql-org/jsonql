@@ -8,9 +8,6 @@ export declare type SwcProcessedModule = {
   interpreter: null
 }
 
-
-
-
 export type SwcSpanObject = {
   [key: string]: number
 }
@@ -74,4 +71,11 @@ export type SwcParserOptions = {
   decorators?: boolean,
   // Input source code are treated as module by default
   isModule?: boolean | undefined,
+}
+/** after ripping the ast out then transform into this object for use */
+export type JsonqlParamInfo = {
+  name: string
+  required: boolean
+  // dynanic fields
+  [key: string]: any
 }

@@ -20,7 +20,8 @@ test(`It should able to transform array style input into the standard`, t => {
     [], // skip
     '_', // skip
     '_', // skip
-    
+    {key: 'hello'}, // as object and check if key exist
+
   ]
 
 
