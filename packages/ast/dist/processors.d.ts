@@ -21,27 +21,28 @@ export declare function extractValue(pat: any): any;
 /** translate the type name from an AssignmentPattern */
 export declare function translateType(swcType: string): string;
 /** wrap this in one method to make the code cleaner */
-export declare function extractIdentifier(pat: any): JsonqlParamInfo & ({
+export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
+    tstype: "TsUnionType";
+} & {
+    type: any;
+}) | ({
     tstype: "TsTypeReference";
+} & {
     type: "array";
     types: any;
     typeParams?: undefined;
-} | {
+}) | ({
     tstype: "TsTypeReference";
+} & {
     type: "any";
     typeParams: {
         typeName: any;
         typeParams: any;
     };
     types?: undefined;
-} | {
+}) | {
     type: any;
     tstype?: undefined;
-    types?: undefined;
-    typeParams?: undefined;
-} | {
-    tstype: "TsUnionType";
-    type: any;
     types?: undefined;
     typeParams?: undefined;
 } | {
@@ -74,12 +75,10 @@ The tstype: TsTypeReference is a very problematic one,
 we need to further process it
 */
 export declare function furtherProcessReferenceType(annotation: any): {
-    tstype: "TsTypeReference";
     type: "array";
     types: any;
     typeParams?: undefined;
 } | {
-    tstype: "TsTypeReference";
     type: "any";
     typeParams: {
         typeName: any;
@@ -87,27 +86,34 @@ export declare function furtherProcessReferenceType(annotation: any): {
     };
     types?: undefined;
 };
-export declare function extractTypeAnnotation(pat: any, base: JsonqlParamInfo): JsonqlParamInfo & ({
+/**
+in situtation where the Union type form with complex types
+*/
+export declare function furtherProcessUnionType(annotation: any): {
+    type: any;
+};
+export declare function extractTypeAnnotation(pat: any, base: JsonqlParamInfo): JsonqlParamInfo & (({
+    tstype: "TsUnionType";
+} & {
+    type: any;
+}) | ({
     tstype: "TsTypeReference";
+} & {
     type: "array";
     types: any;
     typeParams?: undefined;
-} | {
+}) | ({
     tstype: "TsTypeReference";
+} & {
     type: "any";
     typeParams: {
         typeName: any;
         typeParams: any;
     };
     types?: undefined;
-} | {
+}) | {
     type: any;
     tstype?: undefined;
-    types?: undefined;
-    typeParams?: undefined;
-} | {
-    tstype: "TsUnionType";
-    type: any;
     types?: undefined;
     typeParams?: undefined;
 } | {

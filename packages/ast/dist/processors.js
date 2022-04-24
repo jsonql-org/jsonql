@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extractTypeAnnotation = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.processArgs = exports.processClassModuleBody = void 0;
+exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.processArgs = exports.processClassModuleBody = void 0;
 // collection of processors
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
@@ -163,13 +163,11 @@ function furtherProcessReferenceType(annotation) {
     switch (typeName) {
         case constants_1.ARRAY_TYPE:
             return {
-                [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
                 type: constants_1.ARRAY_TYPE,
                 types: extractArrayTypes(annotation)
             };
         default:
             return {
-                [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
                 type: constants_1.ANY_TYPE,
                 // keep this for reference
                 [constants_1.TYPE_PARAMS]: {
@@ -180,6 +178,23 @@ function furtherProcessReferenceType(annotation) {
     }
 }
 exports.furtherProcessReferenceType = furtherProcessReferenceType;
+/**
+in situtation where the Union type form with complex types
+*/
+function furtherProcessUnionType(annotation) {
+    return {
+        type: annotation.types.map((entry) => {
+            switch (entry.type) {
+                case constants_1.TS_TYPE_REF:
+                    return furtherProcessReferenceType(entry);
+                case constants_1.TS_KEY_TYPE:
+                default:
+                    return entry.kind;
+            }
+        })
+    };
+}
+exports.furtherProcessUnionType = furtherProcessUnionType;
 // type annotation could have different field structures
 function extractTypeAnnotation(pat, base) {
     var _a;
@@ -190,11 +205,8 @@ function extractTypeAnnotation(pat, base) {
                 case constants_1.TS_KEY_TYPE:
                     return { type: annotation.kind };
                 case constants_1.TS_UNION_TYPE:
-                    return {
-                        [constants_1.TS_TYPE_NAME]: constants_1.TS_UNION_TYPE,
-                        // @TODO need futher processing to normal JS primitive type
-                        type: annotation.types.map((type) => type.kind)
-                    };
+                    console.dir(annotation, { depth: null });
+                    return Object.assign({ [constants_1.TS_TYPE_NAME]: constants_1.TS_UNION_TYPE }, furtherProcessUnionType(annotation));
                 case constants_1.TS_ARRAY_TYPE:
                     return {
                         [constants_1.TS_TYPE_NAME]: constants_1.TS_ARRAY_TYPE,
@@ -208,7 +220,7 @@ function extractTypeAnnotation(pat, base) {
                 // this is problematic one
                 // It could be a declare type also an Array<> could fall here
                 case constants_1.TS_TYPE_REF:
-                    return furtherProcessReferenceType(annotation);
+                    return Object.assign({ [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF }, furtherProcessReferenceType(annotation));
                 case constants_1.TS_TYPE_LIT:
                     return {
                         type: constants_1.ANY_TYPE,
