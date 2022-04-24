@@ -14,11 +14,20 @@ exports.jsParser = jsParser;
 /** deal with the function style resolver */
 function tsFunctionParser(infile) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        if (constants_1.IS_DEBUG) {
+            console.time('ast');
+        }
         const parser = getParser('ts');
         return parser(infile)
             .then(processors_1.processFunctionModuleBody)
             .then(processors_1.normalize)
-            .then(processors_1.processArgParams);
+            .then(processors_1.processArgParams)
+            .then(result => {
+            if (constants_1.IS_DEBUG) {
+                console.timeEnd('ast');
+            }
+            return result;
+        });
     });
 }
 exports.tsFunctionParser = tsFunctionParser;

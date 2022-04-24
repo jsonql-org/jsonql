@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extractTypeAnnotation = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.processArgs = exports.processArgParams = exports.normalize = exports.processFunctionModuleBody = exports.processClassModuleBody = void 0;
+exports.extractTypeAnnotation = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.processArgs = exports.processClassModuleBody = void 0;
 // collection of processors
 const constants_1 = require("@jsonql/constants");
-const constants_2 = require("./constants");
 const common_1 = require("./common");
 /** the first one to get call to take the body out from Class module */
 function processClassModuleBody(module) {
@@ -23,12 +22,56 @@ function processClassModuleBody(module) {
     });
 }
 exports.processClassModuleBody = processClassModuleBody;
+/** processing the class methods arguments **/
+function processArgs(classBody) {
+    if (classBody.body) {
+        return classBody.body
+            .filter((body) => body.type === constants_1.CLASS_METHOD)
+            .map((body) => {
+            const propertyName = body.key.value;
+            return {
+                [propertyName]: body.function.params.map((params) => {
+                    const { pat } = params;
+                    switch (pat.type) {
+                        case constants_1.ASSIGN_PATTERN:
+                            return extractAssignmentPattern(pat);
+                        default: // Identifier
+                            return extractIdentifier(pat);
+                    }
+                })
+            };
+        })
+            .reduce((a, b) => Object.assign(a, b), {});
+    }
+    throw new Error(`Could not find body within the class file`);
+}
+exports.processArgs = processArgs;
+/** extract ast from function expression */
 function processFunctionModuleBody(module) {
     return module.body.filter((body) => body.type === constants_1.EXPORT_DEFAULT_TYPE
         &&
             body[constants_1.DECLARATION_SHORT_NAME].type === constants_1.FUNC_EXP);
 }
 exports.processFunctionModuleBody = processFunctionModuleBody;
+/** process the function argument params */
+function processArgParams(body) {
+    if (body.params && Array.isArray(body.params)) {
+        return {
+            [body.identifier.value]: body.params
+                .filter((param) => param.type === 'Parameter')
+                .map((param) => {
+                const { pat } = param;
+                return extractTypeAnnotation(pat, {
+                    name: pat.value,
+                    required: !pat.optional,
+                });
+            })
+        };
+    }
+    // @TODO this could be a function without any arguments?
+    throw new Error(`params not found in body!`);
+}
+exports.processArgParams = processArgParams;
 // strip out the module.body.body to make the structure the same to work with
 function normalize(body) {
     if (body.length) {
@@ -47,52 +90,6 @@ function normalize(body) {
     throw new Error(`Could not find any code to work with!`);
 }
 exports.normalize = normalize;
-/** process the function argument params */
-function processArgParams(body) {
-    if (body.params && Array.isArray(body.params)) {
-        return {
-            [body.identifier.value]: body.params
-                .filter((param) => param.type === 'Parameter')
-                .map((param) => {
-                const { pat } = param;
-                return {
-                    name: pat.value,
-                    required: !pat.optional,
-                    type: extractTypeAnnotation(pat)
-                };
-            })
-        };
-    }
-    // @TODO this could be a function without any arguments?
-    throw new Error(`params not found in body!`);
-}
-exports.processArgParams = processArgParams;
-/** processing the class methods arguments **/
-function processArgs(classBody) {
-    if (classBody.body) {
-        return classBody.body
-            .filter((body) => body.type === constants_1.CLASS_METHOD)
-            .map((body) => {
-            const propertyName = body.key.value;
-            return {
-                [propertyName]: body.function.params.map((params) => {
-                    // console.dir(params,  { depth: null })
-                    const { pat } = params;
-                    switch (pat.type) {
-                        case constants_1.ASSIGN_PATTERN:
-                            return extractAssignmentPattern(pat);
-                        default:
-                            // type === 'Identifier'
-                            return extractIdentifier(pat);
-                    }
-                })
-            };
-        })
-            .reduce((a, b) => Object.assign(a, b), {});
-    }
-    throw new Error(`Could not find body within the class file`);
-}
-exports.processArgs = processArgs;
 // this is just assign a value without type info
 function extractAssignmentPattern(pat) {
     // console.dir(pat, { depth: null })
@@ -136,60 +133,100 @@ function translateType(swcType) {
 exports.translateType = translateType;
 /** wrap this in one method to make the code cleaner */
 function extractIdentifier(pat) {
-    return {
+    return extractTypeAnnotation(pat, {
         name: pat.value,
         required: !pat.optional,
         // there might not be a type annotation
         // @TODO need more scenario for testing
-        type: extractTypeAnnotation(pat)
-    };
+    });
 }
 exports.extractIdentifier = extractIdentifier;
-// type annotation could have different field structures
-function extractTypeAnnotation(pat) {
-    var _a;
-    const annotation = (_a = pat === null || pat === void 0 ? void 0 : pat.typeAnnotation) === null || _a === void 0 ? void 0 : _a.typeAnnotation;
-    if (annotation) {
-        // simple type
-        switch (annotation.type) {
-            case constants_1.TS_KEY_TYPE:
-                return annotation.kind;
-            case constants_1.TS_UNION_TYPE:
-                return {
-                    [constants_1.TS_TYPE_NAME]: constants_1.TS_UNION_TYPE,
-                    // @TODO need futher processing to normal JS primitive type
-                    type: annotation.types.map((type) => type.kind)
-                };
-            case constants_1.TS_ARRAY_TYPE:
-                // console.log('--------------- out --------------')
-                // console.dir(annotation, { depth: null })
-                return {
-                    [constants_1.TS_TYPE_NAME]: constants_1.TS_ARRAY_TYPE,
-                    type: constants_1.ARRAY_TYPE,
-                    [constants_1.ELEM_TYPE]: annotation[constants_1.ELEM_TYPE].type,
-                    kind: annotation[constants_1.ELEM_TYPE].kind,
-                };
-            case constants_1.TS_TYPE_REF: // this is problematic one
-                return {
-                    [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
-                    type: constants_1.ANY_TYPE,
-                    // keep this for reference
+/* take the types value out from the params array */
+function extractArrayTypes(annotation) {
+    const typeParams = annotation[constants_1.TYPE_PARAMS].params;
+    // check the first one
+    const firstEntry = typeParams[0];
+    switch (firstEntry.type) {
+        case constants_1.TS_UNION_TYPE:
+            return firstEntry.types.map((type) => type.kind);
+        default:
+            return firstEntry.kind;
+    }
+}
+exports.extractArrayTypes = extractArrayTypes;
+/**
+The tstype: TsTypeReference is a very problematic one,
+we need to further process it
+*/
+function furtherProcessReferenceType(annotation) {
+    const typeName = (annotation[constants_1.TYPE_NAME].value).toLowerCase();
+    switch (typeName) {
+        case constants_1.ARRAY_TYPE:
+            return {
+                [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
+                type: constants_1.ARRAY_TYPE,
+                types: extractArrayTypes(annotation)
+            };
+        default:
+            return {
+                [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF,
+                type: constants_1.ANY_TYPE,
+                // keep this for reference
+                [constants_1.TYPE_PARAMS]: {
                     [constants_1.TYPE_NAME]: annotation[constants_1.TYPE_NAME].value,
                     [constants_1.TYPE_PARAMS]: annotation[constants_1.TYPE_PARAMS]
-                };
-            case constants_1.TS_TYPE_LIT:
-                return {
-                    [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_LIT,
-                    type: constants_1.ANY_TYPE,
-                    memebers: Array.isArray(annotation.members) ?
-                        annotation.members.map((member) => (0, common_1.stripSpan)(member)) :
-                        (0, common_1.stripSpan)(annotation.members)
-                };
-            default: // @TODO should never got here
-                return annotation;
-        }
+                }
+            };
     }
+}
+exports.furtherProcessReferenceType = furtherProcessReferenceType;
+// type annotation could have different field structures
+function extractTypeAnnotation(pat, base) {
+    var _a;
+    const annotation = (_a = pat === null || pat === void 0 ? void 0 : pat.typeAnnotation) === null || _a === void 0 ? void 0 : _a.typeAnnotation;
+    const value = (function (annotation) {
+        if (annotation) {
+            switch (annotation.type) {
+                case constants_1.TS_KEY_TYPE:
+                    return { type: annotation.kind };
+                case constants_1.TS_UNION_TYPE:
+                    return {
+                        [constants_1.TS_TYPE_NAME]: constants_1.TS_UNION_TYPE,
+                        // @TODO need futher processing to normal JS primitive type
+                        type: annotation.types.map((type) => type.kind)
+                    };
+                case constants_1.TS_ARRAY_TYPE:
+                    return {
+                        [constants_1.TS_TYPE_NAME]: constants_1.TS_ARRAY_TYPE,
+                        type: constants_1.ARRAY_TYPE,
+                        types: annotation[constants_1.ELEM_TYPE].kind,
+                        [constants_1.TYPE_PARAMS]: {
+                            [constants_1.ELEM_TYPE]: annotation[constants_1.ELEM_TYPE].type,
+                            kind: annotation[constants_1.ELEM_TYPE].kind,
+                        }
+                    };
+                // this is problematic one
+                // It could be a declare type also an Array<> could fall here
+                case constants_1.TS_TYPE_REF:
+                    return furtherProcessReferenceType(annotation);
+                case constants_1.TS_TYPE_LIT:
+                    return {
+                        type: constants_1.ANY_TYPE,
+                        [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_LIT,
+                        [constants_1.TYPE_PARAMS]: {
+                            memebers: Array.isArray(annotation.members) ?
+                                annotation.members.map((member) => (0, common_1.stripSpan)(member)) :
+                                (0, common_1.stripSpan)(annotation.members)
+                        }
+                    };
+                default: // @TODO should never got here
+                    console.error(`Something went very wrong in processor.ts`, annotation);
+                // return {}
+            }
+        }
+        return {};
+    })(annotation);
     // console.dir('could not find annonation', pat)
-    return constants_2.NIL;
+    return Object.assign(base, value);
 }
 exports.extractTypeAnnotation = extractTypeAnnotation;
