@@ -7,7 +7,6 @@ import {
 import {
   notEmpty
 } from '@jsonql/utils'
-
 import {
   JsonqlValidationError
 } from '@jsonql/errors'

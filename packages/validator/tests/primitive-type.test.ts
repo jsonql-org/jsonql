@@ -53,17 +53,22 @@ test('Should able to check boolean type', t => {
   t.false(checkBoolean(0), 'Pass a 0')
 })
 
-test.only('Should able to check basic array type', t => {
+test('Should able to check basic array type', t => {
   t.true(checkArray([]), 'Empy array')
   t.true(checkArray([1,2,3], 'number'), 'Array of number')
   t.false(checkArray({}), 'Pass empty object')
 })
 
-/*
+
 test(`Test a Array union type`, t => {
 
+  const testArr = [1, 'b', 'a', 2]
+  t.true(checkArray(testArr,['number', 'string']))
+
+  t.false(checkArray(testArr, ['number', 'boolean']))
+
 })
-*/
+
 
 test('Should able to check basic object type', t => {
   t.true(checkObject({}), 'Empty Object')
