@@ -1,0 +1,25 @@
+{
+  "resolver": [
+    {
+      "name": "arg1",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "name": "arg2",
+      "required": true,
+      "type": {
+        "tstype": "TsUnionType",
+        "type": [
+          "string",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "arg3",
+      "required": false,
+      "type": "boolean"
+    }
+  ]
+}
