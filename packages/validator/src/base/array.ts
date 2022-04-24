@@ -1,10 +1,12 @@
 // validate array type
+import { isPlainObject } from '../lib/lodash'
 import { combineCheck } from './combine'
 import {
   ARRAY_TYPE_LFT,
   ARRAY_TYPE_RGT,
   ARRAY_TS_TYPE_LFT,
   ARRAY_TYPE,
+  OBJECT_TYPE,
   OR_SEPERATOR
 } from '../lib/constants'
 import { debug } from './debug'
@@ -29,16 +31,16 @@ export function checkArray(
     // we need to take into account this could be an array
     let c: any[]
     if (Array.isArray(type)) { // Union type
-      // there is one problem here, it doesn't check Array<Array<t>>
       c = value.filter((v: any) => {
         // only need one is correct
         const ctn = type.length
         for (let i = 0; i < ctn; ++i) {
           const t = type[i]
-          if (t === ARRAY_TYPE && Array.isArray(v)) {
-            return false
-          }
-          else if (combineCheck(t)(v)) {
+          if (
+            (t === ARRAY_TYPE && Array.isArray(v)) ||
+            (t === OBJECT_TYPE && isPlainObject(v)) ||
+            combineCheck(t)(v)
+          ) {
             return false
           }
         }
