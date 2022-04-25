@@ -5,7 +5,7 @@ import {
   JsonqlValidationRule,
   JsonqlPropertyParamnMap,
   JsonqlClassValidationMap,
-} from '../../types'
+} from '../types'
 import {
   chainProcessPromises
 } from '@jsonql/utils'
@@ -19,7 +19,7 @@ import {
   checkObject,
   checkUnion,
   combineCheck,
-} from '../../base'
+} from '@jsonql/validator-core'
 import {
   notEmpty
 } from '@jsonql/utils'
@@ -47,7 +47,7 @@ export class ValidatorFactoryBase {
     input?: any
   ): void {
     let astWithRules = this.astWithBaseRules
-    // all we need to do is check if its empty input 
+    // all we need to do is check if its empty input
     if (notEmpty(input)) {
       if (checkArray(input)) {
         astWithRules = this.applyArrayInput(astWithRules, input)
