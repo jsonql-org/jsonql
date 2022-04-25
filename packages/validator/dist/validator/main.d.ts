@@ -1,8 +1,9 @@
 /**
  * padding the arguments with defaultValue if the arguments did not provide the value
  * this will be the name export
+ * @TODO the rules will become
  */
-export declare const normalizeArgs: (args: any[], params: any[]) => {
+export declare const normalizeArgs: (argValues: any[], paramNames: any[]) => {
     arg: any;
     index: number;
     param: any;

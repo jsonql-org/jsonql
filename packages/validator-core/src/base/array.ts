@@ -94,8 +94,9 @@ export function isArrayLike(type: string): boolean | string[] {
 
 /**
  * we might encounter something like array.<T> then we need to take it apart
+ @deprecated This method is no longer needed here 
  */
-export function arrayTypeHandler(p: any, type: any | any[]): boolean {
+export function arrayTypeHandler(p: any, type: any[]): boolean {
   const { arg } = p
   // need a special case to handle the OR type
   // we need to test the args instead of the type(s)

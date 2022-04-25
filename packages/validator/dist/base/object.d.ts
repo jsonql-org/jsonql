@@ -1,7 +1,9 @@
+import { JsonqlCheckObjectKeys } from '../types';
 /**
- * @TODO if provide with the keys then we need to check if the key:value type as well
+ * check if the input is object also able to check if key(s) existed in that object
+ @TODO need to rethink about how this checkObject keys should be
  */
-export declare const checkObject: (value: any, keys?: any[] | undefined) => boolean;
+export declare function checkObject(value: any, keys?: string | Array<string> | Array<JsonqlCheckObjectKeys>): boolean;
 /**
  * fold this into it's own function to handler different object type
  */

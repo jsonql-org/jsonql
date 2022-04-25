@@ -5,3 +5,5 @@ export { checkNumber, checkInteger, checkFloat, checkUnsigned } from './number';
 export { checkString } from './string';
 export { checkObject, objectTypeHandler } from './object';
 export { combineCheck } from './combine';
+export { debug } from './debug';
+export { checkUnion } from './union';

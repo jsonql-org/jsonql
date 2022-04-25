@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
+exports.checkUnion = exports.debug = exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
 // this contains all the primitive types checking methods
 var any_1 = require("./any");
 Object.defineProperty(exports, "checkAny", { enumerable: true, get: function () { return any_1.checkAny; } });
@@ -23,3 +23,8 @@ Object.defineProperty(exports, "objectTypeHandler", { enumerable: true, get: fun
 // wrapper fn
 var combine_1 = require("./combine");
 Object.defineProperty(exports, "combineCheck", { enumerable: true, get: function () { return combine_1.combineCheck; } });
+var debug_1 = require("./debug");
+Object.defineProperty(exports, "debug", { enumerable: true, get: function () { return debug_1.debug; } });
+// union type check
+var union_1 = require("./union");
+Object.defineProperty(exports, "checkUnion", { enumerable: true, get: function () { return union_1.checkUnion; } });

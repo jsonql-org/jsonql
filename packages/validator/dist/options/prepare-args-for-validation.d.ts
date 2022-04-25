@@ -2,7 +2,7 @@ import { JsonqlConfig, JsonqlAppProps } from '../types';
 /**
  * Map the alias to their key then grab their value over
  */
-export declare function mapAliasConfigKeys(config: JsonqlConfig, appProps: JsonqlAppProps): JsonqlConfig;
+export declare function mapAliasConfigKeys(config: JsonqlConfig, appProps: JsonqlAppProps): any;
 /**
  * We only want to run the valdiation against the config (user supplied) value
  * but keep the defaultOptions untouch
