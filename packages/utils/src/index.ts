@@ -30,8 +30,7 @@ export {
   nil,
   readOnly,
   showDeep,
-  formatString,
-  formatStr, 
+  formatStr,
 } from './common'
 export {
   buff,
