@@ -14,7 +14,38 @@ import {
 declare type testNumFn = (num: number) => number
 declare type testArrNumFn = (num: number, base: number) => number[]
 
-test(`Test to see if one of the promise fail and what happen`, async t => {
+test(`Test the chainPromises and see if one fail and what happen`, async t => {
+  t.plan(1)
+
+  const errorMsg = 'FAIL AND EXIT'
+  const afn = async (x: any) => {
+    return Promise.resolve(x)
+  }
+  // expect an object
+  const afn1 = async (x) => {
+    debug('x', x)
+    return Promise.reject(errorMsg)
+    // return Promise.resolve({x: ++x, y: ++y, z: 1})
+  }
+  const afn2 = async () => {
+    console.log(`Should never see me (but I still run ...)`)
+    return Promise.resolve(2)
+  }
+
+  return chainPromises([afn(1), afn1(1), afn2()])
+    .then(result => {
+      console.log(result)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    .finally(() => {
+      t.pass()
+    })
+})
+
+
+test.only(`Test to see if one of the promise fail and what happen`, async t => {
 
   const errorMsg = 'FAIL AND EXIT'
   const fn = async (x: any) => {
@@ -27,6 +58,7 @@ test(`Test to see if one of the promise fail and what happen`, async t => {
     // return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
   const fn2 = async ({x, y, z}) => {
+    console.log(`Should never see me run`)
     debug('x', x, 'y', y, 'z', z)
     return Promise.resolve(x + y + z)
   }
@@ -39,11 +71,6 @@ test(`Test to see if one of the promise fail and what happen`, async t => {
     .catch((error: string) => {
       t.is(error, errorMsg)
     })
-    /*
-    .finally(() => {
-      t.pass()
-    })
-    */
 })
 
 

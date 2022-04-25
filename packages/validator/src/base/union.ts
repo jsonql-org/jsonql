@@ -5,8 +5,11 @@ import { chainProcessPromises } from '@jsonql/utils'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
 
 /** when it pass it rejects it */
-async function fnGenerator(fn: () => boolean, type: string) {
-  return fn() ? Promise.reject(true) : Promise.resolve(type)
+async function fnGenerator(fn: boolean) {
+  // the chainProcessPromises required an array of async function
+  return async (type: string) => (
+    fn ? Promise.reject(true) : Promise.resolve(type)
+  )
 }
 
 /**
@@ -21,11 +24,11 @@ function generatePromisesFn(value: any, types: Array<string>) {
   return types.filter(type => {
     switch (type) {
       case ARRAY_TYPE:
-        return fnGenerator(() => checkArray(value), type)
+        return fnGenerator(checkArray(value))
       case OBJECT_TYPE:
-        return fnGenerator(() => checkObject(value), type)
+        return fnGenerator(checkObject(value))
       default:
-        return fnGenerator(() => combineCheck(type)(value), type)
+        return fnGenerator(combineCheck(type)(value))
     }
   })
 }
@@ -39,7 +42,7 @@ export async function checkUnion(value: any, types: Array<string>) {
   const pFn = Reflect.apply(chainProcessPromises, null, ps)
 
   return new Promise((resolver, rejecter) => {
-    pFn()
+    pFn('init') // this param is really pointless 
       .catch((res: boolean) => {
         resolver(res)
       })

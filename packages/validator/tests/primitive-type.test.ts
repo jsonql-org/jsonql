@@ -14,10 +14,10 @@ import { notEmpty } from '@jsonql/utils'
 
 test.only(`Testing the union type check`, async t => {
   t.plan(1)
-  
+
   return checkUnion(1, ['number', 'string'])
     .then(result => {
-      console.log(result)
+      console.log('result', result)
       t.pass()
     })
 })
