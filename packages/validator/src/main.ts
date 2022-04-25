@@ -5,23 +5,25 @@ import {
   arrayTypeHandler,
   objectTypeHandler,
   combineCheck,
-} from '@jsonql/validator-core'
+} from '@jsonql/validator-core/src'
 import {
   DEFAULT_TYPE,
   ARRAY_TYPE,
   OBJECT_TYPE,
-  ARGS_NOT_ARRAY_ERR,
-  PARAMS_NOT_ARRAY_ERR,
-  EXCEPTION_CASE_ERR,
   DATA_KEY,
   ERROR_KEY
 } from '@jsonql/constants'
+import {
+  ARGS_NOT_ARRAY_ERR,
+  PARAMS_NOT_ARRAY_ERR,
+  EXCEPTION_CASE_ERR,
+} from './constants'
 import {
   JsonqlValidationError,
   JsonqlError
 } from '@jsonql/errors'
 import { notEmpty } from '@jsonql/utils'
-import { debug } from '../base'
+import debug from 'debug'
 const debugFn = debug('validator:main')
 // import debug from 'debug'
 // const debugFn = debug('jsonql-params-validator:validator')
@@ -125,14 +127,14 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
           param,
           index: i,
           arg: getOptionalValue(argValues[i], param),
-          optional: param.optional || false
+          optional: param.optional || false,// remove soon
+          required: param.required || true
         }
       ))
     // this one pass more than it should have anything after the args.length will be cast as any type
     case argValues.length > paramNames.length:
-      let ctn = paramNames.length
       // this happens when we have those array.<number> type
-      let _type = [ DEFAULT_TYPE ]
+      // let _type = [ DEFAULT_TYPE ]
       // we only looking at the first one, this might be a @BUG
       /*
       if ((tmp = isArrayLike(params[0].type[0])) !== false) {
@@ -142,13 +144,16 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
       // which is not what we want, instead, anything without the param
       // will get a any type and optional flag
       return argValues.map((arg, i) => {
-        let optional = i >= ctn ? true : !!paramNames[i].optional
-        let param = paramNames[i] || { type: _type, name: `_${i}` }
+        const optional = i >= paramNames.length ? true : !!paramNames[i].optional
+        const required = !optional
+        const param = paramNames[i] || { type: DEFAULT_TYPE , name: `_${i}` }
+
         return {
           arg: optional ? getOptionalValue(arg, param) : arg,
           index: i,
           param,
-          optional
+          optional,
+          required
         }
       })
     // @TODO find out if there is more cases not cover
@@ -175,10 +180,10 @@ export const validateSync = function(
   params: any[],
   withResult = false
 ) {
-  let cleanArgs = normalizeArgs(args, params)
+  const cleanArgs = normalizeArgs(args, params)
   // @TODO it will become an array
   debugFn(cleanArgs)
-  let checkResult = cleanArgs.filter(p => {
+  const checkResult = cleanArgs.filter(p => {
     // v1.4.4 this fixed the problem, the root level optional is from the last fn
     // @ts-ignore need to fix this later
     if (p.optional === true || p.param.optional === true) {
