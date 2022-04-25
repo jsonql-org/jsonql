@@ -1,18 +1,9 @@
-// @jsonql/validator main export only export the Dev used part here
-// options
+// @jsonql/validator/validator
+// class method
 export {
-  createConfig,
-  constructConfig,
-  checkOptionsSync,
-  checkOptionsAsync,
-} from './options'
+  ValidatorFactory
+} from './validator/class'
+// decorator also will be here
 export {
-  validateSync,
-  validateAsync,
-  checkReturns,
-  checkReturnsAsync,
-  checkResolverReturns,
-  checkResolverReturnsAsync,
-} from './validator'
-
-export * from './lib/constants'
+  Validate
+} from './validator/decorator'
