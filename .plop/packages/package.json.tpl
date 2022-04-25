@@ -6,7 +6,8 @@
   "module": "src/index.ts",
   "typings": "src/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "test:ava": "ava",
