@@ -26,7 +26,7 @@ export declare type JsonqlValidationPlugin = {
   pattern?: string
   // we apply the JSON Schema validation here
   server?: boolean = false // server only, if there is only a validate then it will become a server only
-  
+
   validate?: (value: any) => boolean
 }
 
@@ -54,6 +54,7 @@ export type JsonqlPropertyParamnMap = {
   types?: any
   optional?: boolean // alias temporary will get remove in the future
   rules?: Array<JsonqlValidationRule> | Array<JsonqlValidateFn>
+  messages?: Array<string>
 }
 
 export type JsonqlClassValidationMap = {

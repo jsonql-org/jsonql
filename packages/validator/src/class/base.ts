@@ -23,6 +23,13 @@ import {
 import {
   notEmpty
 } from '@jsonql/utils'
+import {
+  ARGS_NOT_ARRAY_ERR,
+  // PARAMS_NOT_ARRAY_ERR,
+  EXCEPTION_CASE_ERR,
+} from './constants'
+import debug from 'debug'
+const debugFn = debug('jsonql:validator:class:base')
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -57,6 +64,37 @@ export class ValidatorFactoryBase {
     }
     this.schema = astWithRules
   }
+
+  /**
+    when validate happens we check the input value
+    correspond to out map, and apply the values
+  */
+  protected normalizeArgValues(values: any[]) {
+    const params = this.schema
+    if (params.length === 0) {
+      return [] // nothing to do
+    }
+    if (!checkArray(values)) {
+      debugFn(values)
+      throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR)
+    }
+    switch (true) {
+      case values.length === params.length:
+        return values.map((value, i) => (
+          applyRules(value, params[i], i)
+        ))
+    }
+  }
+
+  protected applyRules(
+    value: any,
+    param: JsonqlPropertyParamnMap,
+    idx: number
+  ) {
+    
+
+  }
+
   /*
   protected generteValidationFn() {
 
@@ -87,7 +125,7 @@ export class ValidatorFactoryBase {
 
   /** register plugins */
   protected registerPlugin(name: string, rule: JsonqlValidationPlugin) {
-    // @TODO need to check the rule and transform the plugin 
+    // @TODO need to check the rule and transform the plugin
     this.plugins.set(name, rule)
   }
 

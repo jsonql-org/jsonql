@@ -1,6 +1,6 @@
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
-import { isPlainObject, isString } from './lodash'
+import { isPlainObject, isString, curry } from './lodash'
 /**
  * DIY in Array
  */
@@ -119,3 +119,14 @@ export const readOnly = (config: object): any => Object.freeze(config)
 export const showDeep = (code: any): void => {
   console.dir(code, { depth: null })
 }
+
+/** from https://www.tutorialstonight.com/javascript-string-format.php
+  change to a normal function
+*/
+export function formatString(str: string, ...args: any[]) {
+  return str.replace(/{([0-9]+)}/g, (match: string, index: number) => (
+    typeof args[index] === 'undefined' ? match : args[index]
+  ))
+}
+
+export const formatStr: (txt: string) => (...args: any[]) => string = curry(formatString)

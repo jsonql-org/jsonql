@@ -41,6 +41,9 @@ export function createAutomaticRules(
     if (!ast.rules) {
       ast.rules = []
     }
+    if (!ast.messages) {
+      ast.messages = []
+    }
     ast.rules = [getValidateRules(ast)]
 
     return ast

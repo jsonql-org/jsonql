@@ -46,11 +46,12 @@ export class ValidatorFactory extends ValidatorFactoryBase {
 
   /** this validation happens */
   validate(values: Array<any>) {
+    const argValues = this.normalizeArgValues(values)
 
   }
 
   /** this will export the map for generate contract */
   export(server = false) {
-
+    console.log(`@TODO`, server)
   }
 }
