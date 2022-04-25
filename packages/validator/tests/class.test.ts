@@ -2,6 +2,11 @@
 import test from 'ava'
 import * as fs from 'fs-extra'
 import { join } from 'path'
+import { showDeep } from '@jsonql/utils'
+import {
+  createAutomaticRules
+} from '../src/validator/class/engine'
+
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')
 const classAst = join(fixtures, 'class-style.json')
@@ -14,8 +19,17 @@ test.before(t => {
   }
 })
 
+test(`Should able to generate automatic validation rule from ast map`, t => {
 
-test(`It should able to transform array style input into the standard`, t => {
+  const rules = createAutomaticRules(classAst.main)
+
+  showDeep(rules)
+
+  t.truthy(rules)
+})
+
+
+test.skip(`It should able to transform array style input into the standard`, t => {
   const input1 = [
     [], // skip
     '_', // skip

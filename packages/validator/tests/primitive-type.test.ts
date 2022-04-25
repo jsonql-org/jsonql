@@ -1,5 +1,4 @@
 import test from  'ava'
-// import contractJson from  './fixtures/contract.json'
 import {
   checkAny,
   checkArray,
@@ -24,9 +23,7 @@ test('checking if a value consider empty or not', t => {
   // this two change their behavior now
   t.falsy( notEmpty({}) )
   t.falsy( notEmpty([]) )
-
 })
-
 
 test('Should able to check any type', t => {
   t.true(checkAny('string'), 'Pass a string')
@@ -59,21 +56,17 @@ test('Should able to check basic array type', t => {
   t.false(checkArray({}), 'Pass empty object')
 })
 
-
 test(`Test a Array union type`, t => {
   const testArr = [1, 'b', 'a', 2]
   t.true(checkArray(testArr,['number', 'string']))
   t.false(checkArray(testArr, ['number', 'boolean']))
 })
 
-test(`Test the in operator`, t => {
+test(`Test checkObject with the in operator`, t => {
   const testObj = {prop: 1, notprop: null}
   const keys = ['prop', 'notpropx']
-
   t.false(checkObject(testObj, keys))
-
 })
-
 
 test('Should able to check basic object type', t => {
   t.true(checkObject({}), 'Empty Object')

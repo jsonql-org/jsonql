@@ -3,13 +3,11 @@
     {
       "name": "arg1",
       "required": true,
-      "type": {
-        "tstype": "TsUnionType",
-        "type": [
-          "number",
-          "boolean"
-        ]
-      }
+      "tstype": "TsUnionType",
+      "type": [
+        "number",
+        "boolean"
+      ]
     },
     {
       "name": "arg2",
@@ -19,9 +17,10 @@
     {
       "name": "arg3",
       "required": false,
-      "type": {
-        "tstype": "TsArrayType",
-        "type": "array",
+      "tstype": "TsArrayType",
+      "type": "array",
+      "types": "any",
+      "typeParams": {
         "elemType": "TsKeywordType",
         "kind": "any"
       }
@@ -29,9 +28,9 @@
     {
       "name": "arg4",
       "required": false,
-      "type": {
-        "tstype": "TsTypeReference",
-        "type": "any",
+      "tstype": "TsTypeReference",
+      "type": "any",
+      "typeParams": {
         "typeName": "DummyObj",
         "typeParams": null
       }
@@ -39,9 +38,9 @@
     {
       "name": "arg5",
       "required": false,
-      "type": {
-        "tstype": "TsTypeLiteral",
-        "type": "any",
+      "type": "any",
+      "tstype": "TsTypeLiteral",
+      "typeParams": {
         "memebers": [
           {
             "type": "TsIndexSignature",
@@ -75,9 +74,9 @@
     {
       "name": "arg6",
       "required": false,
-      "type": {
-        "tstype": "TsTypeReference",
-        "type": "any",
+      "tstype": "TsTypeReference",
+      "type": "any",
+      "typeParams": {
         "typeName": "StupidType",
         "typeParams": null
       }

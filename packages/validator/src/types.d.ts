@@ -30,6 +30,7 @@ export declare type JsonqlValidationMap = {
 }
 
 export type JsonqlValidationRule = {
+  message?: string
   type?: string
   pattern?: string
   value?: any // if the rule require a value to compare, normaly it should be a number
@@ -41,8 +42,11 @@ export type JsonqlValidationRule = {
 export type JsonqlPropertyParamnMap = {
   name: string // the argument name
   required: boolean
+  type: any
+  tstype?: string
+  types?: any
   optional?: boolean // alias temporary will get remove in the future
-  rules: Array<JsonqlValidationRule>
+  rules?: Array<JsonqlValidationRule | >
 }
 
 export type JsonqlClassValidationMap = {

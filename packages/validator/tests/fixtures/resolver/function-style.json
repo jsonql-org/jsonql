@@ -8,13 +8,11 @@
     {
       "name": "arg2",
       "required": true,
-      "type": {
-        "tstype": "TsUnionType",
-        "type": [
-          "string",
-          "number"
-        ]
-      }
+      "tstype": "TsUnionType",
+      "type": [
+        "string",
+        "number"
+      ]
     },
     {
       "name": "arg3",
