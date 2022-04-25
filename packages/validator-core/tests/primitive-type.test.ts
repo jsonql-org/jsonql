@@ -16,14 +16,17 @@ test(`Testing the union type check`, async t => {
   t.plan(1)
   return checkUnion(1, ['number', 'string'])
     .then(result => {
-      console.log('result', result)
+      t.true(result)
+      // console.log('result', result)
     })
+    /*
     .catch(err => {
-      console.log('err', err)
+      // console.log('err', err)
     })
     .finally(() => {
       t.pass()
     })
+    */
 })
 
 test('checking if a value consider empty or not', t => {
