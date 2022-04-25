@@ -147,7 +147,7 @@ export function extractAssignmentPattern(pat: any) {
     name: pat.left.value, // type === 'Identifier
     required: !pat.optional,
     type: translateType(pat.right.type),
-    value: extractValue(pat.right)
+    defaultValue: extractValue(pat.right),
   }
 }
 /** extract value from the pat */
@@ -161,7 +161,7 @@ export function extractValue(pat: any) {
       return pat.value
   }
 }
-/** translate the type name from an AssignmentPattern */
+/** translate the ts type name from an AssignmentPattern */
 export function translateType(swcType: string): string {
   switch (swcType) {
     case BOO_LIT:

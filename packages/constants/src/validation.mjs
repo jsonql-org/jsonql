@@ -16,7 +16,7 @@ export const ANY_TYPE = 'any'
 export const BASED_PRIMITIVE_TYPES = [
   NUMBER_TYPE,
   STRING_TYPE,
-  // BOOLEAN_TYPE, // is there anything can be extend from here? 
+  // BOOLEAN_TYPE, // is there anything can be extend from here?
   ARRAY_TYPE,
   OBJECT_TYPE,
 ]
@@ -35,3 +35,5 @@ export const SUPPORTED_TYPES = [
 export const ARRAY_TS_TYPE_LFT = 'Array<'
 export const ARRAY_TYPE_LFT = 'array.<'
 export const ARRAY_TYPE_RGT = '>'
+// matching what we used before 
+export const DEFAULT_VALUE = 'defaultvalue'
