@@ -20,8 +20,8 @@ test.before(t => {
 })
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
-
-  const rules = createAutomaticRules(classAst.main)
+  // @ts-ignore
+  const rules = createAutomaticRules(t.context.classAstInput.main)
 
   showDeep(rules)
 

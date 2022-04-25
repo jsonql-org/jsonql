@@ -5,8 +5,8 @@ import { chainProcessPromises } from '@jsonql/utils'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
 
 /** when it pass it rejects it */
-async function fnGenerator(fn: unknown, type: string) {
-  return fn ? Promise.reject(true) : Promise.resolve(type)
+async function fnGenerator(fn: () => boolean, type: string) {
+  return fn() ? Promise.reject(true) : Promise.resolve(type)
 }
 
 /**
@@ -21,11 +21,11 @@ function generatePromisesFn(value: any, types: Array<string>) {
   return types.filter(type => {
     switch (type) {
       case ARRAY_TYPE:
-        return fnGenerator(checkArray(value), type)
+        return fnGenerator(() => checkArray(value), type)
       case OBJECT_TYPE:
-        return fnGenerator(checkObject(value), type)
+        return fnGenerator(() => checkObject(value), type)
       default:
-        return fnGenerator(combineCheck(type)(value), type)
+        return fnGenerator(() => combineCheck(type)(value), type)
     }
   })
 }
@@ -34,11 +34,12 @@ function generatePromisesFn(value: any, types: Array<string>) {
   because the union type is OR
   therefore it has to be check in one rule
 */
-export async function unionCheck(value: any, types: Array<string>) {
+export async function checkUnion(value: any, types: Array<string>) {
   const ps = generatePromisesFn(value, types)
+  const pFn = Reflect.apply(chainProcessPromises, null, ps)
 
   return new Promise((resolver, rejecter) => {
-    Reflect.apply(chainProcessPromises, null, ps)
+    pFn()
       .catch((res: boolean) => {
         resolver(res)
       })

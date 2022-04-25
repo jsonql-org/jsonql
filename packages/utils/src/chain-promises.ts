@@ -6,11 +6,16 @@ import { isPlainObject, merge } from './lodash'
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it
  */
-export function chainPromises(promises: Array<Promise<any>>, asObject: boolean | object = false) {
+export function chainPromises(
+  promises: Array<Promise<any>>,
+  asObject: boolean | object = false
+) {
   return promises.reduce((promiseChain, currentTask) => (
     promiseChain.then(chainResults => (
       currentTask.then(currentResult => (
-        asObject === false ? [...chainResults, currentResult] : merge(chainResults, currentResult)
+        asObject === false ?
+          [...chainResults, currentResult] :
+          merge(chainResults, currentResult)
       ))
     ))
   ), Promise.resolve(
@@ -18,11 +23,16 @@ export function chainPromises(promises: Array<Promise<any>>, asObject: boolean |
   ))
 }
 
+declare type JsonqlPromiseChainFn = (...args: any[]) => Promise<any>
+
 /**
  * This one return a different result from the chainPromises
  * it will be the same like chainFns that take one promise resolve as the next fn parameter
  */
-export function chainProcessPromises(initPromise: Function, ...promises: Array<Function>) {
+export function chainProcessPromises(
+  initPromise: JsonqlPromiseChainFn,
+  ...promises: Array<JsonqlPromiseChainFn>
+) {
   return (...args: any[]) => (
       promises.reduce((promiseChain, currentTask) => (
         promiseChain.then((chainResult: any) => (

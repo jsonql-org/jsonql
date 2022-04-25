@@ -6,10 +6,22 @@ import {
   checkNumber,
   checkObject,
   checkString,
+  checkUnion,
 } from  '../src/base'
 import { notEmpty } from '@jsonql/utils'
-import debugFn from 'debug'
-const debug = debugFn('jsonql-params-validator:test:primitive-type')
+// import debugFn from 'debug'
+// const debug = debugFn('jsonql-params-validator:test:primitive-type')
+
+test.only(`Testing the union type check`, async t => {
+  t.plan(1)
+  
+  return checkUnion(1, ['number', 'string'])
+    .then(result => {
+      console.log(result)
+      t.pass()
+    })
+})
+
 
 test('checking if a value consider empty or not', t => {
 
@@ -40,6 +52,7 @@ test('Should able to check string type', t => {
 test('Should able to check number type', t => {
   t.true(checkNumber(1), 'Pass an integer')
   t.true(checkNumber(2.1), 'Pass a float')
+  // @ts-ignore
   t.false(checkNumber(' '), 'Pass a space')
 })
 

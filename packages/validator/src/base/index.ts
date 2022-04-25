@@ -8,5 +8,5 @@ export { checkObject, objectTypeHandler } from './object'
 // wrapper fn
 export { combineCheck } from './combine'
 export { debug } from './debug'
-// union type check 
-export { unionCheck } from './union'
+// union type check
+export { checkUnion } from './union'
