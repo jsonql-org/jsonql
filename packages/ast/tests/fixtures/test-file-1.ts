@@ -11,9 +11,9 @@ export default class MyResolver {
   // @TODO @Validate
   public main(
     arg1: number | boolean,
-    arg2: string,
+    arg2 = 'I am string',
     arg3?: any[],
-    arg4?: DummyObj,
+    arg4 = false,
     arg5?: {[key: string]: string},
     arg6?: StupidType
   ) {

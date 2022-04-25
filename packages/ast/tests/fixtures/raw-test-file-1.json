@@ -1,0 +1,429 @@
+[
+  {
+    type: 'ExportDefaultDeclaration',
+    span: { start: 113, end: 722, ctxt: 0 },
+    decl: {
+      type: 'ClassExpression',
+      identifier: {
+        type: 'Identifier',
+        span: { start: 134, end: 144, ctxt: 0 },
+        value: 'MyResolver',
+        optional: false
+      },
+      span: { start: 128, end: 722, ctxt: 0 },
+      decorators: [],
+      body: [
+        {
+          type: 'ClassMethod',
+          span: { start: 171, end: 521, ctxt: 0 },
+          key: {
+            type: 'Identifier',
+            span: { start: 178, end: 182, ctxt: 0 },
+            value: 'main',
+            optional: false
+          },
+          function: {
+            params: [
+              {
+                type: 'Parameter',
+                span: { start: 188, end: 210, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 188, end: 210, ctxt: 0 },
+                  value: 'arg1',
+                  optional: false,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 192, end: 210, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsUnionType',
+                      span: { start: 194, end: 210, ctxt: 0 },
+                      types: [
+                        {
+                          type: 'TsKeywordType',
+                          span: { start: 194, end: 200, ctxt: 0 },
+                          kind: 'number'
+                        },
+                        {
+                          type: 'TsKeywordType',
+                          span: { start: 203, end: 210, ctxt: 0 },
+                          kind: 'boolean'
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 216, end: 236, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'AssignmentPattern',
+                  span: { start: 216, end: 236, ctxt: 0 },
+                  left: {
+                    type: 'Identifier',
+                    span: { start: 216, end: 220, ctxt: 0 },
+                    value: 'arg2',
+                    optional: false,
+                    typeAnnotation: null
+                  },
+                  right: {
+                    type: 'StringLiteral',
+                    span: { start: 223, end: 236, ctxt: 0 },
+                    value: 'I am string',
+                    raw: "'I am string'"
+                  },
+                  typeAnnotation: null
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 242, end: 254, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 242, end: 254, ctxt: 0 },
+                  value: 'arg3',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 247, end: 254, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsArrayType',
+                      span: { start: 249, end: 254, ctxt: 0 },
+                      elemType: {
+                        type: 'TsKeywordType',
+                        span: { start: 249, end: 252, ctxt: 0 },
+                        kind: 'any'
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 260, end: 272, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'AssignmentPattern',
+                  span: { start: 260, end: 272, ctxt: 0 },
+                  left: {
+                    type: 'Identifier',
+                    span: { start: 260, end: 264, ctxt: 0 },
+                    value: 'arg4',
+                    optional: false,
+                    typeAnnotation: null
+                  },
+                  right: {
+                    type: 'BooleanLiteral',
+                    span: { start: 267, end: 272, ctxt: 0 },
+                    value: false
+                  },
+                  typeAnnotation: null
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 278, end: 308, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 278, end: 308, ctxt: 0 },
+                  value: 'arg5',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 283, end: 308, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeLiteral',
+                      span: { start: 285, end: 308, ctxt: 0 },
+                      members: [
+                        {
+                          type: 'TsIndexSignature',
+                          params: [
+                            {
+                              type: 'Identifier',
+                              span: { start: 287, end: 298, ctxt: 0 },
+                              value: 'key',
+                              optional: false,
+                              typeAnnotation: {
+                                type: 'TsTypeAnnotation',
+                                span: { start: 290, end: 298, ctxt: 0 },
+                                typeAnnotation: {
+                                  type: 'TsKeywordType',
+                                  span: { start: 292, end: 298, ctxt: 0 },
+                                  kind: 'string'
+                                }
+                              }
+                            }
+                          ],
+                          typeAnnotation: {
+                            type: 'TsTypeAnnotation',
+                            span: { start: 299, end: 307, ctxt: 0 },
+                            typeAnnotation: {
+                              type: 'TsKeywordType',
+                              span: { start: 301, end: 307, ctxt: 0 },
+                              kind: 'string'
+                            }
+                          },
+                          readonly: false,
+                          static: false,
+                          span: { start: 286, end: 307, ctxt: 0 }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                type: 'Parameter',
+                span: { start: 314, end: 331, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'Identifier',
+                  span: { start: 314, end: 331, ctxt: 0 },
+                  value: 'arg6',
+                  optional: true,
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 319, end: 331, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeReference',
+                      span: { start: 321, end: 331, ctxt: 0 },
+                      typeName: {
+                        type: 'Identifier',
+                        span: { start: 321, end: 331, ctxt: 0 },
+                        value: 'StupidType',
+                        optional: false
+                      },
+                      typeParams: null
+                    }
+                  }
+                }
+              }
+            ],
+            decorators: [],
+            span: { start: 171, end: 521, ctxt: 0 },
+            body: {
+              type: 'BlockStatement',
+              span: { start: 336, end: 521, ctxt: 0 },
+              stmts: [
+                {
+                  type: 'ReturnStatement',
+                  span: { start: 342, end: 517, ctxt: 0 },
+                  argument: {
+                    type: 'ObjectExpression',
+                    span: { start: 349, end: 517, ctxt: 0 },
+                    properties: [
+                      {
+                        type: 'Identifier',
+                        span: { start: 357, end: 361, ctxt: 0 },
+                        value: 'arg1',
+                        optional: false
+                      },
+                      {
+                        type: 'Identifier',
+                        span: { start: 369, end: 373, ctxt: 0 },
+                        value: 'arg2',
+                        optional: false
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 381, end: 385, ctxt: 0 },
+                          value: 'arg3',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 387, end: 412, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 387, end: 391, ctxt: 0 },
+                            value: 'arg3',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 394, end: 398, ctxt: 0 },
+                            value: 'arg3',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'ArrayExpression',
+                            span: { start: 401, end: 412, ctxt: 0 },
+                            elements: [
+                              {
+                                spread: null,
+                                expression: {
+                                  type: 'StringLiteral',
+                                  span: { start: 402, end: 411, ctxt: 0 },
+                                  value: 'NOTHING',
+                                  raw: "'NOTHING'"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 420, end: 424, ctxt: 0 },
+                          value: 'arg4',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 426, end: 442, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 426, end: 430, ctxt: 0 },
+                            value: 'arg4',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 433, end: 437, ctxt: 0 },
+                            value: 'arg4',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'ObjectExpression',
+                            span: { start: 440, end: 442, ctxt: 0 },
+                            properties: []
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 450, end: 454, ctxt: 0 },
+                          value: 'arg5',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 456, end: 472, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 456, end: 460, ctxt: 0 },
+                            value: 'arg5',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 463, end: 467, ctxt: 0 },
+                            value: 'arg5',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'ObjectExpression',
+                            span: { start: 470, end: 472, ctxt: 0 },
+                            properties: []
+                          }
+                        }
+                      },
+                      {
+                        type: 'KeyValueProperty',
+                        key: {
+                          type: 'Identifier',
+                          span: { start: 480, end: 484, ctxt: 0 },
+                          value: 'arg6',
+                          optional: false
+                        },
+                        value: {
+                          type: 'ConditionalExpression',
+                          span: { start: 486, end: 511, ctxt: 0 },
+                          test: {
+                            type: 'Identifier',
+                            span: { start: 486, end: 490, ctxt: 0 },
+                            value: 'arg6',
+                            optional: false
+                          },
+                          consequent: {
+                            type: 'Identifier',
+                            span: { start: 493, end: 497, ctxt: 0 },
+                            value: 'arg6',
+                            optional: false
+                          },
+                          alternate: {
+                            type: 'StringLiteral',
+                            span: { start: 500, end: 511, ctxt: 0 },
+                            value: 'REALLY???',
+                            raw: "'REALLY???'"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            generator: false,
+            async: false,
+            typeParameters: null,
+            returnType: null
+          },
+          kind: 'method',
+          isStatic: false,
+          accessibility: 'public',
+          isAbstract: false,
+          isOptional: false,
+          isOverride: false
+        },
+        {
+          type: 'ClassMethod',
+          span: { start: 565, end: 620, ctxt: 0 },
+          key: {
+            type: 'Identifier',
+            span: { start: 572, end: 579, ctxt: 0 },
+            value: 'another',
+            optional: false
+          },
+          function: {
+            params: [],
+            decorators: [],
+            span: { start: 565, end: 620, ctxt: 0 },
+            body: {
+              type: 'BlockStatement',
+              span: { start: 582, end: 620, ctxt: 0 },
+              stmts: [
+                {
+                  type: 'ReturnStatement',
+                  span: { start: 588, end: 616, ctxt: 0 },
+                  argument: {
+                    type: 'StringLiteral',
+                    span: { start: 595, end: 616, ctxt: 0 },
+                    value: 'This has no params!',
+                    raw: "'This has no params!'"
+                  }
+                }
+              ]
+            },
+            generator: false,
+            async: false,
+            typeParameters: null,
+            returnType: null
+          },
+          kind: 'method',
+          isStatic: false,
+          accessibility: 'public',
+          isAbstract: false,
+          isOptional: false,
+          isOverride: false
+        }
+      ],
+      superClass: null,
+      isAbstract: false,
+      typeParams: null,
+      superTypeParams: null,
+      implements: []
+    }
+  }
+]

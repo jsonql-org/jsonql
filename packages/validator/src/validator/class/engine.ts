@@ -6,6 +6,7 @@ import {
 } from '../../types'
 
 import {
+  checkString,
   checkArray,
   checkObject,
   checkUnion,
@@ -69,8 +70,11 @@ function getValidateRules(ast: any): JsonqlValidateFn {
     case TS_TYPE_LIT:
 
     default: // no tstype then should be primitive
-      return async (value: any) => combineCheck(ast.type)(value)
+      if (checkString(ast.type)) {
+        return async (value: any) => combineCheck(ast.type)(value)
+      }
   }
+  throw new Error(`Unable to determine what is the type from ast map!`)
 }
 
 /**
@@ -86,7 +90,7 @@ export function createAutomaticRules(
       ast.rules = []
     }
     ast.rules = [getValidateRules(ast)]
-    
+
     return ast
   })
 }
