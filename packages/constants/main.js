@@ -321,5 +321,6 @@ module.exports = {
     ],
     "ARRAY_TS_TYPE_LFT": "Array<",
     "ARRAY_TYPE_LFT": "array.<",
-    "ARRAY_TYPE_RGT": ">"
+    "ARRAY_TYPE_RGT": ">",
+    "DEFAULT_VALUE": "defaultvalue"
 }

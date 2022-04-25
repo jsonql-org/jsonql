@@ -268,5 +268,6 @@ export const SUPPORTED_TYPES: string[];
 export const ARRAY_TS_TYPE_LFT: "Array<";
 export const ARRAY_TYPE_LFT: "array.<";
 export const ARRAY_TYPE_RGT: ">";
+export const DEFAULT_VALUE: "defaultvalue";
 //# sourceMappingURL=validation.d.mts.map
 }

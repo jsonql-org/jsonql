@@ -33,6 +33,8 @@ import {
   NUMBER_TYPE,
   ARRAY_TYPE,
   OBJECT_TYPE,
+
+  DEFAULT_VALUE,
 } from '@jsonql/constants'
 import { stripSpan } from './common'
 import {
@@ -147,7 +149,7 @@ export function extractAssignmentPattern(pat: any) {
     name: pat.left.value, // type === 'Identifier
     required: !pat.optional,
     type: translateType(pat.right.type),
-    defaultValue: extractValue(pat.right),
+    [DEFAULT_VALUE]: extractValue(pat.right),
   }
 }
 /** extract value from the pat */

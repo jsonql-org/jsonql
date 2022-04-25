@@ -295,6 +295,7 @@ Please consult the detail break down below.
 - ARRAY_TS_TYPE_LFT
 - ARRAY_TYPE_LFT
 - ARRAY_TYPE_RGT
+- DEFAULT_VALUE
 
 
 
@@ -303,4 +304,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1650638567696
+1650859079421
