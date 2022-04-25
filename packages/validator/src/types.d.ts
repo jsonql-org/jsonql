@@ -22,7 +22,12 @@ export type JsonqlConstantProps = JsonqlConfigBase
 // validation
 
 export declare type JsonqlValidationPlugin = {
-  check: (value: any) => boolean
+  name: string
+  pattern?: string
+  // we apply the JSON Schema validation here
+  server?: boolean = false // server only, if there is only a validate then it will become a server only
+  
+  validate?: (value: any) => boolean
 }
 
 export declare type JsonqlValidationMap = {

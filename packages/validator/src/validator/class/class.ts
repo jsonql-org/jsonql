@@ -28,17 +28,29 @@ import {
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
 
-  constructor(validationMap: JsonqlValidationMap) {
-    super(validationMap)
+  constructor(astMap: any) {
+    super(astMap)
+  }
+  /** accept an array of plugins in one go less confusion */
+  registerPlugins(plugins: Array<JsonqlValidationPlugin>): void {
+    plugins.forEach((plugin: JsonqlValidationPlugin)  => {
+      this.registerPlugin(plugin.name, plugin)
+    })
+  }
+
+  /** takes the user define rules and generate the full map */
+  createSchema(validationMap: JsonqlValidationMap): void {
+    // console.log(propName, this.validationMap)
+    // if this never get call, that means we just do automatic
+  }
+
+  /** this validation happens */
+  validate(values: Array<any>) {
 
   }
 
-  register(name: string, rule: JsonqlValidationPlugin) {
-    this.plugins.set(name, rule)
-  }
+  /** this will export the map for generate contract */
+  export(server = false) {
 
-  // this could be a curry method
-  run(propName: string, args?: any[]) {
-    console.log(propName, this.validationMap)
   }
 }
