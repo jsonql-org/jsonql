@@ -30,7 +30,9 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-
+    "@jsonql/constants": "workspace:^0.5.9",
+    "@jsonql/utils": "workspace:^0.3.3",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
