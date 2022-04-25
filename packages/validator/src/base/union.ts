@@ -35,7 +35,7 @@ function generatePromisesFn(value: any, types: Array<string>) {
   because the union type is OR
   therefore it has to be check in one rule
 */
-export async function checkUnion(value: any, types: Array<string>) {
+export async function checkUnion(value: any, types: Array<string>): Promise<boolean | string> {
   const ps = generatePromisesFn(value, types)
   const pFn = Reflect.apply(chainProcessPromises, null, ps)
 

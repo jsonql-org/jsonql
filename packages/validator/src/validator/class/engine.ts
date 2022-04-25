@@ -1,12 +1,15 @@
 // develop the small functions here one by one
 // import utils from '@jsonql/utils'
 import {
-  JsonqlPropertyParamnMap
-} from '../..//types'
+  JsonqlPropertyParamnMap,
+  JsonqlValidateFn
+} from '../../types'
 
 import {
   checkArray,
   checkObject,
+  checkUnion,
+  combineCheck,
 } from '../../base'
 import {
   notEmpty
@@ -55,6 +58,21 @@ export function normalizeInput(
   */
 }
 
+function getValidateRules(ast: any): JsonqlValidateFn {
+  switch (ast[TS_TYPE_NAME]) {
+    case TS_UNION_TYPE:
+       return (value: any) => checkUnion(value, ast.type)
+    case TS_ARRAY_TYPE:
+
+    case TS_TYPE_REF:
+
+    case TS_TYPE_LIT:
+
+    default: // no tstype then should be primitive
+      return async (value: any) => combineCheck(ast.type)(value)
+  }
+}
+
 /**
   generate an automatic valdiation rule using the AST map
   this part will always happen first then add the user
@@ -64,20 +82,11 @@ export function createAutomaticRules(
   astMap: Array<JsonqlPropertyParamnMap>
 ) {
   return astMap.map((ast: JsonqlPropertyParamnMap) => {
-    switch (ast[TS_TYPE_NAME]) {
-      case TS_UNION_TYPE:
-        
-      case TS_ARRAY_TYPE:
-
-      case TS_TYPE_REF:
-
-      case TS_TYPE_LIT:
-
-      default: // no tstype then should be primitive
-        ast.rules = [
-
-        ]
+    if (!ast.rules) {
+      ast.rules = []
     }
+    ast.rules = [getValidateRules(ast)]
+    
     return ast
   })
 }
