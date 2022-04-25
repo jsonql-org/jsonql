@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showDeep = exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
+exports.formatStr = exports.showDeep = exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
@@ -116,3 +116,10 @@ const showDeep = (code) => {
     console.dir(code, { depth: null });
 };
 exports.showDeep = showDeep;
+/** from https://www.tutorialstonight.com/javascript-string-format.php
+  change to a normal function
+*/
+function formatStr(str, ...args) {
+    return str.replace(/{([0-9]+)}/g, (match, index) => (typeof args[index] === 'undefined' ? match : args[index]));
+}
+exports.formatStr = formatStr;

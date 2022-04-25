@@ -51,3 +51,7 @@ export declare const nil: () => boolean;
 export declare const readOnly: (config: object) => any;
 /** handy method to show deep json structure */
 export declare const showDeep: (code: any) => void;
+/** from https://www.tutorialstonight.com/javascript-string-format.php
+  change to a normal function
+*/
+export declare function formatStr(str: string, ...args: any[]): string;

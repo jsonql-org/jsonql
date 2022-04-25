@@ -32,7 +32,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/constants": "workspace:^0.5.9",
-    "@jsonql/utils": "workspace:^0.3.3",
+    "@jsonql/utils": "workspace:^0.3.4",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
