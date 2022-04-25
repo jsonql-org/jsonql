@@ -5,7 +5,7 @@ import {
   arrayTypeHandler,
   objectTypeHandler,
   combineCheck,
-} from '@jsonql/validator-core'
+} from '../base'
 import {
   DEFAULT_TYPE,
   ARRAY_TYPE,
@@ -15,7 +15,7 @@ import {
   EXCEPTION_CASE_ERR,
   DATA_KEY,
   ERROR_KEY
-} from '@jsonql/constants'
+} from '../lib/constants'
 import {
   JsonqlValidationError,
   JsonqlError
@@ -88,12 +88,15 @@ const getOptionalValue = function(arg: any, param: any) {
  * @TODO the rules will become
  */
 export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
+  // debugFn('normalizedArgs', args, params)
+  // first we should check if this call require a validation at all
+  // there will be situation where the function doesn't need args and params
   if (!checkArray(paramNames)) {
     // debugFn('params value', params)
     throw new JsonqlValidationError(PARAMS_NOT_ARRAY_ERR)
   }
   if (paramNames.length === 0) {
-    return [] // when the function doesn't need to validate because no params
+    return []
   }
   if (!checkArray(argValues)) {
     debugFn(argValues)
@@ -111,11 +114,12 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
         }
       ))
     case paramNames[0].variable === true: // using spread syntax
+      const type = paramNames[0].type;
       return argValues.map((arg, i) => (
         {
           arg,
           index: i, // keep the index for reference
-          param: paramNames[i] || { type: paramNames[0].type, name: '_' }
+          param: paramNames[i] || { type, name: '_' }
         }
       ))
     // with optional defaultValue parameters

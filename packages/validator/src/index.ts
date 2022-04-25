@@ -2,8 +2,8 @@
 // class method
 export {
   ValidatorFactory
-} from './validator/class'
+} from './class'
 // decorator also will be here
 export {
   Validate
-} from './validator/decorator'
+} from './decorator'

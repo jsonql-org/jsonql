@@ -2,10 +2,11 @@ lockfileVersion: 5.3
 
 specifiers:
   '@ava/typescript': ^3.0.1
-  '@jsonql/ast': workspace:^0.2.0
-  '@jsonql/constants': workspace:^0.5.8
+  '@jsonql/ast': workspace:^0.4.1
+  '@jsonql/constants': workspace:^0.5.9
   '@jsonql/errors': workspace:^0.6.0
-  '@jsonql/utils': workspace:^0.3.1
+  '@jsonql/utils': workspace:^0.3.3
+  '@jsonql/validator-core': workspace:^0.1.1
   '@types/node': ^17.0.23
   '@typescript-eslint/eslint-plugin': ^5.17.0
   '@typescript-eslint/parser': ^5.17.0
@@ -24,6 +25,7 @@ dependencies:
   '@jsonql/constants': link:../constants
   '@jsonql/errors': link:../errors
   '@jsonql/utils': link:../utils
+  '@jsonql/validator-core': link:../validator-core
   debug: 4.3.4
   reflect-metadata: 0.1.13
 
