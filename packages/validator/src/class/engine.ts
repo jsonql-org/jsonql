@@ -3,7 +3,7 @@
 import {
   JsonqlPropertyParamnMap,
   JsonqlValidateFn
-} from '../../types'
+} from '../types'
 import {
   checkString,
   checkArray,
@@ -11,7 +11,7 @@ import {
   // checkObject,
   checkUnion,
   combineCheck,
-} from '../../base'
+} from '@jsonql/validator-core/src'
 import {
   TS_TYPE_NAME,
   TS_TYPE_REF,
@@ -51,7 +51,7 @@ export function createAutomaticRules(
 function getValidateRules(ast: any): JsonqlValidateFn {
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
-      return (value: any) => checkUnion(value, ast.type)
+      return async (value: any) => checkUnion(value, ast.type)
     case TS_ARRAY_TYPE:
       return async (value: Array<any>) => checkArray(value)
     case TS_TYPE_REF || TS_TYPE_LIT:

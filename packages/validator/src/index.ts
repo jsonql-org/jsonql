@@ -2,7 +2,7 @@
 // class method
 export {
   ValidatorFactory
-} from './class'
+} from './class/class'
 // decorator also will be here
 export {
   Validate

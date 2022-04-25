@@ -7,6 +7,8 @@ import {
   createAutomaticRules
 } from '../src/class/engine'
 
+// import * as core from '@jsonql/validator-core'
+
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')
 const classAst = join(fixtures, 'class-style.json')
@@ -18,6 +20,7 @@ test.before(t => {
     funcAstInput: fs.readJsonSync(funcAst)
   }
 })
+
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
   // @ts-ignore
@@ -37,7 +40,4 @@ test.skip(`It should able to transform array style input into the standard`, t =
     {key: 'hello'}, // as object and check if key exist
 
   ]
-
-
-
 })
