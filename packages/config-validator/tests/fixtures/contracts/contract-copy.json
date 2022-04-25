@@ -1,0 +1,84 @@
+{
+  "query": {},
+  "mutation": {},
+  "auth": {},
+  "timestamp": 1560347818,
+  "socket": {
+    "continuous": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/continuous.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "a message"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "a message with timestamp"
+        }
+      ]
+    },
+    "sendExtraMsg": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/send-extra-msg.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "number"
+          ],
+          "name": "x",
+          "description": "a number for process"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "x + ?"
+        }
+      ]
+    },
+    "simple": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/simple.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "number"
+          ],
+          "name": "i",
+          "description": "a number"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "a number + 1;"
+        }
+      ]
+    },
+    "throwError": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/throw-error.js",
+      "description": "Testing the throw error",
+      "params": [],
+      "returns": [
+        {
+          "type": [
+            "any"
+          ],
+          "description": "just throw"
+        }
+      ]
+    }
+  }
+}

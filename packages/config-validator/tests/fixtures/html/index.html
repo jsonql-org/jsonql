@@ -1,0 +1,67 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Testing the jsonql-params-validator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>Testing the jsonql-params-validator</h1>
+    <div id="result">
+      <h2>Test result:</h2>
+      <ol></ol>
+    </div>
+
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+    <script src="jsonql-params-validator.umd.js"></script>
+    <script type="text/javascript">
+      var showResult = function(i, pass, msg) {
+        var block = '<li><div class="' + (pass ? 'alert-success' : 'alert-danger' )+ '">';
+            block += '(' + i +')' + msg + '</div></li>';
+        var target = $('#result > ol').append(block);
+      }
+
+      $(function() {
+        console.info(jsonqlParamsValidator);
+        var validateAsync = jsonqlParamsValidator.validateAsync;
+
+        var tests = [
+          {args: [], params: []},
+          {
+            args: [
+              [1]
+            ],
+            params: [{
+              type: ['number'],
+              name: 'id'
+            }]
+          },
+          {
+            args: [
+              ['a']
+            ],
+            params: [
+            {
+              type: ['number'],
+              name: 'id'
+            }
+            ]
+          }
+        ];
+
+        for (var i = 0; i < tests.length; ++i) {
+          validateAsync(tests[i].args, tests[i].params)
+            .then(function(result) {
+              showResult(i, true, result.length);
+            })
+            .catch(function(err) {
+              console.log(err)
+              showResult(i, false, err.toString());
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

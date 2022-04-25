@@ -1,0 +1,127 @@
+{
+  "query": {
+    "helloWorld": {
+      "params": [],
+      "returns": [
+        {
+          "type": "string",
+          "description": "stock message"
+        }
+      ]
+    },
+    "causeError": {
+      "params": [
+        {
+          "type": [
+            "any"
+          ],
+          "name": "x",
+          "description": "param"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "any"
+          ],
+          "description": "unknown"
+        }
+      ]
+    },
+    "getUser": {
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "args",
+          "variable": true,
+          "description": "passing unknown number of param"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "any"
+          ],
+          "description": "extract from last of the args"
+        }
+      ]
+    },
+    "testList": {
+      "params": [
+        {
+          "type": [
+            "number"
+          ],
+          "name": "num",
+          "description": "a number"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "object"
+          ],
+          "description": "@TODO need to figure out how to give keys to the returns"
+        }
+      ]
+    }
+  },
+  "mutation": {
+    "updateList": {
+      "params": [
+        {
+          "type": [
+            "object"
+          ],
+          "name": "payload",
+          "keys": [
+            {
+              "type": [
+                "number"
+              ],
+              "name": "user",
+              "parent": "payload"
+            }
+          ]
+        },
+        {
+          "type": [
+            "object"
+          ],
+          "name": "condition"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "object"
+          ],
+          "description": "with user as key"
+        }
+      ]
+    },
+    "updateMsService": {
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "payload",
+          "description": "incoming"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "msg return from nodeClient"
+        }
+      ]
+    }
+  },
+  "auth": {},
+  "timestamp": 1566134875010
+}
