@@ -12,5 +12,6 @@ export declare function checkArray(value: any, type?: string | string[]): boolea
 export declare function isArrayLike(type: string): boolean | string[];
 /**
  * we might encounter something like array.<T> then we need to take it apart
+ @deprecated This method is no longer needed here
  */
-export declare function arrayTypeHandler(p: any, type: any | any[]): boolean;
+export declare function arrayTypeHandler(p: any, type: any[]): boolean;
