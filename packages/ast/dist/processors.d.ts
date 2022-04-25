@@ -14,11 +14,11 @@ export declare function extractAssignmentPattern(pat: any): {
     name: any;
     required: boolean;
     type: string;
-    value: any;
+    defaultvalue: any;
 };
 /** extract value from the pat */
 export declare function extractValue(pat: any): any;
-/** translate the type name from an AssignmentPattern */
+/** translate the ts type name from an AssignmentPattern */
 export declare function translateType(swcType: string): string;
 /** wrap this in one method to make the code cleaner */
 export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({

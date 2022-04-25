@@ -97,7 +97,7 @@ function extractAssignmentPattern(pat) {
         name: pat.left.value,
         required: !pat.optional,
         type: translateType(pat.right.type),
-        value: extractValue(pat.right)
+        [constants_1.DEFAULT_VALUE]: extractValue(pat.right),
     };
 }
 exports.extractAssignmentPattern = extractAssignmentPattern;
@@ -113,7 +113,7 @@ function extractValue(pat) {
     }
 }
 exports.extractValue = extractValue;
-/** translate the type name from an AssignmentPattern */
+/** translate the ts type name from an AssignmentPattern */
 function translateType(swcType) {
     switch (swcType) {
         case constants_1.BOO_LIT:
