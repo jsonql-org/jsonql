@@ -5,7 +5,7 @@ import { join } from 'path'
 import { showDeep } from '@jsonql/utils'
 import {
   createAutomaticRules
-} from '../src/validator/class/engine'
+} from '../src/class/engine'
 
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')

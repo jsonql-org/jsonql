@@ -57,11 +57,11 @@ export class ValidatorFactoryBase {
     }
     this.schema = astWithRules
   }
-
+  /*
   protected generteValidationFn() {
 
   }
-
+  */
   /** normalize the array style rules input */
   protected applyArrayInput(
     astMap: Array<JsonqlPropertyParamnMap>,
@@ -87,6 +87,7 @@ export class ValidatorFactoryBase {
 
   /** register plugins */
   protected registerPlugin(name: string, rule: JsonqlValidationPlugin) {
+    // @TODO need to check the rule and transform the plugin 
     this.plugins.set(name, rule)
   }
 
