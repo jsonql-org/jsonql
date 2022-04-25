@@ -58,7 +58,7 @@
     "@jsonql/ast": "workspace:^0.4.0",
     "@jsonql/constants": "workspace:^0.5.8",
     "@jsonql/errors": "workspace:^0.6.0",
-    "@jsonql/utils": "workspace:^0.3.2",
+    "@jsonql/utils": "workspace:^0.3.3",
     "debug": "^4.3.4",
     "reflect-metadata": "^0.1.13"
   }
