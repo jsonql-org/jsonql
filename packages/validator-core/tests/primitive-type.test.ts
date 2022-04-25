@@ -7,7 +7,7 @@ import {
   checkObject,
   checkString,
   checkUnion,
-} from  '../src'
+} from  '../dist'
 import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
 // const debug = debugFn('jsonql-params-validator:test:primitive-type')

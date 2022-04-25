@@ -6,7 +6,7 @@ import { join } from 'path'
 import {
   checkArray,
   checkObject
-} from '../src'
+} from '../dist'
 import * as fsx from 'fs-extra'
 
 const contractJson = fsx.readJsonSync(join(__dirname, 'fixtures', 'contracts', 'contract.json'))
