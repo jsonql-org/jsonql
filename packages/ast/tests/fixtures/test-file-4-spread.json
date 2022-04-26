@@ -1,0 +1,270 @@
+[
+  {
+    type: 'ExportDefaultDeclaration',
+    span: { start: 97, end: 338, ctxt: 0 },
+    decl: {
+      type: 'ClassExpression',
+      identifier: {
+        type: 'Identifier',
+        span: { start: 118, end: 131, ctxt: 0 },
+        value: 'MyApiExample3',
+        optional: false
+      },
+      span: { start: 112, end: 338, ctxt: 0 },
+      decorators: [
+        {
+          type: 'Decorator',
+          span: { start: 82, end: 96, ctxt: 0 },
+          expression: {
+            type: 'Identifier',
+            span: { start: 83, end: 96, ctxt: 0 },
+            value: 'TestDecorator',
+            optional: false
+          }
+        }
+      ],
+      body: [
+        {
+          type: 'ClassMethod',
+          span: { start: 170, end: 227, ctxt: 0 },
+          key: {
+            type: 'Identifier',
+            span: { start: 170, end: 177, ctxt: 0 },
+            value: 'method1',
+            optional: false
+          },
+          function: {
+            params: [
+              {
+                type: 'Parameter',
+                span: { start: 178, end: 192, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'RestElement',
+                  span: { start: 178, end: 192, ctxt: 0 },
+                  rest: { start: 178, end: 181, ctxt: 0 },
+                  argument: {
+                    type: 'Identifier',
+                    span: { start: 181, end: 185, ctxt: 0 },
+                    value: 'args',
+                    optional: false,
+                    typeAnnotation: null
+                  },
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 185, end: 192, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsArrayType',
+                      span: { start: 187, end: 192, ctxt: 0 },
+                      elemType: {
+                        type: 'TsKeywordType',
+                        span: { start: 187, end: 190, ctxt: 0 },
+                        kind: 'any'
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            decorators: [],
+            span: { start: 170, end: 227, ctxt: 0 },
+            body: {
+              type: 'BlockStatement',
+              span: { start: 200, end: 227, ctxt: 0 },
+              stmts: [
+                {
+                  type: 'ExpressionStatement',
+                  span: { start: 206, end: 223, ctxt: 0 },
+                  expression: {
+                    type: 'CallExpression',
+                    span: { start: 206, end: 223, ctxt: 0 },
+                    callee: {
+                      type: 'MemberExpression',
+                      span: { start: 206, end: 217, ctxt: 0 },
+                      object: {
+                        type: 'Identifier',
+                        span: { start: 206, end: 213, ctxt: 0 },
+                        value: 'console',
+                        optional: false
+                      },
+                      property: {
+                        type: 'Identifier',
+                        span: { start: 214, end: 217, ctxt: 0 },
+                        value: 'log',
+                        optional: false
+                      }
+                    },
+                    arguments: [
+                      {
+                        spread: null,
+                        expression: {
+                          type: 'Identifier',
+                          span: { start: 218, end: 222, ctxt: 0 },
+                          value: 'args',
+                          optional: false
+                        }
+                      }
+                    ],
+                    typeArguments: null
+                  }
+                }
+              ]
+            },
+            generator: false,
+            async: false,
+            typeParameters: null,
+            returnType: {
+              type: 'TsTypeAnnotation',
+              span: { start: 193, end: 199, ctxt: 0 },
+              typeAnnotation: {
+                type: 'TsKeywordType',
+                span: { start: 195, end: 199, ctxt: 0 },
+                kind: 'void'
+              }
+            }
+          },
+          kind: 'method',
+          isStatic: false,
+          accessibility: null,
+          isAbstract: false,
+          isOptional: false,
+          isOverride: false
+        },
+        {
+          type: 'ClassMethod',
+          span: { start: 261, end: 335, ctxt: 0 },
+          key: {
+            type: 'Identifier',
+            span: { start: 261, end: 268, ctxt: 0 },
+            value: 'method2',
+            optional: false
+          },
+          function: {
+            params: [
+              {
+                type: 'Parameter',
+                span: { start: 269, end: 300, ctxt: 0 },
+                decorators: [],
+                pat: {
+                  type: 'RestElement',
+                  span: { start: 269, end: 300, ctxt: 0 },
+                  rest: { start: 269, end: 272, ctxt: 0 },
+                  argument: {
+                    type: 'Identifier',
+                    span: { start: 272, end: 276, ctxt: 0 },
+                    value: 'args',
+                    optional: false,
+                    typeAnnotation: null
+                  },
+                  typeAnnotation: {
+                    type: 'TsTypeAnnotation',
+                    span: { start: 276, end: 300, ctxt: 0 },
+                    typeAnnotation: {
+                      type: 'TsTypeReference',
+                      span: { start: 278, end: 300, ctxt: 0 },
+                      typeName: {
+                        type: 'Identifier',
+                        span: { start: 278, end: 283, ctxt: 0 },
+                        value: 'Array',
+                        optional: false
+                      },
+                      typeParams: {
+                        type: 'TsTypeParameterInstantiation',
+                        span: { start: 283, end: 300, ctxt: 0 },
+                        params: [
+                          {
+                            type: 'TsUnionType',
+                            span: { start: 284, end: 299, ctxt: 0 },
+                            types: [
+                              {
+                                type: 'TsKeywordType',
+                                span: { start: 284, end: 290, ctxt: 0 },
+                                kind: 'number'
+                              },
+                              {
+                                type: 'TsKeywordType',
+                                span: { start: 293, end: 299, ctxt: 0 },
+                                kind: 'string'
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            decorators: [],
+            span: { start: 261, end: 335, ctxt: 0 },
+            body: {
+              type: 'BlockStatement',
+              span: { start: 308, end: 335, ctxt: 0 },
+              stmts: [
+                {
+                  type: 'ExpressionStatement',
+                  span: { start: 314, end: 331, ctxt: 0 },
+                  expression: {
+                    type: 'CallExpression',
+                    span: { start: 314, end: 331, ctxt: 0 },
+                    callee: {
+                      type: 'MemberExpression',
+                      span: { start: 314, end: 325, ctxt: 0 },
+                      object: {
+                        type: 'Identifier',
+                        span: { start: 314, end: 321, ctxt: 0 },
+                        value: 'console',
+                        optional: false
+                      },
+                      property: {
+                        type: 'Identifier',
+                        span: { start: 322, end: 325, ctxt: 0 },
+                        value: 'log',
+                        optional: false
+                      }
+                    },
+                    arguments: [
+                      {
+                        spread: null,
+                        expression: {
+                          type: 'Identifier',
+                          span: { start: 326, end: 330, ctxt: 0 },
+                          value: 'args',
+                          optional: false
+                        }
+                      }
+                    ],
+                    typeArguments: null
+                  }
+                }
+              ]
+            },
+            generator: false,
+            async: false,
+            typeParameters: null,
+            returnType: {
+              type: 'TsTypeAnnotation',
+              span: { start: 301, end: 307, ctxt: 0 },
+              typeAnnotation: {
+                type: 'TsKeywordType',
+                span: { start: 303, end: 307, ctxt: 0 },
+                kind: 'void'
+              }
+            }
+          },
+          kind: 'method',
+          isStatic: false,
+          accessibility: null,
+          isAbstract: false,
+          isOptional: false,
+          isOverride: false
+        }
+      ],
+      superClass: null,
+      isAbstract: false,
+      typeParams: null,
+      superTypeParams: null,
+      implements: []
+    }
+  }
+]

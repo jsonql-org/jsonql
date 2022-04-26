@@ -11,14 +11,17 @@ import {
 } from '../src/processors'
 
 const show = (s: any) => console.dir(s, { depth: null })
-const tsFile = join(__dirname, 'fixtures', 'test-file-1.ts')
-const tsFuncFile = join(__dirname, 'fixtures', 'test-file-2.ts')
+const fixture = join(__dirname, 'fixtures')
+const tsFile = join(fixture, 'test-file-1.ts')
+const tsFuncFile = join(fixture, 'test-file-2.ts')
 
-test(`Should able to get the correct parser`, async t => {
+const tsFile4 = join(fixture, 'test-file-4-spread.ts')
+
+test.only(`Should able to get the correct parser`, async t => {
   const parser = getParser('ts')
-  const result = await parser(tsFile)
+  const result = await parser(tsFile4)
   const body = processClassModuleBody(result)
-  // show(body)
+  show(body)
   t.truthy(body)
 })
 
