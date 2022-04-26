@@ -35,12 +35,13 @@ import {
   OBJECT_TYPE,
 
   DEFAULT_VALUE,
+  SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import { stripSpan } from './common'
 import {
   SwcProcessedModule,
-  JsonqlParamInfo,
   SwcTypeParamsEntry,
+  JsonqlParamInfo,
 }  from './types'
 
 /** the first one to get call to take the body out from Class module */
@@ -80,6 +81,8 @@ export function processArgs(classBody: any) {
             switch (pat.type) {
               case ASSIGN_PATTERN:
                 return extractAssignmentPattern(pat)
+              case SPREAD_ARG_TYPE:
+                return extractSpread(pat)
               default: // Identifier
                 return extractIdentifier(pat)
             }
@@ -92,11 +95,44 @@ export function processArgs(classBody: any) {
   throw new Error(`Could not find body within the class file`)
 }
 
+/* this is just assign a value without type info */
+export function extractAssignmentPattern(pat: any) {
+  // console.dir(pat, { depth: null })
+  return {
+    name: pat.left.value, // type === 'Identifier
+    required: !pat.optional,
+    type: translateType(pat.right.type),
+    [DEFAULT_VALUE]: extractValue(pat.right),
+  }
+}
+/** when the argument is a spread style */
+export function extractSpread(pat: any) {{
+  return Object.assign(
+    extractTypeAnnotation(pat, {
+      name: pat.argument.value,
+      required: !pat.argument.optional,
+    }),
+    // we need to override the tstype to spread
+    { [TS_TYPE_NAME]: SPREAD_ARG_TYPE }
+  )
+}}
+
+/** The most common situation where it id as identifier  */
+export function extractIdentifier(pat: any) {
+  return extractTypeAnnotation(pat, {
+    name: pat.value,
+    required: !pat.optional,
+    // there might not be a type annotation
+    // @TODO need more scenario for testing
+  })
+}
+
+// --------------------------------------------------------- //
+
 /** extract ast from function expression */
 export function processFunctionModuleBody(
   module: SwcProcessedModule
 ) {
-
   return module.body.filter((body: any) =>
     body.type === EXPORT_DEFAULT_TYPE
     &&
@@ -142,16 +178,7 @@ export function normalize(body: Array<any>) {
   throw new Error(`Could not find any code to work with!`)
 }
 
-// this is just assign a value without type info
-export function extractAssignmentPattern(pat: any) {
-  // console.dir(pat, { depth: null })
-  return {
-    name: pat.left.value, // type === 'Identifier
-    required: !pat.optional,
-    type: translateType(pat.right.type),
-    [DEFAULT_VALUE]: extractValue(pat.right),
-  }
-}
+
 /** extract value from the pat */
 export function extractValue(pat: any) {
   switch (pat.type) {
@@ -179,17 +206,6 @@ export function translateType(swcType: string): string {
     default:
       return ANY_TYPE // always return a any type
   }
-}
-
-/** wrap this in one method to make the code cleaner */
-export function extractIdentifier(pat: any) {
-
-  return extractTypeAnnotation(pat, {
-    name: pat.value,
-    required: !pat.optional,
-    // there might not be a type annotation
-    // @TODO need more scenario for testing
-  })
 }
 
 /* take the types value out from the params array */
@@ -259,13 +275,12 @@ export function extractTypeAnnotation(
         case TS_KEY_TYPE:
           return {type: annotation.kind}
         case TS_UNION_TYPE:
-          console.dir(annotation, { depth: null })
+          // console.dir(annotation, { depth: null })
           return Object.assign(
             { [TS_TYPE_NAME]: TS_UNION_TYPE },
             furtherProcessUnionType(annotation)
           )
         case TS_ARRAY_TYPE:
-
           return {
             [TS_TYPE_NAME]: TS_ARRAY_TYPE,
             type: ARRAY_TYPE,

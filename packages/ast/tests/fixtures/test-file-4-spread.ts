@@ -6,13 +6,13 @@ import { TestDecorator } from './test-decorator'
 export default class MyApiExample3 {
 
   /** spread of the same type */
-  method1(...args: any[]): void {
-    console.log(args)
+  method1(...argA: any[]): void {
+    console.log(argA)
   }
 
   /** spread of union type */
-  method2(...args: Array<number | string>): void {
-    console.log(args)
+  method2(...argB: Array<number | string>): void {
+    console.log(argB)
   }
 
 }

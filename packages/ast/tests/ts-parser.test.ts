@@ -9,6 +9,10 @@ import {
   processClassModuleBody,
   // stripSpan,
 } from '../src/processors'
+import {
+  SPREAD_ARG_TYPE,
+  TS_TYPE_NAME
+} from '@jsonql/constants'
 
 const show = (s: any) => console.dir(s, { depth: null })
 const fixture = join(__dirname, 'fixtures')
@@ -33,12 +37,15 @@ test(`Should able to generate AST from a ts class file`, async t => {
 
 test(`Testing the tsFunctionParser`, async t => {
   const result = await tsFunctionParser(tsFuncFile)
-  // show(result)
+
   t.truthy(result)
 })
 
-test.only(`Should able to understand the spread arguments`, async t => {
+test(`Should able to understand the spread arguments`, async t => {
+  t.plan(2)
   const result = await tsClassParser(tsFile4)
-  show(result)
-  t.truthy(result)
+
+  for (const name in result) {
+    t.is(result[name][0][TS_TYPE_NAME], SPREAD_ARG_TYPE)
+  }
 })
