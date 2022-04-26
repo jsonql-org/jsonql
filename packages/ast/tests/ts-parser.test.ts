@@ -17,22 +17,28 @@ const tsFuncFile = join(fixture, 'test-file-2.ts')
 
 const tsFile4 = join(fixture, 'test-file-4-spread.ts')
 
-test.only(`Should able to get the correct parser`, async t => {
+test(`Should able to get the correct parser`, async t => {
   const parser = getParser('ts')
   const result = await parser(tsFile4)
   const body = processClassModuleBody(result)
-  show(body)
+  // show(body)
   t.truthy(body)
 })
 
 test(`Should able to generate AST from a ts class file`, async t => {
   const result = await tsClassParser(tsFile)
-  show(result)
+  // show(result)
   t.truthy(result)
 })
 
 test(`Testing the tsFunctionParser`, async t => {
   const result = await tsFunctionParser(tsFuncFile)
   // show(result)
+  t.truthy(result)
+})
+
+test.only(`Should able to understand the spread arguments`, async t => {
+  const result = await tsClassParser(tsFile4)
+  show(result)
   t.truthy(result)
 })

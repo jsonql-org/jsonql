@@ -36,3 +36,5 @@ export const TS_TYPE_LIT = 'TsTypeLiteral'
 export const TS_TYPE_REF = 'TsTypeReference'
 // this is for us to id what that is
 export const TS_TYPE_NAME = 'tstype'
+
+export const SPREAD_ARG_TYPE = 'RestElement'
