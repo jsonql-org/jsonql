@@ -41,9 +41,6 @@ export function createAutomaticRules(
     if (!ast.rules) {
       ast.rules = []
     }
-    if (!ast.messages) {
-      ast.messages = []
-    }
     ast.rules = [getValidateRules(ast)]
 
     return ast
@@ -66,4 +63,19 @@ function getValidateRules(ast: any): JsonqlValidateFn {
       }
   }
   throw new Error(`Unable to determine type from ast map to create validator!`)
+}
+
+/** extra the default value if there is none */
+export function getOptionalValue(arg: any, param: any) {
+  if (arg !== undefined) {
+    return arg
+  }
+  return (
+    (
+      param.optional === true ||
+      param.required === false // this is the new SWC generate map
+    ) &&
+    param.defaultvalue !== undefined
+      ? param.defaultvalue
+      : null)
 }

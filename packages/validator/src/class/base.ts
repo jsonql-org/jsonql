@@ -5,12 +5,14 @@ import {
   JsonqlValidationRule,
   JsonqlPropertyParamnMap,
   JsonqlClassValidationMap,
+  JsonqlValidateFn,
 } from '../types'
 import {
   chainProcessPromises
 } from '@jsonql/utils'
 import {
-  createAutomaticRules
+  createAutomaticRules,
+  getOptionalValue,
 } from './engine'
 import {
   checkString,
@@ -28,6 +30,9 @@ import {
   // PARAMS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
 } from './constants'
+import {
+  DEFAULT_VALUE
+} from '@jsonql/constants'
 import debug from 'debug'
 const debugFn = debug('jsonql:validator:class:base')
 /**
@@ -41,9 +46,11 @@ The sequence how this should run
 export class ValidatorFactoryBase {
 
   private plugins = new Map<string, any>()
-  // we keep the two set
+  // we keep two set
   private astWithBaseRules: Array<JsonqlPropertyParamnMap>
   protected schema!: Array<JsonqlPropertyParamnMap>
+  // the first level is the param pos the second level is the rule
+  protected errors!: Array<Array<number>>
 
   constructor(astMap: any) {
     this.astWithBaseRules = createAutomaticRules(astMap)
@@ -68,31 +75,58 @@ export class ValidatorFactoryBase {
   /**
     when validate happens we check the input value
     correspond to out map, and apply the values
+    argument values turn into an executable queue
   */
   protected normalizeArgValues(values: any[]) {
     const params = this.schema
-    if (params.length === 0) {
+    const pCtn = params.length
+    if (pCtn === 0) {
       return [] // nothing to do
     }
     if (!checkArray(values)) {
       debugFn(values)
       throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR)
     }
+    const vCtn = values.length
     switch (true) {
-      case values.length === params.length:
+      case vCtn === pCtn:
         return values.map((value, i) => (
           applyRules(value, params[i], i)
         ))
+      // @TODO spread operator
+
+      case vCtn < pCtn:
+        return params.map((param, i) => (
+          applyRules(getOptionalValue(values[i], param), param, i)
+        ))
+      case vCtn > pCtn:
+        return values.map((value, i) => {
+          
+        })
     }
   }
-
+  /**
+    at this point we actually put the rules in the queue
+    but we dont' run it yet until all rules are in the main queue
+    this way, if one fail then the whole queue exited without running
+  */
   protected applyRules(
     value: any,
     param: JsonqlPropertyParamnMap,
     idx: number
   ) {
-    
+    const { rules } = param
+    if (rules.length) {
+      const queue = rules.map((rule: JsonqlValidateFn, i: nummber) => {
+        // when it fail then we provide with the index number
+        return async () => Reflect.apply(rule, null, [value])
+                                  .catch(() => [idx, i])
+      })
 
+      return Reflect.apply(chainProcessPromises, null, queue)
+    }
+    // stuff it with a placeholder fuction?
+    return async () => true
   }
 
   /*

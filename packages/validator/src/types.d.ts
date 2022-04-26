@@ -44,7 +44,7 @@ export type JsonqlValidationRule = {
   [key: string]: any // free form to apply the plugins
 }
 
-export type JsonqlValidateFn = (value: any) => Promise<boolean|string>
+export type JsonqlValidateFn = (value: any) => Promise<boolean|string|number>
 
 export type JsonqlPropertyParamnMap = {
   name: string // the argument name
@@ -54,7 +54,6 @@ export type JsonqlPropertyParamnMap = {
   types?: any
   optional?: boolean // alias temporary will get remove in the future
   rules?: Array<JsonqlValidationRule> | Array<JsonqlValidateFn>
-  messages?: Array<string>
 }
 
 export type JsonqlClassValidationMap = {
