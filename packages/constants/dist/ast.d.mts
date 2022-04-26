@@ -23,4 +23,5 @@ export const TS_ANNO_NAME: "TsTypeAnnotation";
 export const TS_TYPE_LIT: "TsTypeLiteral";
 export const TS_TYPE_REF: "TsTypeReference";
 export const TS_TYPE_NAME: "tstype";
+export const SPREAD_ARG_TYPE: "RestElement";
 //# sourceMappingURL=ast.d.mts.map

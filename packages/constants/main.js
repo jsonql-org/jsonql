@@ -24,6 +24,7 @@ module.exports = {
     "TS_TYPE_LIT": "TsTypeLiteral",
     "TS_TYPE_REF": "TsTypeReference",
     "TS_TYPE_NAME": "tstype",
+    "SPREAD_ARG_TYPE": "RestElement",
     "EXT": "js",
     "TS_EXT": "ts",
     "HELLO": "Hello world!",
