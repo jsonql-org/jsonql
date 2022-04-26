@@ -21,7 +21,7 @@ import {
   checkObject,
   checkUnion,
   combineCheck,
-} from '@jsonql/validator-core'
+} from '@jsonql/validator-core/src'
 import {
   notEmpty
 } from '@jsonql/utils'
@@ -101,7 +101,7 @@ export class ValidatorFactoryBase {
         ))
       case vCtn > pCtn:
         return values.map((value, i) => {
-          
+
         })
     }
   }

@@ -1,12 +1,30 @@
 // start your project here
 // this contains all the primitive types checking methods
-export { checkAny } from './base/any'
-export { checkArray, isArrayLike, arrayTypeHandler } from './base/array'
-export { checkBoolean } from './base/boolean'
-export { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number'
-export { checkString } from './base/string'
-export { checkObject, objectTypeHandler } from './base/object'
+import { checkAny } from './base/any'
+import { checkArray, isArrayLike, arrayTypeHandler } from './base/array'
+import { checkBoolean } from './base/boolean'
+import { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number'
+import { checkString } from './base/string'
+import { checkObject, objectTypeHandler } from './base/object'
 // wrapper fn
-export { combineCheck } from './base/combine'
+import { combineCheck } from './base/combine'
 // union type check
-export { checkUnion } from './base/union'
+import { checkUnion } from './base/union'
+
+// for some reason the downstream keep complaining the js version has no export member of X
+export {
+  checkAny,
+  checkArray,
+  isArrayLike,
+  arrayTypeHandler,
+  checkBoolean,
+  checkNumber,
+  checkInteger,
+  checkFloat,
+  checkUnsigned,
+  checkString,
+  checkObject,
+  objectTypeHandler,
+  combineCheck,
+  checkUnion,
+}

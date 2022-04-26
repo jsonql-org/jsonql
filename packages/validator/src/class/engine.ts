@@ -18,6 +18,7 @@ import {
   TS_TYPE_LIT,
   TS_ARRAY_TYPE,
   TS_UNION_TYPE,
+  DEFAULT_VALUE,
 } from '@jsonql/constants'
 
 /**
@@ -74,8 +75,10 @@ export function getOptionalValue(arg: any, param: any) {
     (
       param.optional === true ||
       param.required === false // this is the new SWC generate map
-    ) &&
-    param.defaultvalue !== undefined
-      ? param.defaultvalue
-      : null)
+    )
+    &&
+    param[DEFAULT_VALUE] !== undefined
+      ? param[DEFAULT_VALUE]
+      : undefined
+  )
 }
