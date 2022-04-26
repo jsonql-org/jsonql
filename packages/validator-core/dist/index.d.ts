@@ -1,8 +1,9 @@
-export { checkAny } from './base/any';
-export { checkArray, isArrayLike, arrayTypeHandler } from './base/array';
-export { checkBoolean } from './base/boolean';
-export { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number';
-export { checkString } from './base/string';
-export { checkObject, objectTypeHandler } from './base/object';
-export { combineCheck } from './base/combine';
-export { checkUnion } from './base/union';
+import { checkAny } from './base/any';
+import { checkArray, isArrayLike, arrayTypeHandler } from './base/array';
+import { checkBoolean } from './base/boolean';
+import { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number';
+import { checkString } from './base/string';
+import { checkObject, objectTypeHandler } from './base/object';
+import { combineCheck } from './base/combine';
+import { checkUnion } from './base/union';
+export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, combineCheck, checkUnion, };
