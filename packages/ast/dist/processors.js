@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.extractIdentifier = exports.translateType = exports.extractValue = exports.extractAssignmentPattern = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.processArgs = exports.processClassModuleBody = void 0;
+exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.translateType = exports.extractValue = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.extractIdentifier = exports.extractSpread = exports.extractAssignmentPattern = exports.processArgs = exports.processClassModuleBody = void 0;
 // collection of processors
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
@@ -35,6 +35,8 @@ function processArgs(classBody) {
                     switch (pat.type) {
                         case constants_1.ASSIGN_PATTERN:
                             return extractAssignmentPattern(pat);
+                        case constants_1.SPREAD_ARG_TYPE:
+                            return extractSpread(pat);
                         default: // Identifier
                             return extractIdentifier(pat);
                     }
@@ -46,6 +48,40 @@ function processArgs(classBody) {
     throw new Error(`Could not find body within the class file`);
 }
 exports.processArgs = processArgs;
+/* this is just assign a value without type info */
+function extractAssignmentPattern(pat) {
+    // console.dir(pat, { depth: null })
+    return {
+        name: pat.left.value,
+        required: !pat.optional,
+        type: translateType(pat.right.type),
+        [constants_1.DEFAULT_VALUE]: extractValue(pat.right),
+    };
+}
+exports.extractAssignmentPattern = extractAssignmentPattern;
+/** when the argument is a spread style */
+function extractSpread(pat) {
+    {
+        return Object.assign(extractTypeAnnotation(pat, {
+            name: pat.argument.value,
+            required: !pat.argument.optional,
+        }), 
+        // we need to override the tstype to spread
+        { [constants_1.TS_TYPE_NAME]: constants_1.SPREAD_ARG_TYPE });
+    }
+}
+exports.extractSpread = extractSpread;
+/** The most common situation where it id as identifier  */
+function extractIdentifier(pat) {
+    return extractTypeAnnotation(pat, {
+        name: pat.value,
+        required: !pat.optional,
+        // there might not be a type annotation
+        // @TODO need more scenario for testing
+    });
+}
+exports.extractIdentifier = extractIdentifier;
+// --------------------------------------------------------- //
 /** extract ast from function expression */
 function processFunctionModuleBody(module) {
     return module.body.filter((body) => body.type === constants_1.EXPORT_DEFAULT_TYPE
@@ -90,17 +126,6 @@ function normalize(body) {
     throw new Error(`Could not find any code to work with!`);
 }
 exports.normalize = normalize;
-// this is just assign a value without type info
-function extractAssignmentPattern(pat) {
-    // console.dir(pat, { depth: null })
-    return {
-        name: pat.left.value,
-        required: !pat.optional,
-        type: translateType(pat.right.type),
-        [constants_1.DEFAULT_VALUE]: extractValue(pat.right),
-    };
-}
-exports.extractAssignmentPattern = extractAssignmentPattern;
 /** extract value from the pat */
 function extractValue(pat) {
     switch (pat.type) {
@@ -131,16 +156,6 @@ function translateType(swcType) {
     }
 }
 exports.translateType = translateType;
-/** wrap this in one method to make the code cleaner */
-function extractIdentifier(pat) {
-    return extractTypeAnnotation(pat, {
-        name: pat.value,
-        required: !pat.optional,
-        // there might not be a type annotation
-        // @TODO need more scenario for testing
-    });
-}
-exports.extractIdentifier = extractIdentifier;
 /* take the types value out from the params array */
 function extractArrayTypes(annotation) {
     const typeParams = annotation[constants_1.TYPE_PARAMS].params;
@@ -205,7 +220,7 @@ function extractTypeAnnotation(pat, base) {
                 case constants_1.TS_KEY_TYPE:
                     return { type: annotation.kind };
                 case constants_1.TS_UNION_TYPE:
-                    console.dir(annotation, { depth: null });
+                    // console.dir(annotation, { depth: null })
                     return Object.assign({ [constants_1.TS_TYPE_NAME]: constants_1.TS_UNION_TYPE }, furtherProcessUnionType(annotation));
                 case constants_1.TS_ARRAY_TYPE:
                     return {

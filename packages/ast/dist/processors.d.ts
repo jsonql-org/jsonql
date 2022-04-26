@@ -3,24 +3,15 @@ import { SwcProcessedModule, JsonqlParamInfo } from './types';
 export declare function processClassModuleBody(module: SwcProcessedModule): any;
 /** processing the class methods arguments **/
 export declare function processArgs(classBody: any): any;
-/** extract ast from function expression */
-export declare function processFunctionModuleBody(module: SwcProcessedModule): any;
-/** process the function argument params */
-export declare function processArgParams(body: any): {
-    [x: number]: any;
-};
-export declare function normalize(body: Array<any>): any;
 export declare function extractAssignmentPattern(pat: any): {
     name: any;
     required: boolean;
     type: string;
     defaultvalue: any;
 };
-/** extract value from the pat */
-export declare function extractValue(pat: any): any;
-/** translate the ts type name from an AssignmentPattern */
-export declare function translateType(swcType: string): string;
-/** wrap this in one method to make the code cleaner */
+/** when the argument is a spread style */
+export declare function extractSpread(pat: any): never;
+/** The most common situation where it id as identifier  */
 export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
     tstype: "TsUnionType";
 } & {
@@ -69,6 +60,17 @@ export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
     types?: undefined;
     typeParams?: undefined;
 });
+/** extract ast from function expression */
+export declare function processFunctionModuleBody(module: SwcProcessedModule): any;
+/** process the function argument params */
+export declare function processArgParams(body: any): {
+    [x: number]: any;
+};
+export declare function normalize(body: Array<any>): any;
+/** extract value from the pat */
+export declare function extractValue(pat: any): any;
+/** translate the ts type name from an AssignmentPattern */
+export declare function translateType(swcType: string): string;
 export declare function extractArrayTypes(annotation: any): any;
 /**
 The tstype: TsTypeReference is a very problematic one,
