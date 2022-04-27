@@ -26,7 +26,7 @@ import {
   JsonqlValidationMap,
 } from '../types'
 import {
-  chainProcessPromises,
+  queuePromisesProcess,
   showDeep,
 } from '@jsonql/utils'
 // main
@@ -52,10 +52,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this.normalizeArgValues(values)
-    // we get a function back
-    const ex = Reflect.apply(chainProcessPromises, null, queues)
 
-    return ex(null)
+    return queuePromisesProcess(queues, null)
       .then((result: any) => {
         console.log('result', result)
         return result

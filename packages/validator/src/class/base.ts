@@ -28,7 +28,7 @@ import {
 import {
   createAutomaticRules,
   getOptionalValue,
-} from './engine'
+} from './fn'
 import {
   JsonqlValidationPlugin,
   JsonqlValidationMap,
