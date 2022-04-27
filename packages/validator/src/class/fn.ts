@@ -4,7 +4,6 @@ import {
   JsonqlPropertyParamnMap,
   JsonqlValidateCbFn,
   JsonqlValidateFn,
-  AsyncCallbackFunction
 } from '../types'
 import {
   checkString,
@@ -25,7 +24,7 @@ import {
 } from '@jsonql/constants'
 import {
   JsonqlValidationError
-} from '@jsonql/errors'
+} from '@jsonql/errors/src'
 
 /**
 The input is what the dev wrote in the validate
@@ -44,6 +43,7 @@ because the plugins are apply there
 export function createAutomaticRules(
   astMap: Array<JsonqlPropertyParamnMap>
 ): Array<JsonqlPropertyParamnMap> {
+
   return astMap.map((ast: JsonqlPropertyParamnMap) => {
     if (!ast.rules) {
       ast.rules = []
@@ -51,6 +51,29 @@ export function createAutomaticRules(
     ast.rules = [ contructRuleCb(ast) ]
     return ast
   })
+}
+
+/* create a generic wrapper method to manage the error */
+async function validateFnWrapper(
+  fn: JsonqlValidateFn,
+  args: Array<any>,
+  name?: string,
+  errDetail?: Array<number>
+) {
+
+  return Reflect.apply(fn, null, args)
+          .then((result: boolean) => {
+
+            console.log(name, args, errDetail)
+
+            if (!result) {
+              throw new JsonqlValidationError(name, errDetail)
+            }
+            return result
+          })
+          .catch(err => {
+            console.log('ERROR?', err)
+          })
 }
 
 /**
@@ -62,12 +85,8 @@ function contructRuleCb(ast: any): JsonqlValidateCbFn {
   const ruleFn = getValidateRules(ast)
 
   return async function(value: any, pos: number[]) {
-    return Reflect.apply(ruleFn, null, [value])
-            .then((result: boolean) => {
-              if (!result) {
-                throw new JsonqlValidationError(ast.name, pos)
-              }
-            })
+
+    return validateFnWrapper(ruleFn, [value], ast.name, pos)
   }
 }
 

@@ -44,9 +44,9 @@ export type JsonqlValidationRule = {
   [key: string]: any // free form to apply the plugins
 }
 
-export type JsonqlValidateFn = (value: any) => Promise<boolean|string|number|Array<number>>
+export type JsonqlValidateFn = AsyncCallbackFunction
 
-export type JsonqlValidateCbFn = (value: any, pos: number[]) => Promise<boolean|string|number|Array<number>>
+export type JsonqlValidateCbFn = (value: any, pos: number[]) => Promise<any>
 
 export type JsonqlPropertyParamnMap = {
   name: string // the argument name

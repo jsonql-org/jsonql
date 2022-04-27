@@ -44,7 +44,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
 
   /** takes the user define rules and generate the full map */
   createSchema(validationMap: JsonqlValidationMap): void {
-    // console.log(propName, this.validationMap)
+    console.log(/* propName, */ validationMap)
     // if this never get call, that means we just do automatic
   }
 
@@ -52,6 +52,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this.normalizeArgValues(values)
+
+    console.log(queues)
 
     return queuePromisesProcess(queues, null)
       .then((result: any) => {

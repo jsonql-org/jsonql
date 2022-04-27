@@ -3,7 +3,7 @@ import {
   JsonqlValidationError
 } from '@jsonql/errors'
 import {
-  chainProcessPromises,
+  queuePromisesProcess,
   notEmpty,
   showDeep,
 } from '@jsonql/utils'
@@ -138,12 +138,11 @@ export class ValidatorFactoryBase {
   ) {
     const { rules } = param
     if (rules && rules.length) {
-      const queue = rules.map((rule: JsonqlValidateCbFn, i: number) => {
+      // we only need to return the queue
+      return rules.map((rule: JsonqlValidateCbFn, i: number) => {
         // when it fail then we provide with the index number
         return async () => Reflect.apply(rule, null, [value, [idx, i]])
       })
-      console.log('queue', queue)
-      return Reflect.apply(chainProcessPromises, null, queue)
     }
     // stuff it with a placeholder fuction?
     return async () => true
