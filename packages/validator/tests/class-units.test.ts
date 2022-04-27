@@ -9,11 +9,13 @@ import {
 import {
   ValidatorFactory
 } from '../src'
+import {
+  chainProcessPromises
+} from '@jsonql/utils'
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')
 const classAst = join(fixtures, 'class-style.json')
 const funcAst = join(fixtures, 'function-style.json')
-
 let context: any = {}
 test.before(() => {
   context = {
@@ -21,6 +23,48 @@ test.before(() => {
     funcAstInput: fs.readJsonSync(funcAst)
   }
 })
+// ------------------------------------------- //
+declare type CBFunc = () => Promise<boolean>
+const truthy: CBFunc = async () => true
+const falsy: CBFunc = async () => false
+const wrapper = async (fn: CBFunc, i: number) => {
+  return fn().then((result: boolean) => {
+    if (!result) {
+      throw new Error(i+'')
+    }
+    return result
+  })
+}
+// ------------------ START TEST ---------------- //
+test(`Testing the multi level of Throw promies`, async t => {
+  t.plan(1)
+
+  const queue = [
+    [() => wrapper(truthy, 0)],
+    [() => wrapper(falsy, 1)],
+    [() => wrapper(truthy, 0)]
+  ].map(q => {
+
+    const x = Reflect.apply(chainProcessPromises, null, q)
+    return () => x()
+  })
+
+  const main = Reflect.apply(chainProcessPromises, null, queue)
+
+  return main(null)
+            .then(result => {
+              console.log('------ RESULT -------')
+              showDeep(result)
+            })
+            .catch(err => {
+              console.log('------- ERROR ------')
+              showDeep(err)
+            })
+            .finally(() => {
+              t.pass()
+            })
+})
+
 
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
@@ -30,14 +74,23 @@ test(`Should able to generate automatic validation rule from ast map`, t => {
   t.truthy(rules)
 })
 
-test.only(`It should able validate`, async t => {
+test(`It should able validate`, async t => {
+  t.plan(1)
   // arg1: string, arg2: string | number, arg3?: boolea
-  const values = ['hello', 234, "shit"]
+  const values = ['hello', true, "shit"]
   const validator = new ValidatorFactory(context.funcAstInput.resolver)
 
-  const result = await validator.validate(values)
+  return validator.validate(values)
+                  .then(result => {
+                    console.log('result')
+                    showDeep(result)
+                  })
+                  .catch(err => {
+                    console.log('err')
+                    showDeep(err)
+                  })
+                  .finally(() => {
+                    t.pass()
+                  })
 
-  showDeep(result)
-
-  t.truthy(result)
 })

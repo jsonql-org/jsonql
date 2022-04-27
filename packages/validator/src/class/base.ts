@@ -35,7 +35,7 @@ import {
   JsonqlValidationRule,
   JsonqlPropertyParamnMap,
   JsonqlClassValidationMap,
-  JsonqlValidateFn,
+  JsonqlValidateCbFn,
 } from '../types'
 // ---- DEBUG ---- //
 import debug from 'debug'
@@ -64,7 +64,7 @@ export class ValidatorFactoryBase {
   protected get schema() {
     return this._schema || this._astWithBaseRules
   }
-  
+
   /** @TODO map the index array to name */
   protected get errors() {
     return this._errors || null
@@ -138,12 +138,11 @@ export class ValidatorFactoryBase {
   ) {
     const { rules } = param
     if (rules && rules.length) {
-      const queue = rules.map((rule: JsonqlValidateFn, i: number) => {
+      const queue = rules.map((rule: JsonqlValidateCbFn, i: number) => {
         // when it fail then we provide with the index number
-        return async () => Reflect.apply(rule, null, [value])
-                                  .catch(() => [idx, i])
+        return async () => Reflect.apply(rule, null, [value, [idx, i]])
       })
-
+      console.log('queue', queue)
       return Reflect.apply(chainProcessPromises, null, queue)
     }
     // stuff it with a placeholder fuction?

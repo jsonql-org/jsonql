@@ -3,6 +3,7 @@ export { chainFns } from './chain-fns'
 export {
   chainPromises,
   chainProcessPromises,
+  queuePromisesProcess,
 } from './chain-promises'
 export {
   checkIsContract,

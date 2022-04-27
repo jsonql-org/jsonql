@@ -11,6 +11,7 @@ import omitBy from 'lodash-es/omitBy'
 /// import isEqual from 'lodash-es/isEqual'
 import findKey from 'lodash-es/findKey'
 // import curry from 'lodash-es/curry'
+import flatMap from 'lodash-es/flatMap'
 // export
 export {
   isNaN,
@@ -23,4 +24,5 @@ export {
   findKey,
   // isEqual
   // curry,
+  flatMap,
 }

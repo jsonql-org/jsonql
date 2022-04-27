@@ -8,7 +8,8 @@ import {
   chainFns,
   chainPromises,
   chainProcessPromises,
-
+  queuePromisesProcess,
+  // showDeep
 } from '../src'
 
 declare type testNumFn = (num: number) => number
@@ -44,8 +45,7 @@ test(`Test the chainPromises and see if one fail and what happen`, async t => {
     })
 })
 
-
-test.only(`Test to see if one of the promise fail and what happen`, async t => {
+test(`Test to see if one of the promise fail and it should exit with queuePromisesProcess`, async t => {
 
   const errorMsg = 'FAIL AND EXIT'
   const fn = async (x: any) => {
@@ -62,15 +62,14 @@ test.only(`Test to see if one of the promise fail and what happen`, async t => {
     debug('x', x, 'y', y, 'z', z)
     return Promise.resolve(x + y + z)
   }
-  const executor = chainProcessPromises(fn, fn1, fn2)
 
-  return executor(1)
-    .then((result: number) => {
-      console.log(result)
-    })
-    .catch((error: string) => {
-      t.is(error, errorMsg)
-    })
+  return queuePromisesProcess([fn, fn1, fn2], 1)
+            .then((result: number) => {
+              console.log(result)
+            })
+            .catch((error: string) => {
+              t.is(error, errorMsg)
+            })
 })
 
 

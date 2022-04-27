@@ -1,6 +1,6 @@
 // custom validation error class
 // when validaton failed
-// should there also be a errors result somewhere 
+// should there also be a errors result somewhere
 
 export default class JsonqlValidationError extends Error {
   detail: any
@@ -12,7 +12,7 @@ export default class JsonqlValidationError extends Error {
     this.message = args[0]
     this.detail = args[1]
 
-    this.className = JsonqlValidationError.name;
+    this.className = JsonqlValidationError.name
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, JsonqlValidationError)

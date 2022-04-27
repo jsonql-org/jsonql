@@ -2,7 +2,9 @@
 // import utils from '@jsonql/utils'
 import {
   JsonqlPropertyParamnMap,
-  JsonqlValidateFn
+  JsonqlValidateCbFn,
+  JsonqlValidateFn,
+  AsyncCallbackFunction
 } from '../types'
 import {
   checkString,
@@ -21,6 +23,9 @@ import {
   DEFAULT_VALUE,
   SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
+import {
+  JsonqlValidationError
+} from '@jsonql/errors'
 
 /**
 The input is what the dev wrote in the validate
@@ -43,10 +48,27 @@ export function createAutomaticRules(
     if (!ast.rules) {
       ast.rules = []
     }
-    ast.rules = [getValidateRules(ast)]
-
+    ast.rules = [ contructRuleCb(ast) ]
     return ast
   })
+}
+
+/**
+ when this get put in the execution queue we also
+ provide the index (argument position)
+ and i the position of this rule within the rules
+ */
+function contructRuleCb(ast: any): JsonqlValidateCbFn {
+  const ruleFn = getValidateRules(ast)
+
+  return async function(value: any, pos: number[]) {
+    return Reflect.apply(ruleFn, null, [value])
+            .then((result: boolean) => {
+              if (!result) {
+                throw new JsonqlValidationError(ast.name, pos)
+              }
+            })
+  }
 }
 
 /** only deal with constructing the basic rules validation fucntion */
