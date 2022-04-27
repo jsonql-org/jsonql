@@ -1,19 +1,16 @@
 // this is the base class for all the helper methods
 import {
-  JsonqlValidationPlugin,
-  JsonqlValidationMap,
-  JsonqlValidationRule,
-  JsonqlPropertyParamnMap,
-  JsonqlClassValidationMap,
-  JsonqlValidateFn,
-} from '../types'
+  JsonqlValidationError
+} from '@jsonql/errors'
 import {
-  chainProcessPromises
+  chainProcessPromises,
+  notEmpty,
+  showDeep,
 } from '@jsonql/utils'
 import {
-  createAutomaticRules,
-  getOptionalValue,
-} from './engine'
+  DEFAULT_VALUE,
+  DEFAULT_TYPE,
+} from '@jsonql/constants'
 import {
   checkString,
   checkArray,
@@ -22,17 +19,25 @@ import {
   checkUnion,
   combineCheck,
 } from '@jsonql/validator-core/src'
-import {
-  notEmpty
-} from '@jsonql/utils'
+// ----- LOCAL ---- //
 import {
   ARGS_NOT_ARRAY_ERR,
   // PARAMS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
-} from './constants'
+} from '../constants'
 import {
-  DEFAULT_VALUE
-} from '@jsonql/constants'
+  createAutomaticRules,
+  getOptionalValue,
+} from './engine'
+import {
+  JsonqlValidationPlugin,
+  JsonqlValidationMap,
+  JsonqlValidationRule,
+  JsonqlPropertyParamnMap,
+  JsonqlClassValidationMap,
+  JsonqlValidateFn,
+} from '../types'
+// ---- DEBUG ---- //
 import debug from 'debug'
 const debugFn = debug('jsonql:validator:class:base')
 /**
@@ -45,22 +50,31 @@ The sequence how this should run
 */
 export class ValidatorFactoryBase {
 
-  private plugins = new Map<string, any>()
+  private _plugins = new Map<string, any>()
   // we keep two set
-  private astWithBaseRules: Array<JsonqlPropertyParamnMap>
-  protected schema!: Array<JsonqlPropertyParamnMap>
+  private _astWithBaseRules: Array<JsonqlPropertyParamnMap>
+  private _schema!: Array<JsonqlPropertyParamnMap>
   // the first level is the param pos the second level is the rule
-  protected errors!: Array<Array<number>>
+  private _errors!: Array<Array<number>>
 
   constructor(astMap: any) {
-    this.astWithBaseRules = createAutomaticRules(astMap)
+    this._astWithBaseRules = createAutomaticRules(astMap)
+  }
+
+  protected get schema() {
+    return this._schema || this._astWithBaseRules
+  }
+  
+  /** @TODO map the index array to name */
+  protected get errors() {
+    return this._errors || null
   }
 
   /** put the rule in here and make it into an async method */
   protected createSchema(
     input?: any
   ): void {
-    let astWithRules = this.astWithBaseRules
+    let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
     if (notEmpty(input)) {
       if (checkArray(input)) {
@@ -69,7 +83,7 @@ export class ValidatorFactoryBase {
         astWithRules = this.applyObjectInput(astWithRules, input)
       }
     }
-    this.schema = astWithRules
+    this._schema = astWithRules
   }
 
   /**
@@ -78,6 +92,7 @@ export class ValidatorFactoryBase {
     argument values turn into an executable queue
   */
   protected normalizeArgValues(values: any[]) {
+    // there might not be a dev provided schema
     const params = this.schema
     const pCtn = params.length
     if (pCtn === 0) {
@@ -91,17 +106,23 @@ export class ValidatorFactoryBase {
     switch (true) {
       case vCtn === pCtn:
         return values.map((value, i) => (
-          applyRules(value, params[i], i)
+          this.applyRules(value, params[i], i)
         ))
-      // @TODO spread operator
-
       case vCtn < pCtn:
         return params.map((param, i) => (
-          applyRules(getOptionalValue(values[i], param), param, i)
+          this.applyRules(getOptionalValue(values[i], param), param, i)
         ))
       case vCtn > pCtn:
         return values.map((value, i) => {
-
+          // const required = !(i > pCtn ? true : !!params[i].required)
+          const param = params[i] || { type: DEFAULT_TYPE, name: `_${i}`}
+          return this.applyRules(getOptionalValue(value, param), param, i)
+        })
+      default: // will not fall through here @TODO
+        // now the default should be the spread
+        return values.map((value, i) => {
+          const p = params[i] || Object.assign(params[0], { name: '_'})
+          return this.applyRules(getOptionalValue(value, p), p, i)
         })
     }
   }
@@ -116,8 +137,8 @@ export class ValidatorFactoryBase {
     idx: number
   ) {
     const { rules } = param
-    if (rules.length) {
-      const queue = rules.map((rule: JsonqlValidateFn, i: nummber) => {
+    if (rules && rules.length) {
+      const queue = rules.map((rule: JsonqlValidateFn, i: number) => {
         // when it fail then we provide with the index number
         return async () => Reflect.apply(rule, null, [value])
                                   .catch(() => [idx, i])
@@ -160,7 +181,7 @@ export class ValidatorFactoryBase {
   /** register plugins */
   protected registerPlugin(name: string, rule: JsonqlValidationPlugin) {
     // @TODO need to check the rule and transform the plugin
-    this.plugins.set(name, rule)
+    this._plugins.set(name, rule)
   }
 
 }

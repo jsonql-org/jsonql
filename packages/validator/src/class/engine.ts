@@ -19,6 +19,7 @@ import {
   TS_ARRAY_TYPE,
   TS_UNION_TYPE,
   DEFAULT_VALUE,
+  SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 
 /**
@@ -52,12 +53,17 @@ export function createAutomaticRules(
 function getValidateRules(ast: any): JsonqlValidateFn {
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
+    // @TODO need more test on different situation
       return async (value: any) => checkUnion(value, ast.type)
     case TS_ARRAY_TYPE:
-      return async (value: Array<any>) => checkArray(value)
+      // need to apply for the type as well
+      return async (value: Array<any>) => checkArray(value, ast.types)
     case TS_TYPE_REF || TS_TYPE_LIT:
     // @TODO should this get a special treatment
       return async (value: any) => checkAny(value)
+    case SPREAD_ARG_TYPE: // it will be array but need the extended test
+      // @TODO need to examine the input to see what more sutation could come up
+      return async (value: Array<any>) => checkArray(value, ast.types)
     default: // no tstype then should be primitive
       if (checkString(ast.type)) {
         return async (value: any) => combineCheck(ast.type)(value)
@@ -66,7 +72,7 @@ function getValidateRules(ast: any): JsonqlValidateFn {
   throw new Error(`Unable to determine type from ast map to create validator!`)
 }
 
-/** extra the default value if there is none */
+/** extract the default value if there is none */
 export function getOptionalValue(arg: any, param: any) {
   if (arg !== undefined) {
     return arg

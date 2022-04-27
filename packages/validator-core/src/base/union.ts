@@ -11,7 +11,10 @@ have one of them pass that means all pass
 so if one pass we throw Error and it will exist
 if it fail we resolve it therefore the then is actually failed
 */
-function generatePromisesFn(value: any, types: Array<string>) {
+function generatePromisesFn(
+  value: any,
+  types: Array<string>
+) {
   // we return it as a function therefore
   // if the last one fail the next one no need to get exeucte
   return types.map(type => {

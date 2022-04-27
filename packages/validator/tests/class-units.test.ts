@@ -6,16 +6,17 @@ import { showDeep } from '@jsonql/utils'
 import {
   createAutomaticRules
 } from '../src/class/engine'
-
-// import * as core from '@jsonql/validator-core'
-
+import {
+  ValidatorFactory
+} from '../src'
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')
 const classAst = join(fixtures, 'class-style.json')
 const funcAst = join(fixtures, 'function-style.json')
 
-test.before(t => {
-  t.context = {
+let context: any = {}
+test.before(() => {
+  context = {
     classAstInput: fs.readJsonSync(classAst),
     funcAstInput: fs.readJsonSync(funcAst)
   }
@@ -24,20 +25,19 @@ test.before(t => {
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
   // @ts-ignore
-  const rules = createAutomaticRules(t.context.classAstInput.main)
-
+  const rules = createAutomaticRules(context.classAstInput.main)
   showDeep(rules)
-
   t.truthy(rules)
 })
 
+test.only(`It should able validate`, async t => {
+  // arg1: string, arg2: string | number, arg3?: boolea
+  const values = ['hello', 234, "shit"]
+  const validator = new ValidatorFactory(context.funcAstInput.resolver)
 
-test.skip(`It should able to transform array style input into the standard`, t => {
-  const input1 = [
-    [], // skip
-    '_', // skip
-    '_', // skip
-    {key: 'hello'}, // as object and check if key exist
+  const result = await validator.validate(values)
 
-  ]
+  showDeep(result)
+
+  t.truthy(result)
 })

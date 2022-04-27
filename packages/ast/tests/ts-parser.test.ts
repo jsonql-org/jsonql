@@ -44,7 +44,7 @@ test(`Testing the tsFunctionParser`, async t => {
 test(`Should able to understand the spread arguments`, async t => {
   t.plan(2)
   const result = await tsClassParser(tsFile4)
-
+  // show(result)
   for (const name in result) {
     t.is(result[name][0][TS_TYPE_NAME], SPREAD_ARG_TYPE)
   }

@@ -24,7 +24,11 @@ import {
 import {
   JsonqlValidationPlugin,
   JsonqlValidationMap,
-} from '../../types'
+} from '../types'
+import {
+  chainProcessPromises,
+  showDeep,
+} from '@jsonql/utils'
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
 
@@ -45,9 +49,20 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   }
 
   /** this validation happens */
-  validate(values: Array<any>) {
-    const argValues = this.normalizeArgValues(values)
+  async validate(values: Array<any>) {
+    // this come out with a queue then we put into the chainProcessPromises
+    const queues = this.normalizeArgValues(values)
+    // we get a function back
+    const ex = Reflect.apply(chainProcessPromises, null, queues)
 
+    return ex(null)
+      .then((result: any) => {
+        console.log('result', result)
+        return result
+      })
+      .catch((err: any) => {
+        showDeep(err)
+      })
   }
 
   /** this will export the map for generate contract */
