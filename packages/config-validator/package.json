@@ -32,7 +32,7 @@
   "dependencies": {
     "@jsonql/constants": "workspace:^0.5.10",
     "@jsonql/errors": "workspace:^0.6.0",
-    "@jsonql/utils": "workspace:^0.3.4",
+    "@jsonql/utils": "workspace:^0.4.0",
     "@jsonql/validator-core": "workspace:^0.1.2"
   },
   "devDependencies": {

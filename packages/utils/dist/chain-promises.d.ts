@@ -9,4 +9,9 @@ declare type JsonqlPromiseChainFn = (...args: any[]) => Promise<any>;
  * it will be the same like chainFns that take one promise resolve as the next fn parameter
  */
 export declare function chainProcessPromises(initPromise: JsonqlPromiseChainFn, ...promises: Array<JsonqlPromiseChainFn>): (...args: any[]) => any;
+/**
+ * This is a combine method to run the above chain process
+ * cos sometime we don't want to have the process separate (see validator)
+ */
+export declare function queuePromisesProcess(queue: Array<JsonqlPromiseChainFn>, initValue?: any): any;
 export {};

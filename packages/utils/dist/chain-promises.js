@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chainProcessPromises = exports.chainPromises = void 0;
+exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = void 0;
 // break it out on its own because
 // it's building from the lodash-es from scratch
 // according to this discussion https://github.com/lodash/lodash/issues/3298
@@ -23,3 +23,14 @@ function chainProcessPromises(initPromise, ...promises) {
     return (...args) => (promises.reduce((promiseChain, currentTask) => (promiseChain.then((chainResult) => (currentTask(chainResult)))), Reflect.apply(initPromise, null, args)));
 }
 exports.chainProcessPromises = chainProcessPromises;
+/**
+ * This is a combine method to run the above chain process
+ * cos sometime we don't want to have the process separate (see validator)
+ */
+function queuePromisesProcess(queue, initValue) {
+    // we need to make sure the Array is actually flat array
+    const q = (0, lodash_1.flatMap)(queue);
+    const ex = Reflect.apply(chainProcessPromises, null, q);
+    return ex(initValue);
+}
+exports.queuePromisesProcess = queuePromisesProcess;
