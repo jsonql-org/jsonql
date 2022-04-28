@@ -27,10 +27,10 @@ exports.chainProcessPromises = chainProcessPromises;
  * This is a combine method to run the above chain process
  * cos sometime we don't want to have the process separate (see validator)
  */
-function queuePromisesProcess(queue, initValue) {
+function queuePromisesProcess(queue, ...initValue) {
     // we need to make sure the Array is actually flat array
     const q = (0, lodash_1.flatMap)(queue);
     const ex = Reflect.apply(chainProcessPromises, null, q);
-    return ex(initValue);
+    return Reflect.apply(ex, null, initValue);
 }
 exports.queuePromisesProcess = queuePromisesProcess;

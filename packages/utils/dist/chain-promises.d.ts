@@ -13,5 +13,5 @@ export declare function chainProcessPromises(initPromise: JsonqlPromiseChainFn, 
  * This is a combine method to run the above chain process
  * cos sometime we don't want to have the process separate (see validator)
  */
-export declare function queuePromisesProcess(queue: Array<JsonqlPromiseChainFn>, initValue?: any): any;
+export declare function queuePromisesProcess(queue: Array<JsonqlPromiseChainFn>, ...initValue: any[]): any;
 export {};
