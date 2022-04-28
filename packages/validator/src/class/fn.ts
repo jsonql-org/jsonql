@@ -12,6 +12,7 @@ import {
   // checkObject,
   checkUnion,
   combineCheck,
+  promisify,
 } from '@jsonql/validator-core/src'
 import {
   TS_TYPE_NAME,
@@ -23,7 +24,8 @@ import {
   SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import {
-  JsonqlValidationError
+  JsonqlValidationError,
+  JsonqlError,
 } from '@jsonql/errors/src'
 
 /**
@@ -60,10 +62,18 @@ export function createAutomaticRules(
  */
 function contructRuleCb(ast: any): JsonqlValidateCbFn {
   const ruleFn = getValidateRules(ast)
-
   return async function(value: any, pos: number[]) {
-
-    return validateFnWrapper(ruleFn, [value], ast.name, pos)
+    // return validateFnWrapper(ruleFn, [value], pos, ast.name)
+    const { name } = ast 
+    return Reflect.apply(ruleFn, null, [value])
+                  .then((result: any) => {
+                    console.log('pass', name, result)
+                    return result 
+                  })
+                  .catch((error: boolean) => {
+                    console.log('failed', name, error, pos)
+                    throw new JsonqlValidationError(name, pos)
+                  })
   }
 }
 
@@ -73,42 +83,19 @@ function getValidateRules(ast: any): JsonqlValidateFn {
     case TS_UNION_TYPE:
     // @TODO need more test on different situation
       return async (value: any) => checkUnion(value, ast.type)
-    case TS_ARRAY_TYPE:
+    case TS_ARRAY_TYPE || SPREAD_ARG_TYPE:
       // need to apply for the type as well
-      return async (value: Array<any>) => checkArray(value, ast.types)
+       // @TODO need to examine the input to see what more sutation could come up
+      return async (value: Array<any>) => promisify(checkArray)(value, ast.types)
     case TS_TYPE_REF || TS_TYPE_LIT:
     // @TODO should this get a special treatment
-      return async (value: any) => checkAny(value)
-    case SPREAD_ARG_TYPE: // it will be array but need the extended test
-      // @TODO need to examine the input to see what more sutation could come up
-      return async (value: Array<any>) => checkArray(value, ast.types)
+      return async (value: any) => promisify(checkAny)(value)
     default: // no tstype then should be primitive
       if (checkString(ast.type)) {
-        return async (value: any) => combineCheck(ast.type)(value)
+        return async (value: any) => promisify(combineCheck(ast.type))(value)
       }
   }
-  throw new Error(`Unable to determine type from ast map to create validator!`)
-}
-
-/* create a generic wrapper method to manage the error */
-async function validateFnWrapper(
-  fn: JsonqlValidateFn,
-  args: Array<any>,
-  name?: string,
-  errDetail?: Array<number>
-) {
-
-  return Reflect.apply(fn, null, args)
-          .then((result: boolean) => {
-            if (!result) {
-              console.log(name, args, errDetail)
-              throw new JsonqlValidationError(name, errDetail)
-            }
-            return result
-          })
-          .catch(err => {
-            console.log('ERROR?', err)
-          })
+  throw new JsonqlError(`Unable to determine type from ast map to create validator!`, ast)
 }
 
 /** extract the default value if there is none */
@@ -118,8 +105,8 @@ export function getOptionalValue(arg: any, param: any) {
   }
   return (
     (
-      param.optional === true ||
-      param.required === false // this is the new SWC generate map
+      param.required === false || // this is the new SWC generate map
+      param.optional === true 
     )
     &&
     param[DEFAULT_VALUE] !== undefined
