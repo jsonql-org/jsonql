@@ -12,23 +12,6 @@ import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
 // const debug = debugFn('jsonql-params-validator:test:primitive-type')
 
-test(`Testing the union type check`, async t => {
-  t.plan(1)
-  return checkUnion(1, ['number', 'string'])
-    .then(result => {
-      t.true(result)
-      // console.log('result', result)
-    })
-    /*
-    .catch(err => {
-      // console.log('err', err)
-    })
-    .finally(() => {
-      t.pass()
-    })
-    */
-})
-
 test('checking if a value consider empty or not', t => {
 
   t.falsy( notEmpty(null) )

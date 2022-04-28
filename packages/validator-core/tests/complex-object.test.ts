@@ -33,10 +33,8 @@ test('Test with complex object with wrong value', t => {
     checkObject({key: 1, update: 'something'}, keys),
     'Check with a wrong value for type in properties'
   )
-
   t.false(
     checkObject({key: 'this is key'}, keys),
     'Check with missing key in properties'
   )
-
 })

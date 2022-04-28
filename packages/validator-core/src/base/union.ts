@@ -1,7 +1,7 @@
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
-import { chainProcessPromises } from '@jsonql/utils'
+import { queuePromisesProcess } from '@jsonql/utils'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
 
 /**
@@ -13,23 +13,28 @@ if it fail we resolve it therefore the then is actually failed
 */
 function generatePromisesFn(
   value: any,
-  types: Array<string>
+  types: Array<string>,
+  extended?: Array<any> // this will be check keys
 ) {
   // we return it as a function therefore
   // if the last one fail the next one no need to get exeucte
-  return types.map(type => {
+  return types.map((type: string, i: number) => {
+    const args = [value]
+    if (extended && extended[i]) {
+      args.push(extended[i])
+    }
     switch (type) {
       case ARRAY_TYPE:
-        return () => checkArray(value)
+        return () => Reflect.apply(checkArray, null, args)
       case OBJECT_TYPE:
-        return () => checkObject(value)
+        return () => Reflect.apply(checkObject, null, args)
       default:
         return () => combineCheck(type)(value)
     }
   })
   .map(fn => (
     async (type: string) => (
-      fn() ? Promise.reject(true) : Promise.resolve(type)
+      fn() ? Promise.reject(type) : Promise.resolve(true)
     )
   ))
 }
@@ -38,17 +43,12 @@ function generatePromisesFn(
   because the union type is OR
   therefore it has to be check in one rule
 */
-export async function checkUnion(value: any, types: Array<string>): Promise<boolean | string> {
-  const ps = generatePromisesFn(value, types)
-  const pFn = Reflect.apply(chainProcessPromises, null, ps)
+export async function checkUnion(
+  value: any,
+  types: Array<string>,
+  extended?: Array<any>
+): Promise<boolean | string> {
+  const ps = generatePromisesFn(value, types, extended)
 
-  return new Promise((resolver, rejecter) => {
-    pFn(null) // this param is really pointless
-      .catch((res: boolean) => {
-        resolver(res)
-      })
-      .then((results: string[]) => {
-        rejecter(results)
-      })
-  })
+  return queuePromisesProcess(ps, null)
 }
