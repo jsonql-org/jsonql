@@ -49,11 +49,11 @@ export function chainProcessPromises(
  */
 export function queuePromisesProcess(
   queue: Array<JsonqlPromiseChainFn>,
-  initValue?: any
+  ...initValue: any[]
 ) {
   // we need to make sure the Array is actually flat array
   const q = flatMap(queue)
   const ex = Reflect.apply(chainProcessPromises, null, q)
 
-  return ex(initValue)
+  return Reflect.apply(ex, null, initValue)
 }

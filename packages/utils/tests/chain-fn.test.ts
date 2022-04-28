@@ -48,22 +48,21 @@ test(`Test the chainPromises and see if one fail and what happen`, async t => {
 test(`Test to see if one of the promise fail and it should exit with queuePromisesProcess`, async t => {
 
   const errorMsg = 'FAIL AND EXIT'
-  const fn = async (x: any) => {
+  const fn = async (x: number) => {
     return Promise.resolve(x)
   }
   // expect an object
-  const fn1 = async (x) => {
-    debug('x', x)
+  const fn1 = async (y: number) => {
+    console.log(y)
     return Promise.reject(errorMsg)
     // return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
-  const fn2 = async ({x, y, z}) => {
+  const fn2 = async (z: number) => {
     console.log(`Should never see me run`)
-    debug('x', x, 'y', y, 'z', z)
-    return Promise.resolve(x + y + z)
+    return Promise.resolve(z + 1)
   }
 
-  return queuePromisesProcess([fn, fn1, fn2], 1)
+  return queuePromisesProcess([fn, fn1, fn2], 101)
             .then((result: number) => {
               console.log(result)
             })
@@ -101,7 +100,7 @@ test(`It should able to accept the last array return as spread input`, t => {
 })
 
 test(`It should able to merge the promise result together as one object`, async t => {
-  let ps = []
+  const ps = []
   for (let i = 0; i < 3; ++i) {
     ps.push(Promise.resolve({['key' + i]: i}))
   }
@@ -127,6 +126,25 @@ test(`It should able to take one promise result as the next promise result param
   }
   const executor = chainProcessPromises(fn, fn1, fn2)
   const result = await executor(1,2)
+
+  t.is(result, 6)
+})
+
+test(`As above using queuePromisesProcess instead`, async t => {
+  // init function
+  const fn = async (x: any, y: any) => {
+    return Promise.resolve({x, y})
+  }
+  // expect an object
+  const fn1 = async ({x, y}) => {
+    debug('x', x, 'y', y)
+    return Promise.resolve({x: ++x, y: ++y, z: 1})
+  }
+  const fn2 = async ({x, y, z}) => {
+    debug('x', x, 'y', y, 'z', z)
+    return Promise.resolve(x + y + z)
+  }
+  const result = await queuePromisesProcess([fn, fn1, fn2], 1 , 2)
 
   t.is(result, 6)
 })
