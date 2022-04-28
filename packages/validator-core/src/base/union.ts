@@ -1,8 +1,13 @@
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
-import { queuePromisesProcess } from '@jsonql/utils'
+import { queuePromisesProcess } from '@jsonql/utils/src'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
+
+/** wrap the or return result together */
+function typeAsFail(result: boolean, type: string) {
+  return result || type
+}
 
 /**
 We use the chainProcessPromises fail and exit side effects to
@@ -25,22 +30,21 @@ function generatePromisesFn(
     }
     switch (type) {
       case ARRAY_TYPE:
-        return () => Reflect.apply(checkArray, null, args)
+        return () => typeAsFail(Reflect.apply(checkArray, null, args), type)
       case OBJECT_TYPE:
-        return () => Reflect.apply(checkObject, null, args)
+        return () => typeAsFail(Reflect.apply(checkObject, null, args), type)
       default:
-        return () => {
-          console.log(type, value, 'called')
-          return combineCheck(type)(value)
-        }
+        return () => typeAsFail(combineCheck(type)(value), type)
     }
   })
   .map(fn => (
     // this treat result in opposite way because once one pass
     // then we want to exit the queue (it's OR just need one to pass)
-    async (type: string) => (
-      fn() ? Promise.reject(true) : Promise.resolve(type)
-    )
+    async () => {
+      const result = fn()
+      // @TODO may be push them together in one array?
+      return result === true ? Promise.reject(true) : Promise.resolve(result)
+    }
   ))
 }
 

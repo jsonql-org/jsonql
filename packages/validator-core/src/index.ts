@@ -10,7 +10,7 @@ import { checkObject, objectTypeHandler } from './base/object'
 import { combineCheck } from './base/combine'
 // union type check
 import { checkUnion } from './base/union'
-
+import { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
 export {
   checkAny,
@@ -27,4 +27,7 @@ export {
   objectTypeHandler,
   combineCheck,
   checkUnion,
+  
+  promisify,
+  reversePromisifyResult,
 }
