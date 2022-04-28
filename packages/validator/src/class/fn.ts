@@ -53,29 +53,6 @@ export function createAutomaticRules(
   })
 }
 
-/* create a generic wrapper method to manage the error */
-async function validateFnWrapper(
-  fn: JsonqlValidateFn,
-  args: Array<any>,
-  name?: string,
-  errDetail?: Array<number>
-) {
-
-  return Reflect.apply(fn, null, args)
-          .then((result: boolean) => {
-
-            console.log(name, args, errDetail)
-
-            if (!result) {
-              throw new JsonqlValidationError(name, errDetail)
-            }
-            return result
-          })
-          .catch(err => {
-            console.log('ERROR?', err)
-          })
-}
-
 /**
  when this get put in the execution queue we also
  provide the index (argument position)
@@ -111,6 +88,27 @@ function getValidateRules(ast: any): JsonqlValidateFn {
       }
   }
   throw new Error(`Unable to determine type from ast map to create validator!`)
+}
+
+/* create a generic wrapper method to manage the error */
+async function validateFnWrapper(
+  fn: JsonqlValidateFn,
+  args: Array<any>,
+  name?: string,
+  errDetail?: Array<number>
+) {
+
+  return Reflect.apply(fn, null, args)
+          .then((result: boolean) => {
+            if (!result) {
+              console.log(name, args, errDetail)
+              throw new JsonqlValidationError(name, errDetail)
+            }
+            return result
+          })
+          .catch(err => {
+            console.log('ERROR?', err)
+          })
 }
 
 /** extract the default value if there is none */

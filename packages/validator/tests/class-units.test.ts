@@ -76,8 +76,8 @@ test.only(`It should able validate`, async t => {
 
   return validator.validate(values)
                   .then(result => {
-                    console.log('result')
-                    showDeep(result)
+                    //console.log('result')
+                    //showDeep(result)
                   })
                   .catch(err => {
                     console.log('err')
