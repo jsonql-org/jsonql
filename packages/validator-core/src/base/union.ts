@@ -1,8 +1,10 @@
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
+import { reversePromisifyResult } from '../lib/promisify'
 import { queuePromisesProcess } from '@jsonql/utils/src'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
+
 
 /** wrap the or return result together */
 function typeAsFail(result: boolean, type: string) {
@@ -16,7 +18,7 @@ have one of them pass that means all pass
 so if one pass we throw Error and it will exist
 if it fail we resolve it therefore the then is actually failed
 */
-function generatePromisesFn(
+export function generateReversePromisesFn(
   value: any,
   types: Array<string>,
   extended?: Array<any> // this will be check keys
@@ -57,7 +59,7 @@ export async function checkUnion(
   types: Array<string>,
   extended?: Array<any>
 ): Promise<boolean | string> {
-  const ps = generatePromisesFn(value, types, extended)
+  const ps = generateReversePromisesFn(value, types, extended)
   // we wrap this in another promise to reverse the result
   return new Promise((resolver, rejecter) => {
     /**

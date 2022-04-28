@@ -13,7 +13,7 @@ test(`Testing the union type check`, async t => {
     })
 })
 
-test.only(`Throw wrong data to expect to fail`, async t => {
+test(`Throw wrong data to expect to fail`, async t => {
   t.plan(1)
 
   return checkUnion(false, ['number', 'string'])
