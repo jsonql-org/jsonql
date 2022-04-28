@@ -1,7 +1,6 @@
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
-import { reversePromisifyResult } from '../lib/promisify'
 import { queuePromisesProcess } from '@jsonql/utils/src'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
 

@@ -5,5 +5,6 @@ import { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/num
 import { checkString } from './base/string';
 import { checkObject, objectTypeHandler } from './base/object';
 import { combineCheck } from './base/combine';
-import { checkUnion } from './base/union';
-export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, combineCheck, checkUnion, };
+import { checkUnion, generateReversePromisesFn } from './base/union';
+import { promisify, reversePromisifyResult } from './lib/promisify';
+export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, combineCheck, checkUnion, generateReversePromisesFn, promisify, reversePromisifyResult, };
