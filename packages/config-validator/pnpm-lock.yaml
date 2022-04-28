@@ -2,10 +2,10 @@ lockfileVersion: 5.3
 
 specifiers:
   '@ava/typescript': ^3.0.1
-  '@jsonql/constants': workspace:^0.5.9
+  '@jsonql/constants': workspace:^0.5.10
   '@jsonql/errors': workspace:^0.6.0
-  '@jsonql/utils': workspace:^0.3.3
-  '@jsonql/validator-core': workspace:^0.1.0
+  '@jsonql/utils': workspace:^0.4.0
+  '@jsonql/validator-core': workspace:^0.1.2
   '@types/node': ^17.0.23
   '@typescript-eslint/eslint-plugin': ^5.17.0
   '@typescript-eslint/parser': ^5.17.0
