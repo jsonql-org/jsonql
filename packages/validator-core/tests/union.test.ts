@@ -2,7 +2,7 @@
 import test from  'ava'
 import {
   checkUnion,
-} from  '../dist'
+} from  '../src'
 
 test(`Testing the union type check`, async t => {
   t.plan(1)
@@ -11,12 +11,14 @@ test(`Testing the union type check`, async t => {
       t.true(result)
       // console.log('result', result)
     })
-    /*
-    .catch(err => {
-      // console.log('err', err)
-    })
-    .finally(() => {
-      t.pass()
-    })
-    */
+})
+
+test.only(`Throw wrong data to expect to fail`, async t => {
+  t.plan(1)
+
+  return checkUnion(false, ['number', 'string'])
+            .catch((type: string) => {
+              console.log('failed type', type)
+              t.truthy(type)
+            })
 })

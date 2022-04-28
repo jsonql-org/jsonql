@@ -6,7 +6,6 @@ import {
   checkNumber,
   checkObject,
   checkString,
-  checkUnion,
 } from  '../dist'
 import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
