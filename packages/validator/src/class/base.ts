@@ -100,7 +100,7 @@ export class ValidatorFactoryBase {
     }
     if (!checkArray(values)) {
       debugFn(values)
-      throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR)
+      throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR, values)
     }
     const vCtn = values.length
     switch (true) {
@@ -119,11 +119,14 @@ export class ValidatorFactoryBase {
           return this.applyRules(getOptionalValue(value, param), param, i)
         })
       default: // will not fall through here @TODO
+        throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
         // now the default should be the spread
+        /*
         return values.map((value, i) => {
           const p = params[i] || Object.assign(params[0], { name: '_'})
           return this.applyRules(getOptionalValue(value, p), p, i)
         })
+        */
     }
   }
   /**
