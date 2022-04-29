@@ -5,8 +5,9 @@
 // or just return a string regex pattern: string
 
 export const name = 'email'
-export const pattern = "^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$"
 
 export default function main(value: string): boolean {
+  const pattern = "^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$"
+
   return (new RegExp(pattern)).test(value)
 }
