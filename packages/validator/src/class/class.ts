@@ -63,13 +63,6 @@ export class ValidatorFactory extends ValidatorFactoryBase {
         queues as unknown as Array<(...args: any[]) => Promise<any>>,
         {}
       )
-      .then((result: any) => {
-        console.log('result', result)
-        return result
-      })
-      .catch((err: any) => {
-        showDeep(err)
-      })
   }
 
   /** this will export the map for generate contract */
