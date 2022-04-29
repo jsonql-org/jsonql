@@ -4,6 +4,10 @@ export declare type CallbackFunction = (...args: any[]) => any
 
 export declare type AsyncCallbackFunction = (...args: any[]) => Promise<any>
 
+export declare type JsonqlGenericObject = {
+  [key: string]: any
+}
+
 export declare type JsonqlConfigParams = {
   enumv?: any[]
   required?: boolean
@@ -53,7 +57,11 @@ export type JsonqlObjectValidateInput = {
 
 export type JsonqlValidateFn = AsyncCallbackFunction
 
-export type JsonqlValidateCbFn = (value: any, pos: number[]) => Promise<any>
+export type JsonqlValidateCbFn = (
+  value: any,
+  lastResult: JsonqlGenericObject,
+  pos: number[]
+) => Promise<any>
 
 export type JsonqlPropertyParamnMap = {
   name: string // the argument name

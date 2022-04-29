@@ -4,6 +4,7 @@ import {
   JsonqlPropertyParamnMap,
   JsonqlValidateCbFn,
   JsonqlValidateFn,
+  JsonqlGenericObject,
 } from '../types'
 import {
   checkString,
@@ -27,6 +28,9 @@ import {
   JsonqlValidationError,
   JsonqlError,
 } from '@jsonql/errors/src'
+import {
+  assign
+} from '@jsonql/utils'
 
 /**
 The input is what the dev wrote in the validate
@@ -62,17 +66,23 @@ export function createAutomaticRules(
  */
 function contructRuleCb(ast: any): JsonqlValidateCbFn {
   const ruleFn = getValidateRules(ast)
-  return async function(value: any, pos: number[]) {
+  
+  return async function(
+    value: any,
+    lastResult: JsonqlGenericObject,
+    pos: number[]
+  ) {
     // return validateFnWrapper(ruleFn, [value], pos, ast.name)
-    const { name } = ast 
+    const { name } = ast
     return Reflect.apply(ruleFn, null, [value])
                   .then((result: any) => {
                     console.log('pass', name, result)
-                    return result 
+                    // return the argument name with the value
+                    return assign(lastResult, { [name]: value })
                   })
                   .catch((error: boolean) => {
-                    console.log('failed', name, error, pos)
-                    throw new JsonqlValidationError(name, pos)
+                    console.log('failed', name, error, pos, error)
+                    return Promise.reject(new JsonqlValidationError(name, pos))
                   })
   }
 }
@@ -104,10 +114,7 @@ export function getOptionalValue(arg: any, param: any) {
     return arg
   }
   return (
-    (
-      param.required === false || // this is the new SWC generate map
-      param.optional === true 
-    )
+    param.required === false
     &&
     param[DEFAULT_VALUE] !== undefined
       ? param[DEFAULT_VALUE]

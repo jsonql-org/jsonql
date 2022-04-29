@@ -48,7 +48,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   createSchema(
     validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
   ): void {
-    
+
     console.log(/* propName, */ validationMap)
     // if this never get call, that means we just do automatic
 
@@ -59,9 +59,10 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this.normalizeArgValues(values)
 
-    console.log(queues)
-
-    return queuePromisesProcess(queues, null)
+    return queuePromisesProcess(
+        queues as unknown as Array<(...args: any[]) => Promise<any>>,
+        {}
+      )
       .then((result: any) => {
         console.log('result', result)
         return result

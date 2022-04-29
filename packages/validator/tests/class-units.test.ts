@@ -68,23 +68,37 @@ test(`Should able to generate automatic validation rule from ast map`, t => {
   t.truthy(rules)
 })
 
-test.only(`It should able validate`, async t => {
+test(`It should able validate`, async t => {
   t.plan(1)
-  // arg1: string, arg2: string | number, arg3?: boolea
-  const values = ['hello', true, "shit"]
+  // arg1: string, arg2: string | number, arg3?: boolean
+  const values = ['hello', 1, false]
   const validator = new ValidatorFactory(context.funcAstInput.resolver)
 
   return validator.validate(values)
                   .then(result => {
-                    //console.log('result')
-                    //showDeep(result)
+                    t.deepEqual(result, {arg1: 'hello', arg2: 1, arg3: false})
                   })
                   .catch(err => {
                     console.log('err')
                     showDeep(err)
                   })
+})
+
+test.only(`It should able to capture the error pos`, async t => {
+  t.plan(1)
+
+  const values = ['hello', false, 'whatever']
+  const validator = new ValidatorFactory(context.funcAstInput.resolver)
+
+  return validator.validate(values)
+                  .then(result => {
+                    console.log('result????')
+                    showDeep(result)
+                  })
+                  .catch(err => {
+                    console.log('details', err.detail)
+                  })
                   .finally(() => {
                     t.pass()
                   })
-
 })

@@ -1,6 +1,7 @@
 // this is the base class for all the helper methods
 import {
-  JsonqlValidationError
+  JsonqlValidationError,
+  JsonqlError,
 } from '@jsonql/errors'
 import {
   queuePromisesProcess,
@@ -31,14 +32,15 @@ import {
   getOptionalValue,
 } from './fn'
 import {
+  // JsonqlValidationMap,
+  // JsonqlClassValidationMap,
   JsonqlValidationPlugin,
-  JsonqlValidationMap,
   JsonqlValidationRule,
   JsonqlPropertyParamnMap,
-  JsonqlClassValidationMap,
   JsonqlValidateCbFn,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
+  JsonqlGenericObject,
 } from '../types'
 import * as plugins from '../plugins'
 
@@ -114,24 +116,23 @@ export class ValidatorFactoryBase {
           this.applyRules(value, params[i], i)
         ))
       case vCtn < pCtn:
-        return params.map((param, i) => (
-          this.applyRules(getOptionalValue(values[i], param), param, i)
-        ))
+        return params.map((param, i) => {
+          const _value = getOptionalValue(values[i], param)
+
+          return this.applyRules(_value, param, i)
+        })
       case vCtn > pCtn:
         return values.map((value, i) => {
           // const required = !(i > pCtn ? true : !!params[i].required)
           const param = params[i] || { type: DEFAULT_TYPE, name: `_${i}`}
-          return this.applyRules(getOptionalValue(value, param), param, i)
+          const _value = getOptionalValue(value, param)
+          // @TODO if it's optional field and using the provide value
+          // should we skip the validation
+
+          return this.applyRules(_value, param, i)
         })
       default: // will not fall through here @TODO
         throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
-        // now the default should be the spread
-        /*
-        return values.map((value, i) => {
-          const p = params[i] || Object.assign(params[0], { name: '_'})
-          return this.applyRules(getOptionalValue(value, p), p, i)
-        })
-        */
     }
   }
   /**
@@ -149,7 +150,8 @@ export class ValidatorFactoryBase {
       // we only need to return the queue
       return rules.map((rule: JsonqlValidateCbFn, i: number) => {
         // when it fail then we provide with the index number
-        return async () => Reflect.apply(rule, null, [value, [idx, i]])
+        return async (lastResult: JsonqlGenericObject) =>
+          Reflect.apply(rule, null, [value, lastResult, [idx, i]])
       })
     }
     // stuff it with a placeholder fuction?
@@ -172,17 +174,17 @@ export class ValidatorFactoryBase {
     const fixedInput = input.map((_input: JsonqlValidationRule) => {
       return Array.isArray(_input) ? _input : [_input]
     })
-    // transform this back into JsonqlObjectValidateInput
-    const config = astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
-      if (fixedInput[i]) {
-        return {
-          [ast.name]: fixedInput[i]
-        }
+    // We just need to take the validate methods and concat to the rules here
+    return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
+      const input2 = this.transformInput(fixedInput[i])
+      if (!ast.rules) {
+        ast.rules = []
       }
-      return {[ast.name]: { validate: false }} // nothing to add
-    }).reduce((a, b) => assign(a, b), {})
-
-    return this.applyObjectInput(astMap, config)
+      if (input2) {
+        ast.rules = ast.rules.concat(input2)
+      }
+      return ast
+    })
   }
 
   /** nomalize the object style rules input */
@@ -190,10 +192,35 @@ export class ValidatorFactoryBase {
     astMap: Array<JsonqlPropertyParamnMap>,
     input: JsonqlObjectValidateInput
   ) {
+
     return astMap.map((ast: JsonqlPropertyParamnMap) => {
-      
+
       return ast
     })
+  }
+
+  // here is the one that will transform the rules
+  private transformInput(input: JsonqlValidationRule): Array<any> {
+    return input.map(_input => {
+      switch (true) {
+        case _input.pluign !== undefined:
+          return this.lookupPlugin(_input)
+        case _input.validator !== undefined:
+          // @TODO need to transform this
+          return _input.validator
+        default:
+          throw new JsonqlError(`unable to find rule`)
+      }
+    })
+  }
+
+  private lookupPlugin(input) {
+    const name = input.plugin
+    if (this._plugins.has(name)) {
+      // @TODO need to transform this
+      return this._plugins.get(name)
+    }
+    throw new JsonqlError(`Unable to find ${name} plugin`)
   }
 
   /** register plugins */
