@@ -17,8 +17,11 @@ test(`Throw wrong data to expect to fail`, async t => {
   t.plan(1)
 
   return checkUnion(false, ['number', 'string'])
+            .then(() => {
+              console.log(`should not see me here`)
+            })
             .catch((type: string) => {
               console.log('failed type', type)
-              t.truthy(type)
+              t.is(type, 'string')
             })
 })
