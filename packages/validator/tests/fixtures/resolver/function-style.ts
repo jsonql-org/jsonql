@@ -1,23 +1,22 @@
 // This is pure function style resolver
 
-export default function resolver(arg1: string, arg2: string | number, arg3?: boolean) {
+export default function resolver(
+  email: string,
+  age: number,
+  arg3?: boolean
+) {
 
   return {
-    arg1,
-    arg2,
-    arg3: arg3 ? arg3 : 'NOTHING'
+    email,
+    age,
+    arg3: arg3 ? 'SOMETHING' : 'NOTHING'
   }
 }
 
 // also export a validator
 export const validate = {
-  arg1: {
-
-  },
-  arg2: {
-
-  },
-  arg3: {
-
-  }
+  email: [
+    {plugin: 'email'}
+  ],
+  arg2: [],
 }

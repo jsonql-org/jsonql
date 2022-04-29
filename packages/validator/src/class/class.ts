@@ -24,6 +24,8 @@ import {
 import {
   JsonqlValidationPlugin,
   JsonqlValidationMap,
+  JsonqlArrayValidateInput,
+  JsonqlObjectValidateInput
 } from '../types'
 import {
   queuePromisesProcess,
@@ -43,9 +45,13 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   }
 
   /** takes the user define rules and generate the full map */
-  createSchema(validationMap: JsonqlValidationMap): void {
+  createSchema(
+    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+  ): void {
+    
     console.log(/* propName, */ validationMap)
     // if this never get call, that means we just do automatic
+
   }
 
   /** this validation happens */

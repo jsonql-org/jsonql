@@ -6,6 +6,7 @@ import {
   queuePromisesProcess,
   notEmpty,
   showDeep,
+  assign,
 } from '@jsonql/utils'
 import {
   DEFAULT_VALUE,
@@ -36,7 +37,11 @@ import {
   JsonqlPropertyParamnMap,
   JsonqlClassValidationMap,
   JsonqlValidateCbFn,
+  JsonqlArrayValidateInput,
+  JsonqlObjectValidateInput,
 } from '../types'
+import * as plugins from '../plugins'
+
 // ---- DEBUG ---- //
 import debug from 'debug'
 const debugFn = debug('jsonql:validator:class:base')
@@ -156,25 +161,37 @@ export class ValidatorFactoryBase {
 
   }
   */
+
+
+
   /** normalize the array style rules input */
   protected applyArrayInput(
     astMap: Array<JsonqlPropertyParamnMap>,
-    input?: any
+    input: JsonqlArrayValidateInput
   ) {
-    // we use the astMap as standard
-    return astMap.map((ast: any, i: number) => {
-
-      return ast
+    const fixedInput = input.map((_input: JsonqlValidationRule) => {
+      return Array.isArray(_input) ? _input : [_input]
     })
+    // transform this back into JsonqlObjectValidateInput
+    const config = astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
+      if (fixedInput[i]) {
+        return {
+          [ast.name]: fixedInput[i]
+        }
+      }
+      return {[ast.name]: { validate: false }} // nothing to add
+    }).reduce((a, b) => assign(a, b), {})
+
+    return this.applyObjectInput(astMap, config)
   }
 
   /** nomalize the object style rules input */
   protected applyObjectInput(
     astMap: Array<JsonqlPropertyParamnMap>,
-    input: any
+    input: JsonqlObjectValidateInput
   ) {
-    return astMap.map((ast: JsonqlPropertyParamnMap, i: number)  => {
-
+    return astMap.map((ast: JsonqlPropertyParamnMap) => {
+      
       return ast
     })
   }
