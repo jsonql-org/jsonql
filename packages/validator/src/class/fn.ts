@@ -54,7 +54,7 @@ export function createAutomaticRules(
     if (!ast.rules) {
       ast.rules = []
     }
-    ast.rules = [ contructRuleCb(ast) ]
+    ast.rules = [ contructRuleCbWithAst(ast) ]
     return ast
   })
 }
@@ -64,28 +64,36 @@ export function createAutomaticRules(
  provide the index (argument position)
  and i the position of this rule within the rules
  */
-function contructRuleCb(ast: any): JsonqlValidateCbFn {
+function contructRuleCbWithAst(ast: any): JsonqlValidateCbFn {
+  const { name } = ast
   const ruleFn = getValidateRules(ast)
 
-  return async function(
+  return constructRuleCb(name, ruleFn)
+}
+
+/**
+this will get re-use in the class to create method for the queue execution
+ */
+export function constructRuleCb(
+  name: string,
+  ruleFn: JsonqlValidateFn,
+) {
+  return async (
     value: any,
     lastResult: JsonqlGenericObject,
     pos: number[]
-  ) {
-    // return validateFnWrapper(ruleFn, [value], pos, ast.name)
-    const { name } = ast
-    return Reflect.apply(ruleFn, null, [value])
-                  .then((result: any) => {
-                    console.log('pass', name, result)
-                    // return the argument name with the value
-                    return assign(lastResult, { [name]: value })
-                  })
-                  .catch((error: boolean) => {
-                    console.log('failed', name, error, pos, error)
-                    return Promise.reject(new JsonqlValidationError(name, pos))
-                  })
-  }
+  ) => Reflect.apply(ruleFn, null, [value])
+                .then((result: any) => {
+                  console.log('pass', name, result)
+                  // return the argument name with the value
+                  return assign(lastResult, { [name]: value })
+                })
+                .catch((error: boolean) => {
+                  console.log('failed', name, error, pos, error)
+                  return Promise.reject(new JsonqlValidationError(name, pos))
+                })
 }
+
 
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast: any): JsonqlValidateFn {
