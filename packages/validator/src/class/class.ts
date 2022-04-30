@@ -23,9 +23,11 @@ import {
 } from './base'
 import {
   JsonqlValidationPlugin,
-  JsonqlValidationMap,
+  // JsonqlValidationMap,
   JsonqlArrayValidateInput,
-  JsonqlObjectValidateInput
+  JsonqlObjectValidateInput,
+  JsonqlGenericObject,
+  JsonqlValidateCbFn
 } from '../types'
 import {
   queuePromisesProcess,
@@ -56,15 +58,25 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     this._createSchema(validationMap)
   }
 
-  /** this validation happens */
+  /** this is where validation happens */
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
 
     return queuePromisesProcess(
-        queues as unknown as Array<(...args: any[]) => Promise<any>>,
-        {}
-      )
+      queues  as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
+      {}
+    )
+  }
+
+  /** After the validation the success will get an object with
+  argumentName: value object and we make it to an array matching
+  the order of the call, then we can pass it directly to method that
+  get validated */
+  async prepareValidateResult(
+    validateResult: JsonqlGenericObject
+  ): Promise<Array<any>> {
+    return this._arguments.map(name => validateResult[name])
   }
 
   /** this will export the map for generate contract */

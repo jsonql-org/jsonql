@@ -3,14 +3,18 @@
 import test from 'ava'
 
 import { ValidatorFactory } from '../src'
+import { context } from './fixtures/resolver/export-ast'
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins`, async t => {
 
-  const validateObj1 = new ValidatorFactory()
+  const validateObj1 = new ValidatorFactory(context.funcAstInput)
+
+  
 
 
 })
 
-test.todo(`Testing the JsonqlArrayValidateInput with built-in plugins`, async t => {
+test.todo(`Testing the JsonqlArrayValidateInput with built-in plugins`
+/*, async t => {
 
-})
+}*/)

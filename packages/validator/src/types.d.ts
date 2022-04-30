@@ -72,7 +72,7 @@ export type JsonqlPropertyParamnMap = {
   type: any
   tstype?: string
   types?: any
-  optional?: boolean // alias temporary will get remove in the future
+  optional?: boolean // alias will remove in the future
   rules?: Array<JsonqlValidationRule> & Array<JsonqlValidateCbFn>
 }
 

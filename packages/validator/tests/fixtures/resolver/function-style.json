@@ -1,12 +1,12 @@
 {
   "resolver": [
     {
-      "name": "arg1",
+      "name": "email",
       "required": true,
       "type": "string"
     },
     {
-      "name": "arg2",
+      "name": "age",
       "required": true,
       "tstype": "TsUnionType",
       "type": [

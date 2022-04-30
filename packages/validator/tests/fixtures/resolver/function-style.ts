@@ -2,7 +2,7 @@
 
 export default function resolver(
   email: string,
-  age: number,
+  age: string | number,
   arg3?: boolean
 ) {
 

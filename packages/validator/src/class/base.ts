@@ -67,9 +67,13 @@ export class ValidatorFactoryBase {
   private _schema!: Array<JsonqlPropertyParamnMap>
   // the first level is the param pos the second level is the rule
   private _errors!: Array<Array<number>>
-
+  // use this list to make callable argument
+  protected _arguments!: Array<string>
+  // @TODO properly type the astMap 
   constructor(astMap: any) {
     this._astWithBaseRules = createAutomaticRules(astMap)
+    // create the argument list in order
+    this._arguments = this._astWithBaseRules.map(rule => rule.name)
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
       plugin.validateAsync = promisify(plugin.main)
@@ -243,7 +247,7 @@ export class ValidatorFactoryBase {
       const _plugin = this._plugins.get(name)
       if (_plugin && _plugin.validateAsync) {
         // @TODO there will be require more arguments we need to look up the params
-        
+
 
         return _plugin.validateAsync as JsonqlValidateFn
       }
