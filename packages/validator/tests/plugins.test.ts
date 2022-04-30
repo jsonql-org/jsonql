@@ -7,13 +7,13 @@ import { context } from './fixtures/resolver/export-ast'
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins`, async t => {
 
-  const validateObj1 = new ValidatorFactory(context.funcAstInput)
+  const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
 
   validateObj1.createSchema({
     email: { plugin: 'email' }
   })
 
-  
+
   t.fail()
 
 })

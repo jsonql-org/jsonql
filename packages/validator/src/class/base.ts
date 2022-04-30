@@ -34,6 +34,7 @@ import {
   createAutomaticRules,
   getOptionalValue,
   patternPluginFanctory,
+  constructRuleCb,
 } from './fn'
 import {
   // JsonqlValidationMap,
@@ -220,6 +221,7 @@ export class ValidatorFactoryBase {
         const _input = toArray(input[name])
         const rules = this._transformInput(_input)
         if (rules && rules.length) {
+          // @ts-ignore
           ast.rules = ast.rules.concat(rules)
         }
       }
@@ -233,14 +235,15 @@ export class ValidatorFactoryBase {
   ): Array<JsonqlValidationRule> { // @NOTE add the undefined to get around the TS moronic check
     // @ts-ignore - where the undefined came from?
     return input.map((_input: JsonqlValidationRule) => {
+      const { name } = _input
       switch (true) {
         case _input.pluign !== undefined:
           return this._lookupPlugin(_input)
         case _input.validate !== undefined:
           // @TODO need to transform this
-          return promisify(_input.validate)
+          return constructRuleCb(name, promisify(_input.validate))
         case _input.validateAsync !== undefined:
-          return _input.validateAsync
+          return constructRuleCb(name, _input.validateAsync as unknown as JsonqlValidateFn)
         default:
           throw new JsonqlError(`unable to find rule`)
       }
@@ -257,8 +260,7 @@ export class ValidatorFactoryBase {
       if (_plugin && _plugin.validateAsync) {
         // @TODO there will be require more arguments we need to look up the params
 
-
-        return _plugin.validateAsync as JsonqlValidateFn
+        return constructRuleCb(name, _plugin.validateAsync as JsonqlValidateFn)
       }
     }
     throw new JsonqlError(`Unable to find ${name} plugin`)
