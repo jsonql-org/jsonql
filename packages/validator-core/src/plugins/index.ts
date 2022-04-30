@@ -12,6 +12,9 @@ import moreThanEqual from './more-than-equal'
 import moreThan from './more-than'
 import unit from './uint'
 import within from './within'
+import { curry } from '@jsonql/utils/src'
+import { JsonqlPluginConfig, JsonqlValidateFn } from '../types'
+import { JsonqlError } from '@jsonql/errors/src'
 
 export const plugins = [
   between,
@@ -24,6 +27,25 @@ export const plugins = [
   unit,
   within,
 ]
+
+/** construct the curry plugin method */
+export function curryPlugin(config: JsonqlPluginConfig): JsonqlValidateFn {
+  const { plugin } = config
+  if (plugin) {
+    const pluginExport = plugins.filter(p => plugin === p.name)[0]
+    const params = pluginExport['params'] // if we use pluginExport.params then TS complain!
+    if (params) {
+      const args = params.map((param: string) => config[param])
+
+      return Reflect.apply(curry(pluginExport.main), null, args)
+    } else {
+      throw new JsonqlError(`This plugin ${pluginExport.name} can not be curry`)
+    }
+  }
+  throw new JsonqlError(`Unable to find plugin`)
+}
+
+
 
 /** @TODO it needs to be a js file then it must be after compile */
 export function getPlugin(pluginName: string) {
