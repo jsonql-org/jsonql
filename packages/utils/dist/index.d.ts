@@ -13,4 +13,4 @@ export { getCallMethod, packResult, isJsonqlErrorObj, packError, resultHandler, 
 export { createSendPayload, createWsReply, createReplyMsg, createAcknowledgeMsg, isWsReply, extractWsPayload, } from './socket';
 export { timestamp } from './timestamp';
 export { urlParams, cacheBurstUrl, cacheBurst } from './urls';
-export { isNaN, isString, isPlainObject, merge, mapValues, mapKeys, omitBy, findKey, } from './lodash';
+export { isNaN, isString, isPlainObject, merge, mapValues, mapKeys, omitBy, findKey, curry, } from './lodash';

@@ -6,5 +6,6 @@ import mapValues from 'lodash-es/mapValues';
 import mapKeys from 'lodash-es/mapKeys';
 import omitBy from 'lodash-es/omitBy';
 import findKey from 'lodash-es/findKey';
+import curry from 'lodash-es/curry';
 import flatMap from 'lodash-es/flatMap';
-export { isNaN, isString, isPlainObject, merge, mapValues, mapKeys, omitBy, findKey, flatMap, };
+export { isNaN, isString, isPlainObject, merge, mapValues, mapKeys, omitBy, findKey, curry, flatMap, };
