@@ -12,6 +12,7 @@ import { combineCheck } from './base/combine'
 import { checkUnion, generateReversePromisesFn } from './base/union'
 import { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
+import { plugins } from './plugins'
 export {
   checkAny,
   checkArray,
@@ -30,4 +31,6 @@ export {
   generateReversePromisesFn,
   promisify,
   reversePromisifyResult,
+  // 0.3.0 move plugins from validator to here
+  plugins,
 }
