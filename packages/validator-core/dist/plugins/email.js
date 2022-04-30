@@ -6,11 +6,12 @@
 // or just return a string regex pattern: string
 Object.defineProperty(exports, "__esModule", { value: true });
 const name = 'email';
+const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 function main(value) {
-    const pattern = "^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$";
-    return (new RegExp(pattern)).test(value);
+    return pattern.test(value);
 }
 exports.default = {
     main,
     name,
+    pattern,
 };

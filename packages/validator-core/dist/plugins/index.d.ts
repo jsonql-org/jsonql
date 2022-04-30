@@ -6,6 +6,7 @@ export declare const plugins: ({
 } | {
     main: (value: string) => boolean;
     name: string;
+    pattern: RegExp;
 } | {
     name: string;
     main: (value: number) => boolean;
