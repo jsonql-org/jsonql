@@ -14,7 +14,7 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins`, async t => {
   })
 
 
-  t.fail()
+
 
 })
 

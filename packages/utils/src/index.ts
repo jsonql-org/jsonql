@@ -109,5 +109,6 @@ export {
   mapKeys,
   omitBy,
   findKey,
+  curry,
   // isEqual
 } from './lodash'
