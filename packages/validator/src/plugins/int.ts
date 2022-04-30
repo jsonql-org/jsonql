@@ -2,6 +2,11 @@
 
 export const name = "int"
 
-export default function main(value: number): boolean {
+function main(value: number): boolean {
   return Number.isInteger(value)
+}
+
+export default {
+  name,
+  main, 
 }

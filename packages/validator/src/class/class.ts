@@ -37,27 +37,29 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   constructor(astMap: any) {
     super(astMap)
   }
-  /** accept an array of plugins in one go less confusion */
-  registerPlugins(plugins: Array<JsonqlValidationPlugin>): void {
-    plugins.forEach((plugin: JsonqlValidationPlugin)  => {
-      this.registerPlugin(plugin.name, plugin)
-    })
+  /** accept an object name => plugin in one go */
+  registerPlugins(plugins: {[name: string]: JsonqlValidationPlugin}): Array<boolean> {
+    const result: Array<boolean> = []
+    for (const name in plugins) {
+      result.push(this._registerPlugin(name, plugins[name]))
+    }
+    return result
   }
-
+  /** wrapper for the protected register plugin method */
+  registerPlugin(name, plugin): boolean {
+    return this._registerPlugin(name, plugin)
+  }
   /** takes the user define rules and generate the full map */
   createSchema(
     validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
   ): void {
-
-    console.log(/* propName, */ validationMap)
-    // if this never get call, that means we just do automatic
-
+    this._createSchema(validationMap)
   }
 
   /** this validation happens */
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
-    const queues = this.normalizeArgValues(values)
+    const queues = this._normalizeArgValues(values)
 
     return queuePromisesProcess(
         queues as unknown as Array<(...args: any[]) => Promise<any>>,

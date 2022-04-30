@@ -66,6 +66,8 @@ export class ValidatorFactoryBase {
 
   constructor(astMap: any) {
     this._astWithBaseRules = createAutomaticRules(astMap)
+    // register internal plugins
+    
   }
 
   protected get schema() {
@@ -78,16 +80,16 @@ export class ValidatorFactoryBase {
   }
 
   /** put the rule in here and make it into an async method */
-  protected createSchema(
+  protected _createSchema(
     input?: any
   ): void {
     let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
     if (notEmpty(input)) {
       if (checkArray(input)) {
-        astWithRules = this.applyArrayInput(astWithRules, input)
+        astWithRules = this._applyArrayInput(astWithRules, input)
       } else if (checkObject(input)) {
-        astWithRules = this.applyObjectInput(astWithRules, input)
+        astWithRules = this._applyObjectInput(astWithRules, input)
       }
     }
     this._schema = astWithRules
@@ -98,7 +100,7 @@ export class ValidatorFactoryBase {
     correspond to out map, and apply the values
     argument values turn into an executable queue
   */
-  protected normalizeArgValues(values: any[]) {
+  protected _normalizeArgValues(values: any[]) {
     // there might not be a dev provided schema
     const params = this.schema
     const pCtn = params.length
@@ -113,13 +115,13 @@ export class ValidatorFactoryBase {
     switch (true) {
       case vCtn === pCtn:
         return values.map((value, i) => (
-          this.applyRules(value, params[i], i)
+          this._applyRules(value, params[i], i)
         ))
       case vCtn < pCtn:
         return params.map((param, i) => {
           const _value = getOptionalValue(values[i], param)
 
-          return this.applyRules(_value, param, i)
+          return this._applyRules(_value, param, i)
         })
       case vCtn > pCtn:
         return values.map((value, i) => {
@@ -129,7 +131,7 @@ export class ValidatorFactoryBase {
           // @TODO if it's optional field and using the provide value
           // should we skip the validation
 
-          return this.applyRules(_value, param, i)
+          return this._applyRules(_value, param, i)
         })
       default: // will not fall through here @TODO
         throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
@@ -140,7 +142,7 @@ export class ValidatorFactoryBase {
     but we dont' run it yet until all rules are in the main queue
     this way, if one fail then the whole queue exited without running
   */
-  protected applyRules(
+  private _applyRules(
     value: any,
     param: JsonqlPropertyParamnMap,
     idx: number
@@ -159,15 +161,15 @@ export class ValidatorFactoryBase {
   }
 
   /*
-  protected generteValidationFn() {
-
-  }
+  example:
+    v = [
+      [rule, rule , rule]
+      [rule]
+      rule
+  ]
   */
-
-
-
   /** normalize the array style rules input */
-  protected applyArrayInput(
+  private _applyArrayInput(
     astMap: Array<JsonqlPropertyParamnMap>,
     input: JsonqlArrayValidateInput
   ) {
@@ -176,7 +178,7 @@ export class ValidatorFactoryBase {
     })
     // We just need to take the validate methods and concat to the rules here
     return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
-      const input2 = this.transformInput(fixedInput[i])
+      const input2 = this._transformInput(fixedInput[i])
       if (!ast.rules) {
         ast.rules = []
       }
@@ -186,9 +188,16 @@ export class ValidatorFactoryBase {
       return ast
     })
   }
-
+  /*
+  example:
+  v = {
+    argName: [rule, rule],
+    argName: rule,
+    argName: [rule]
+  }
+  */
   /** nomalize the object style rules input */
-  protected applyObjectInput(
+  private _applyObjectInput(
     astMap: Array<JsonqlPropertyParamnMap>,
     input: JsonqlObjectValidateInput
   ) {
@@ -200,11 +209,11 @@ export class ValidatorFactoryBase {
   }
 
   // here is the one that will transform the rules
-  private transformInput(input: JsonqlValidationRule): Array<any> {
+  private _transformInput(input: JsonqlValidationRule): Array<any> {
     return input.map(_input => {
       switch (true) {
         case _input.pluign !== undefined:
-          return this.lookupPlugin(_input)
+          return this._lookupPlugin(_input)
         case _input.validator !== undefined:
           // @TODO need to transform this
           return _input.validator
@@ -214,7 +223,9 @@ export class ValidatorFactoryBase {
     })
   }
 
-  private lookupPlugin(input) {
+  /// ----------------------- PLUGINS ----------------------- ///
+
+  private _lookupPlugin(input) {
     const name = input.plugin
     if (this._plugins.has(name)) {
       // @TODO need to transform this
@@ -224,9 +235,10 @@ export class ValidatorFactoryBase {
   }
 
   /** register plugins */
-  protected registerPlugin(name: string, rule: JsonqlValidationPlugin) {
+  protected _registerPlugin(name: string, rule: JsonqlValidationPlugin): boolean {
     // @TODO need to check the rule and transform the plugin
     this._plugins.set(name, rule)
+    return true
   }
 
 }

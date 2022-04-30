@@ -2,8 +2,15 @@
 import moreThanEqual from './more-than-equal'
 import lessThanEqual from './less-than-equal'
 
-export const name = 'between'
+const name = 'between'
 
-export default function main(value: number, max: number, min: number): boolean {
+function main(value: number, max: number, min: number): boolean {
   return lessThanEqual(value, max) && moreThanEqual(value, min)
+}
+
+// so when we register it, we know what param we should expect
+export default {
+  main,
+  name,
+  params: ['max', 'min']
 }

@@ -25,7 +25,7 @@ export const plugins = {
   within,
 }
 
-// it needs to be a js file then it must be after compile
+/** @TODO it needs to be a js file then it must be after compile */
 export function getPlugin(pluginName: string) {
   let p = plugins[pluginName]
   if (p) {

@@ -31,6 +31,7 @@ export declare type JsonqlValidationPlugin = {
   // we apply the JSON Schema validation here
   server?: boolean = false // server only, if there is only a validate then it will become a server only
   validate?: (value: any) => boolean
+  validateAsync?: (value: any) => Promise<boolean>
 }
 
 export declare type JsonqlValidationMap = {
@@ -38,13 +39,13 @@ export declare type JsonqlValidationMap = {
 }
 
 export type JsonqlValidationRule = {
-  message?: string
   type?: string
   pattern?: string
   plugin?: string
   value?: any // if the rule require a value to compare, normaly it should be a number
-  serverOnly?: boolean // mark if this is a server side only rules
-  validator?: (value: any) => boolean // apply a function
+  server?: boolean // mark if this is a server side only rules
+  validate?: (value: any) => boolean // apply a function
+  validateAsync?: (value: any) => Promise<boolean>
   [key: string]: any // free form to apply the plugins
 }
 
