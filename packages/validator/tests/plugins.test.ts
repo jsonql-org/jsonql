@@ -1,14 +1,16 @@
+// this will focus on testing the built in plugin
+// and develop the different features around it
 import test from 'ava'
 
-import { getPlugin } from '../src/plugins'
+import { ValidatorFactory } from '../src'
+
+test(`Testing the JsonqlObjectValidateInput with built-in plugins`, async t => {
+
+  const validateObj1 = new ValidatorFactory()
 
 
-test(`Test the import plugin method`, async t => {
+})
 
-  const fn = await getPlugin('email')
-
-  console.log(fn)
-
-  t.truthy(fn)
+test.todo(`Testing the JsonqlArrayValidateInput with built-in plugins`, async t => {
 
 })
