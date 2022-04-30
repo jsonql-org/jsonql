@@ -288,11 +288,13 @@ export class ValidatorFactoryBase {
       // @TODO need to transform this
       const _plugin = this._plugins.get(name)
       if (_plugin && _plugin[VALIDATE_ASYNC_KEY]) {
+
         return constructRuleCb(
           name,
           _plugin[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
         )
       } else if (_plugin && _plugin[PARAMS_KEY]) {
+
         return constructRuleCb(
           name,
           promisify(

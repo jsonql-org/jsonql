@@ -3,6 +3,13 @@ import test from 'ava'
 import { curry } from '@jsonql/utils'
 import { plugins, curryPlugin } from '../src'
 
+test(`Just testing the email plugin`, t => {
+  const email = 'some@email.com'
+  const result = Reflect.apply(plugins[1].main, null , [email])
+
+  t.true(result)
+})
+
 test(`test the plugins with curry`, t => {
 
   const between = plugins[0].main

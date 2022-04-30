@@ -6,13 +6,14 @@
 
 const name = 'email'
 
-function main(value: string): boolean {
-  const pattern = "^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$"
+const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-  return (new RegExp(pattern)).test(value)
+function main(value: string): boolean {
+  return pattern.test(value)
 }
 
 export default {
   main,
   name,
+  pattern,
 }
