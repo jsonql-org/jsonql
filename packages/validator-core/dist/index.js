@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
+exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 const any_1 = require("./base/any");
@@ -34,3 +34,4 @@ Object.defineProperty(exports, "reversePromisifyResult", { enumerable: true, get
 // for some reason the downstream keep complaining the js version has no export member of X
 const plugins_1 = require("./plugins");
 Object.defineProperty(exports, "plugins", { enumerable: true, get: function () { return plugins_1.plugins; } });
+Object.defineProperty(exports, "curryPlugin", { enumerable: true, get: function () { return plugins_1.curryPlugin; } });
