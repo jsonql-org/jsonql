@@ -264,7 +264,7 @@ export class ValidatorFactoryBase {
     return input.map((_input: JsonqlValidationRule) => {
       const { name } = _input
       switch (true) {
-        case _input.pluign !== undefined:
+        case _input[PLUGIN_KEY] !== undefined:
           debug(`Should got here`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input)
         case _input[VALIDATE_KEY] !== undefined:
