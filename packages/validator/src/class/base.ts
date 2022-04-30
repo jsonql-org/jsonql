@@ -37,6 +37,7 @@ import {
   getOptionalValue,
   patternPluginFanctory,
   constructRuleCb,
+  successThen,
 } from './fn'
 import {
   // JsonqlValidationMap,
@@ -51,10 +52,9 @@ import {
   JsonqlValidateFn,
 } from '../types'
 
-
 // ---- DEBUG ---- //
-import debug from 'debug'
-const debugFn = debug('jsonql:validator:class:base')
+import debugFn from 'debug'
+const debug = debugFn('jsonql:validator:class:base')
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -126,7 +126,7 @@ export class ValidatorFactoryBase {
       return [] // nothing to do
     }
     if (!checkArray(values)) {
-      debugFn(values)
+      debug(values)
       throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR, values)
     }
     const vCtn = values.length
@@ -136,12 +136,14 @@ export class ValidatorFactoryBase {
           this._applyRules(value, params[i], i)
         ))
       case vCtn < pCtn:
+        debug(`Values pass less than params`)
         return params.map((param, i) => {
           const _value = getOptionalValue(values[i], param)
 
           return this._applyRules(_value, param, i)
         })
-      case vCtn > pCtn:
+      case vCtn > pCtn: // this is the spread style argument
+        debug('spread parameters')
         return values.map((value, i) => {
           // const required = !(i > pCtn ? true : !!params[i].required)
           const param = params[i] || { type: DEFAULT_TYPE, name: `_${i}`}
@@ -169,6 +171,12 @@ export class ValidatorFactoryBase {
     if (rules && rules.length) {
       // we only need to return the queue
       return rules.map((rule: JsonqlValidateCbFn, i: number) => {
+        // if this is not required field and no value the we create a fake callback
+        if (value === undefined && !param.required) {
+          return async (lastResult: JsonqlGenericObject) => (
+            successThen(param.name, value, lastResult, [idx, i])(true)
+          )
+        }
         // when it fail then we provide with the index number
         return async (lastResult: JsonqlGenericObject) =>
           Reflect.apply(rule, null, [value, lastResult, [idx, i]])

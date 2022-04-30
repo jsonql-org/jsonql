@@ -31,7 +31,8 @@ import {
 import {
   assign
 } from '@jsonql/utils'
-
+import debugFn from 'debug'
+const debug = debugFn('jsonql:validator:class:fn')
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -83,15 +84,27 @@ export function constructRuleCb(
     lastResult: JsonqlGenericObject,
     pos: number[]
   ) => Reflect.apply(ruleFn, null, [value])
-                .then((result: any) => {
-                  console.log('pass', name, result)
-                  // return the argument name with the value
-                  return assign(lastResult, { [name]: value })
-                })
+                .then(
+                  successThen(name, value, lastResult, pos)
+                )
                 .catch((error: boolean) => {
-                  console.log('failed', name, error, pos, error)
+                  debug('failed', name, value, error, pos)
                   return Promise.reject(new JsonqlValidationError(name, pos))
                 })
+}
+
+/** This is taken out from the above then call for re-use when we want to fall through a rule */
+export function successThen(
+  name: string,
+  value: any,
+  lastResult: JsonqlGenericObject,
+  pos: number[]
+) {
+  return (result: any) => {
+    debug('pass', name, value, result, pos)
+    // return the argument name with the value
+    return assign(lastResult, { [name]: value })
+  }
 }
 
 
@@ -99,7 +112,8 @@ export function constructRuleCb(
 function getValidateRules(ast: any): JsonqlValidateFn {
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
-    // @TODO need more test on different situation
+      // @TODO need more test on different situation
+      // @ts-ignore Typescript is confused again
       return async (value: any) => checkUnion(value, ast.type)
     case TS_ARRAY_TYPE || SPREAD_ARG_TYPE:
       // need to apply for the type as well
@@ -122,8 +136,8 @@ export function getOptionalValue(arg: any, param: any) {
     return arg
   }
   return (
-    param.required === false
-    &&
+    /* param.required === false // we don't need to check this
+    && */
     param[DEFAULT_VALUE] !== undefined
       ? param[DEFAULT_VALUE]
       : undefined
