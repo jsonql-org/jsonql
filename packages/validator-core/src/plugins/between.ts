@@ -1,11 +1,11 @@
 // between
-import moreThanEqual from './more-than-equal'
-import lessThanEqual from './less-than-equal'
+import moreThan from './more-than'
+import lessThan from './less-than'
 
 const name = 'between'
 
 function main(max: number, min: number, value: number): boolean {
-  return lessThanEqual.main(value, max) && moreThanEqual.main(value, min)
+  return lessThan.main(max, value) && moreThan.main(min, value)
 }
 
 // so when we register it, we know what param we should expect

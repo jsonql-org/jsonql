@@ -1,10 +1,12 @@
-import moreThan from './more-than'
-import lessThan from './less-than'
+
+
+import moreThanEqual from './more-than-equal'
+import lessThanEqual from './less-than-equal'
 
 const name = 'main'
 
 function main(max: number, min: number, value: number): boolean {
-  return lessThan.main(value, max) && moreThan.main(value, min)
+  return lessThanEqual.main(max, value) && moreThanEqual.main(min, value)
 }
 
 export default {
