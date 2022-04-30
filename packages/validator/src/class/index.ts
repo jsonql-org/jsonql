@@ -27,7 +27,7 @@ import {
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
-  JsonqlValidateCbFn
+  JsonqlValidateCbFn,
 } from '../types'
 import {
   queuePromisesProcess,
