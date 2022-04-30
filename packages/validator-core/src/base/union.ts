@@ -57,7 +57,7 @@ export async function checkUnion(
   value: any,
   types: Array<string>,
   extended?: Array<any>
-): Promise<boolean | string> {
+): Promise<boolean> {
   const ps = generateReversePromisesFn(value, types, extended)
   // we wrap this in another promise to reverse the result
   return new Promise((resolver, rejecter) => {

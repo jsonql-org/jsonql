@@ -73,7 +73,9 @@ export type JsonqlPropertyParamnMap = {
   tstype?: string
   types?: any
   optional?: boolean // alias will remove in the future
-  rules?: Array<JsonqlValidationRule> & Array<JsonqlValidateCbFn>
+  // we separate them to make it clear in stages about the transform 
+  rules?: Array<JsonqlValidationRule>
+  queue?: Array<JsonqlValidateCbFn>
 }
 
 export type JsonqlClassValidationMap = {

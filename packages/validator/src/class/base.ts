@@ -9,6 +9,7 @@ import {
   showDeep,
   assign,
   isFunction,
+  toArray,
 } from '@jsonql/utils'
 import {
   DEFAULT_VALUE,
@@ -69,7 +70,7 @@ export class ValidatorFactoryBase {
   private _errors!: Array<Array<number>>
   // use this list to make callable argument
   protected _arguments!: Array<string>
-  // @TODO properly type the astMap 
+  // @TODO properly type the astMap
   constructor(astMap: any) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument list in order
@@ -194,6 +195,7 @@ export class ValidatorFactoryBase {
         ast.rules = []
       }
       if (input2) {
+        // @ts-ignore deal with this two rules later
         ast.rules = ast.rules.concat(input2)
       }
       return ast
@@ -212,9 +214,15 @@ export class ValidatorFactoryBase {
     astMap: Array<JsonqlPropertyParamnMap>,
     input: JsonqlObjectValidateInput
   ) {
-
     return astMap.map((ast: JsonqlPropertyParamnMap) => {
-
+      const { name } = ast
+      if (input[name]) {
+        const _input = toArray(input[name])
+        const rules = this._transformInput(_input)
+        if (rules && rules.length) {
+          ast.rules = ast.rules.concat(rules)
+        }
+      }
       return ast
     })
   }
@@ -222,7 +230,8 @@ export class ValidatorFactoryBase {
   /** here is the one that will transform the rules */
   private _transformInput(
     input: Array<JsonqlValidationRule>
-  ): Array<JsonqlValidationRule | undefined> { // @NOTE add the undefined to get around the TS moronic check
+  ): Array<JsonqlValidationRule> { // @NOTE add the undefined to get around the TS moronic check
+    // @ts-ignore - where the undefined came from?
     return input.map((_input: JsonqlValidationRule) => {
       switch (true) {
         case _input.pluign !== undefined:
