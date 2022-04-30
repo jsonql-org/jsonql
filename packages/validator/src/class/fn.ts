@@ -66,7 +66,7 @@ export function createAutomaticRules(
  */
 function contructRuleCb(ast: any): JsonqlValidateCbFn {
   const ruleFn = getValidateRules(ast)
-  
+
   return async function(
     value: any,
     lastResult: JsonqlGenericObject,
@@ -120,4 +120,13 @@ export function getOptionalValue(arg: any, param: any) {
       ? param[DEFAULT_VALUE]
       : undefined
   )
+}
+
+/** If the plugin provide a pattern */
+export function patternPluginFanctory(pattern: string) {
+  return async (value: string) => {
+    return (new RegExp(pattern)).test(value) ?
+              Promise.resolve(true) :
+              Promise.reject(false)
+  }
 }

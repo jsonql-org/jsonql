@@ -1,8 +1,8 @@
 // configuration
 
-export declare type CallbackFunction = (...args: any[]) => any
+export declare type CallbackFunction<T,O> = (...args: T[]) => O
 
-export declare type AsyncCallbackFunction = (...args: any[]) => Promise<any>
+export declare type AsyncCallbackFunction<T,O> = (...args: T[]) => Promise<O>
 
 export declare type JsonqlGenericObject = {
   [key: string]: any
@@ -27,11 +27,13 @@ export type JsonqlConstantProps = JsonqlConfigBase
 
 export declare type JsonqlValidationPlugin = {
   name: string
+  main?: CallbackFunction<any, boolean> // after transform the plugin we remove it from the object
+  params?: Array<string>
   pattern?: string
   // we apply the JSON Schema validation here
-  server?: boolean = false // server only, if there is only a validate then it will become a server only
-  validate?: (value: any) => boolean
-  validateAsync?: (value: any) => Promise<boolean>
+  server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only
+  validate?: CallbackFunction<any, boolean>
+  validateAsync?: AsyncCallbackFunction<any, boolean>
 }
 
 export declare type JsonqlValidationMap = {
@@ -44,8 +46,8 @@ export type JsonqlValidationRule = {
   plugin?: string
   value?: any // if the rule require a value to compare, normaly it should be a number
   server?: boolean // mark if this is a server side only rules
-  validate?: (value: any) => boolean // apply a function
-  validateAsync?: (value: any) => Promise<boolean>
+  validate?: CallbackFunction<any, boolean> // apply a function
+  validateAsync?: AsyncCallbackFunction<any, boolean>
   [key: string]: any // free form to apply the plugins
 }
 
@@ -56,7 +58,7 @@ export type JsonqlObjectValidateInput = {
   [argName: string]: JsonqlValidationRule | Array<JsonqlValidationRule>
 }
 
-export type JsonqlValidateFn = AsyncCallbackFunction
+export type JsonqlValidateFn = AsyncCallbackFunction<any, boolean>
 
 export type JsonqlValidateCbFn = (
   value: any,

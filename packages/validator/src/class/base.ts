@@ -8,6 +8,7 @@ import {
   notEmpty,
   showDeep,
   assign,
+  isFunction,
 } from '@jsonql/utils'
 import {
   DEFAULT_VALUE,
@@ -20,6 +21,7 @@ import {
   checkObject,
   checkUnion,
   combineCheck,
+  promisify
 } from '@jsonql/validator-core/src'
 // ----- LOCAL ---- //
 import {
@@ -30,6 +32,7 @@ import {
 import {
   createAutomaticRules,
   getOptionalValue,
+  patternPluginFanctory,
 } from './fn'
 import {
   // JsonqlValidationMap,
@@ -41,8 +44,9 @@ import {
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
+  JsonqlValidateFn,
 } from '../types'
-import * as plugins from '../plugins'
+import { plugins } from '../plugins'
 
 // ---- DEBUG ---- //
 import debug from 'debug'
@@ -57,7 +61,7 @@ The sequence how this should run
 */
 export class ValidatorFactoryBase {
 
-  private _plugins = new Map<string, any>()
+  private _plugins = new Map<string, JsonqlValidationPlugin>()
   // we keep two set
   private _astWithBaseRules: Array<JsonqlPropertyParamnMap>
   private _schema!: Array<JsonqlPropertyParamnMap>
@@ -67,7 +71,10 @@ export class ValidatorFactoryBase {
   constructor(astMap: any) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // register internal plugins
-    
+    plugins.forEach((plugin: JsonqlValidationPlugin) => {
+      plugin.validateAsync = promisify(plugin.main)
+      this._registerPlugin(plugin.name, plugin)
+    })
   }
 
   protected get schema() {
@@ -81,15 +88,15 @@ export class ValidatorFactoryBase {
 
   /** put the rule in here and make it into an async method */
   protected _createSchema(
-    input?: any
+    input: JsonqlObjectValidateInput | JsonqlArrayValidateInput
   ): void {
     let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
     if (notEmpty(input)) {
       if (checkArray(input)) {
-        astWithRules = this._applyArrayInput(astWithRules, input)
+        astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
       } else if (checkObject(input)) {
-        astWithRules = this._applyObjectInput(astWithRules, input)
+        astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
       }
     }
     this._schema = astWithRules
@@ -208,15 +215,19 @@ export class ValidatorFactoryBase {
     })
   }
 
-  // here is the one that will transform the rules
-  private _transformInput(input: JsonqlValidationRule): Array<any> {
-    return input.map(_input => {
+  /** here is the one that will transform the rules */
+  private _transformInput(
+    input: Array<JsonqlValidationRule>
+  ): Array<JsonqlValidationRule | undefined> { // @NOTE add the undefined to get around the TS moronic check
+    return input.map((_input: JsonqlValidationRule) => {
       switch (true) {
         case _input.pluign !== undefined:
           return this._lookupPlugin(_input)
-        case _input.validator !== undefined:
+        case _input.validate !== undefined:
           // @TODO need to transform this
-          return _input.validator
+          return promisify(_input.validate)
+        case _input.validateAsync !== undefined:
+          return _input.validateAsync
         default:
           throw new JsonqlError(`unable to find rule`)
       }
@@ -225,11 +236,17 @@ export class ValidatorFactoryBase {
 
   /// ----------------------- PLUGINS ----------------------- ///
 
-  private _lookupPlugin(input) {
+  private _lookupPlugin(input: JsonqlValidationRule): JsonqlValidateFn {
     const name = input.plugin
-    if (this._plugins.has(name)) {
+    if (name && this._plugins.has(name)) {
       // @TODO need to transform this
-      return this._plugins.get(name)
+      const _plugin = this._plugins.get(name)
+      if (_plugin && _plugin.validateAsync) {
+        // @TODO there will be require more arguments we need to look up the params
+        
+
+        return _plugin.validateAsync as JsonqlValidateFn
+      }
     }
     throw new JsonqlError(`Unable to find ${name} plugin`)
   }
@@ -237,7 +254,19 @@ export class ValidatorFactoryBase {
   /** register plugins */
   protected _registerPlugin(name: string, rule: JsonqlValidationPlugin): boolean {
     // @TODO need to check the rule and transform the plugin
-    this._plugins.set(name, rule)
+    if (!this._plugins.has(name)) {
+      switch (true) {
+        case (!rule.validateAsync && rule.validate && isFunction(rule.validate)):
+          rule.validateAsync = promisify(rule.validate)
+          break
+        case (rule.pattern && checkString(rule.pattern)):
+          rule.validateAsync = patternPluginFanctory(rule.pattern as string)
+          break
+        default:
+          // @TODO more situations
+      }
+      this._plugins.set(name, rule)
+    }
     return true
   }
 

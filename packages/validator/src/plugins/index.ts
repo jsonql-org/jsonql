@@ -13,7 +13,7 @@ import moreThan from './more-than'
 import unit from './uint'
 import within from './within'
 
-export const plugins = {
+export const plugins = [
   between,
   email,
   int,
@@ -23,7 +23,7 @@ export const plugins = {
   moreThan,
   unit,
   within,
-}
+]
 
 /** @TODO it needs to be a js file then it must be after compile */
 export function getPlugin(pluginName: string) {
