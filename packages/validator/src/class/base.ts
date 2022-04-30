@@ -51,7 +51,16 @@ import {
   JsonqlGenericObject,
   JsonqlValidateFn,
 } from '../types'
-
+import {
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  PLUGIN_KEY,
+  PLUGIN_FN_KEY,
+  PATTERN_KEY,
+  RULES_KEY,
+  NAME_KEY,
+  PARAMS_KEY,
+} from '../constants'
 // ---- DEBUG ---- //
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:base')
@@ -77,14 +86,14 @@ export class ValidatorFactoryBase {
   constructor(astMap: any) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument list in order
-    this._arguments = this._astWithBaseRules.map(rule => rule.name)
+    this._arguments = this._astWithBaseRules.map(rule => rule[NAME_KEY])
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
-      if (!plugin.params) {
+      if (!plugin[PARAMS_KEY]) {
         // We skip those need to curry and do that JIT
-        plugin.validateAsync = promisify(plugin.main)
+        plugin[VALIDATE_ASYNC_KEY] = promisify(plugin[PLUGIN_FN_KEY])
       }
-      this._registerPlugin(plugin.name, plugin)
+      this._registerPlugin(plugin[NAME_KEY], plugin)
     })
   }
 
@@ -103,10 +112,13 @@ export class ValidatorFactoryBase {
   ): void {
     let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
-    if (notEmpty(input)) {
+    if (notEmpty(input, true)) {
+      debug('input is notEmpty')
       if (checkArray(input)) {
+        debug('input is array')
         astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
       } else if (checkObject(input)) {
+        debug('input is object')
         astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
       }
     }
@@ -133,14 +145,14 @@ export class ValidatorFactoryBase {
     switch (true) {
       case vCtn === pCtn:
         return values.map((value, i) => (
-          this._applyRules(value, params[i], i)
+          this._prepareForExecution(value, params[i], i)
         ))
       case vCtn < pCtn:
         debug(`Values pass less than params`)
         return params.map((param, i) => {
           const _value = getOptionalValue(values[i], param)
 
-          return this._applyRules(_value, param, i)
+          return this._prepareForExecution(_value, param, i)
         })
       case vCtn > pCtn: // this is the spread style argument
         debug('spread parameters')
@@ -151,7 +163,7 @@ export class ValidatorFactoryBase {
           // @TODO if it's optional field and using the provide value
           // should we skip the validation
 
-          return this._applyRules(_value, param, i)
+          return this._prepareForExecution(_value, param, i)
         })
       default: // will not fall through here @TODO
         throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
@@ -162,7 +174,7 @@ export class ValidatorFactoryBase {
     but we dont' run it yet until all rules are in the main queue
     this way, if one fail then the whole queue exited without running
   */
-  private _applyRules(
+  private _prepareForExecution(
     value: any,
     param: JsonqlPropertyParamnMap,
     idx: number
@@ -174,7 +186,7 @@ export class ValidatorFactoryBase {
         // if this is not required field and no value the we create a fake callback
         if (value === undefined && !param.required) {
           return async (lastResult: JsonqlGenericObject) => (
-            successThen(param.name, value, lastResult, [idx, i])(true)
+            successThen(param[NAME_KEY], value, lastResult, [idx, i])(true)
           )
         }
         // when it fail then we provide with the index number
@@ -205,12 +217,12 @@ export class ValidatorFactoryBase {
     // We just need to take the validate methods and concat to the rules here
     return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
       const input2 = this._transformInput(fixedInput[i])
-      if (!ast.rules) {
-        ast.rules = []
+      if (!ast[RULES_KEY]) {
+        ast[RULES_KEY] = []
       }
       if (input2) {
         // @ts-ignore deal with this two rules later
-        ast.rules = ast.rules.concat(input2)
+        ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
       }
       return ast
     })
@@ -232,10 +244,12 @@ export class ValidatorFactoryBase {
       const { name } = ast
       if (input[name]) {
         const _input = toArray(input[name])
+        debug('_input', _input)
         const rules = this._transformInput(_input)
+        debug('_applyObjectInput:rules', rules)
         if (rules && rules.length) {
           // @ts-ignore
-          ast.rules = ast.rules.concat(rules)
+          ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
         }
       }
       return ast
@@ -251,12 +265,13 @@ export class ValidatorFactoryBase {
       const { name } = _input
       switch (true) {
         case _input.pluign !== undefined:
+          debug(`Should got here`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input)
-        case _input.validate !== undefined:
+        case _input[VALIDATE_KEY] !== undefined:
           // @TODO need to transform this
-          return constructRuleCb(name, promisify(_input.validate))
-        case _input.validateAsync !== undefined:
-          return constructRuleCb(name, _input.validateAsync as unknown as JsonqlValidateFn)
+          return constructRuleCb(name, promisify(_input[VALIDATE_KEY]))
+        case _input[VALIDATE_ASYNC_KEY] !== undefined:
+          return constructRuleCb(name, _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn)
         default:
           throw new JsonqlError(`unable to find rule`)
       }
@@ -268,16 +283,16 @@ export class ValidatorFactoryBase {
   private _lookupPlugin(
     input: JsonqlValidationRule
   ): JsonqlValidateFn {
-    const name = input.plugin
+    const name = input[PLUGIN_KEY]
     if (name && this._plugins.has(name)) {
       // @TODO need to transform this
       const _plugin = this._plugins.get(name)
-      if (_plugin && _plugin.validateAsync) {
+      if (_plugin && _plugin[VALIDATE_ASYNC_KEY]) {
         return constructRuleCb(
           name,
-          _plugin.validateAsync as JsonqlValidateFn
+          _plugin[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
         )
-      } else if (_plugin && _plugin.params) {
+      } else if (_plugin && _plugin[PARAMS_KEY]) {
         return constructRuleCb(
           name,
           promisify(
@@ -294,11 +309,11 @@ export class ValidatorFactoryBase {
     // @TODO need to check the rule and transform the plugin
     if (!this._plugins.has(name)) {
       switch (true) {
-        case (!rule.validateAsync && rule.validate && isFunction(rule.validate)):
-          rule.validateAsync = promisify(rule.validate)
+        case (!rule[VALIDATE_ASYNC_KEY] && rule[VALIDATE_KEY] && isFunction(rule[VALIDATE_KEY])):
+          rule[VALIDATE_ASYNC_KEY] = promisify(rule[VALIDATE_KEY])
           break
-        case (rule.pattern && checkString(rule.pattern)):
-          rule.validateAsync = patternPluginFanctory(rule.pattern as string)
+        case (rule[PATTERN_KEY] && checkString(rule[PATTERN_KEY])):
+          rule[VALIDATE_ASYNC_KEY] = patternPluginFanctory(rule[PATTERN_KEY] as string)
           break
         default:
           // @TODO more situations
@@ -307,5 +322,4 @@ export class ValidatorFactoryBase {
     }
     return true
   }
-
 }
