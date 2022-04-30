@@ -3,7 +3,7 @@ import lessThan from './less-than'
 
 const name = 'main'
 
-function main(value: number, max: number, min: number): boolean {
+function main(max: number, min: number, value: number): boolean {
   return lessThan.main(value, max) && moreThan.main(value, min)
 }
 

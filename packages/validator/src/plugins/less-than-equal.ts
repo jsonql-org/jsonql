@@ -2,7 +2,7 @@
 
 const name = 'lessThanEqual'
 
-function main(value: number, arg: number): boolean {
+function main(arg: number, value: number): boolean {
   return value <= arg
 }
 

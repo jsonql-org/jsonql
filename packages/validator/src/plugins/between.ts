@@ -4,7 +4,7 @@ import lessThanEqual from './less-than-equal'
 
 const name = 'between'
 
-function main(value: number, max: number, min: number): boolean {
+function main(max: number, min: number, value: number): boolean {
   return lessThanEqual.main(value, max) && moreThanEqual.main(value, min)
 }
 

@@ -259,6 +259,9 @@ export class ValidatorFactoryBase {
       const _plugin = this._plugins.get(name)
       if (_plugin && _plugin.validateAsync) {
         // @TODO there will be require more arguments we need to look up the params
+        if (_plugin.params) {
+          
+        }
 
         return constructRuleCb(name, _plugin.validateAsync as JsonqlValidateFn)
       }
