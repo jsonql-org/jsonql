@@ -18,11 +18,13 @@ import {
 import {
   checkString,
   checkArray,
-  checkAny,
   checkObject,
-  checkUnion,
-  combineCheck,
-  promisify
+  // checkAny,
+  // checkUnion,
+  // combineCheck,
+  promisify,
+  curryPlugin,
+  plugins,
 } from '@jsonql/validator-core/src'
 // ----- LOCAL ---- //
 import {
@@ -48,7 +50,7 @@ import {
   JsonqlGenericObject,
   JsonqlValidateFn,
 } from '../types'
-import { plugins } from '../plugins'
+
 
 // ---- DEBUG ---- //
 import debug from 'debug'
@@ -78,7 +80,10 @@ export class ValidatorFactoryBase {
     this._arguments = this._astWithBaseRules.map(rule => rule.name)
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
-      plugin.validateAsync = promisify(plugin.main)
+      if (!plugin.params) {
+        // We skip those need to curry and do that JIT
+        plugin.validateAsync = promisify(plugin.main)
+      }
       this._registerPlugin(plugin.name, plugin)
     })
   }
@@ -252,18 +257,25 @@ export class ValidatorFactoryBase {
 
   /// ----------------------- PLUGINS ----------------------- ///
 
-  private _lookupPlugin(input: JsonqlValidationRule): JsonqlValidateFn {
+  private _lookupPlugin(
+    input: JsonqlValidationRule
+  ): JsonqlValidateFn {
     const name = input.plugin
     if (name && this._plugins.has(name)) {
       // @TODO need to transform this
       const _plugin = this._plugins.get(name)
       if (_plugin && _plugin.validateAsync) {
-        // @TODO there will be require more arguments we need to look up the params
-        if (_plugin.params) {
-          
-        }
-
-        return constructRuleCb(name, _plugin.validateAsync as JsonqlValidateFn)
+        return constructRuleCb(
+          name,
+          _plugin.validateAsync as JsonqlValidateFn
+        )
+      } else if (_plugin && _plugin.params) {
+        return constructRuleCb(
+          name,
+          promisify(
+            curryPlugin(input)
+          )
+        )
       }
     }
     throw new JsonqlError(`Unable to find ${name} plugin`)
