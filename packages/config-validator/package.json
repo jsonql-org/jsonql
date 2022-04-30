@@ -33,7 +33,7 @@
     "@jsonql/constants": "workspace:^0.5.10",
     "@jsonql/errors": "workspace:^0.6.0",
     "@jsonql/utils": "workspace:^0.6.0",
-    "@jsonql/validator-core": "workspace:^0.3.0"
+    "@jsonql/validator-core": "workspace:^0.4.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
