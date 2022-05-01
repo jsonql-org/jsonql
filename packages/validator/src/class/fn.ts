@@ -158,7 +158,7 @@ export function getOptionalValue(
 
 /** check plugin argument */
 export function checkPluginArg(params: Array<string>): boolean {
-  return !!params.filter(param => inArray(KEYWORDS, param)).length
+  return !(params.filter(param => inArray(KEYWORDS, param)).length > 0)
 }
 
 /** check if the actually provide a func or pattern to construct function */

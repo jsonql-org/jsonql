@@ -10,10 +10,10 @@ test(`Testing the user define custom plugin`, async t => {
   const validateObj = new ValidatorFactory(context.funcAstInput.resolver)
   validateObj.registerPlugin('notEqual', {
     main: (arg: number, value: number) => arg !== value,
-    params: ['arg']
+    params: ['argx']
   })
   validateObj.createSchema({
-    age: { plugin: 'notEqual', arg: 50}
+    age: { plugin: 'notEqual', argx: 50}
   })
 
   return validateObj.validate(['some@email', 51])
