@@ -26,6 +26,8 @@ import {
   patternPluginFanctory,
   constructRuleCb,
   successThen,
+  checkPluginArg,
+  hasPluginFunc,
 } from './fn'
 import {
   JsonqlValidationPlugin,
@@ -81,7 +83,7 @@ export class ValidatorFactoryBase {
         // We skip those need to curry and do that JIT
         plugin[VALIDATE_ASYNC_KEY] = promisify(plugin[PLUGIN_FN_KEY])
       }
-      this._registerPlugin(plugin[NAME_KEY], plugin)
+      this._registerPlugin(plugin[NAME_KEY], plugin, true)
     })
   }
 
@@ -293,21 +295,34 @@ export class ValidatorFactoryBase {
   }
 
   /** register plugins */
-  protected _registerPlugin(name: string, rule: JsonqlValidationPlugin): boolean {
-    // @TODO need to check the rule and transform the plugin
-    if (!this._plugins.has(name)) {
-      switch (true) {
-        case (!rule[VALIDATE_ASYNC_KEY] && rule[VALIDATE_KEY] && isFunction(rule[VALIDATE_KEY])):
-          rule[VALIDATE_ASYNC_KEY] = promisify(rule[VALIDATE_KEY])
-          break
-        case (rule[PATTERN_KEY] && checkString(rule[PATTERN_KEY])):
-          rule[VALIDATE_ASYNC_KEY] = patternPluginFanctory(rule[PATTERN_KEY] as string)
-          break
-        default:
-          // @TODO more situations
+  protected _registerPlugin(
+    name: string,
+    rule: JsonqlValidationPlugin,
+    skipCheck = false // when register internal plugin then skip it
+  ): void {
+    if (!skipCheck) {
+      if (this._plugins.has(name)) {
+        throw new JsonqlError(`plugin ${name} already existed!`)
       }
-      this._plugins.set(name, rule)
+      if (rule[PARAMS_KEY] !== undefined) {
+        if (!checkPluginArg(rule[PARAMS_KEY] as string[])) {
+          throw new JsonqlError(`Your plugin argument contains reserved keywords`)
+        }
+      }
+      if (!hasPluginFunc(rule)) {
+        throw new JsonqlError(`Can not find any executable within your plugin definition`)
+      }
     }
-    return true
+    switch (true) {
+      case (!rule[VALIDATE_ASYNC_KEY] && rule[VALIDATE_KEY] && isFunction(rule[VALIDATE_KEY])):
+        rule[VALIDATE_ASYNC_KEY] = promisify(rule[VALIDATE_KEY])
+        break
+      case (rule[PATTERN_KEY] && checkString(rule[PATTERN_KEY])):
+        rule[VALIDATE_ASYNC_KEY] = patternPluginFanctory(rule[PATTERN_KEY] as string)
+        break
+      default:
+        // @TODO more situations
+    }
+    this._plugins.set(name, rule)
   }
 }

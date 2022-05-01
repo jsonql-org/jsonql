@@ -25,11 +25,23 @@ import {
   SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import {
+  KEYWORDS,
+
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  PLUGIN_FN_KEY,
+  PATTERN_KEY,
+
+} from '../constants'
+import {
   JsonqlValidationError,
   JsonqlError,
 } from '@jsonql/errors/src'
 import {
-  assign
+  assign,
+  getRegex,
+  inArray,
+  isFunction,
 } from '@jsonql/utils'
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')
@@ -144,10 +156,31 @@ export function getOptionalValue(arg: any, param: any) {
   )
 }
 
+/** check plugin argument */
+export function checkPluginArg(params: Array<string>): boolean {
+  return !!params.filter(param => inArray(KEYWORDS, param)).length
+}
+
+/** check if the actually provide a func or pattern to construct function */
+export function hasPluginFunc(rule: JsonqlGenericObject): boolean {
+  if (!rule[PATTERN_KEY]) {
+    const checks = [VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY]
+    for (let i = 0; i < checks.length; ++i) {
+      const fn = checks[i]
+      if (rule[fn] && isFunction(fn)) {
+        return true
+      }
+    }
+  }
+  return true
+}
+
 /** If the plugin provide a pattern */
 export function patternPluginFanctory(pattern: string) {
+  const regex = getRegex(pattern)
+
   return async (value: string) => {
-    return (new RegExp(pattern)).test(value) ?
+    return regex.test(value) ?
               Promise.resolve(true) :
               Promise.reject(false)
   }
