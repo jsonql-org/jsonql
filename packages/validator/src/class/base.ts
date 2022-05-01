@@ -4,24 +4,17 @@ import {
   JsonqlError,
 } from '@jsonql/errors'
 import {
-  queuePromisesProcess,
   notEmpty,
-  showDeep,
-  assign,
   isFunction,
   toArray,
 } from '@jsonql/utils'
 import {
-  DEFAULT_VALUE,
   DEFAULT_TYPE,
 } from '@jsonql/constants'
 import {
   checkString,
   checkArray,
   checkObject,
-  // checkAny,
-  // checkUnion,
-  // combineCheck,
   promisify,
   curryPlugin,
   plugins,
@@ -35,8 +28,6 @@ import {
   successThen,
 } from './fn'
 import {
-  // JsonqlValidationMap,
-  // JsonqlClassValidationMap,
   JsonqlValidationPlugin,
   JsonqlValidationRule,
   JsonqlPropertyParamnMap,

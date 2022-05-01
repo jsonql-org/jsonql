@@ -23,16 +23,15 @@ import {
 } from './base'
 import {
   JsonqlValidationPlugin,
-  // JsonqlValidationMap,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
-  // JsonqlValidateCbFn,
 } from '../types'
 import {
   queuePromisesProcess,
-  // showDeep,
 } from '@jsonql/utils'
+import debugFn from 'debug'
+const debug = debugFn('jsonql:validator:class:index')
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
   // @TODO need to properly type this astMap
@@ -67,8 +66,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
-
-    console.log('queues', queues)
+    debug('queues', queues)
 
     return queuePromisesProcess(
       queues  as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
@@ -82,7 +80,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   get validated */
   async prepareValidateResult(
     validateResult: JsonqlGenericObject
-  ): Promise<Array<any>> {
+  ): Promise<any[]> {
     return this._arguments.map(name => validateResult[name])
   }
 
