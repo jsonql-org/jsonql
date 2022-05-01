@@ -274,21 +274,21 @@ export class ValidatorFactoryBase {
     const name = input[PLUGIN_KEY]
     if (name && this._plugins.has(name)) {
       // @TODO need to transform this
-      const _plugin = this._plugins.get(name)
-      if (_plugin && _plugin[VALIDATE_ASYNC_KEY]) {
+      const pluginConfig = this._plugins.get(name)
+      if (pluginConfig && pluginConfig[VALIDATE_ASYNC_KEY]) {
 
         return constructRuleCb(
           name,
-          _plugin[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
+          pluginConfig[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
         )
-      } else if (_plugin && _plugin[PARAMS_KEY]) {
-        debug('_pluign', _plugin)
+      } else if (pluginConfig && pluginConfig[PARAMS_KEY]) {
+        debug('_pluign', pluginConfig)
         debug('input', input)
         const _input = input as unknown as JsonqlPluginInput
         // need to check if the _plugin is internal or not
         const fn = inArray(this._internalPluginNames, name) ?
                     createCoreCurryPlugin(_input) :
-                    curryPlugin(_input, _plugin as unknown as JsonqlPluginConfig)
+                    curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
 
         return constructRuleCb(name, promisify(fn))
       }
@@ -299,36 +299,41 @@ export class ValidatorFactoryBase {
   /** register plugins */
   protected _registerPlugin(
     name: string,
-    rule: JsonqlValidationPlugin,
+    pluginConfig: JsonqlValidationPlugin,
     skipCheck = false // when register internal plugin then skip it
   ): void {
     if (!skipCheck) {
       if (this._plugins.has(name)) {
         throw new JsonqlError(`plugin ${name} already existed!`)
       }
-      if (rule[PARAMS_KEY] !== undefined) {
-        if (!checkPluginArg(rule[PARAMS_KEY] as string[])) {
-          throw new JsonqlError(`Your plugin argument contains reserved keywords`)
+      if (pluginConfig[PARAMS_KEY] !== undefined) {
+        if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
+          throw new JsonqlError(`Your plugin config argument contains reserved keywords`)
         }
       }
-      if (!hasPluginFunc(rule)) {
-        throw new JsonqlError(`Can not find any executable within your plugin definition`)
+      if (!hasPluginFunc(pluginConfig)) {
+        throw new JsonqlError(`Can not find any executable within your plugin config`)
       }
     }
+    // put the name back in
+    pluginConfig.name = name
     switch (true) {
       // this rule is not really in use but keep here for future
-      case (!rule[VALIDATE_ASYNC_KEY] && rule[VALIDATE_KEY] && isFunction(rule[VALIDATE_KEY])):
-        rule[VALIDATE_ASYNC_KEY] = promisify(rule[VALIDATE_KEY])
+      case (!pluginConfig[VALIDATE_ASYNC_KEY] &&
+            pluginConfig[VALIDATE_KEY] &&
+            isFunction(pluginConfig[VALIDATE_KEY])):
+        pluginConfig[VALIDATE_ASYNC_KEY] = promisify(pluginConfig[VALIDATE_KEY])
         break
       // use the pattern key to generate plugin method
-      case (rule[PATTERN_KEY] && checkString(rule[PATTERN_KEY])):
-        rule[VALIDATE_ASYNC_KEY] = patternPluginFanctory(rule[PATTERN_KEY] as string)
+      case (pluginConfig[PATTERN_KEY] &&
+            checkString(pluginConfig[PATTERN_KEY])):
+        pluginConfig[VALIDATE_ASYNC_KEY] = patternPluginFanctory(pluginConfig[PATTERN_KEY] as string)
         break
       // @NOTE we can not create the curryPlugin here because it needs to be generic
       // and the arguement provide at validation time, this need to get create at the _lookupPlugin
       default:
         // @TODO more situations
     }
-    this._plugins.set(name, rule)
+    this._plugins.set(name, pluginConfig)
   }
 }

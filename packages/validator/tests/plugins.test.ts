@@ -5,6 +5,24 @@ import test from 'ava'
 import { ValidatorFactory } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
+test(`Testing the user define custom plugin`, async t => {
+  t.plan(1)
+  const validateObj = new ValidatorFactory(context.funcAstInput.resolver)
+  validateObj.registerPlugin('notEqual', {
+    main: (arg: number, value: number) => arg !== value,
+    params: ['arg']
+  })
+  validateObj.createSchema({
+    age: { plugin: 'notEqual', arg: 50}
+  })
+
+  return validateObj.validate(['some@email', 51])
+            .then(result => {
+              t.truthy(result)
+            })
+})
+
+
 test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
     t.plan(1)
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)

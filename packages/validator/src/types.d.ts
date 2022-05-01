@@ -26,7 +26,7 @@ export type JsonqlConstantProps = JsonqlConfigBase
 // validation
 
 export declare type JsonqlValidationPlugin = {
-  name: string
+  name?: string
   main?: CallbackFunction<any, boolean> // after transform the plugin we remove it from the object
   params?: Array<string>
   pattern?: string | RegExp
