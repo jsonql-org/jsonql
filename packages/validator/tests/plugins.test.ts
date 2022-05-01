@@ -13,10 +13,9 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins`, async t => {
   validateObj1.createSchema({
     email: { plugin: 'email' }
   })
-
+  
   return validateObj1.validate(['some@email.com', 65])
               .then(result => {
-                console.log(result)
                 t.truthy(result)
               })
 

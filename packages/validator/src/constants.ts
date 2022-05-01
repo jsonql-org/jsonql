@@ -10,3 +10,23 @@ export const PATTERN_KEY = 'pattern'
 export const RULES_KEY = 'rules'
 export const NAME_KEY = 'name'
 export const PARAMS_KEY = 'params'
+
+// when dev register their plugin, they can pass extra param but no the word in this list
+export const KEYWORDS = [
+  'name',
+  'type',
+  'types',
+  PARAMS_KEY,
+  PATTERN_KEY,
+  'server',
+  'tstype',
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  'value',
+  PLUGIN_KEY,
+  'optional',
+  RULES_KEY,
+  'tmp',
+  'pos',
+  'lastResult',
+]
