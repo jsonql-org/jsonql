@@ -90,7 +90,7 @@ export class ValidatorFactoryBase {
         // We skip those need to curry and do that JIT
         plugin[VALIDATE_ASYNC_KEY] = promisify(plugin[PLUGIN_FN_KEY])
       }
-      const name = plugin[NAME_KEY]
+      const name = plugin[NAME_KEY] as string
       this._internalPluginNames.push(name)
       this._registerPlugin(name, plugin, true)
     })

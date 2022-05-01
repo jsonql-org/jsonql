@@ -98,7 +98,7 @@ function getOptionalValue(arg, param) {
 exports.getOptionalValue = getOptionalValue;
 /** check plugin argument */
 function checkPluginArg(params) {
-    return !!params.filter(param => (0, utils_1.inArray)(constants_2.KEYWORDS, param)).length;
+    return !(params.filter(param => (0, utils_1.inArray)(constants_2.KEYWORDS, param)).length > 0);
 }
 exports.checkPluginArg = checkPluginArg;
 /** check if the actually provide a func or pattern to construct function */

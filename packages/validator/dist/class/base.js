@@ -189,54 +189,59 @@ class ValidatorFactoryBase {
         const name = input[constants_2.PLUGIN_KEY];
         if (name && this._plugins.has(name)) {
             // @TODO need to transform this
-            const _plugin = this._plugins.get(name);
-            if (_plugin && _plugin[constants_2.VALIDATE_ASYNC_KEY]) {
-                return (0, fn_1.constructRuleCb)(name, _plugin[constants_2.VALIDATE_ASYNC_KEY]);
+            const pluginConfig = this._plugins.get(name);
+            if (pluginConfig && pluginConfig[constants_2.VALIDATE_ASYNC_KEY]) {
+                return (0, fn_1.constructRuleCb)(name, pluginConfig[constants_2.VALIDATE_ASYNC_KEY]);
             }
-            else if (_plugin && _plugin[constants_2.PARAMS_KEY]) {
-                debug('_pluign', _plugin);
+            else if (pluginConfig && pluginConfig[constants_2.PARAMS_KEY]) {
+                debug('_pluign', pluginConfig);
                 debug('input', input);
                 const _input = input;
                 // need to check if the _plugin is internal or not
                 const fn = (0, utils_1.inArray)(this._internalPluginNames, name) ?
                     (0, src_1.createCoreCurryPlugin)(_input) :
-                    (0, src_1.curryPlugin)(_input, _plugin);
+                    (0, src_1.curryPlugin)(_input, pluginConfig);
                 return (0, fn_1.constructRuleCb)(name, (0, src_1.promisify)(fn));
             }
         }
         throw new errors_1.JsonqlError(`Unable to find ${name} plugin`);
     }
     /** register plugins */
-    _registerPlugin(name, rule, skipCheck = false // when register internal plugin then skip it
+    _registerPlugin(name, pluginConfig, skipCheck = false // when register internal plugin then skip it
     ) {
         if (!skipCheck) {
             if (this._plugins.has(name)) {
                 throw new errors_1.JsonqlError(`plugin ${name} already existed!`);
             }
-            if (rule[constants_2.PARAMS_KEY] !== undefined) {
-                if (!(0, fn_1.checkPluginArg)(rule[constants_2.PARAMS_KEY])) {
-                    throw new errors_1.JsonqlError(`Your plugin argument contains reserved keywords`);
+            if (pluginConfig[constants_2.PARAMS_KEY] !== undefined) {
+                if (!(0, fn_1.checkPluginArg)(pluginConfig[constants_2.PARAMS_KEY])) {
+                    throw new errors_1.JsonqlError(`Your plugin config argument contains reserved keywords`);
                 }
             }
-            if (!(0, fn_1.hasPluginFunc)(rule)) {
-                throw new errors_1.JsonqlError(`Can not find any executable within your plugin definition`);
+            if (!(0, fn_1.hasPluginFunc)(pluginConfig)) {
+                throw new errors_1.JsonqlError(`Can not find any executable within your plugin config`);
             }
         }
+        // put the name back in
+        pluginConfig.name = name;
         switch (true) {
             // this rule is not really in use but keep here for future
-            case (!rule[constants_2.VALIDATE_ASYNC_KEY] && rule[constants_2.VALIDATE_KEY] && (0, utils_1.isFunction)(rule[constants_2.VALIDATE_KEY])):
-                rule[constants_2.VALIDATE_ASYNC_KEY] = (0, src_1.promisify)(rule[constants_2.VALIDATE_KEY]);
+            case (!pluginConfig[constants_2.VALIDATE_ASYNC_KEY] &&
+                pluginConfig[constants_2.VALIDATE_KEY] &&
+                (0, utils_1.isFunction)(pluginConfig[constants_2.VALIDATE_KEY])):
+                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, src_1.promisify)(pluginConfig[constants_2.VALIDATE_KEY]);
                 break;
             // use the pattern key to generate plugin method
-            case (rule[constants_2.PATTERN_KEY] && (0, src_1.checkString)(rule[constants_2.PATTERN_KEY])):
-                rule[constants_2.VALIDATE_ASYNC_KEY] = (0, fn_1.patternPluginFanctory)(rule[constants_2.PATTERN_KEY]);
+            case (pluginConfig[constants_2.PATTERN_KEY] &&
+                (0, src_1.checkString)(pluginConfig[constants_2.PATTERN_KEY])):
+                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, fn_1.patternPluginFanctory)(pluginConfig[constants_2.PATTERN_KEY]);
                 break;
             // @NOTE we can not create the curryPlugin here because it needs to be generic
             // and the arguement provide at validation time, this need to get create at the _lookupPlugin
             default:
             // @TODO more situations
         }
-        this._plugins.set(name, rule);
+        this._plugins.set(name, pluginConfig);
     }
 }
 exports.ValidatorFactoryBase = ValidatorFactoryBase;

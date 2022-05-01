@@ -40,5 +40,5 @@ export declare class ValidatorFactoryBase {
     private _transformInput;
     private _lookupPlugin;
     /** register plugins */
-    protected _registerPlugin(name: string, rule: JsonqlValidationPlugin, skipCheck?: boolean): void;
+    protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
 }
