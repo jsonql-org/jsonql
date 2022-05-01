@@ -17,7 +17,7 @@ export async function tsFileParser(code: string) {
   const parser = getParser('ts', true)
 
   return parser(code)
-    .then(processFunctionModuleBody)
+    .then(module => module.body)
     .then(normalize)
     .then(processArgParams)
 }

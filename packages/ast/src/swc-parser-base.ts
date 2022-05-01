@@ -5,7 +5,6 @@ import * as swc from '@swc/core'
 import fs from 'fs-extra'
 // import { SwcParserOptions, SwcParsedResult } from './types'
 
-
 export async function swcParserBase(
   infile: string,
   options: any //SwcParserOptions // @TODO
