@@ -39,7 +39,7 @@ const wrapper = async (fn: CBFunc, i: number) => {
   })
 }
 // ------------------ START TEST ---------------- //
-test.skip(`Testing the multi level of Throw promies`, async t => {
+test(`Testing the multi level of Throw promies`, async t => {
   t.plan(1)
   const queue = [
     [() => wrapper(truthy, 0)],
@@ -64,19 +64,23 @@ test.skip(`Testing the multi level of Throw promies`, async t => {
 test(`Should able to generate automatic validation rule from ast map`, t => {
   // @ts-ignore
   const rules = createAutomaticRules(context.classAstInput.main)
-  showDeep(rules)
+  // showDeep(rules)
   t.truthy(rules)
 })
 
 test(`It should able validate`, async t => {
   t.plan(1)
   // arg1: string, arg2: string | number, arg3?: boolean
-  const values = ['hello', 1, false]
+  const values = ['hello@email.com', 10, false]
   const validator = new ValidatorFactory(context.funcAstInput.resolver)
 
   return validator.validate(values)
                   .then(result => {
-                    t.deepEqual(result, {arg1: 'hello', arg2: 1, arg3: false})
+                    t.deepEqual(result, {
+                      email: 'hello@email.com',
+                      age: 10,
+                      arg3: false
+                    })
                   })
                   .catch(err => {
                     console.log('err')
