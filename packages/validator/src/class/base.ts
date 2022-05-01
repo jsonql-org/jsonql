@@ -189,12 +189,9 @@ export class ValidatorFactoryBase {
     let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
     if (notEmpty(input, true)) {
-      debug('input is notEmpty')
       if (checkArray(input)) {
-        debug('input is array')
         astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
       } else if (checkObject(input)) {
-        debug('input is object')
         astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
       }
     }
