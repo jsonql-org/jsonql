@@ -218,14 +218,7 @@ export class ValidatorFactoryBase {
       return ast
     })
   }
-  /*
-  example:
-  v = {
-    argName: [rule, rule],
-    argName: rule,
-    argName: [rule]
-  }
-  */
+
   /** nomalize the object style rules input */
   private _applyObjectInput(
     astMap: Array<JsonqlPropertyParamnMap>,
@@ -234,7 +227,11 @@ export class ValidatorFactoryBase {
     return astMap.map((ast: JsonqlPropertyParamnMap) => {
       const { name } = ast
       if (input[name]) {
-        const _input = toArray(input[name])
+        // there might not be a name in there and it's important
+        const _input = toArray(input[name]).map(input => {
+          input.name = name
+          return input
+        })
         const rules = this._transformInput(_input)
         if (rules && rules.length) {
           ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
