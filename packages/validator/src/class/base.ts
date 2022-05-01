@@ -67,7 +67,7 @@ The sequence how this should run
 export class ValidatorFactoryBase {
 
   private _plugins = new Map<string, JsonqlValidationPlugin>()
-  private _internalPluginNames!: string[]
+  private _internalPluginNames: string[] = []
   // we keep two set
   private _astWithBaseRules: Array<JsonqlPropertyParamnMap>
   private _schema!: Array<JsonqlPropertyParamnMap>
@@ -213,9 +213,11 @@ export class ValidatorFactoryBase {
     const arrayInput = input.map(toArray)
     // We just need to take the validate methods and concat to the rules here
     return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
-      const input2 = this._transformInput(arrayInput[i])
-      if (input2) {
-        ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
+      if (arrayInput[i]) { // the user didn't provide additonal rules
+        const input2 = this._transformInput(arrayInput[i])
+        if (input2) {
+          ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
+        }
       }
       return ast
     })
@@ -289,7 +291,7 @@ export class ValidatorFactoryBase {
         const fn = inArray(this._internalPluginNames, name) ?
                     createCoreCurryPlugin(input) :
                     curryPlugin(_plugin, input)
-        
+
         return constructRuleCb(name, promisify(fn))
       }
     }
