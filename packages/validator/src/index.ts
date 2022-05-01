@@ -5,5 +5,6 @@ export {
 } from './class'
 // decorator also will be here
 export {
-  Validate
+  InitValidator,
+  Validate,
 } from './decorator'

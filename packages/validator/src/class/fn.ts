@@ -31,7 +31,6 @@ import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
   PATTERN_KEY,
-
 } from '../constants'
 import {
   JsonqlValidationError,

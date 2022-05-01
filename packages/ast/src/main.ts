@@ -1,6 +1,7 @@
 // ast index export
 import {
-  swcParserBase
+  swcParserBase,
+  swcParseFileBase,
 } from './swc-parser-base'
 import {
   processClassModuleBody,
@@ -11,9 +12,14 @@ import {
 } from './processors'
 import { IS_DEBUG, SYNTAXS } from './constants'
 
-export function jsParser(infile: string) {
-  console.log(`@TODO`, infile)
-  // "ecmascript" |
+/** This will pass the code directly for parsing */
+export async function tsFileParser(code: string) {
+  const parser = getParser('ts', true)
+
+  return parser(code)
+    .then(processFunctionModuleBody)
+    .then(normalize)
+    .then(processArgParams)
 }
 
 /** deal with the function style resolver */
@@ -55,7 +61,7 @@ export async function tsClassParser(infile: string) {
 }
 
 /** preconfig */
-export function getParser(syntax: string) {
+export function getParser(syntax: string, file = false) {
   if (!SYNTAXS[syntax]) {
     throw new Error(`Unsupported syntax! Only allow ts or js`)
   }
@@ -71,6 +77,7 @@ export function getParser(syntax: string) {
 
   return function(infile: string) {
 
-    return swcParserBase(infile, options)
+    return file ? swcParseFileBase(infile, options)
+                : swcParserBase(infile, options)
   }
 }

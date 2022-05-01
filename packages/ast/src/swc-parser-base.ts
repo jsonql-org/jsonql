@@ -12,11 +12,19 @@ export async function swcParserBase(
 ): Promise<any> { // @TODO
   return fs.readFile(infile)
             .then((code: Buffer) => code.toString())
-            .then(async (code: string) => {
-
-              return swc.parse(code, options)
-            })
+            .then(async (code: string) =>
+              swcParseFileBase(code, options)
+            )
 }
+
+/** breaking this out to create a api using just the file */
+export async function swcParseFileBase(
+    code: string,
+    options: any
+  ) {
+    return swc.parse(code, options)
+  }
+
 
 /*
 

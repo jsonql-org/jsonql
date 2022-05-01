@@ -1,16 +1,18 @@
 // use this to run the decorator
-import { Validate } from '../../src'
+import {
+  InitValidator,
+  Validate,
+} from '../../src'
 
+@InitValidator
+export default class TestsClass {
 
-export default class TestClass {
-
-
-  @Validate({
+  @Validate<TestClass>({
     username: {
       plugin: 'moreThan', arg: 8
     },
     password: {
-      plugin: 'moreThan', arg: 8
+      plugin: 'between', max: 20, min: 5
     }
   })
   login(username: string, password: string) {
