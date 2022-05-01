@@ -1,18 +1,41 @@
 import test from 'ava'
 
 import { curry } from '@jsonql/utils'
-import { plugins, curryPlugin, createCoreCurryPlugin } from '../src'
+import {
+  plugins,
+  curryPlugin,
+  createCoreCurryPlugin
+} from '../src'
 
-test.skip(`test the checkArgKeys validation key method`, t => {
-/*
+test(`Test with our custom plugin defintion`, t => {
+
   const config = {
-    plugin:
+    name: 'notTheSame',
+    main: (arg1: number, value: number) => arg1 !== value,
+    params: ['arg1']
   }
 
-*/
+  const input = {
+    plugin: 'notTheSame',
+    arg1: 100
+  }
+  const notTheSame = curryPlugin(input, config)
+  t.true(notTheSame(101))
+  t.false(notTheSame(100))
 })
 
-
+test.only(`Provide wrong data and expect the curryPlugin to throw`, t => {
+  const config = {
+    name: 'notTheSame',
+    main: (arg1: number, value: number) => arg1 !== value,
+    params: ['arg1']
+  }
+  const input = {
+    plugin: 'notTheSame',
+    max: 100
+  }
+  t.throws(() => curryPlugin(input, config))
+})
 
 test(`Just testing the email plugin`, t => {
   const email = 'some@email.com'

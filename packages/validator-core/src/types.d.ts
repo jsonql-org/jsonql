@@ -11,7 +11,7 @@ export type JsonqlPluginInput = {
 
 export type JsonqlPluginConfig = {
   name: string,
-  main: (arg: any[]) => boolean,
+  main: (...arg: any[]) => boolean,
   params?: string[]
 }
 
