@@ -25,7 +25,7 @@ exports.getCallMethod = getCallMethod;
  * wrapper method
  */
 const packResult = function (result, ts = false) {
-    let payload = { [constants_1.DATA_KEY]: result };
+    const payload = { [constants_1.DATA_KEY]: result };
     if (ts && Array.isArray(ts)) {
         ts.push((0, timestamp_1.timestamp)());
         payload[constants_1.TIMESTAMP_PARAM_NAME] = ts;
@@ -54,7 +54,7 @@ exports.isJsonqlErrorObj = isJsonqlErrorObj;
  * wrapper method - the output is trying to match up the structure of the Error sub class
  */
 const packError = function (detail, className = 'JsonqlError', statusCode = 0, message = '') {
-    let errorObj = { detail, className, statusCode, message };
+    const errorObj = { detail, className, statusCode, message };
     // we need to check the detail object to see if it has detail, className and message
     // if it has then we should merge the object instead
     return JSON.stringify({

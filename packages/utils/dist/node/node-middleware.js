@@ -60,7 +60,7 @@ const getPathToFn = function (name, type, opts) {
     // we should check the type
     const dir = opts[constants_1.RESOLVER_DIR_PROP_KEY];
     const fileName = (0, dasherize_1.dasherize)(name);
-    let paths = [];
+    const paths = [];
     if (opts.contract && opts.contract[type] && opts.contract[type].file) {
         paths.push(opts.contract[type].file);
     }
@@ -82,7 +82,7 @@ exports.getPathToFn = getPathToFn;
  */
 const replaceErrors = function (value) {
     if (value instanceof Error) {
-        var error = {};
+        const error = {};
         Object.getOwnPropertyNames(value).forEach(function (key) {
             error[key] = value[key];
         });

@@ -6,8 +6,8 @@ const timestamp_1 = require("./timestamp");
  * construct a url with query parameters
  */
 const urlParams = (url, params) => {
-    let parts = [];
-    for (let key in params) {
+    const parts = [];
+    for (const key in params) {
         parts.push([key, params[key]].join('='));
     }
     return [url, parts.join('&')].join('?');

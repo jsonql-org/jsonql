@@ -54,7 +54,7 @@ exports.createDeliverable = createDeliverable;
  */
 function createQuery(resolverName, args = [], jsonp = false) {
     if ((0, lodash_1.isString)(resolverName) && Array.isArray(args)) {
-        let payload = (0, exports.formatPayload)(args);
+        const payload = (0, exports.formatPayload)(args);
         if (jsonp === true) {
             return payload;
         }

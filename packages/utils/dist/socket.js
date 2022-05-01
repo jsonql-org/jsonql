@@ -24,7 +24,7 @@ const WS_KEYS = [
  */
 const createSendPayload = (resolverName, args, str = false) => {
     if ((0, lodash_1.isString)(resolverName) && Array.isArray(args)) {
-        let payload = (0, params_api_1.formatPayload)(args);
+        const payload = (0, params_api_1.formatPayload)(args);
         // the different is we add a additonal type in the payload
         const result = (0, params_api_1.createDeliverable)(resolverName, payload, { type: constants_1.EMIT_SEND_TYPE });
         return str ? JSON.stringify(result) : result;
@@ -42,7 +42,7 @@ exports.createSendPayload = createSendPayload;
  * @BUG this never works, the new version of the contract will have a META field to hold this info
  */
 const getTsFieldFromData = (data) => {
-    let obj = {
+    const obj = {
         data: {}
     };
     obj[constants_1.TIMESTAMP_PARAM_NAME] = [];
@@ -86,7 +86,7 @@ const isWsReply = (payload) => {
     const json = (0, lodash_1.isString)(payload) ? (0, common_1.parseJson)(payload) : payload;
     const { data } = json;
     if (data) {
-        let result = WS_KEYS.filter(key => (0, common_1.objectHasKey)(data, key));
+        const result = WS_KEYS.filter(key => (0, common_1.objectHasKey)(data, key));
         return (result.length === WS_KEYS.length) ? data : false;
     }
     return false;

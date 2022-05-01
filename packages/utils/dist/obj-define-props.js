@@ -28,7 +28,7 @@ exports.objHasProp = objHasProp;
  * to the resolver with the decoded user data
  */
 function injectToFn(resolver, name, data, overwrite = false) {
-    let check = objHasProp(resolver, name);
+    const check = objHasProp(resolver, name);
     if (overwrite === false && check !== undefined) {
         // console.info(`NOT INJECTED`)
         return resolver;
