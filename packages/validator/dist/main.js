@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateAsync = exports.validateSync = exports.normalizeArgs = void 0;
+const tslib_1 = require("tslib");
 // move the index.js code here that make more sense to find where things are
-const base_1 = require("../base");
-const constants_1 = require("../lib/constants");
+const src_1 = require("@jsonql/validator-core/src");
+const constants_1 = require("@jsonql/constants");
+const constants_2 = require("./constants");
 const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
-const base_2 = require("../base");
-const debugFn = (0, base_2.debug)('validator:main');
+const debug_1 = tslib_1.__importDefault(require("debug"));
+const debugFn = (0, debug_1.default)('validator:main');
 // import debug from 'debug'
 // const debugFn = debug('jsonql-params-validator:validator')
 // also export this for use in other places
@@ -31,18 +33,18 @@ const validateHandler = function (type, value) {
     switch (true) {
         case type === constants_1.OBJECT_TYPE:
             // debugFn('call OBJECT_TYPE')
-            return !(0, base_1.objectTypeHandler)(value);
+            return !(0, src_1.objectTypeHandler)(value);
         case type === constants_1.ARRAY_TYPE:
             // debugFn('call ARRAY_TYPE')
-            return !(0, base_1.checkArray)(value.arg);
+            return !(0, src_1.checkArray)(value.arg);
         // @TODO when the type is not present, it always fall through here
         // so we need to find a way to actually pre-check the type first
         // AKA check the contract.json map before running here
-        case (tmp = (0, base_1.isArrayLike)(type)) !== false:
+        case (tmp = (0, src_1.isArrayLike)(type)) !== false:
             // debugFn('call ARRAY_LIKE: %O', value)
-            return !(0, base_1.arrayTypeHandler)(value, tmp);
+            return !(0, src_1.arrayTypeHandler)(value, tmp);
         default:
-            return !(0, base_1.combineCheck)(type)(value.arg);
+            return !(0, src_1.combineCheck)(type)(value.arg);
     }
 };
 /**
@@ -65,19 +67,16 @@ const getOptionalValue = function (arg, param) {
  * @TODO the rules will become
  */
 const normalizeArgs = function (argValues, paramNames) {
-    // debugFn('normalizedArgs', args, params)
-    // first we should check if this call require a validation at all
-    // there will be situation where the function doesn't need args and params
-    if (!(0, base_1.checkArray)(paramNames)) {
+    if (!(0, src_1.checkArray)(paramNames)) {
         // debugFn('params value', params)
-        throw new errors_1.JsonqlValidationError(constants_1.PARAMS_NOT_ARRAY_ERR);
+        throw new errors_1.JsonqlValidationError(constants_2.PARAMS_NOT_ARRAY_ERR);
     }
     if (paramNames.length === 0) {
-        return [];
+        return []; // when the function doesn't need to validate because no params
     }
-    if (!(0, base_1.checkArray)(argValues)) {
+    if (!(0, src_1.checkArray)(argValues)) {
         debugFn(argValues);
-        throw new errors_1.JsonqlValidationError(constants_1.ARGS_NOT_ARRAY_ERR);
+        throw new errors_1.JsonqlValidationError(constants_2.ARGS_NOT_ARRAY_ERR);
     }
     // debugFn(args, params);
     // fall through switch
@@ -89,11 +88,10 @@ const normalizeArgs = function (argValues, paramNames) {
                 param: paramNames[i]
             }));
         case paramNames[0].variable === true: // using spread syntax
-            const type = paramNames[0].type;
             return argValues.map((arg, i) => ({
                 arg,
                 index: i,
-                param: paramNames[i] || { type, name: '_' }
+                param: paramNames[i] || { type: paramNames[0].type, name: '_' }
             }));
         // with optional defaultValue parameters
         case argValues.length < paramNames.length:
@@ -101,13 +99,13 @@ const normalizeArgs = function (argValues, paramNames) {
                 param,
                 index: i,
                 arg: getOptionalValue(argValues[i], param),
-                optional: param.optional || false
+                optional: param.optional || false,
+                required: param.required || true
             }));
         // this one pass more than it should have anything after the args.length will be cast as any type
         case argValues.length > paramNames.length:
-            let ctn = paramNames.length;
             // this happens when we have those array.<number> type
-            let _type = [constants_1.DEFAULT_TYPE];
+            // let _type = [ DEFAULT_TYPE ]
             // we only looking at the first one, this might be a @BUG
             /*
             if ((tmp = isArrayLike(params[0].type[0])) !== false) {
@@ -117,13 +115,15 @@ const normalizeArgs = function (argValues, paramNames) {
             // which is not what we want, instead, anything without the param
             // will get a any type and optional flag
             return argValues.map((arg, i) => {
-                let optional = i >= ctn ? true : !!paramNames[i].optional;
-                let param = paramNames[i] || { type: _type, name: `_${i}` };
+                const optional = i >= paramNames.length ? true : !!paramNames[i].optional;
+                const required = !optional;
+                const param = paramNames[i] || { type: constants_1.DEFAULT_TYPE, name: `_${i}` };
                 return {
                     arg: optional ? getOptionalValue(arg, param) : arg,
                     index: i,
                     param,
-                    optional
+                    optional,
+                    required
                 };
             });
         // @TODO find out if there is more cases not cover
@@ -131,7 +131,7 @@ const normalizeArgs = function (argValues, paramNames) {
             // debugFn('args', args)
             // debugFn('params', params)
             // this is unknown therefore we just throw it!
-            throw new errors_1.JsonqlError(constants_1.EXCEPTION_CASE_ERR, { argValues, paramNames });
+            throw new errors_1.JsonqlError(constants_2.EXCEPTION_CASE_ERR, { argValues, paramNames });
     }
 };
 exports.normalizeArgs = normalizeArgs;
@@ -145,10 +145,10 @@ const processReturn = (result) => result.map(r => r.arg);
  * validator main interface
  */
 const validateSync = function (args, params, withResult = false) {
-    let cleanArgs = (0, exports.normalizeArgs)(args, params);
+    const cleanArgs = (0, exports.normalizeArgs)(args, params);
     // @TODO it will become an array
     debugFn(cleanArgs);
-    let checkResult = cleanArgs.filter(p => {
+    const checkResult = cleanArgs.filter(p => {
         // v1.4.4 this fixed the problem, the root level optional is from the last fn
         // @ts-ignore need to fix this later
         if (p.optional === true || p.param.optional === true) {

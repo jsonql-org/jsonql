@@ -1,0 +1,12 @@
+export declare const ARGS_NOT_ARRAY_ERR = "Input argument is not an array!";
+export declare const PARAMS_NOT_ARRAY_ERR = "Parameter is not an array";
+export declare const EXCEPTION_CASE_ERR = "Exception happened don't know how to handle it";
+export declare const VALIDATE_KEY = "validate";
+export declare const VALIDATE_ASYNC_KEY = "validateAsync";
+export declare const PLUGIN_KEY = "plugin";
+export declare const PLUGIN_FN_KEY = "main";
+export declare const PATTERN_KEY = "pattern";
+export declare const RULES_KEY = "rules";
+export declare const NAME_KEY = "name";
+export declare const PARAMS_KEY = "params";
+export declare const KEYWORDS: string[];

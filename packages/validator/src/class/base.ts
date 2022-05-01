@@ -42,6 +42,10 @@ import {
   JsonqlValidateFn,
 } from '../types'
 import {
+  JsonqlPluginInput,
+  JsonqlPluginConfig
+} from '@jsonql/validator-core/src/types'
+import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
   VALIDATE_KEY,
@@ -197,14 +201,6 @@ export class ValidatorFactoryBase {
     this._schema = astWithRules
   }
 
-  /*
-  example:
-    v = [
-      [rule, rule , rule]
-      [rule]
-      rule
-  ]
-  */
   /** normalize the array style rules input */
   private _applyArrayInput(
     astMap: Array<JsonqlPropertyParamnMap>,
@@ -251,9 +247,8 @@ export class ValidatorFactoryBase {
   /** here is the one that will transform the rules */
   private _transformInput(
     input: Array<JsonqlValidationRule>
-  ): Array<JsonqlValidationRule> { // @NOTE add the undefined to get around the TS moronic check
+  ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
     debug('_transformInput', input)
-    // @ts-ignore - where the undefined came from?
     return input.map((_input: JsonqlValidationRule) => {
       const { name } = _input
       switch (true) {
@@ -287,10 +282,13 @@ export class ValidatorFactoryBase {
           _plugin[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
         )
       } else if (_plugin && _plugin[PARAMS_KEY]) {
+        debug('_pluign', _plugin)
+        debug('input', input)
+        const _input = input as unknown as JsonqlPluginInput
         // need to check if the _plugin is internal or not
         const fn = inArray(this._internalPluginNames, name) ?
-                    createCoreCurryPlugin(input) :
-                    curryPlugin(_plugin, input)
+                    createCoreCurryPlugin(_input) :
+                    curryPlugin(_input, _plugin as unknown as JsonqlPluginConfig)
 
         return constructRuleCb(name, promisify(fn))
       }

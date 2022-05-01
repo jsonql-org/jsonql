@@ -84,7 +84,7 @@ test(`It should able validate`, async t => {
                   })
 })
 
-test.only(`It should able to capture the error pos`, async t => {
+test(`It should able to capture the error pos`, async t => {
   t.plan(1)
 
   const values = ['hello', false, 'whatever']

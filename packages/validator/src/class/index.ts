@@ -41,19 +41,17 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   /** accept an object name => plugin in one go */
   registerPlugins(
     plugins: {[name: string]: JsonqlValidationPlugin}
-  ): Array<boolean> {
-    const result: Array<boolean> = []
+  ): void {
     for (const name in plugins) {
-      result.push(this._registerPlugin(name, plugins[name]))
+      this._registerPlugin(name, plugins[name])
     }
-    return result
   }
   /** wrapper for the protected register plugin method */
   registerPlugin(
     name: string,
     plugin: JsonqlValidationPlugin
-  ): boolean {
-    return this._registerPlugin(name, plugin)
+  ): void {
+    this._registerPlugin(name, plugin)
   }
   /** takes the user define rules and generate the full map */
   createSchema(

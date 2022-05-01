@@ -29,11 +29,13 @@ export declare type JsonqlValidationPlugin = {
   name: string
   main?: CallbackFunction<any, boolean> // after transform the plugin we remove it from the object
   params?: Array<string>
-  pattern?: string
+  pattern?: string | RegExp
+  // plugin?: string
   // we apply the JSON Schema validation here
   server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only
   validate?: CallbackFunction<any, boolean>
   validateAsync?: AsyncCallbackFunction<any, boolean>
+  [key: string]: any
 }
 
 export declare type JsonqlValidationMap = {
@@ -42,7 +44,7 @@ export declare type JsonqlValidationMap = {
 
 export type JsonqlValidationRule = {
   type?: string
-  pattern?: string
+  pattern?: string | RegExp
   plugin?: string
   value?: any // if the rule require a value to compare, normaly it should be a number
   server?: boolean // mark if this is a server side only rules
@@ -74,8 +76,8 @@ export type JsonqlPropertyParamnMap = {
   types?: any
   optional?: boolean // alias will remove in the future
   // rules get contractured the moment we init the object
-  rules?: Array<JsonqlValidateCbFn>
-  // tmp will be occasionally we MIGHT have to store it 
+  rules: Array<JsonqlValidateCbFn> = []
+  // tmp will be occasionally we MIGHT have to store it
   tmp?: Array<JsonqlValidationRule>
 }
 

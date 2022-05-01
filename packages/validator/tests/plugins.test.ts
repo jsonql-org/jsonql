@@ -5,7 +5,7 @@ import test from 'ava'
 import { ValidatorFactory } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
-test.skip('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
+test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
     t.plan(1)
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
     validateObj1.createSchema({
@@ -18,7 +18,7 @@ test.skip('Testing the JsonqlObjectValidateInput with built-in plugins', async t
               })
 })
 
-test.skip(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`, async t => {
+test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`, async t => {
   t.plan(1)
   t.throws(() => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
