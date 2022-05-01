@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "test:ava": "ava",
-    "test": "pnpm build && nyc ava",
+    "test:nyc": "nyc ava",
+    "test": "pnpm build && pnpm test:nyc",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
     "ts:check": "tsc -noEmit",
@@ -20,7 +21,7 @@
     "update:version": "node ../../update-deps.js ast",
     "clean:dist": "rimraf ./dist",
     "build": "pnpm clean:dist && pnpm build:tsc",
-    "prepublishOnly": "pnpm build && pnpm test",
+    "prepublishOnly": "pnpm build && pnpm test:nyc",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
     "minor": "npm version minor",
