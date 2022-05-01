@@ -4,8 +4,8 @@ import { timestamp } from './timestamp'
  * construct a url with query parameters
  */
 export const urlParams = (url: string, params: any): string => {
-  let parts: string[] = []
-  for (let key in params) {
+  const parts: string[] = []
+  for (const key in params) {
     parts.push( [ key, params[key] ].join('=') )
   }
 

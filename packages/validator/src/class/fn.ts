@@ -2,7 +2,7 @@
 // import utils from '@jsonql/utils'
 import {
   JsonqlPropertyParamnMap,
-  JsonqlValidateCbFn,
+  // JsonqlValidateCbFn,
   JsonqlValidateFn,
   JsonqlGenericObject,
 } from '../types'
@@ -41,6 +41,7 @@ import {
   getRegex,
   inArray,
   isFunction,
+  notEmpty,
 } from '@jsonql/utils'
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')
@@ -111,8 +112,6 @@ export function successThen(
 function getValidateRules(ast: any): JsonqlValidateFn {
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
-      // @TODO need more test on different situation
-      // @ts-ignore Typescript is confused again
       return async (value: any) => checkUnion(value, ast.type)
     case TS_ARRAY_TYPE || SPREAD_ARG_TYPE:
       // need to apply for the type as well
@@ -125,8 +124,11 @@ function getValidateRules(ast: any): JsonqlValidateFn {
       if (checkString(ast.type)) {
         return async (value: any) => promisify(combineCheck(ast.type))(value)
       }
+      // if both are not presented that means this could be a JS code
+      // this happen when we use Decorator and toString() to extract the ast
+      debug(`getValidateRules`, ast)
+      return async (value: any) => promisify(notEmpty)(value, true)
   }
-  throw new JsonqlError(`Unable to determine type from ast map to create validator!`, ast)
 }
 
 /** extract the default value if there is none */

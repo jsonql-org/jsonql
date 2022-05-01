@@ -1,4 +1,7 @@
-
+import {
+  JsonqlResolver,
+  JsonqlAsyncResolver
+} from './types'
 
 /**
  * this is essentially the same as the injectToFn
@@ -28,8 +31,13 @@ export function objHasProp(obj: any, name: string) {
  * After the user login we will use this Object.define add a new property
  * to the resolver with the decoded user data
  */
-export function injectToFn(resolver: Function, name: string, data: any, overwrite = false) {
-  let check = objHasProp(resolver, name)
+export function injectToFn(
+  resolver: JsonqlResolver | JsonqlAsyncResolver, 
+  name: string,
+  data: any,
+  overwrite = false
+) {
+  const check = objHasProp(resolver, name)
   if (overwrite === false && check !== undefined) {
     // console.info(`NOT INJECTED`)
     return resolver

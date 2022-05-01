@@ -69,7 +69,7 @@ export const getPathToFn = function(name: string, type: string, opts: any): stri
   // we should check the type
   const dir = opts[RESOLVER_DIR_PROP_KEY]
   const fileName = dasherize(name)
-  let paths: Array<string> = []
+  const paths: Array<string> = []
   if (opts.contract && opts.contract[type] && opts.contract[type].file) {
     paths.push(opts.contract[type].file)
   }
@@ -96,7 +96,7 @@ export const getPathToFn = function(name: string, type: string, opts: any): stri
  */
 export const replaceErrors = function(value: any): any {
   if (value instanceof Error) {
-    var error = {}
+    const error = {}
     Object.getOwnPropertyNames(value).forEach(function (key) {
       error[key] = value[key]
     })

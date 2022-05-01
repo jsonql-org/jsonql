@@ -40,7 +40,7 @@ export const createSendPayload = (
   str = false
 ) => {
   if (isString(resolverName) && Array.isArray(args)) {
-    let payload = formatPayload(args)
+    const payload = formatPayload(args)
     // the different is we add a additonal type in the payload
     const result = createDeliverable(resolverName, payload, { type: EMIT_SEND_TYPE })
 
@@ -60,7 +60,7 @@ export const createSendPayload = (
  * @BUG this never works, the new version of the contract will have a META field to hold this info
  */
 const getTsFieldFromData = (data: any) => {
-  let obj = {
+  const obj = {
     data: {}
   }
   obj[TIMESTAMP_PARAM_NAME] = []
@@ -116,7 +116,7 @@ export const isWsReply = (payload: any): any => {
   const json = isString(payload) ? parseJson(payload) : payload
   const { data } = json
   if (data) {
-    let result = WS_KEYS.filter(key => objectHasKey(data, key))
+    const result = WS_KEYS.filter(key => objectHasKey(data, key))
 
     return (result.length === WS_KEYS.length) ? data : false
   }

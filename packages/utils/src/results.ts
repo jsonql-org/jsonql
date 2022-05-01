@@ -33,7 +33,7 @@ export const getCallMethod = (method: string) => {
  * wrapper method
  */
 export const packResult = function(result: any, ts = false): string {
-  let payload = { [DATA_KEY]: result }
+  const payload = { [DATA_KEY]: result }
   if (ts && Array.isArray(ts)) {
     ts.push(timestamp())
     payload[TIMESTAMP_PARAM_NAME] = ts
@@ -72,7 +72,7 @@ export const packError = function(
   statusCode = 0,
   message = ''
 ): string {
-  let errorObj = { detail, className, statusCode, message }
+  const errorObj = { detail, className, statusCode, message }
   // we need to check the detail object to see if it has detail, className and message
   // if it has then we should merge the object instead
   return JSON.stringify({

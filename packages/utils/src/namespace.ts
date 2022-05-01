@@ -16,9 +16,9 @@ const SIZE = 'size'
  * create the group using publicNamespace when there is only public
  */
 function groupPublicNamespace(socket: any, publicNamespace: string) {
-  let g = {}
-  for (let resolverName in socket) {
-    let params = socket[resolverName]
+  const g = {}
+  for (const resolverName in socket) {
+    const params = socket[resolverName]
     g[resolverName] = params
   }
   return { size: 1, nspGroup: {[publicNamespace]: g}, publicNamespace}
@@ -33,19 +33,19 @@ function groupPublicNamespace(socket: any, publicNamespace: string) {
  * 3. which namespace is public
  */
 export function groupByNamespace(contract: JsonqlContract) {
-  let socket = extractSocketPart(contract)
+  const socket = extractSocketPart(contract)
   if (socket === false) {
     throw new JsonqlError('groupByNamespace', SOCKET_NOT_FOUND_ERR)
   }
-  let prop = {
+  const prop = {
     [NSP_GROUP]: {},
     [PUBLIC_NAMESPACE]: null,
     [SIZE]: 0
   }
 
-  for (let resolverName in socket) {
-    let params = socket[resolverName]
-    let { namespace } = params
+  for (const resolverName in socket) {
+    const params = socket[resolverName]
+    const { namespace } = params
     if (namespace) {
       if (!prop[NSP_GROUP][namespace]) {
         ++prop[SIZE]
@@ -67,8 +67,8 @@ export function groupByNamespace(contract: JsonqlContract) {
  * Got to make sure the connection order otherwise it will hang
  */
 export function getNamespaceInOrder(nspGroup: any, publicNamespace: string) {
-  let names: string[] = [] // need to make sure the order!
-  for (let namespace in nspGroup) {
+  const names: string[] = [] // need to make sure the order!
+  for (const namespace in nspGroup) {
     if (namespace === publicNamespace) {
       names[1] = namespace
     } else {
@@ -113,7 +113,7 @@ export function getPrivateNamespace(namespaces: string[]): string | boolean {
 export function getNspInfoByConfig(config: any) {
   const { contract, enableAuth } = config
   const namespaces = getNamespace(config)
-  let nspInfo = enableAuth ? groupByNamespace(contract)
+  const nspInfo = enableAuth ? groupByNamespace(contract)
                            : groupPublicNamespace(contract.socket, namespaces[0])
   // add the namespaces into it as well
   return Object.assign(nspInfo, { namespaces })

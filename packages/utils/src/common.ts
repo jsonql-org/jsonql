@@ -59,7 +59,7 @@ export const getConfigValue = (name: string, obj: object) => (
 /**
  * Check several parameter that there is something in the param
  */
-export const isNotEmpty = (param: any) => (
+export const isNotEmpty = (param: any): boolean => (
   param !== undefined &&
   // param !== false &&
   param !== null &&
@@ -72,7 +72,7 @@ export const isNotEmpty = (param: any) => (
  and we should check if its array is it empty array
  if it's object then if its empty object
  */
-export function notEmpty(a: any, valueCheck = false) {
+export function notEmpty(a: any, valueCheck = false): boolean {
   if (Array.isArray(a)) {
     // @NOTE we now check if its an empty array as well
     return valueCheck ? !!a.length : false

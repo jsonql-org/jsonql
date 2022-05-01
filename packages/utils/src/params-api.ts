@@ -65,7 +65,7 @@ export function createDeliverable(resolverName: string, payload: any, extra = {}
  */
 export function createQuery(resolverName: string, args = [], jsonp = false) {
   if (isString(resolverName) && Array.isArray(args)) {
-    let payload = formatPayload(args)
+    const payload = formatPayload(args)
     if (jsonp === true) {
 
       return payload
