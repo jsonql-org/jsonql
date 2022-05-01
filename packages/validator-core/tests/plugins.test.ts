@@ -1,7 +1,18 @@
 import test from 'ava'
 
 import { curry } from '@jsonql/utils'
-import { plugins, curryPlugin } from '../src'
+import { plugins, curryPlugin, createCoreCurryPlugin } from '../src'
+
+test.skip(`test the checkArgKeys validation key method`, t => {
+/*
+  const config = {
+    plugin:
+  }
+
+*/
+})
+
+
 
 test(`Just testing the email plugin`, t => {
   const email = 'some@email.com'
@@ -28,7 +39,7 @@ test(`test the plugins with curry`, t => {
 test(`Test a plugin that can not be curry`, t => {
   const plugin = 'email'
   t.throws(
-    () => curryPlugin({ plugin }),
+    () => createCoreCurryPlugin({ plugin }),
     undefined,
     `This plugin ${plugin} can not be curry`
   )
@@ -37,7 +48,7 @@ test(`Test a plugin that can not be curry`, t => {
 
 test(`Test the curryPlugin`, t => {
 
-  const curryFn = curryPlugin({plugin: 'between', max: 100, min: 10})
+  const curryFn = createCoreCurryPlugin({plugin: 'between', max: 100, min: 10})
 
   t.true(curryFn(50))
   t.false(curryFn(101))

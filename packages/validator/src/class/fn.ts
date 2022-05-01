@@ -26,7 +26,7 @@ import {
 } from '@jsonql/constants'
 import {
   KEYWORDS,
-
+  RULES_KEY,
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
@@ -64,10 +64,8 @@ export function createAutomaticRules(
 ): Array<JsonqlPropertyParamnMap> {
 
   return astMap.map((ast: JsonqlPropertyParamnMap) => {
-    if (!ast.rules) {
-      ast.rules = []
-    }
-    ast.rules = [ contructRuleCbWithAst(ast) ]
+    ast[RULES_KEY] = [ contructRuleCbWithAst(ast) ]
+
     return ast
   })
 }
@@ -113,12 +111,11 @@ export function successThen(
   pos: number[]
 ) {
   return (result: any) => {
-    debug('pass', name, value, result, pos)
+    debug('passed', name, value, result, pos)
     // return the argument name with the value
     return assign(lastResult, { [name]: value })
   }
 }
-
 
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast: any): JsonqlValidateFn {
@@ -143,7 +140,10 @@ function getValidateRules(ast: any): JsonqlValidateFn {
 }
 
 /** extract the default value if there is none */
-export function getOptionalValue(arg: any, param: any) {
+export function getOptionalValue(
+  arg: any,
+  param: JsonqlGenericObject
+) {
   if (arg !== undefined) {
     return arg
   }
@@ -176,12 +176,13 @@ export function hasPluginFunc(rule: JsonqlGenericObject): boolean {
 }
 
 /** If the plugin provide a pattern */
-export function patternPluginFanctory(pattern: string) {
+export function patternPluginFanctory(
+  pattern: string
+): (value: string) => Promise<boolean> {
   const regex = getRegex(pattern)
 
-  return async (value: string) => {
-    return regex.test(value) ?
-              Promise.resolve(true) :
-              Promise.reject(false)
-  }
+  return async (value: string) => regex.test(value) ?
+                                    Promise.resolve(true) :
+                                    Promise.reject(false)
+
 }

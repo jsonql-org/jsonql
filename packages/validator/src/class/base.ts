@@ -96,24 +96,7 @@ export class ValidatorFactoryBase {
     return this._errors || null
   }
 
-  /** put the rule in here and make it into an async method */
-  protected _createSchema(
-    input: JsonqlObjectValidateInput | JsonqlArrayValidateInput
-  ): void {
-    let astWithRules = this._astWithBaseRules
-    // all we need to do is check if its empty input
-    if (notEmpty(input, true)) {
-      debug('input is notEmpty')
-      if (checkArray(input)) {
-        debug('input is array')
-        astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
-      } else if (checkObject(input)) {
-        debug('input is object')
-        astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
-      }
-    }
-    this._schema = astWithRules
-  }
+  // ----------------- validate ------------------ //
 
   /**
     when validate happens we check the input value
@@ -188,6 +171,27 @@ export class ValidatorFactoryBase {
     return async () => true
   }
 
+  // ---------------------- schema -------------------------- // 
+
+  /** put the rule in here and make it into an async method */
+  protected _createSchema(
+    input: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+  ): void {
+    let astWithRules = this._astWithBaseRules
+    // all we need to do is check if its empty input
+    if (notEmpty(input, true)) {
+      debug('input is notEmpty')
+      if (checkArray(input)) {
+        debug('input is array')
+        astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
+      } else if (checkObject(input)) {
+        debug('input is object')
+        astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
+      }
+    }
+    this._schema = astWithRules
+  }
+
   /*
   example:
     v = [
@@ -201,18 +205,14 @@ export class ValidatorFactoryBase {
     astMap: Array<JsonqlPropertyParamnMap>,
     input: JsonqlArrayValidateInput
   ) {
-    const fixedInput = input.map((_input: JsonqlValidationRule) => {
-      return Array.isArray(_input) ? _input : [_input]
-    })
+    const arrayInput = input.map(toArray)
     // We just need to take the validate methods and concat to the rules here
     return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
-      const input2 = this._transformInput(fixedInput[i])
-      if (!ast[RULES_KEY]) {
-        ast[RULES_KEY] = []
-      }
+      const input2 = this._transformInput(arrayInput[i])
       if (input2) {
         ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
       }
+
       return ast
     })
   }
@@ -233,9 +233,7 @@ export class ValidatorFactoryBase {
       const { name } = ast
       if (input[name]) {
         const _input = toArray(input[name])
-        debug('_input', _input)
         const rules = this._transformInput(_input)
-        debug('_applyObjectInput:rules', rules)
         if (rules && rules.length) {
           ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
         }
@@ -248,6 +246,7 @@ export class ValidatorFactoryBase {
   private _transformInput(
     input: Array<JsonqlValidationRule>
   ): Array<JsonqlValidationRule> { // @NOTE add the undefined to get around the TS moronic check
+    debug('_transformInput', input)
     // @ts-ignore - where the undefined came from?
     return input.map((_input: JsonqlValidationRule) => {
       const { name } = _input
