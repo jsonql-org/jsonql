@@ -40,7 +40,9 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     super(astMap)
   }
   /** accept an object name => plugin in one go */
-  registerPlugins(plugins: {[name: string]: JsonqlValidationPlugin}): Array<boolean> {
+  registerPlugins(
+    plugins: {[name: string]: JsonqlValidationPlugin}
+  ): Array<boolean> {
     const result: Array<boolean> = []
     for (const name in plugins) {
       result.push(this._registerPlugin(name, plugins[name]))
@@ -48,7 +50,10 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     return result
   }
   /** wrapper for the protected register plugin method */
-  registerPlugin(name, plugin): boolean {
+  registerPlugin(
+    name: string,
+    plugin: JsonqlValidationPlugin
+  ): boolean {
     return this._registerPlugin(name, plugin)
   }
   /** takes the user define rules and generate the full map */
@@ -63,7 +68,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
 
-    console.log('queues', queues.length)
+    console.log('queues', queues)
 
     return queuePromisesProcess(
       queues  as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,

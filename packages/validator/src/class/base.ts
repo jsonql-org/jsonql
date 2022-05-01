@@ -28,11 +28,6 @@ import {
 } from '@jsonql/validator-core/src'
 // ----- LOCAL ---- //
 import {
-  ARGS_NOT_ARRAY_ERR,
-  // PARAMS_NOT_ARRAY_ERR,
-  EXCEPTION_CASE_ERR,
-} from '../constants'
-import {
   createAutomaticRules,
   getOptionalValue,
   patternPluginFanctory,
@@ -52,6 +47,8 @@ import {
   JsonqlValidateFn,
 } from '../types'
 import {
+  ARGS_NOT_ARRAY_ERR,
+  EXCEPTION_CASE_ERR,
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,
@@ -221,7 +218,6 @@ export class ValidatorFactoryBase {
         ast[RULES_KEY] = []
       }
       if (input2) {
-        // @ts-ignore deal with this two rules later
         ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
       }
       return ast
@@ -248,7 +244,6 @@ export class ValidatorFactoryBase {
         const rules = this._transformInput(_input)
         debug('_applyObjectInput:rules', rules)
         if (rules && rules.length) {
-          // @ts-ignore
           ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
         }
       }
