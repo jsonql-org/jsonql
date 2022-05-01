@@ -7,6 +7,7 @@ import {
   notEmpty,
   isFunction,
   toArray,
+  inArray,
 } from '@jsonql/utils'
 import {
   DEFAULT_TYPE,
@@ -16,6 +17,7 @@ import {
   checkArray,
   checkObject,
   promisify,
+  createCoreCurryPlugin,
   curryPlugin,
   plugins,
 } from '@jsonql/validator-core/src'
@@ -65,6 +67,7 @@ The sequence how this should run
 export class ValidatorFactoryBase {
 
   private _plugins = new Map<string, JsonqlValidationPlugin>()
+  private _internalPluginNames!: string[]
   // we keep two set
   private _astWithBaseRules: Array<JsonqlPropertyParamnMap>
   private _schema!: Array<JsonqlPropertyParamnMap>
@@ -83,7 +86,9 @@ export class ValidatorFactoryBase {
         // We skip those need to curry and do that JIT
         plugin[VALIDATE_ASYNC_KEY] = promisify(plugin[PLUGIN_FN_KEY])
       }
-      this._registerPlugin(plugin[NAME_KEY], plugin, true)
+      const name = plugin[NAME_KEY]
+      this._internalPluginNames.push(name)
+      this._registerPlugin(name, plugin, true)
     })
   }
 
@@ -171,7 +176,7 @@ export class ValidatorFactoryBase {
     return async () => true
   }
 
-  // ---------------------- schema -------------------------- // 
+  // ---------------------- schema -------------------------- //
 
   /** put the rule in here and make it into an async method */
   protected _createSchema(
@@ -212,7 +217,6 @@ export class ValidatorFactoryBase {
       if (input2) {
         ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
       }
-
       return ast
     })
   }
@@ -281,13 +285,12 @@ export class ValidatorFactoryBase {
           _plugin[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
         )
       } else if (_plugin && _plugin[PARAMS_KEY]) {
-
-        return constructRuleCb(
-          name,
-          promisify(
-            curryPlugin(input)
-          )
-        )
+        // need to check if the _plugin is internal or not
+        const fn = inArray(this._internalPluginNames, name) ?
+                    createCoreCurryPlugin(input) :
+                    curryPlugin(_plugin, input)
+        
+        return constructRuleCb(name, promisify(fn))
       }
     }
     throw new JsonqlError(`Unable to find ${name} plugin`)
@@ -313,12 +316,16 @@ export class ValidatorFactoryBase {
       }
     }
     switch (true) {
+      // this rule is not really in use but keep here for future
       case (!rule[VALIDATE_ASYNC_KEY] && rule[VALIDATE_KEY] && isFunction(rule[VALIDATE_KEY])):
         rule[VALIDATE_ASYNC_KEY] = promisify(rule[VALIDATE_KEY])
         break
+      // use the pattern key to generate plugin method
       case (rule[PATTERN_KEY] && checkString(rule[PATTERN_KEY])):
         rule[VALIDATE_ASYNC_KEY] = patternPluginFanctory(rule[PATTERN_KEY] as string)
         break
+      // @NOTE we can not create the curryPlugin here because it needs to be generic
+      // and the arguement provide at validation time, this need to get create at the _lookupPlugin
       default:
         // @TODO more situations
     }
