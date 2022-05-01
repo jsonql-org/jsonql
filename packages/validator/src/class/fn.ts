@@ -63,22 +63,13 @@ export function createAutomaticRules(
 ): Array<JsonqlPropertyParamnMap> {
 
   return astMap.map((ast: JsonqlPropertyParamnMap) => {
-    ast[RULES_KEY] = [ contructRuleCbWithAst(ast) ]
+    const { name } = ast
+    const ruleFn = getValidateRules(ast)
+
+    ast[RULES_KEY] = [ constructRuleCb(name, ruleFn) ]
 
     return ast
   })
-}
-
-/**
- when this get put in the execution queue we also
- provide the index (argument position)
- and i the position of this rule within the rules
- */
-function contructRuleCbWithAst(ast: any): JsonqlValidateCbFn {
-  const { name } = ast
-  const ruleFn = getValidateRules(ast)
-
-  return constructRuleCb(name, ruleFn)
 }
 
 /**
