@@ -146,13 +146,9 @@ export function getOptionalValue(
   if (arg !== undefined) {
     return arg
   }
-  return (
-    /* param.required === false // we don't need to check this
-    && */
-    param[DEFAULT_VALUE] !== undefined
-      ? param[DEFAULT_VALUE]
-      : undefined
-  )
+  return param[DEFAULT_VALUE] !== undefined
+          ? param[DEFAULT_VALUE]
+          : undefined
 }
 
 /** check plugin argument */
@@ -171,10 +167,10 @@ export function hasPluginFunc(rule: JsonqlGenericObject): boolean {
       }
     }
   }
-  return true
+  return false
 }
 
-/** If the plugin provide a pattern */
+/** If the plugin provide a pattern and we construct a function out of it */
 export function patternPluginFanctory(
   pattern: string
 ): (value: string) => Promise<boolean> {
