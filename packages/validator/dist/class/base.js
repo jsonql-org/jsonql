@@ -143,20 +143,16 @@ class ValidatorFactoryBase {
             return ast;
         });
     }
-    /*
-    example:
-    v = {
-      argName: [rule, rule],
-      argName: rule,
-      argName: [rule]
-    }
-    */
     /** nomalize the object style rules input */
     _applyObjectInput(astMap, input) {
         return astMap.map((ast) => {
             const { name } = ast;
             if (input[name]) {
-                const _input = (0, utils_1.toArray)(input[name]);
+                // there might not be a name in there and it's important
+                const _input = (0, utils_1.toArray)(input[name]).map(input => {
+                    input.name = name;
+                    return input;
+                });
                 const rules = this._transformInput(_input);
                 if (rules && rules.length) {
                     ast[constants_2.RULES_KEY] = ast[constants_2.RULES_KEY].concat(rules);
