@@ -1,0 +1,110 @@
+{
+  "query": {},
+  "mutation": {},
+  "auth": {},
+  "timestamp": 1559136905329,
+  "socket": {
+    "causeError": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-server/tests/fixtures/resolvers/socket/cause-error.js",
+      "event": "cause-error",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "a message"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "a message but here we throw an error"
+        }
+      ]
+    },
+    "chatroom": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-server/tests/fixtures/resolvers/socket/chatroom.js",
+      "event": "chatroom",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "message"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "timestamp",
+          "description": "for checking the time"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "reply"
+        }
+      ]
+    },
+    "delayFn": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-server/tests/fixtures/resolvers/socket/delay-fn.js",
+      "event": "delay-fn",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "a message"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "timestamp",
+          "description": "a timestamp"
+        }
+      ],
+      "returns": false
+    },
+    "wsHandler": {
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-server/tests/fixtures/resolvers/socket/ws-handler.js",
+      "event": "ws-handler",
+      "description": "method just for testing the ws",
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "message"
+        },
+        {
+          "type": [
+            "number"
+          ],
+          "name": "timestamp",
+          "description": "timestamp"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "msg + time lapsed"
+        }
+      ]
+    }
+  }
+}

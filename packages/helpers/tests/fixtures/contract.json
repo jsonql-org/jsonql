@@ -1,0 +1,111 @@
+{
+  "query": {},
+  "mutation": {},
+  "auth": {},
+  "timestamp": 1560348254,
+  "socket": {
+    "continuous": {
+      "namespace": "jsonql/private",
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/continuous.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "a message"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "a message with timestamp"
+        }
+      ]
+    },
+    "pinging": {
+      "namespace": "jsonql/public",
+      "public": true,
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/public/pinging.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "string"
+          ],
+          "name": "msg",
+          "description": "message"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "string"
+          ],
+          "description": "reply message based on your message"
+        }
+      ]
+    },
+    "sendExtraMsg": {
+      "namespace": "jsonql/private",
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/send-extra-msg.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "number"
+          ],
+          "name": "x",
+          "description": "a number for process"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "x + ?"
+        }
+      ]
+    },
+    "simple": {
+      "namespace": "jsonql/private",
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/simple.js",
+      "description": false,
+      "params": [
+        {
+          "type": [
+            "number"
+          ],
+          "name": "i",
+          "description": "a number"
+        }
+      ],
+      "returns": [
+        {
+          "type": [
+            "number"
+          ],
+          "description": "a number + 1;"
+        }
+      ]
+    },
+    "throwError": {
+      "namespace": "jsonql/private",
+      "file": "/home/joel/projects/open-source/jsonqltools/packages/ws-client/tests/fixtures/resolvers/socket/throw-error.js",
+      "description": "Testing the throw error",
+      "params": [],
+      "returns": [
+        {
+          "type": [
+            "any"
+          ],
+          "description": "just throw"
+        }
+      ]
+    }
+  }
+}
