@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const len_1 = require("../lib/len");
 const name = 'lessThanEqual';
-function main(arg, value) {
-    return value <= arg;
+function main(num, value) {
+    return (0, len_1.len)(value) <= num;
 }
 exports.default = {
     name,
     main,
-    params: ['arg']
+    params: ['num']
 };

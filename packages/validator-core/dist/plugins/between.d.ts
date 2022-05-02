@@ -1,4 +1,4 @@
-declare function main(max: number, min: number, value: number): boolean;
+declare function main(max: number, min: number, value: number | string): boolean;
 declare const _default: {
     main: typeof main;
     name: string;

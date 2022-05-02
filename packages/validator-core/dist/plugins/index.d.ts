@@ -1,6 +1,6 @@
 import { JsonqlPluginConfig, JsonqlValidateFn, JsonqlPluginInput } from '../types';
 export declare const plugins: ({
-    main: (max: number, min: number, value: number) => boolean;
+    main: (max: number, min: number, value: string | number) => boolean;
     name: string;
     params: string[];
 } | {

@@ -49,11 +49,14 @@ test(`test the plugins with curry`, t => {
   const between = plugins[0].main
   const lessThan = plugins[4].main
 
-  const betweenFn = curry(between)(100, 10)
+  const betweenFn = curry(between)(10, 1)
   const lessThanFn = curry(lessThan)(50)
 
-  t.true(betweenFn(50))
-  t.false(betweenFn(200))
+  t.true(betweenFn(5))
+  t.false(betweenFn(20))
+  // also test the string vesion
+  t.true(betweenFn('fox'))
+  t.false(betweenFn('jumping fox over the fence'))
 
   t.true(lessThanFn(10))
   t.false(lessThanFn(51))
