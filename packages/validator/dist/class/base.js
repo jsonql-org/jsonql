@@ -117,13 +117,10 @@ class ValidatorFactoryBase {
         let astWithRules = this._astWithBaseRules;
         // all we need to do is check if its empty input
         if ((0, utils_1.notEmpty)(input, true)) {
-            debug('input is notEmpty');
             if ((0, src_1.checkArray)(input)) {
-                debug('input is array');
                 astWithRules = this._applyArrayInput(astWithRules, input);
             }
             else if ((0, src_1.checkObject)(input)) {
-                debug('input is object');
                 astWithRules = this._applyObjectInput(astWithRules, input);
             }
         }

@@ -34,7 +34,7 @@ import {
 } from '../constants'
 import {
   JsonqlValidationError,
-  JsonqlError,
+  // JsonqlError,
 } from '@jsonql/errors/src'
 import {
   assign,
@@ -154,8 +154,8 @@ export function hasPluginFunc(rule: JsonqlGenericObject): boolean {
   if (!rule[PATTERN_KEY]) {
     const checks = [VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY]
     for (let i = 0; i < checks.length; ++i) {
-      const fn = checks[i]
-      if (rule[fn] && isFunction(fn)) {
+      const fn = rule[checks[i]]
+      if (fn && isFunction(fn)) {
         return true
       }
     }

@@ -25,5 +25,5 @@ export declare function getOptionalValue(arg: any, param: JsonqlGenericObject): 
 export declare function checkPluginArg(params: Array<string>): boolean;
 /** check if the actually provide a func or pattern to construct function */
 export declare function hasPluginFunc(rule: JsonqlGenericObject): boolean;
-/** If the plugin provide a pattern */
+/** If the plugin provide a pattern and we construct a function out of it */
 export declare function patternPluginFanctory(pattern: string): (value: string) => Promise<boolean>;

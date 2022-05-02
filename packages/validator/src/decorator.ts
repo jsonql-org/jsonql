@@ -7,7 +7,7 @@ import {
 import {
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
-  JsonqlGenericObject,
+  // JsonqlGenericObject,
   DescriptorMeta,
 } from './types'
 

@@ -24,21 +24,13 @@ because the plugins are apply there
 */
 function createAutomaticRules(astMap) {
     return astMap.map((ast) => {
-        ast[constants_2.RULES_KEY] = [contructRuleCbWithAst(ast)];
+        const { name } = ast;
+        const ruleFn = getValidateRules(ast);
+        ast[constants_2.RULES_KEY] = [constructRuleCb(name, ruleFn)];
         return ast;
     });
 }
 exports.createAutomaticRules = createAutomaticRules;
-/**
- when this get put in the execution queue we also
- provide the index (argument position)
- and i the position of this rule within the rules
- */
-function contructRuleCbWithAst(ast) {
-    const { name } = ast;
-    const ruleFn = getValidateRules(ast);
-    return constructRuleCb(name, ruleFn);
-}
 /**
 this will get re-use in the class to create method for the queue execution
  */
@@ -66,8 +58,6 @@ exports.successThen = successThen;
 function getValidateRules(ast) {
     switch (ast[constants_1.TS_TYPE_NAME]) {
         case constants_1.TS_UNION_TYPE:
-            // @TODO need more test on different situation
-            // @ts-ignore Typescript is confused again
             return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.checkUnion)(value, ast.type); });
         case constants_1.TS_ARRAY_TYPE || constants_1.SPREAD_ARG_TYPE:
             // need to apply for the type as well
@@ -80,20 +70,20 @@ function getValidateRules(ast) {
             if ((0, src_1.checkString)(ast.type)) {
                 return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)((0, src_1.combineCheck)(ast.type))(value); });
             }
+            // if both are not presented that means this could be a JS code
+            // this happen when we use Decorator and toString() to extract the ast
+            debug(`getValidateRules`, ast);
+            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)(utils_1.notEmpty)(value, true); });
     }
-    throw new src_2.JsonqlError(`Unable to determine type from ast map to create validator!`, ast);
 }
 /** extract the default value if there is none */
 function getOptionalValue(arg, param) {
     if (arg !== undefined) {
         return arg;
     }
-    return (
-    /* param.required === false // we don't need to check this
-    && */
-    param[constants_1.DEFAULT_VALUE] !== undefined
+    return param[constants_1.DEFAULT_VALUE] !== undefined
         ? param[constants_1.DEFAULT_VALUE]
-        : undefined);
+        : undefined;
 }
 exports.getOptionalValue = getOptionalValue;
 /** check plugin argument */
@@ -112,10 +102,10 @@ function hasPluginFunc(rule) {
             }
         }
     }
-    return true;
+    return false;
 }
 exports.hasPluginFunc = hasPluginFunc;
-/** If the plugin provide a pattern */
+/** If the plugin provide a pattern and we construct a function out of it */
 function patternPluginFanctory(pattern) {
     const regex = (0, utils_1.getRegex)(pattern);
     return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () {

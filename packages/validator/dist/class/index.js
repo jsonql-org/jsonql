@@ -23,7 +23,7 @@ const tslib_1 = require("tslib");
   @TODO how to integrete this into the contract generator
 */
 const base_1 = require("./base");
-const utils_1 = require("@jsonql/utils");
+const src_1 = require("@jsonql/utils/src");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
@@ -52,7 +52,7 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
             // this come out with a queue then we put into the chainProcessPromises
             const queues = this._normalizeArgValues(values);
             debug('queues', queues);
-            return (0, utils_1.queuePromisesProcess)(queues, {});
+            return (0, src_1.queuePromisesProcess)(queues, {});
         });
     }
     /** After the validation the success will get an object with
