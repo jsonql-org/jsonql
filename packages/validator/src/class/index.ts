@@ -29,7 +29,8 @@ import {
 } from '../types'
 import {
   queuePromisesProcess,
-} from '@jsonql/utils'
+} from '@jsonql/utils/src'
+
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
