@@ -64,13 +64,13 @@ Type 'SwcParserOptions' is not assignable to type
 */
 
 export type SwcParserOptions = {
-  syntax?: string | undefined
-  comments?: boolean | undefined,
-  script?: boolean | undefined,
-  target?: string | undefined , // @TODO find out about the JscTarget
-  decorators?: boolean,
+  syntax: string = "typescript"
+  comments: boolean = false
+  script: boolean = true
+  target: string = "es6" // @TODO find out about the JscTarget
+  decorators: boolean = true
   // Input source code are treated as module by default
-  isModule?: boolean | undefined,
+  isModule: boolean = true
 }
 
 export type SwcParamsSpan = {
