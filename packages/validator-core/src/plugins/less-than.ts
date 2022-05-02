@@ -1,13 +1,16 @@
-
+import { len } from '../lib/len'
 
 const name = "lessThan"
 
-function main(arg: number, value: number): boolean {
-  return value < arg
+function main(
+  num: number,
+  value: number | string
+): boolean {
+  return len(value) < num
 }
 
 export default {
   name,
   main,
-  params: ['arg']
+  params: ['num']
 }

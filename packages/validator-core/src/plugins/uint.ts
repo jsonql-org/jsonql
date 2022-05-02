@@ -8,5 +8,5 @@ function main(value: number): boolean {
 
 export default {
   name,
-  main, 
+  main,
 }
