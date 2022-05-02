@@ -1,6 +1,10 @@
 import test from 'ava'
-
+import { join } from 'node:path'
 import { tsFileParser } from '../src'
+/*
+import { tsInFileParser } from '../src/main'
+const targetFile = join(__dirname, 'fixtures', 'test-file-1.ts')
+*/
 
 test(`Test the tsFileParser`, async t => {
   t.plan(1)
@@ -15,5 +19,4 @@ test(`Test the tsFileParser`, async t => {
               console.log(result)
               t.truthy(result)
             })
-
 })

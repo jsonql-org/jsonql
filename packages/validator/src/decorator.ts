@@ -1,13 +1,18 @@
 import 'reflect-metadata'
 import {
   tsClassParser,
+  tsFileParser,
   pickInputFile,
 } from '@jsonql/ast/src'
 import {
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
-  JsonqlGenericObject
+  JsonqlGenericObject,
+  DescriptorMeta,
 } from './types'
+
+
+
 
 export const jsonqlAstKey = Symbol('jsonqlAstKey')
 export const jsonqlValidationKey = Symbol('jsonqlValidator')
@@ -39,8 +44,9 @@ export function Validate<T>(
   rules?: JsonqlArrayValidateInput | JsonqlObjectValidateInput
 ) {
 
-  return (target: T, propertyName: string): void => {
-    const astMap = Reflect.getOwnMetadata(jsonqlAstKey, target)
+  return (target: T, propertyName: string, descriptor: DescriptorMeta): void => {
+    const fn = descriptor.value
+    
     const rule = Reflect.getOwnMetadata(jsonqlValidationKey, target) || {}
     console.log(rules, target, propertyName)
     rule[propertyName] = rules

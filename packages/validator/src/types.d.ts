@@ -1,5 +1,12 @@
 // configuration
 
+export type DescriptorMeta = {
+  value: function
+  writable: boolean
+  enumerable: boolean
+  configurable: boolean
+}
+
 export declare type CallbackFunction<T,O> = (...args: T[]) => O
 
 export declare type AsyncCallbackFunction<T,O> = (...args: T[]) => Promise<O>

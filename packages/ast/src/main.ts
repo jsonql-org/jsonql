@@ -2,6 +2,8 @@
 import {
   swcParserBase,
   swcParseFileBase,
+  swcParseFileSync,
+  swcParseInFileBase,
 } from './swc-parser-base'
 import {
   processClassModuleBody,
@@ -20,6 +22,18 @@ export async function tsFileParser(code: string) {
     .then(module => module.body)
     .then(normalize)
     .then(processArgParams)
+}
+
+export async function tsInFileParser(infile) {
+  const options = getOptions('ts')
+
+  return swcParseInFileBase(infile, options)
+}
+
+/** The string version for individual function */
+export function tsFileParserSync(code: string) {
+  const options = getOptions('ts')
+  return swcParseFileSync(code, options)
 }
 
 /** deal with the function style resolver */
@@ -62,10 +76,20 @@ export async function tsClassParser(infile: string) {
 
 /** preconfig */
 export function getParser(syntax: string, file = false) {
+  const options = getOptions(syntax)
+  return function(infile: string) {
+    return file ? swcParseFileBase(infile, options)
+                : swcParserBase(infile, options)
+  }
+}
+
+/** wrapper to get the options  */
+function getOptions(syntax: string) {
   if (!SYNTAXS[syntax]) {
     throw new Error(`Unsupported syntax! Only allow ts or js`)
   }
-  const options = {
+
+  return {
     syntax: SYNTAXS[syntax],
     comments: false,
     script: true,
@@ -73,11 +97,5 @@ export function getParser(syntax: string, file = false) {
     decorators: true,
     // Input source code are treated as module by default
     // isModule: true,
-  }
-
-  return function(infile: string) {
-
-    return file ? swcParseFileBase(infile, options)
-                : swcParserBase(infile, options)
   }
 }

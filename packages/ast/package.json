@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/ast",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Generate AST Map using SWC",
   "main": "dist/index.js",
   "module": "src/index.ts",
@@ -31,8 +31,7 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.5.10",
-    "fs-extra": "^10.0.1"
+    "@jsonql/constants": "workspace:^0.5.10"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
