@@ -1,10 +1,10 @@
 // configuration
 
 export type DescriptorMeta = {
-  value: function
-  writable: boolean
-  enumerable: boolean
-  configurable: boolean
+  value?: function
+  writable?: boolean
+  enumerable?: boolean
+  configurable?: boolean
 }
 
 export declare type CallbackFunction<T,O> = (...args: T[]) => O

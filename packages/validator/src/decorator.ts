@@ -11,9 +11,6 @@ import {
   DescriptorMeta,
 } from './types'
 
-
-
-
 export const jsonqlAstKey = Symbol('jsonqlAstKey')
 export const jsonqlValidationKey = Symbol('jsonqlValidator')
 
@@ -46,7 +43,10 @@ export function Validate<T>(
 
   return (target: T, propertyName: string, descriptor: DescriptorMeta): void => {
     const fn = descriptor.value
-    
+    const astMap = tsFileParser(fn.toString())
+
+    console.log(astMap)
+
     const rule = Reflect.getOwnMetadata(jsonqlValidationKey, target) || {}
     console.log(rules, target, propertyName)
     rule[propertyName] = rules

@@ -2,12 +2,12 @@
 import {
   InitValidator,
   Validate,
-} from '../../src'
+} from '../../src/decorator'
 
 @InitValidator
 export default class TestsClass {
 
-  @Validate<TestClass>({
+  @Validate<TestsClass>({
     username: {
       plugin: 'moreThan', arg: 8
     },
