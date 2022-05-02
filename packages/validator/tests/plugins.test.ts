@@ -35,9 +35,9 @@ test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
               })
 })
 
-test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`, async t => {
+test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`,async t => {
   t.plan(1)
-  t.throwsAsync(async () => {
+  t.throws(() => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
     validateObj1.createSchema({
       email: { plugin: 'email' },
@@ -60,7 +60,7 @@ test(`Testing the JsonqlArrayValidateInput with built-in plugins` , async t => {
 
   return validateObj2.validate(['something@email.com', 51])
                 .then(result => {
-                  console.log(result)
+                  // console.log(result)
                   t.truthy(result)
                 })
 })

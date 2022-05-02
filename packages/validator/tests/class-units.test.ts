@@ -48,13 +48,13 @@ test(`Testing the multi level of Throw promies`, async t => {
   ]
   return queuePromisesProcess(queue, null)
             .then(result => {
-              console.log('------ RESULT -------')
-              showDeep(result)
+              // console.log('------ RESULT -------')
+              // showDeep(result)
             })
             .catch(err => {
-              console.log('------- ERROR ------')
-              console.log(err.detail, err.message, err.className)
-              showDeep(err)
+              // console.log('------- ERROR ------')
+              // console.log(err.detail, err.message, err.className)
+              // showDeep(err)
             })
             .finally(() => {
               t.pass()
@@ -96,11 +96,11 @@ test(`It should able to capture the error pos`, async t => {
 
   return validator.validate(values)
                   .then(result => {
-                    console.log('result????')
-                    showDeep(result)
+                    // console.log('result????')
+                    // showDeep(result)
                   })
                   .catch(err => {
-                    console.log('details', err.detail)
+                    // console.log('details', err.detail)
                   })
                   .finally(() => {
                     t.pass()
