@@ -96,8 +96,8 @@ function hasPluginFunc(rule) {
     if (!rule[constants_2.PATTERN_KEY]) {
         const checks = [constants_2.VALIDATE_KEY, constants_2.VALIDATE_ASYNC_KEY, constants_2.PLUGIN_FN_KEY];
         for (let i = 0; i < checks.length; ++i) {
-            const fn = checks[i];
-            if (rule[fn] && (0, utils_1.isFunction)(fn)) {
+            const fn = rule[checks[i]];
+            if (fn && (0, utils_1.isFunction)(fn)) {
                 return true;
             }
         }

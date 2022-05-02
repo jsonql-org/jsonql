@@ -37,7 +37,7 @@ test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`, async t => {
   t.plan(1)
-  t.throws(async () => {
+  t.throwsAsync(async () => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
     validateObj1.createSchema({
       email: { plugin: 'email' },
