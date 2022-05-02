@@ -208,6 +208,12 @@ export class ValidatorFactoryBase {
     return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
       if (arrayInput[i]) { // the user didn't provide additonal rules
         const input2 = this._transformInput(arrayInput[i])
+        /*
+        @TODO at this point ast[RULES_KEY] has the rule generated
+        when this is run with a js file there won't be any type info
+        so the first rule could provide the "override" and "type"
+        then we need to override it with the type
+        */
         if (input2) {
           ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
         }
@@ -230,6 +236,7 @@ export class ValidatorFactoryBase {
           return input
         })
         const rules = this._transformInput(_input)
+        // debug('ast[RULES_KEY]', ast[RULES_KEY])
         if (rules && rules.length) {
           ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
         }

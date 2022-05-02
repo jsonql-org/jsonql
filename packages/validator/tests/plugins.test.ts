@@ -5,7 +5,7 @@ import test from 'ava'
 import { ValidatorFactory } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
-test.only(`Testing the user define custom plugin`, async t => {
+test(`Testing the user define custom plugin`, async t => {
   t.plan(1)
   const validateObj = new ValidatorFactory(context.funcAstInput.resolver)
   validateObj.registerPlugin('notEqual', {
@@ -22,7 +22,6 @@ test.only(`Testing the user define custom plugin`, async t => {
             })
 })
 
-
 test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
     t.plan(1)
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
@@ -38,7 +37,7 @@ test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`, async t => {
   t.plan(1)
-  t.throws(() => {
+  t.throws(async () => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
     validateObj1.createSchema({
       email: { plugin: 'email' },

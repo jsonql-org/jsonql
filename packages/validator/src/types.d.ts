@@ -49,7 +49,7 @@ export declare type JsonqlValidationMap = {
   [propName: string]: any
 }
 
-export type JsonqlValidationRule = {
+export declare type JsonqlValidationRule = {
   type?: string
   pattern?: string | RegExp
   plugin?: string
@@ -57,6 +57,7 @@ export type JsonqlValidationRule = {
   server?: boolean // mark if this is a server side only rules
   validate?: CallbackFunction<any, boolean> // apply a function
   validateAsync?: AsyncCallbackFunction<any, boolean>
+  override?: boolean
   [key: string]: any // free form to apply the plugins
 }
 
