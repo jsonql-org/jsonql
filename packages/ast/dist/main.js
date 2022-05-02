@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParser = void 0;
+exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = void 0;
 const tslib_1 = require("tslib");
 // ast index export
 const swc_parser_base_1 = require("./swc-parser-base");
@@ -17,6 +17,12 @@ function tsFileParser(code) {
     });
 }
 exports.tsFileParser = tsFileParser;
+/** The string version for individual function */
+function tsFileParserSync(code) {
+    const options = getOptions('ts');
+    return (0, swc_parser_base_1.swcParseFileSync)(code, options);
+}
+exports.tsFileParserSync = tsFileParserSync;
 /** deal with the function style resolver */
 function tsFunctionParser(infile) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -59,10 +65,19 @@ function tsClassParser(infile) {
 exports.tsClassParser = tsClassParser;
 /** preconfig */
 function getParser(syntax, file = false) {
+    const options = getOptions(syntax);
+    return function (infile) {
+        return file ? (0, swc_parser_base_1.swcParseFileBase)(infile, options)
+            : (0, swc_parser_base_1.swcParserBase)(infile, options);
+    };
+}
+exports.getParser = getParser;
+/** wrapper to get the options  */
+function getOptions(syntax) {
     if (!constants_1.SYNTAXS[syntax]) {
         throw new Error(`Unsupported syntax! Only allow ts or js`);
     }
-    const options = {
+    return {
         syntax: constants_1.SYNTAXS[syntax],
         comments: false,
         script: true,
@@ -71,9 +86,4 @@ function getParser(syntax, file = false) {
         // Input source code are treated as module by default
         // isModule: true,
     };
-    return function (infile) {
-        return file ? (0, swc_parser_base_1.swcParseFileBase)(infile, options)
-            : (0, swc_parser_base_1.swcParserBase)(infile, options);
-    };
 }
-exports.getParser = getParser;

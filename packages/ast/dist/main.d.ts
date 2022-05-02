@@ -2,6 +2,8 @@
 export declare function tsFileParser(code: string): Promise<{
     [x: number]: any;
 }>;
+/** The string version for individual function */
+export declare function tsFileParserSync(code: string): import("@swc/core").Script;
 /** deal with the function style resolver */
 export declare function tsFunctionParser(infile: string): Promise<{
     [x: number]: any;

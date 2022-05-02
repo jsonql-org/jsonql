@@ -3,7 +3,6 @@ import {
   swcParserBase,
   swcParseFileBase,
   swcParseFileSync,
-  swcParseInFileBase,
 } from './swc-parser-base'
 import {
   processClassModuleBody,
@@ -22,12 +21,6 @@ export async function tsFileParser(code: string) {
     .then(module => module.body)
     .then(normalize)
     .then(processArgParams)
-}
-
-export async function tsInFileParser(infile) {
-  const options = getOptions('ts')
-
-  return swcParseInFileBase(infile, options)
 }
 
 /** The string version for individual function */
