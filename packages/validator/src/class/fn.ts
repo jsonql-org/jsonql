@@ -14,7 +14,7 @@ import {
   checkUnion,
   combineCheck,
   promisify,
-} from '@jsonql/validator-core/src'
+} from '@jsonql/validator-core'
 import {
   TS_TYPE_NAME,
   TS_TYPE_REF,
@@ -35,7 +35,7 @@ import {
 import {
   JsonqlValidationError,
   // JsonqlError,
-} from '@jsonql/errors/src'
+} from '@jsonql/errors'
 import {
   assign,
   getRegex,

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.patternPluginFanctory = exports.hasPluginFunc = exports.checkPluginArg = exports.getOptionalValue = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
-const src_1 = require("@jsonql/validator-core/src");
+const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("@jsonql/constants");
 const constants_2 = require("../constants");
-const src_2 = require("@jsonql/errors/src");
+const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:fn');
@@ -40,7 +40,7 @@ function constructRuleCb(name, ruleFn) {
             .then(successThen(name, value, lastResult, pos))
             .catch((error) => {
             debug('failed', name, value, error, pos);
-            return Promise.reject(new src_2.JsonqlValidationError(name, pos));
+            return Promise.reject(new errors_1.JsonqlValidationError(name, pos));
         });
     });
 }
@@ -58,22 +58,22 @@ exports.successThen = successThen;
 function getValidateRules(ast) {
     switch (ast[constants_1.TS_TYPE_NAME]) {
         case constants_1.TS_UNION_TYPE:
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.checkUnion)(value, ast.type); });
+            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.checkUnion)(value, ast.type); });
         case constants_1.TS_ARRAY_TYPE || constants_1.SPREAD_ARG_TYPE:
             // need to apply for the type as well
             // @TODO need to examine the input to see what more sutation could come up
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)(src_1.checkArray)(value, ast.types); });
+            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(validator_core_1.checkArray)(value, ast.types); });
         case constants_1.TS_TYPE_REF || constants_1.TS_TYPE_LIT:
             // @TODO should this get a special treatment
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)(src_1.checkAny)(value); });
+            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(validator_core_1.checkAny)(value); });
         default: // no tstype then should be primitive
-            if ((0, src_1.checkString)(ast.type)) {
-                return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)((0, src_1.combineCheck)(ast.type))(value); });
+            if ((0, validator_core_1.checkString)(ast.type)) {
+                return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)((0, validator_core_1.combineCheck)(ast.type))(value); });
             }
             // if both are not presented that means this could be a JS code
             // this happen when we use Decorator and toString() to extract the ast
             debug(`getValidateRules`, ast);
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, src_1.promisify)(utils_1.notEmpty)(value, true); });
+            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(utils_1.notEmpty)(value, true); });
     }
 }
 /** extract the default value if there is none */

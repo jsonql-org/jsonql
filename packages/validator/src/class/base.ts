@@ -20,7 +20,7 @@ import {
   createCoreCurryPlugin,
   curryPlugin,
   plugins,
-} from '@jsonql/validator-core/src'
+} from '@jsonql/validator-core'
 // ----- LOCAL ---- //
 import {
   createAutomaticRules,
@@ -44,7 +44,7 @@ import {
 import {
   JsonqlPluginInput,
   JsonqlPluginConfig
-} from '@jsonql/validator-core/src/types'
+} from '@jsonql/validator-core'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,

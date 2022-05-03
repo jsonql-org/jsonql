@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
 const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
 const constants_1 = require("@jsonql/constants");
-const src_1 = require("@jsonql/validator-core/src");
+const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
 const constants_2 = require("../constants");
@@ -30,10 +30,10 @@ class ValidatorFactoryBase {
         // create the argument list in order
         this._arguments = this._astWithBaseRules.map(rule => rule[constants_2.NAME_KEY]);
         // register internal plugins
-        src_1.plugins.forEach((plugin) => {
+        validator_core_1.plugins.forEach((plugin) => {
             if (!plugin[constants_2.PARAMS_KEY]) {
                 // We skip those need to curry and do that JIT
-                plugin[constants_2.VALIDATE_ASYNC_KEY] = (0, src_1.promisify)(plugin[constants_2.PLUGIN_FN_KEY]);
+                plugin[constants_2.VALIDATE_ASYNC_KEY] = (0, validator_core_1.promisify)(plugin[constants_2.PLUGIN_FN_KEY]);
             }
             const name = plugin[constants_2.NAME_KEY];
             this._internalPluginNames.push(name);
@@ -60,7 +60,7 @@ class ValidatorFactoryBase {
         if (pCtn === 0) {
             return []; // nothing to do
         }
-        if (!(0, src_1.checkArray)(values)) {
+        if (!(0, validator_core_1.checkArray)(values)) {
             debug(values);
             throw new errors_1.JsonqlValidationError(constants_2.ARGS_NOT_ARRAY_ERR, values);
         }
@@ -117,10 +117,10 @@ class ValidatorFactoryBase {
         let astWithRules = this._astWithBaseRules;
         // all we need to do is check if its empty input
         if ((0, utils_1.notEmpty)(input, true)) {
-            if ((0, src_1.checkArray)(input)) {
+            if ((0, validator_core_1.checkArray)(input)) {
                 astWithRules = this._applyArrayInput(astWithRules, input);
             }
-            else if ((0, src_1.checkObject)(input)) {
+            else if ((0, validator_core_1.checkObject)(input)) {
                 astWithRules = this._applyObjectInput(astWithRules, input);
             }
         }
@@ -176,7 +176,7 @@ class ValidatorFactoryBase {
                     return this._lookupPlugin(_input);
                 case _input[constants_2.VALIDATE_KEY] !== undefined:
                     // @TODO need to transform this
-                    return (0, fn_1.constructRuleCb)(name, (0, src_1.promisify)(_input[constants_2.VALIDATE_KEY]));
+                    return (0, fn_1.constructRuleCb)(name, (0, validator_core_1.promisify)(_input[constants_2.VALIDATE_KEY]));
                 case _input[constants_2.VALIDATE_ASYNC_KEY] !== undefined:
                     return (0, fn_1.constructRuleCb)(name, _input[constants_2.VALIDATE_ASYNC_KEY]);
                 default:
@@ -199,9 +199,9 @@ class ValidatorFactoryBase {
                 const _input = input;
                 // need to check if the _plugin is internal or not
                 const fn = (0, utils_1.inArray)(this._internalPluginNames, name) ?
-                    (0, src_1.createCoreCurryPlugin)(_input) :
-                    (0, src_1.curryPlugin)(_input, pluginConfig);
-                return (0, fn_1.constructRuleCb)(name, (0, src_1.promisify)(fn));
+                    (0, validator_core_1.createCoreCurryPlugin)(_input) :
+                    (0, validator_core_1.curryPlugin)(_input, pluginConfig);
+                return (0, fn_1.constructRuleCb)(name, (0, validator_core_1.promisify)(fn));
             }
         }
         throw new errors_1.JsonqlError(`Unable to find ${name} plugin`);
@@ -229,11 +229,11 @@ class ValidatorFactoryBase {
             case (!pluginConfig[constants_2.VALIDATE_ASYNC_KEY] &&
                 pluginConfig[constants_2.VALIDATE_KEY] &&
                 (0, utils_1.isFunction)(pluginConfig[constants_2.VALIDATE_KEY])):
-                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, src_1.promisify)(pluginConfig[constants_2.VALIDATE_KEY]);
+                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, validator_core_1.promisify)(pluginConfig[constants_2.VALIDATE_KEY]);
                 break;
             // use the pattern key to generate plugin method
             case (pluginConfig[constants_2.PATTERN_KEY] &&
-                (0, src_1.checkString)(pluginConfig[constants_2.PATTERN_KEY])):
+                (0, validator_core_1.checkString)(pluginConfig[constants_2.PATTERN_KEY])):
                 pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, fn_1.patternPluginFanctory)(pluginConfig[constants_2.PATTERN_KEY]);
                 break;
             // @NOTE we can not create the curryPlugin here because it needs to be generic
