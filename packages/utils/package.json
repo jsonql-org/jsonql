@@ -8,7 +8,9 @@
   "files": [
     "dist",
     "src",
-    "browser.js"
+    "jsonql-utils.min.js",
+    "jsonql-utils.min.js.map",
+    "index.d.ts"
   ],
   "scripts": {
     "test:ava": "ava",
