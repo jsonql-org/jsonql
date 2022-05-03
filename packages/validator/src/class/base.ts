@@ -44,7 +44,7 @@ import {
 import {
   JsonqlPluginInput,
   JsonqlPluginConfig
-} from '@jsonql/validator-core'
+} from '@jsonql/validator-core/src/types'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
