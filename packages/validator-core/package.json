@@ -33,7 +33,7 @@
   "dependencies": {
     "@jsonql/constants": "workspace:^0.6.0",
     "@jsonql/errors": "workspace:^0.6.0",
-    "@jsonql/utils": "workspace:^0.6.4",
+    "@jsonql/utils": "workspace:^0.6.5",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
