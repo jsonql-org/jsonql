@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUnion = exports.generateReversePromisesFn = void 0;
+exports.checkUnionSync = exports.checkUnion = exports.generateReversePromisesFn = void 0;
 const tslib_1 = require("tslib");
 const combine_1 = require("./combine");
 const array_1 = require("./array");
@@ -72,3 +72,30 @@ function checkUnion(value, types, extended) {
     });
 }
 exports.checkUnion = checkUnion;
+/**
+ * Create a sync version of checkUnion
+ */
+function checkUnionSync(value, types) {
+    const ctn = types.length;
+    for (let i = 0; i < ctn; ++i) {
+        const type = types[i];
+        switch (type) {
+            case constants_1.ARRAY_TYPE:
+                if ((0, array_1.checkArray)(value)) {
+                    return true;
+                }
+                break;
+            case constants_1.OBJECT_TYPE:
+                if ((0, object_1.checkObject)(value)) {
+                    return true;
+                }
+                break;
+            default:
+                if ((0, combine_1.combineCheck)(type)(value)) {
+                    return true;
+                }
+        }
+    }
+    return false;
+}
+exports.checkUnionSync = checkUnionSync;

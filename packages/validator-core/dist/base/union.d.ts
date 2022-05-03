@@ -11,3 +11,7 @@ export declare function generateReversePromisesFn(value: any, types: Array<strin
   therefore it has to be check in one rule
 */
 export declare function checkUnion(value: any, types: Array<string>, extended?: Array<any>): Promise<boolean>;
+/**
+ * Create a sync version of checkUnion
+ */
+export declare function checkUnionSync(value: any, types: Array<string>): boolean;

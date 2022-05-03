@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCoreCurryPlugin = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
+exports.createCoreCurryPlugin = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.objectTypeHandler = exports.checkObject = exports.checkString = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 const any_1 = require("./base/any");
@@ -28,6 +28,7 @@ Object.defineProperty(exports, "combineCheck", { enumerable: true, get: function
 const union_1 = require("./base/union");
 Object.defineProperty(exports, "checkUnion", { enumerable: true, get: function () { return union_1.checkUnion; } });
 Object.defineProperty(exports, "generateReversePromisesFn", { enumerable: true, get: function () { return union_1.generateReversePromisesFn; } });
+Object.defineProperty(exports, "checkUnionSync", { enumerable: true, get: function () { return union_1.checkUnionSync; } });
 const promisify_1 = require("./lib/promisify");
 Object.defineProperty(exports, "promisify", { enumerable: true, get: function () { return promisify_1.promisify; } });
 Object.defineProperty(exports, "reversePromisifyResult", { enumerable: true, get: function () { return promisify_1.reversePromisifyResult; } });
