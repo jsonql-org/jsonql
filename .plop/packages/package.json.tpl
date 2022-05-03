@@ -20,7 +20,7 @@
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js {{projectName}}",
     "clean:dist": "rimraf ./dist",
-    "build": "pnpm clean:dist && pnpm build:tsc",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm prepare:types",
     "prepublishOnly": "pnpm test",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
