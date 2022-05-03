@@ -2,6 +2,7 @@
 import test from  'ava'
 import {
   checkUnion,
+  checkUnionSync
 } from  '../src'
 
 test(`Testing the union type check`, async t => {
@@ -24,4 +25,17 @@ test(`Throw wrong data to expect to fail`, async t => {
               console.log('failed type', type)
               t.is(type, 'string')
             })
+})
+
+test(`Test the checkUnionSync`, t => {
+  const types = ['number', 'string']
+
+  const result1 = checkUnionSync(1, types)
+
+  t.true(result1)
+
+  const result2 = checkUnionSync(false, types)
+
+  t.false(result2)
+  
 })

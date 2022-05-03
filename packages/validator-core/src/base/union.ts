@@ -77,3 +77,30 @@ export async function checkUnion(
 
   })
 }
+
+/**
+ * Create a sync version of checkUnion
+ */
+export function checkUnionSync(value: any, types: Array<string>) {
+  const ctn = types.length
+  for (let i = 0; i < ctn; ++i) {
+    const type = types[i]
+    switch (type) {
+      case ARRAY_TYPE:
+        if (checkArray(value)) {
+          return true
+        }
+        break
+      case OBJECT_TYPE:
+        if (checkObject(value)) {
+          return true
+        }
+        break
+      default:
+        if (combineCheck(type)(value))  {
+          return true
+        }
+      }
+  }
+  return false
+}

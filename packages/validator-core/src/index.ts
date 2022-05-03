@@ -9,7 +9,7 @@ import { checkObject, objectTypeHandler } from './base/object'
 // wrapper fn
 import { combineCheck } from './base/combine'
 // union type check
-import { checkUnion, generateReversePromisesFn } from './base/union'
+import { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union'
 import { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
 import { plugins, curryPlugin, createCoreCurryPlugin } from './plugins'
@@ -27,8 +27,11 @@ export {
   checkObject,
   objectTypeHandler,
   combineCheck,
+
   checkUnion,
   generateReversePromisesFn,
+  checkUnionSync,
+
   promisify,
   reversePromisifyResult,
   // 0.3.0 move plugins from validator to here
