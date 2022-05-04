@@ -35,5 +35,7 @@ Object.defineProperty(exports, "reversePromisifyResult", { enumerable: true, get
 // for some reason the downstream keep complaining the js version has no export member of X
 const plugins_1 = require("./plugins");
 Object.defineProperty(exports, "plugins", { enumerable: true, get: function () { return plugins_1.plugins; } });
-Object.defineProperty(exports, "curryPlugin", { enumerable: true, get: function () { return plugins_1.curryPlugin; } });
-Object.defineProperty(exports, "createCoreCurryPlugin", { enumerable: true, get: function () { return plugins_1.createCoreCurryPlugin; } });
+// avoid a circular reference 
+const plugins_2 = require("./plugins/plugins");
+Object.defineProperty(exports, "curryPlugin", { enumerable: true, get: function () { return plugins_2.curryPlugin; } });
+Object.defineProperty(exports, "createCoreCurryPlugin", { enumerable: true, get: function () { return plugins_2.createCoreCurryPlugin; } });

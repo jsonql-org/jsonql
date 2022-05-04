@@ -7,5 +7,6 @@ import { checkObject, objectTypeHandler } from './base/object';
 import { combineCheck } from './base/combine';
 import { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union';
 import { promisify, reversePromisifyResult } from './lib/promisify';
-import { plugins, curryPlugin, createCoreCurryPlugin } from './plugins';
+import { plugins } from './plugins';
+import { curryPlugin, createCoreCurryPlugin } from './plugins/plugins';
 export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, combineCheck, checkUnion, generateReversePromisesFn, checkUnionSync, promisify, reversePromisifyResult, plugins, curryPlugin, createCoreCurryPlugin, };

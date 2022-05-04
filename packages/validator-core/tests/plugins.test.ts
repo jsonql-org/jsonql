@@ -5,7 +5,7 @@ import {
   plugins,
   curryPlugin,
   createCoreCurryPlugin
-} from '../src'
+} from '../dist'
 
 test(`Test with our custom plugin defintion`, t => {
 

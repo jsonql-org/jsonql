@@ -3,7 +3,7 @@ import test from  'ava'
 import {
   checkUnion,
   checkUnionSync
-} from  '../src'
+} from  '../dist'
 
 test(`Testing the union type check`, async t => {
   t.plan(1)
@@ -37,5 +37,5 @@ test(`Test the checkUnionSync`, t => {
   const result2 = checkUnionSync(false, types)
 
   t.false(result2)
-  
+
 })

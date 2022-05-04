@@ -5,7 +5,7 @@ import {
   checkNumber,
   promisify,
   reversePromisifyResult
-} from '../src'
+} from '../dist'
 
 test(`Using checkNumber with promisify`, async t => {
 
