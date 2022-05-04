@@ -1,7 +1,7 @@
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
-import { queuePromisesProcess } from '@jsonql/utils/src'
+import { queuePromisesProcess } from '@jsonql/utils'
 import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
 
 
