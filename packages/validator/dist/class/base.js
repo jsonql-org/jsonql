@@ -218,7 +218,7 @@ class ValidatorFactoryBase {
                     throw new errors_1.JsonqlError(`Your plugin config argument contains reserved keywords`);
                 }
             }
-            if (!(0, fn_1.hasPluginFunc)(pluginConfig)) {
+            if (!(0, fn_1.pluginHasFunc)(pluginConfig)) {
                 throw new errors_1.JsonqlError(`Can not find any executable within your plugin config`);
             }
         }

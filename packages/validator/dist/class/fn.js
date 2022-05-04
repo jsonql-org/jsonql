@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patternPluginFanctory = exports.hasPluginFunc = exports.checkPluginArg = exports.getOptionalValue = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
+exports.patternPluginFanctory = exports.pluginHasFunc = exports.checkPluginArg = exports.getOptionalValue = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("@jsonql/constants");
@@ -92,7 +92,7 @@ function checkPluginArg(params) {
 }
 exports.checkPluginArg = checkPluginArg;
 /** check if the actually provide a func or pattern to construct function */
-function hasPluginFunc(rule) {
+function pluginHasFunc(rule) {
     if (!rule[constants_2.PATTERN_KEY]) {
         const checks = [constants_2.VALIDATE_KEY, constants_2.VALIDATE_ASYNC_KEY, constants_2.PLUGIN_FN_KEY];
         for (let i = 0; i < checks.length; ++i) {
@@ -104,7 +104,7 @@ function hasPluginFunc(rule) {
     }
     return false;
 }
-exports.hasPluginFunc = hasPluginFunc;
+exports.pluginHasFunc = pluginHasFunc;
 /** If the plugin provide a pattern and we construct a function out of it */
 function patternPluginFanctory(pattern) {
     const regex = (0, utils_1.getRegex)(pattern);
