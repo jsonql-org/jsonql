@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { ValidatorFactory } from '../src'
+import { ValidatorFactory } from '../dist'
 import { context } from './fixtures/resolver/export-ast'
 
 test(`Testing custom rules to validate`, async t => {

@@ -8,7 +8,7 @@ import {
 } from '../src/class/fn'
 import {
   ValidatorFactory
-} from '../src'
+} from '../dist'
 import {
   queuePromisesProcess
 } from '@jsonql/utils'

@@ -2,7 +2,7 @@
 // and develop the different features around it
 import test from 'ava'
 
-import { ValidatorFactory } from '../src'
+import { ValidatorFactory } from '../dist'
 import { context } from './fixtures/resolver/export-ast'
 
 test(`Testing the user define custom plugin`, async t => {

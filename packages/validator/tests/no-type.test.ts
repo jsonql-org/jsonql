@@ -1,7 +1,7 @@
 // testing when passing a js function
 import test from 'ava'
 
-import { ValidatorFactory } from '../src'
+import { ValidatorFactory } from '../dist'
 import { tsFileParser } from '@jsonql/ast'
 
 function login(username: string, password: string) {
