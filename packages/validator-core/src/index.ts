@@ -12,7 +12,9 @@ import { combineCheck } from './base/combine'
 import { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union'
 import { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
-import { plugins, curryPlugin, createCoreCurryPlugin } from './plugins'
+import { plugins } from './plugins'
+// avoid a circular reference 
+import { curryPlugin, createCoreCurryPlugin } from './plugins/plugins'
 export {
   checkAny,
   checkArray,
