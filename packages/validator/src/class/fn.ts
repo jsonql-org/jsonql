@@ -150,7 +150,7 @@ export function checkPluginArg(params: Array<string>): boolean {
 }
 
 /** check if the actually provide a func or pattern to construct function */
-export function hasPluginFunc(rule: JsonqlGenericObject): boolean {
+export function pluginHasFunc(rule: JsonqlGenericObject): boolean {
   if (!rule[PATTERN_KEY]) {
     const checks = [VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY]
     for (let i = 0; i < checks.length; ++i) {

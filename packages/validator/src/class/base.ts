@@ -29,7 +29,7 @@ import {
   constructRuleCb,
   successThen,
   checkPluginArg,
-  hasPluginFunc,
+  pluginHasFunc,
 } from './fn'
 import {
   JsonqlValidationPlugin,
@@ -312,7 +312,7 @@ export class ValidatorFactoryBase {
           throw new JsonqlError(`Your plugin config argument contains reserved keywords`)
         }
       }
-      if (!hasPluginFunc(pluginConfig)) {
+      if (!pluginHasFunc(pluginConfig)) {
         throw new JsonqlError(`Can not find any executable within your plugin config`)
       }
     }
