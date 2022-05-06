@@ -7,6 +7,7 @@ export const EXPORT_DEFAULT_TYPE = 'ExportDefaultDeclaration'
 export const DECLARATION_NAME = 'declaration'
 export const DECLARATION_SHORT_NAME = 'decl'
 export const ANNOTATION_NAME = 'typeAnnotation'
+export const PARAMETER_NAME = 'Parameter'
 
 export const CLASS_TYPE = 'ClassDeclaration'
 export const CLASS_METHOD = 'ClassMethod'

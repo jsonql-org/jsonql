@@ -4,6 +4,7 @@ module.exports = {
     "DECLARATION_NAME": "declaration",
     "DECLARATION_SHORT_NAME": "decl",
     "ANNOTATION_NAME": "typeAnnotation",
+    "PARAMETER_NAME": "Parameter",
     "CLASS_TYPE": "ClassDeclaration",
     "CLASS_METHOD": "ClassMethod",
     "CLASS_EXP": "ClassExpression",
