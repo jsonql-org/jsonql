@@ -1,0 +1,17 @@
+{
+  meta: {
+    version: '',
+    date: '',
+    for: ''
+  },
+  errors: {},
+  data: [
+    {
+      path: '/path/to/somewhere',
+      method: 'post',
+      params: {
+        'arg1': [{type: 'string', required: true}]
+      }
+    }
+  ]
+}
