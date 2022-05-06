@@ -15,7 +15,10 @@
       ]
     },
     {
-      "required": true
+      "name": "arg3",
+      "required": true,
+      "type": "boolean",
+      "defaultvalue": false
     }
   ]
 }

@@ -8,7 +8,7 @@ import { context } from './fixtures/resolver/export-ast'
 const expectedLoginResult = {username: 'John', password: '123456'}
 const loginValues = [expectedLoginResult.username, expectedLoginResult.password]
 
-test(`Testing the user define custom plugin`, async t => {
+test.only(`Testing the user define custom plugin`, async t => {
   t.plan(1)
   const validateObj = new ValidatorFactory(context.funcAstInput.resolver)
   validateObj.registerPlugin('notEqual', {
@@ -21,8 +21,7 @@ test(`Testing the user define custom plugin`, async t => {
 
   return validateObj.validate(['some@email', 51])
             .then(result => {
-              console.log(result)
-              t.truthy(result)
+              t.deepEqual(result, {email: 'some@email', age: 51, arg3: false})
             })
 })
 

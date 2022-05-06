@@ -62,7 +62,7 @@ because the plugins are apply there
 export function createAutomaticRules(
   astMap: Array<JsonqlPropertyParamMap>
 ): Array<JsonqlPropertyParamMap> {
-
+  debug('astMap', astMap)
   return astMap.map((ast: JsonqlPropertyParamMap) => {
     const { name } = ast
     const ruleFn = getValidateRules(ast)
