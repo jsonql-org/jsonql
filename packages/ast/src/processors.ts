@@ -104,13 +104,13 @@ export function extractAssignmentPattern(pat: SwcPatEntry) {
   // console.dir(pat, { depth: null })
   return {
     name: pat.left.value, // type === 'Identifier
-    required: !pat.optional,
+    required: (pat.optional !== undefined) ? !pat.optional : !pat.left.optional,
     type: translateType(pat.right.type),
     [DEFAULT_VALUE]: extractValue(pat.right),
   }
 }
 /** when the argument is a spread style */
-export function extractSpread(pat: any) {{
+export function extractSpread(pat: SwcPatEntry) {{
   return Object.assign(
     extractTypeAnnotation(pat, {
       name: pat.argument.value,
@@ -152,11 +152,14 @@ export function processArgParams(body: SwcProcessedBody) {
         .filter((param: SwcParameterEntry) => param.type === PARAMETER_NAME)
         .map((param: SwcParameterEntry) => {
           const { pat } = param
-
-          return extractTypeAnnotation(pat, {
-            name: pat.value,
-            required: !pat.optional,
-          })
+          switch (pat.type) {
+            case ASSIGN_PATTERN:
+              return extractAssignmentPattern(pat)
+            case SPREAD_ARG_TYPE:
+              return extractSpread(pat)
+            default:
+              return extractIdentifier(pat)
+          }
         })
     }
   }
@@ -181,7 +184,6 @@ export function normalize(body: Array<any>) {
   // console.dir(body, { depth: null })
   throw new Error(`Could not find any code to work with!`)
 }
-
 
 /** extract value from the pat */
 export function extractValue(pat: SwcPatEntry) {
@@ -314,9 +316,9 @@ export function extractTypeAnnotation(
         default: // @TODO should never got here
           console.error(`Something went very wrong in processor.ts`, annotation)
           // return {}
+        }
       }
-    }
-    return {}
+      return {}
   })(annotation)
 
   // console.dir('could not find annonation', pat)

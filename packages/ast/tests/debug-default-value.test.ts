@@ -4,13 +4,9 @@ import { join } from 'path'
 const fnFile = join(__dirname, 'fixtures', 'function-style.ts')
 import { tsFunctionParser } from '../src'
 
-
-
 test(`It should able to take the default value and apply to the astMap`, async t => {
 
   const astMap = await tsFunctionParser(fnFile)
-
-  console.dir(astMap, { depth: null })
-
+  // console.dir(astMap, { depth: null })
   t.truthy(astMap)
 })

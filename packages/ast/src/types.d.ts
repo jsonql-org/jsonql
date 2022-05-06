@@ -34,6 +34,8 @@ export type SwcGenericSubEntry = {
   type: string
   span: SwcSpanObject
   value: string
+  left: any
+  right: any
   optional?: boolean
   typeAnnotation?: any
 }
@@ -43,6 +45,7 @@ export type SwcPatEntry = {
   span: SwcSpanObject,
   left: SwcGenericSubEntry
   right: SwcGenericSubEntry
+  argument?: any
   optional?: boolean
   typeAnnotation?: any
   elements?: any

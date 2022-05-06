@@ -53,7 +53,7 @@ function extractAssignmentPattern(pat) {
     // console.dir(pat, { depth: null })
     return {
         name: pat.left.value,
-        required: !pat.optional,
+        required: (pat.optional !== undefined) ? !pat.optional : !pat.left.optional,
         type: translateType(pat.right.type),
         [constants_1.DEFAULT_VALUE]: extractValue(pat.right),
     };
@@ -94,13 +94,17 @@ function processArgParams(body) {
     if (body.params && Array.isArray(body.params)) {
         return {
             [body.identifier.value]: body.params
-                .filter((param) => param.type === 'Parameter')
+                .filter((param) => param.type === constants_1.PARAMETER_NAME)
                 .map((param) => {
                 const { pat } = param;
-                return extractTypeAnnotation(pat, {
-                    name: pat.value,
-                    required: !pat.optional,
-                });
+                switch (pat.type) {
+                    case constants_1.ASSIGN_PATTERN:
+                        return extractAssignmentPattern(pat);
+                    case constants_1.SPREAD_ARG_TYPE:
+                        return extractSpread(pat);
+                    default:
+                        return extractIdentifier(pat);
+                }
             })
         };
     }
