@@ -38,3 +38,5 @@ test(`Should able to apply additional rule just like a normal ts function`, asyn
               t.deepEqual(err.detail, [0,1])
             })
 })
+
+test.todo(`Should able to apply override rules`)

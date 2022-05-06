@@ -4,8 +4,10 @@ import { join } from 'node:path'
 
 const classAst = join(__dirname, 'class-style.json')
 const funcAst = join(__dirname, 'function-style.json')
+const funcA = join(__dirname, 'function-a.json')
 
 export const context = {
   classAstInput: readJsonSync(classAst),
-  funcAstInput: readJsonSync(funcAst)
+  funcAstInput: readJsonSync(funcAst),
+  funcAInput: readJsonSync(funcA)
 }

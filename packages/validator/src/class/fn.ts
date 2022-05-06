@@ -1,7 +1,7 @@
 // develop the small functions here one by one
 // import utils from '@jsonql/utils'
 import {
-  JsonqlPropertyParamnMap,
+  JsonqlPropertyParamMap,
   // JsonqlValidateCbFn,
   JsonqlValidateFn,
   JsonqlGenericObject,
@@ -60,14 +60,15 @@ because the plugins are apply there
   generate valdiation rules
 */
 export function createAutomaticRules(
-  astMap: Array<JsonqlPropertyParamnMap>
-): Array<JsonqlPropertyParamnMap> {
+  astMap: Array<JsonqlPropertyParamMap>
+): Array<JsonqlPropertyParamMap> {
 
-  return astMap.map((ast: JsonqlPropertyParamnMap) => {
+  return astMap.map((ast: JsonqlPropertyParamMap) => {
     const { name } = ast
     const ruleFn = getValidateRules(ast)
-
-    ast[RULES_KEY] = [ constructRuleCb(name, ruleFn) ]
+    const ruleName = ast[TS_TYPE_NAME] || ast.type
+    debug('createAutomaticRules', name, ruleName)
+    ast[RULES_KEY] = [ constructRuleCb(name, ruleFn, ruleName) ]
 
     return ast
   })
@@ -79,6 +80,7 @@ this will get re-use in the class to create method for the queue execution
 export function constructRuleCb(
   name: string,
   ruleFn: JsonqlValidateFn,
+  ruleName?: string
 ) {
   return async (
     value: any,
@@ -90,7 +92,9 @@ export function constructRuleCb(
                 )
                 .catch((error: boolean) => {
                   debug('failed', name, value, error, pos)
-                  return Promise.reject(new JsonqlValidationError(name, pos))
+                  // the name should be the validator name - not the property name
+                  // because the pos already indicator the property
+                  return Promise.reject(new JsonqlValidationError(ruleName, pos))
                 })
 }
 
@@ -103,6 +107,7 @@ export function successThen(
 ) {
   return (result: any) => {
     debug('passed', name, value, result, pos)
+    debug('lastResult', lastResult)
     // return the argument name with the value
     return assign(lastResult, { [name]: value })
   }

@@ -3,7 +3,7 @@
 export default function resolver(
   email: string,
   age: string | number,
-  arg3?: boolean
+  arg3 = false
 ) {
 
   return {

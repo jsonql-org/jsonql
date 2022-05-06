@@ -34,7 +34,7 @@ import {
 import {
   JsonqlValidationPlugin,
   JsonqlValidationRule,
-  JsonqlPropertyParamnMap,
+  JsonqlPropertyParamMap,
   JsonqlValidateCbFn,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
@@ -73,8 +73,8 @@ export class ValidatorFactoryBase {
   private _plugins = new Map<string, JsonqlValidationPlugin>()
   private _internalPluginNames: string[] = []
   // we keep two set
-  private _astWithBaseRules: Array<JsonqlPropertyParamnMap>
-  private _schema!: Array<JsonqlPropertyParamnMap>
+  private _astWithBaseRules: Array<JsonqlPropertyParamMap>
+  private _schema!: Array<JsonqlPropertyParamMap>
   // the first level is the param pos the second level is the rule
   private _errors!: Array<Array<number>>
   // use this list to make callable argument
@@ -113,6 +113,7 @@ export class ValidatorFactoryBase {
     argument values turn into an executable queue
   */
   protected _normalizeArgValues(values: any[]) {
+    debug('_normalizeArgValues', values)
     // there might not be a dev provided schema
     const params = this.schema
     const pCtn = params.length
@@ -158,22 +159,26 @@ export class ValidatorFactoryBase {
   */
   private _prepareForExecution(
     value: any,
-    param: JsonqlPropertyParamnMap,
+    param: JsonqlPropertyParamMap,
     idx: number
   ) {
-    const { rules } = param
+    const { rules, required } = param
     if (rules && rules.length) {
       // we only need to return the queue
       return rules.map((rule: JsonqlValidateCbFn, i: number) => {
         // if this is not required field and no value the we create a fake callback
-        if (value === undefined && !param.required) {
+        if (value === undefined && !required) {
+          debug(`skip the validation`, required)
           return async (lastResult: JsonqlGenericObject) => (
             successThen(param[NAME_KEY], value, lastResult, [idx, i])(true)
           )
         }
         // when it fail then we provide with the index number
         return async (lastResult: JsonqlGenericObject) =>
-          Reflect.apply(rule, null, [value, lastResult, [idx, i]])
+          Reflect.apply(rule, null, [value, lastResult, [idx, i]]).then((result: any) => {
+            debug('Post rule result', result)
+            return result
+          })
       })
     }
     // stuff it with a placeholder fuction?
@@ -200,14 +205,14 @@ export class ValidatorFactoryBase {
 
   /** normalize the array style rules input */
   private _applyArrayInput(
-    astMap: Array<JsonqlPropertyParamnMap>,
+    astMap: Array<JsonqlPropertyParamMap>,
     input: JsonqlArrayValidateInput
   ) {
     const arrayInput = input.map(toArray)
     // We just need to take the validate methods and concat to the rules here
-    return astMap.map((ast: JsonqlPropertyParamnMap, i: number) => {
+    return astMap.map((ast: JsonqlPropertyParamMap, i: number) => {
       if (arrayInput[i]) { // the user didn't provide additonal rules
-        const input2 = this._transformInput(arrayInput[i])
+        const input2 = this._transformInput(arrayInput[i], ast.name)
         /*
         @TODO at this point ast[RULES_KEY] has the rule generated
         when this is run with a js file there won't be any type info
@@ -224,18 +229,19 @@ export class ValidatorFactoryBase {
 
   /** nomalize the object style rules input */
   private _applyObjectInput(
-    astMap: Array<JsonqlPropertyParamnMap>,
+    astMap: Array<JsonqlPropertyParamMap>,
     input: JsonqlObjectValidateInput
   ) {
-    return astMap.map((ast: JsonqlPropertyParamnMap) => {
-      const { name } = ast
-      if (input[name]) {
+
+    return astMap.map((ast: JsonqlPropertyParamMap) => {
+      const propName = ast.name
+      if (input[propName]) {
         // there might not be a name in there and it's important
-        const _input = toArray(input[name]).map(input => {
-          input.name = name
+        const _input = toArray(input[propName]).map(input => {
+          input.name = propName
           return input
         })
-        const rules = this._transformInput(_input)
+        const rules = this._transformInput(_input, propName)
         // debug('ast[RULES_KEY]', ast[RULES_KEY])
         if (rules && rules.length) {
           ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
@@ -247,22 +253,31 @@ export class ValidatorFactoryBase {
 
   /** here is the one that will transform the rules */
   private _transformInput(
-    input: Array<JsonqlValidationRule>
+    input: Array<JsonqlValidationRule>,
+    propName: string
   ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
     debug('_transformInput', input)
     return input.map((_input: JsonqlValidationRule) => {
-      const { name } = _input
+      const pluginName = _input.name
       switch (true) {
         case _input[PLUGIN_KEY] !== undefined:
           debug(`Should got here`, _input[PLUGIN_KEY])
-          return this._lookupPlugin(_input)
+          return this._lookupPlugin(_input, propName)
         case _input[VALIDATE_KEY] !== undefined:
           // @TODO need to transform this
-          return constructRuleCb(name, promisify(_input[VALIDATE_KEY]))
+          return constructRuleCb(
+            propName,
+            promisify(_input[VALIDATE_KEY]),
+            pluginName
+          )
         case _input[VALIDATE_ASYNC_KEY] !== undefined:
-          return constructRuleCb(name, _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn)
+          return constructRuleCb(
+            propName,
+            _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn,
+            pluginName
+          )
         default:
-          throw new JsonqlError(`unable to find rule`)
+          throw new JsonqlError(`unable to find rule for ${propName}`)
       }
     })
   }
@@ -270,31 +285,33 @@ export class ValidatorFactoryBase {
   /// ----------------------- PLUGINS ----------------------- ///
 
   private _lookupPlugin(
-    input: JsonqlValidationRule
+    input: JsonqlValidationRule,
+    propName: string
   ): JsonqlValidateFn {
-    const name = input[PLUGIN_KEY]
-    if (name && this._plugins.has(name)) {
+    const pluginName = input[PLUGIN_KEY]
+    if (pluginName && this._plugins.has(pluginName)) {
       // @TODO need to transform this
-      const pluginConfig = this._plugins.get(name)
+      const pluginConfig = this._plugins.get(pluginName)
       if (pluginConfig && pluginConfig[VALIDATE_ASYNC_KEY]) {
-
+        // here is the problem the name should be the param not the plugin
         return constructRuleCb(
-          name,
-          pluginConfig[VALIDATE_ASYNC_KEY] as JsonqlValidateFn
+          propName,
+          pluginConfig[VALIDATE_ASYNC_KEY] as JsonqlValidateFn,
+          pluginName,
         )
       } else if (pluginConfig && pluginConfig[PARAMS_KEY]) {
         debug('_pluign', pluginConfig)
         debug('input', input)
         const _input = input as unknown as JsonqlPluginInput
         // need to check if the _plugin is internal or not
-        const fn = inArray(this._internalPluginNames, name) ?
+        const fn = inArray(this._internalPluginNames, pluginName) ?
                     createCoreCurryPlugin(_input) :
                     curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
 
-        return constructRuleCb(name, promisify(fn))
+        return constructRuleCb(propName, promisify(fn), pluginName)
       }
     }
-    throw new JsonqlError(`Unable to find ${name} plugin`)
+    throw new JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`)
   }
 
   /** register plugins */

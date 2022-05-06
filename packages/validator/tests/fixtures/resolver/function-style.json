@@ -15,9 +15,7 @@
       ]
     },
     {
-      "name": "arg3",
-      "required": false,
-      "type": "boolean"
+      "required": true
     }
   ]
 }
