@@ -3,15 +3,15 @@ import {
   swcParserBase,
   swcParseFileBase,
   swcParseFileSync,
-} from './swc-parser-base'
+} from './lib/swc-parser-base'
 import {
   processClassModuleBody,
   normalize,
   processArgs,
   processFunctionModuleBody,
   processArgParams,
-} from './processors'
-import { IS_DEBUG, SYNTAXS } from './constants'
+} from './lib/processors'
+import { IS_DEBUG, SYNTAXS } from './lib/constants'
 
 /** This will pass the code directly for parsing */
 export async function tsFileParser(code: string) {

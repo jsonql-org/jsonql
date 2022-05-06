@@ -46,7 +46,7 @@ import {
   SwcProcessedBody,
   SwcParameterEntry,
   SwcPatEntry,
-}  from './types'
+}  from '../types'
 
 /** the first one to get call to take the body out from Class module */
 export function processClassModuleBody(

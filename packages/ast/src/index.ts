@@ -7,4 +7,4 @@ export {
 // this will get use in the other Decorator
 export {
   pickInputFile
-} from './common'
+} from './lib/common'
