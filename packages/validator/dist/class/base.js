@@ -54,6 +54,7 @@ class ValidatorFactoryBase {
       argument values turn into an executable queue
     */
     _normalizeArgValues(values) {
+        debug('_normalizeArgValues', values);
         // there might not be a dev provided schema
         const params = this.schema;
         const pCtn = params.length;
@@ -94,18 +95,24 @@ class ValidatorFactoryBase {
       this way, if one fail then the whole queue exited without running
     */
     _prepareForExecution(value, param, idx) {
-        const { rules } = param;
+        const { rules, required } = param;
         if (rules && rules.length) {
             // we only need to return the queue
             return rules.map((rule, i) => {
                 // if this is not required field and no value the we create a fake callback
-                if (value === undefined && !param.required) {
+                if (value === undefined && !required) {
+                    debug(`skip the validation`, required);
                     return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                         return ((0, fn_1.successThen)(param[constants_2.NAME_KEY], value, lastResult, [idx, i])(true));
                     });
                 }
                 // when it fail then we provide with the index number
-                return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () { return Reflect.apply(rule, null, [value, lastResult, [idx, i]]); });
+                return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return Reflect.apply(rule, null, [value, lastResult, [idx, i]]).then((result) => {
+                        debug('Post rule result', result);
+                        return result;
+                    });
+                });
             });
         }
         // stuff it with a placeholder fuction?
@@ -132,7 +139,7 @@ class ValidatorFactoryBase {
         // We just need to take the validate methods and concat to the rules here
         return astMap.map((ast, i) => {
             if (arrayInput[i]) { // the user didn't provide additonal rules
-                const input2 = this._transformInput(arrayInput[i]);
+                const input2 = this._transformInput(arrayInput[i], ast.name);
                 /*
                 @TODO at this point ast[RULES_KEY] has the rule generated
                 when this is run with a js file there won't be any type info
@@ -149,14 +156,14 @@ class ValidatorFactoryBase {
     /** nomalize the object style rules input */
     _applyObjectInput(astMap, input) {
         return astMap.map((ast) => {
-            const { name } = ast;
-            if (input[name]) {
+            const propName = ast.name;
+            if (input[propName]) {
                 // there might not be a name in there and it's important
-                const _input = (0, utils_1.toArray)(input[name]).map(input => {
-                    input.name = name;
+                const _input = (0, utils_1.toArray)(input[propName]).map(input => {
+                    input.name = propName;
                     return input;
                 });
-                const rules = this._transformInput(_input);
+                const rules = this._transformInput(_input, propName);
                 // debug('ast[RULES_KEY]', ast[RULES_KEY])
                 if (rules && rules.length) {
                     ast[constants_2.RULES_KEY] = ast[constants_2.RULES_KEY].concat(rules);
@@ -166,45 +173,46 @@ class ValidatorFactoryBase {
         });
     }
     /** here is the one that will transform the rules */
-    _transformInput(input) {
+    _transformInput(input, propName) {
         debug('_transformInput', input);
         return input.map((_input) => {
-            const { name } = _input;
+            const pluginName = _input.name;
             switch (true) {
                 case _input[constants_2.PLUGIN_KEY] !== undefined:
                     debug(`Should got here`, _input[constants_2.PLUGIN_KEY]);
-                    return this._lookupPlugin(_input);
+                    return this._lookupPlugin(_input, propName);
                 case _input[constants_2.VALIDATE_KEY] !== undefined:
                     // @TODO need to transform this
-                    return (0, fn_1.constructRuleCb)(name, (0, validator_core_1.promisify)(_input[constants_2.VALIDATE_KEY]));
+                    return (0, fn_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[constants_2.VALIDATE_KEY]), pluginName);
                 case _input[constants_2.VALIDATE_ASYNC_KEY] !== undefined:
-                    return (0, fn_1.constructRuleCb)(name, _input[constants_2.VALIDATE_ASYNC_KEY]);
+                    return (0, fn_1.constructRuleCb)(propName, _input[constants_2.VALIDATE_ASYNC_KEY], pluginName);
                 default:
-                    throw new errors_1.JsonqlError(`unable to find rule`);
+                    throw new errors_1.JsonqlError(`unable to find rule for ${propName}`);
             }
         });
     }
     /// ----------------------- PLUGINS ----------------------- ///
-    _lookupPlugin(input) {
-        const name = input[constants_2.PLUGIN_KEY];
-        if (name && this._plugins.has(name)) {
+    _lookupPlugin(input, propName) {
+        const pluginName = input[constants_2.PLUGIN_KEY];
+        if (pluginName && this._plugins.has(pluginName)) {
             // @TODO need to transform this
-            const pluginConfig = this._plugins.get(name);
+            const pluginConfig = this._plugins.get(pluginName);
             if (pluginConfig && pluginConfig[constants_2.VALIDATE_ASYNC_KEY]) {
-                return (0, fn_1.constructRuleCb)(name, pluginConfig[constants_2.VALIDATE_ASYNC_KEY]);
+                // here is the problem the name should be the param not the plugin
+                return (0, fn_1.constructRuleCb)(propName, pluginConfig[constants_2.VALIDATE_ASYNC_KEY], pluginName);
             }
             else if (pluginConfig && pluginConfig[constants_2.PARAMS_KEY]) {
                 debug('_pluign', pluginConfig);
                 debug('input', input);
                 const _input = input;
                 // need to check if the _plugin is internal or not
-                const fn = (0, utils_1.inArray)(this._internalPluginNames, name) ?
+                const fn = (0, utils_1.inArray)(this._internalPluginNames, pluginName) ?
                     (0, validator_core_1.createCoreCurryPlugin)(_input) :
                     (0, validator_core_1.curryPlugin)(_input, pluginConfig);
-                return (0, fn_1.constructRuleCb)(name, (0, validator_core_1.promisify)(fn));
+                return (0, fn_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(fn), pluginName);
             }
         }
-        throw new errors_1.JsonqlError(`Unable to find ${name} plugin`);
+        throw new errors_1.JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`);
     }
     /** register plugins */
     _registerPlugin(name, pluginConfig, skipCheck = false // when register internal plugin then skip it

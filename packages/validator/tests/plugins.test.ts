@@ -8,7 +8,7 @@ import { context } from './fixtures/resolver/export-ast'
 const expectedLoginResult = {username: 'John', password: '123456'}
 const loginValues = [expectedLoginResult.username, expectedLoginResult.password]
 
-test.only(`Testing the user define custom plugin`, async t => {
+test(`Testing the user define custom plugin`, async t => {
   t.plan(1)
   const validateObj = new ValidatorFactory(context.funcAstInput.resolver)
   validateObj.registerPlugin('notEqual', {
@@ -32,16 +32,16 @@ test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
       email: { plugin: 'email' },
       age: { plugin: 'moreThan', num: 50}
     })
-    return validateObj1.validate(['some@email.com', 65])
+    return validateObj1.validate(['some@email.com', 65, true])
               .then(result => {
-                console.log(result)
-                t.truthy(result)
+                t.deepEqual(result, {email: 'some@email.com', age: 65, arg3: true})
               })
 })
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`,async t => {
   t.plan(1)
   // when using throwsAsync it won't work
+  /// @TODO need to test it without the t.throws and see if the catch actually catch the error
   t.throws(() => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
     validateObj1.createSchema({
@@ -51,7 +51,6 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-co
     return validateObj1.validate(['some@email.com', 65])
               .then(result => {
                 console.log(result)
-                t.truthy(result)
               })
   })
 })

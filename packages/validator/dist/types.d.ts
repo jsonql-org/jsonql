@@ -76,7 +76,7 @@ export type JsonqlValidateCbFn = (
   pos: number[]
 ) => Promise<any>
 
-export type JsonqlPropertyParamnMap = {
+export type JsonqlPropertyParamMap = {
   name: string // the argument name
   required: boolean
   type: any
@@ -90,7 +90,7 @@ export type JsonqlPropertyParamnMap = {
 }
 
 export type JsonqlClassValidationMap = {
-  [propName: string]: Array<JsonqlPropertyParamnMap>
+  [propName: string]: Array<JsonqlPropertyParamMap>
 }
 
 export interface JsonqlCheckObjectKeys {

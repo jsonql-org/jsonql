@@ -1,4 +1,4 @@
-import { JsonqlValidationPlugin, JsonqlPropertyParamnMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
+import { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -15,7 +15,7 @@ export declare class ValidatorFactoryBase {
     private _errors;
     protected _arguments: Array<string>;
     constructor(astMap: any);
-    protected get schema(): JsonqlPropertyParamnMap[];
+    protected get schema(): JsonqlPropertyParamMap[];
     /** @TODO map the index array to name */
     protected get errors(): number[][];
     /**

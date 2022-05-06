@@ -1,4 +1,4 @@
-import { JsonqlPropertyParamnMap, JsonqlValidateFn, JsonqlGenericObject } from '../types';
+import { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject } from '../types';
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -12,11 +12,11 @@ because the plugins are apply there
   this part will always happen first then add the user
   generate valdiation rules
 */
-export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamnMap>): Array<JsonqlPropertyParamnMap>;
+export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamMap>): Array<JsonqlPropertyParamMap>;
 /**
 this will get re-use in the class to create method for the queue execution
  */
-export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn): (value: any, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
+export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn, ruleName?: string): (value: any, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 export declare function successThen(name: string, value: any, lastResult: JsonqlGenericObject, pos: number[]): (result: any) => any;
 /** extract the default value if there is none */

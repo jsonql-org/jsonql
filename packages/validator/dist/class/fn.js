@@ -26,7 +26,9 @@ function createAutomaticRules(astMap) {
     return astMap.map((ast) => {
         const { name } = ast;
         const ruleFn = getValidateRules(ast);
-        ast[constants_2.RULES_KEY] = [constructRuleCb(name, ruleFn)];
+        const ruleName = ast[constants_1.TS_TYPE_NAME] || ast.type;
+        debug('createAutomaticRules', name, ruleName);
+        ast[constants_2.RULES_KEY] = [constructRuleCb(name, ruleFn, ruleName)];
         return ast;
     });
 }
@@ -34,13 +36,15 @@ exports.createAutomaticRules = createAutomaticRules;
 /**
 this will get re-use in the class to create method for the queue execution
  */
-function constructRuleCb(name, ruleFn) {
+function constructRuleCb(name, ruleFn, ruleName) {
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Reflect.apply(ruleFn, null, [value])
             .then(successThen(name, value, lastResult, pos))
             .catch((error) => {
             debug('failed', name, value, error, pos);
-            return Promise.reject(new errors_1.JsonqlValidationError(name, pos));
+            // the name should be the validator name - not the property name
+            // because the pos already indicator the property
+            return Promise.reject(new errors_1.JsonqlValidationError(ruleName, pos));
         });
     });
 }
@@ -49,6 +53,7 @@ exports.constructRuleCb = constructRuleCb;
 function successThen(name, value, lastResult, pos) {
     return (result) => {
         debug('passed', name, value, result, pos);
+        debug('lastResult', lastResult);
         // return the argument name with the value
         return (0, utils_1.assign)(lastResult, { [name]: value });
     };
