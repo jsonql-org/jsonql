@@ -36,6 +36,7 @@ import {
 
   DEFAULT_VALUE,
   SPREAD_ARG_TYPE,
+  PARAMETER_NAME
 } from '@jsonql/constants'
 import { stripSpan } from './common'
 import {
@@ -99,7 +100,7 @@ export function processArgs(classBody: SwcProcessedBody) {
 }
 
 /* this is just assign a value without type info */
-export function extractAssignmentPattern(pat: any) {
+export function extractAssignmentPattern(pat: SwcPatEntry) {
   // console.dir(pat, { depth: null })
   return {
     name: pat.left.value, // type === 'Identifier
@@ -148,7 +149,7 @@ export function processArgParams(body: SwcProcessedBody) {
   if (body.params && Array.isArray(body.params)) {
     return {
       [body.identifier.value]: body.params
-        .filter((param: SwcParameterEntry) => param.type === 'Parameter')
+        .filter((param: SwcParameterEntry) => param.type === PARAMETER_NAME)
         .map((param: SwcParameterEntry) => {
           const { pat } = param
 
