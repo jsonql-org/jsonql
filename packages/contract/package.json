@@ -6,7 +6,9 @@
   "module": "dist/index.ts",
   "typings": "dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "index.d.ts"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -30,11 +32,10 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
+    "@jsonql/ast": "workspace:^0.7.0",
     "@jsonql/constants": "workspace:^0.6.1",
     "@jsonql/errors": "workspace:^0.6.0",
     "@jsonql/utils": "workspace:^0.6.5",
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.165",
     "fs-extra": "^10.0.1"
   },
   "devDependencies": {
