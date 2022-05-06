@@ -1,6 +1,6 @@
 import test from 'ava'
-import { join } from 'node:path'
-import { tsFileParser } from '../src'
+// import { join } from 'node:path'
+import { tsFileParser } from '../dist'
 /*
 import { tsInFileParser } from '../src/main'
 const targetFile = join(__dirname, 'fixtures', 'test-file-1.ts')

@@ -42,6 +42,9 @@ import {
   SwcProcessedModule,
   SwcTypeParamsEntry,
   JsonqlParamInfo,
+  SwcProcessedBody,
+  SwcParameterEntry,
+  SwcPatEntry,
 }  from './types'
 
 /** the first one to get call to take the body out from Class module */
@@ -69,7 +72,7 @@ export function processClassModuleBody(
 }
 
 /** processing the class methods arguments **/
-export function processArgs(classBody: any) {
+export function processArgs(classBody: SwcProcessedBody) {
   if (classBody.body) {
     return classBody.body
       .filter((body: any) => body.type === CLASS_METHOD)
@@ -141,12 +144,12 @@ export function processFunctionModuleBody(
 }
 
 /** process the function argument params */
-export function processArgParams(body: any) {
+export function processArgParams(body: SwcProcessedBody) {
   if (body.params && Array.isArray(body.params)) {
     return {
       [body.identifier.value]: body.params
-        .filter((param: any) => param.type === 'Parameter')
-        .map((param: any) => {
+        .filter((param: SwcParameterEntry) => param.type === 'Parameter')
+        .map((param: SwcParameterEntry) => {
           const { pat } = param
 
           return extractTypeAnnotation(pat, {
@@ -180,7 +183,7 @@ export function normalize(body: Array<any>) {
 
 
 /** extract value from the pat */
-export function extractValue(pat: any) {
+export function extractValue(pat: SwcPatEntry) {
   switch (pat.type) {
     case ARR_EXP:
       return pat.elements
@@ -265,7 +268,7 @@ export function furtherProcessUnionType(annotation: any) {
 
 // type annotation could have different field structures
 export function extractTypeAnnotation(
-  pat: any,
+  pat: SwcPatEntry,
   base: JsonqlParamInfo
 ) {
   const annotation = pat?.typeAnnotation?.typeAnnotation

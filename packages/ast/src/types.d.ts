@@ -1,16 +1,62 @@
 // specify your types here
 // Need to take the original swc types here - its kick itself in the teeth
 
+export type SwcSpanObject = {
+  [key: string]: number
+}
+
+export type SwcProcessedBody = {
+  type: string
+  identifier: {
+    type: string
+    span: SwcSpanObject
+    value: string
+    optional: boolean
+  }
+  params: Array<any>
+  decorators: Array<any>
+  span: SwcSpanObject
+  body: any
+  generator?: boolean,
+  async?: boolean,
+  typeParameters?: any,
+  returnType?: any
+}
+
+export type SwcParameterEntry = {
+  type: string
+  span: SwcSpanObject
+  decorators: Array<any>
+  pat: any
+}
+
+export type SwcGenericSubEntry = {
+  type: string
+  span: SwcSpanObject
+  value: string
+  optional?: boolean
+  typeAnnotation?: any
+}
+
+export type SwcPatEntry = {
+  type: string
+  span: SwcSpanObject,
+  left: SwcGenericSubEntry
+  right: SwcGenericSubEntry
+  typeAnnotation?: any
+  elements?: any
+  properties?: any
+  value?: any
+}
+
 export declare type SwcProcessedModule = {
   type: string
-  span: { [key: string]: number | string }
+  span: SwcSpanObject
   body: { [key: string]: any }
   interpreter: null
 }
 
-export type SwcSpanObject = {
-  [key: string]: number
-}
+
 // @TODO
 export type SwcDeclObject = {
   function: any // @TODO
@@ -72,7 +118,7 @@ export type SwcParserOptions = {
   // Input source code are treated as module by default
   isModule: boolean = true
 }
-
+// this should just use the SwcSpanObject instead
 export type SwcParamsSpan = {
   start: number
   end: number

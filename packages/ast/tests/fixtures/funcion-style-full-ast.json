@@ -1,0 +1,149 @@
+{
+  type: 'FunctionExpression',
+  identifier: {
+    type: 'Identifier',
+    span: { start: 65, end: 73, ctxt: 0 },
+    value: 'resolver',
+    optional: false
+  },
+  params: [
+    {
+      type: 'Parameter',
+      span: { start: 77, end: 90, ctxt: 0 },
+      decorators: [],
+      pat: {
+        type: 'Identifier',
+        span: { start: 77, end: 90, ctxt: 0 },
+        value: 'email',
+        optional: false,
+        typeAnnotation: {
+          type: 'TsTypeAnnotation',
+          span: { start: 82, end: 90, ctxt: 0 },
+          typeAnnotation: {
+            type: 'TsKeywordType',
+            span: { start: 84, end: 90, ctxt: 0 },
+            kind: 'string'
+          }
+        }
+      }
+    },
+    {
+      type: 'Parameter',
+      span: { start: 94, end: 114, ctxt: 0 },
+      decorators: [],
+      pat: {
+        type: 'Identifier',
+        span: { start: 94, end: 114, ctxt: 0 },
+        value: 'age',
+        optional: false,
+        typeAnnotation: {
+          type: 'TsTypeAnnotation',
+          span: { start: 97, end: 114, ctxt: 0 },
+          typeAnnotation: {
+            type: 'TsUnionType',
+            span: { start: 99, end: 114, ctxt: 0 },
+            types: [
+              {
+                type: 'TsKeywordType',
+                span: { start: 99, end: 105, ctxt: 0 },
+                kind: 'string'
+              },
+              {
+                type: 'TsKeywordType',
+                span: { start: 108, end: 114, ctxt: 0 },
+                kind: 'number'
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      type: 'Parameter',
+      span: { start: 118, end: 130, ctxt: 0 },
+      decorators: [],
+      pat: {
+        type: 'AssignmentPattern',
+        span: { start: 118, end: 130, ctxt: 0 },
+        left: {
+          type: 'Identifier',
+          span: { start: 118, end: 122, ctxt: 0 },
+          value: 'arg3',
+          optional: false,
+          typeAnnotation: null
+        },
+        right: {
+          type: 'BooleanLiteral',
+          span: { start: 125, end: 130, ctxt: 0 },
+          value: false
+        },
+        typeAnnotation: null
+      }
+    }
+  ],
+  decorators: [],
+  span: { start: 56, end: 213, ctxt: 0 },
+  body: {
+    type: 'BlockStatement',
+    span: { start: 133, end: 213, ctxt: 0 },
+    stmts: [
+      {
+        type: 'ReturnStatement',
+        span: { start: 138, end: 211, ctxt: 0 },
+        argument: {
+          type: 'ObjectExpression',
+          span: { start: 145, end: 211, ctxt: 0 },
+          properties: [
+            {
+              type: 'Identifier',
+              span: { start: 151, end: 156, ctxt: 0 },
+              value: 'email',
+              optional: false
+            },
+            {
+              type: 'Identifier',
+              span: { start: 162, end: 165, ctxt: 0 },
+              value: 'age',
+              optional: false
+            },
+            {
+              type: 'KeyValueProperty',
+              key: {
+                type: 'Identifier',
+                span: { start: 171, end: 175, ctxt: 0 },
+                value: 'arg3',
+                optional: false
+              },
+              value: {
+                type: 'ConditionalExpression',
+                span: { start: 177, end: 207, ctxt: 0 },
+                test: {
+                  type: 'Identifier',
+                  span: { start: 177, end: 181, ctxt: 0 },
+                  value: 'arg3',
+                  optional: false
+                },
+                consequent: {
+                  type: 'StringLiteral',
+                  span: { start: 184, end: 195, ctxt: 0 },
+                  value: 'SOMETHING',
+                  raw: "'SOMETHING'"
+                },
+                alternate: {
+                  type: 'StringLiteral',
+                  span: { start: 198, end: 207, ctxt: 0 },
+                  value: 'NOTHING',
+                  raw: "'NOTHING'"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  generator: false,
+  async: false,
+  typeParameters: null,
+  returnType: null
+}
