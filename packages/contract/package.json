@@ -37,7 +37,8 @@
     "@jsonql/errors": "workspace:^0.6.0",
     "@jsonql/utils": "workspace:^0.6.5",
     "fs-extra": "^10.0.1",
-    "glob": "^8.0.1"
+    "glob": "^8.0.1",
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",

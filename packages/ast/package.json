@@ -32,7 +32,8 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.6.1"
+    "@jsonql/constants": "workspace:^0.6.1",
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
