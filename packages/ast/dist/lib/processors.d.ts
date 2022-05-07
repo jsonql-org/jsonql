@@ -1,4 +1,4 @@
-import { SwcProcessedModule, JsonqlParamInfo, SwcProcessedBody, SwcPatEntry } from './types';
+import { SwcProcessedModule, JsonqlParamInfo, SwcProcessedBody, SwcPatEntry } from '../types';
 /** the first one to get call to take the body out from Class module */
 export declare function processClassModuleBody(module: SwcProcessedModule): any;
 /** processing the class methods arguments **/

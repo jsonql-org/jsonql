@@ -240,7 +240,7 @@ function extractTypeAnnotation(pat, base) {
                 // It could be a declare type also an Array<> could fall here
                 case constants_1.TS_TYPE_REF:
                     return Object.assign({ [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_REF }, furtherProcessReferenceType(annotation));
-                case constants_1.TS_TYPE_LIT:
+                case constants_1.TS_TYPE_LIT: // @TODO need to strip down the output here
                     return {
                         type: constants_1.ANY_TYPE,
                         [constants_1.TS_TYPE_NAME]: constants_1.TS_TYPE_LIT,
