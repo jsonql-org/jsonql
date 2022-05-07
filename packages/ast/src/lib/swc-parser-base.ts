@@ -15,7 +15,7 @@ export async function swcParserBase(
   return swc.parseFile(infile, options)
 }
 /** sync version of above method */
-export async function swcParserSync(
+export function swcParserSync(
   infile: string,
   options: any
 ) {

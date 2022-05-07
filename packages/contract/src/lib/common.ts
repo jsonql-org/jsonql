@@ -25,11 +25,17 @@ export function stripAllTypeParams(obj: any) {
 export function tsParserSync(filePath: string) {
   const fn = chainFns(
     tsBasicParserSync,
-    processFunctionModuleBody,
+    (code: any) => {
+      console.dir(code, { depth: null })
+      return code
+    }
+  )
+  /*
+    processClassModuleBody,
     normalize,
     processArgParams,
     stripAllTypeParams
   )
-
+  */
   return fn(filePath)
 }

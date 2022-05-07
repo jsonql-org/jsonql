@@ -66,7 +66,7 @@ test(`Test the strip typeParams method`, async t => {
   t.truthy(cleanResult)
 })
 
-test(`test the new tsBasicParserSync`, t => {
+test.only(`test the new tsBasicParserSync`, t => {
 
   const result = tsBasicParserSync(tsFile)
 
