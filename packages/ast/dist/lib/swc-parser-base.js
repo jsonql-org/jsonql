@@ -21,9 +21,7 @@ function swcParserBase(infile, options // @TODO
 exports.swcParserBase = swcParserBase;
 /** sync version of above method */
 function swcParserSync(infile, options) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        return swc.parseFileSync(infile, options);
-    });
+    return swc.parseFileSync(infile, options);
 }
 exports.swcParserSync = swcParserSync;
 /*
