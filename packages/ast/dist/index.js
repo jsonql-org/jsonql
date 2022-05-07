@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stripTypeParams = exports.pickInputFile = exports.tsFunctionParser = exports.tsClassParser = exports.tsFileParserSync = exports.tsFileParser = void 0;
+exports.stripTypeParams = exports.pickInputFile = void 0;
+const tslib_1 = require("tslib");
 // @jsonql/ast main export
-var main_1 = require("./main");
-Object.defineProperty(exports, "tsFileParser", { enumerable: true, get: function () { return main_1.tsFileParser; } });
-Object.defineProperty(exports, "tsFileParserSync", { enumerable: true, get: function () { return main_1.tsFileParserSync; } });
-Object.defineProperty(exports, "tsClassParser", { enumerable: true, get: function () { return main_1.tsClassParser; } });
-Object.defineProperty(exports, "tsFunctionParser", { enumerable: true, get: function () { return main_1.tsFunctionParser; } });
+tslib_1.__exportStar(require("./main"), exports);
+// now export everything from prosssors
+tslib_1.__exportStar(require("./lib/processors"), exports);
 // this will get use in the other Decorator
 var common_1 = require("./lib/common");
 Object.defineProperty(exports, "pickInputFile", { enumerable: true, get: function () { return common_1.pickInputFile; } });

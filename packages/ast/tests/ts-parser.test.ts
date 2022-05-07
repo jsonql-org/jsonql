@@ -3,7 +3,8 @@ import { join } from 'path'
 import {
   getParser,
   tsClassParser,
-  tsFunctionParser
+  tsFunctionParser,
+  tsBasicParserSync,
 } from '../src/main'
 import {
   processClassModuleBody,
@@ -53,7 +54,7 @@ test(`Should able to understand the spread arguments`, async t => {
   }
 })
 
-test.only(`Test the strip typeParams method`, async t => {
+test(`Test the strip typeParams method`, async t => {
   const result = await tsClassParser(tsFile)
   const cleanResult = {}
 
@@ -63,4 +64,14 @@ test.only(`Test the strip typeParams method`, async t => {
 
   // show(cleanResult)
   t.truthy(cleanResult)
+})
+
+test(`test the new tsBasicParserSync`, t => {
+
+  const result = tsBasicParserSync(tsFile)
+
+  show(result)
+
+  t.truthy(result)
+
 })

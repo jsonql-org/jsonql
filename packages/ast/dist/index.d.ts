@@ -1,2 +1,3 @@
-export { tsFileParser, tsFileParserSync, tsClassParser, tsFunctionParser, } from './main';
+export * from './main';
+export * from './lib/processors';
 export { pickInputFile, stripTypeParams } from './lib/common';

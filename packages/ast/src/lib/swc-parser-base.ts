@@ -14,6 +14,14 @@ export async function swcParserBase(
 ): Promise<any> { // @TODO
   return swc.parseFile(infile, options)
 }
+/** sync version of above method */
+export async function swcParserSync(
+  infile: string,
+  options: any
+) {
+  return swc.parseFileSync(infile, options)
+}
+
 /*
 No overload matches this call. Overload 1 of 2,
 '(path: string,

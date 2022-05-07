@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.swcParseFileSync = exports.swcParseFileBase = exports.swcParserBase = void 0;
+exports.swcParseFileSync = exports.swcParseFileBase = exports.swcParserSync = exports.swcParserBase = void 0;
 const tslib_1 = require("tslib");
 // Using the swc/core to parse the TS file into AST
 // and we extract the method's argument along with their type
@@ -19,6 +19,13 @@ function swcParserBase(infile, options // @TODO
     });
 }
 exports.swcParserBase = swcParserBase;
+/** sync version of above method */
+function swcParserSync(infile, options) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return swc.parseFileSync(infile, options);
+    });
+}
+exports.swcParserSync = swcParserSync;
 /*
 No overload matches this call. Overload 1 of 2,
 '(path: string,

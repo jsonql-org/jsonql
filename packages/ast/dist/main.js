@@ -1,11 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = void 0;
+exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = exports.tsBasicParserSync = void 0;
 const tslib_1 = require("tslib");
 // ast index export
 const swc_parser_base_1 = require("./lib/swc-parser-base");
 const processors_1 = require("./lib/processors");
 const constants_1 = require("./lib/constants");
+/** just the core parser sync version */
+function tsBasicParserSync(filePath) {
+    const options = getOptions('ts');
+    return (0, swc_parser_base_1.swcParserSync)(filePath, options);
+}
+exports.tsBasicParserSync = tsBasicParserSync;
 /** This will pass the code directly for parsing */
 function tsFileParser(code) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {

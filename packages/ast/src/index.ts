@@ -1,10 +1,7 @@
 // @jsonql/ast main export
-export {
-  tsFileParser,
-  tsFileParserSync,
-  tsClassParser,
-  tsFunctionParser,
-} from './main'
+export * from './main'
+// now export everything from prosssors
+export * from './lib/processors'
 // this will get use in the other Decorator
 export {
   pickInputFile,
