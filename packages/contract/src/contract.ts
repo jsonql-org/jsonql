@@ -19,13 +19,28 @@ export class JsonqlContract {
       })
   }
 
+  static findByPath(
+    obj: any,
+    path: string,
+    paths: string[] = [],
+    i: number = 0
+  ) {
+    if (paths.length === 0) {
+      paths = path.split('.')
+    }
+    if (obj[paths[i]]) {
+
+    }
+    return null
+  }
+
   public get astMap() {
     return this._astMap
   }
 
   // we are going to have three root properties
-  public data() {
-
+  public data(entry: any, path?: string) {
+    this._contract.data = entry
   }
 
   public error() {
