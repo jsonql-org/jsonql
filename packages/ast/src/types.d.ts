@@ -135,6 +135,16 @@ export type SwcTypeParamsEntry = {
   kind: string
 }
 
+export type JsonqlProcessedEntry = {
+  name: string
+  required: boolean
+  type: string
+  tstype?: string
+  defaultvalue?: any
+  types?: any
+  typeParams?: any
+}
+
 /** after ripping the ast out then transform into this object for use */
 export type JsonqlParamInfo = {
   name: string

@@ -8,7 +8,10 @@ import {
 import {
   processClassModuleBody,
   // stripSpan,
-} from '../src/processors'
+} from '../src/lib/processors'
+import {
+  stripTypeParams
+} from '../src/lib/common'
 import {
   SPREAD_ARG_TYPE,
   TS_TYPE_NAME
@@ -29,7 +32,7 @@ test(`Should able to get the correct parser`, async t => {
   t.truthy(body)
 })
 
-test(`Should able to generate AST from a ts class file`, async t => {
+test.only(`Should able to generate AST from a ts class file`, async t => {
   const result = await tsClassParser(tsFile)
   // show(result)
   t.truthy(result)
@@ -48,4 +51,16 @@ test(`Should able to understand the spread arguments`, async t => {
   for (const name in result) {
     t.is(result[name][0][TS_TYPE_NAME], SPREAD_ARG_TYPE)
   }
+})
+
+test.only(`Test the strip typeParams method`, async t => {
+  const result = await tsClassParser(tsFile)
+  const cleanResult = {}
+
+  for (const methodName in result) {
+    cleanResult[methodName] = stripTypeParams(result[methodName])
+  }
+
+  // show(cleanResult)
+  t.truthy(cleanResult)
 })

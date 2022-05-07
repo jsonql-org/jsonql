@@ -303,7 +303,7 @@ export function extractTypeAnnotation(
             { [TS_TYPE_NAME]: TS_TYPE_REF },
             furtherProcessReferenceType(annotation)
           )
-        case TS_TYPE_LIT:
+        case TS_TYPE_LIT: // @TODO need to strip down the output here
           return {
             type: ANY_TYPE,
             [TS_TYPE_NAME]: TS_TYPE_LIT,

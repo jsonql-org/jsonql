@@ -1,4 +1,6 @@
 // take out some of the common methods to keep the processor files size down
+import { TYPE_PARAMS } from '@jsonql/constants'
+import { JsonqlProcessedEntry } from '../types'
 /** remove all the span props they are no use to us */
 export function stripSpan(obj: any) {
   const tmp = {}
@@ -20,6 +22,18 @@ export function stripSpan(obj: any) {
   }
   return tmp
 }
+
+/** strip out all the typesParams from the generate ast because we don't need them in the contract */
+export function stripTypeParams(astMap: Array<JsonqlProcessedEntry>) {
+
+  return astMap.map(ast => {
+    if (ast[TYPE_PARAMS] !== undefined) {
+      delete ast[TYPE_PARAMS]
+    }
+    return ast
+  })
+}
+
 
 /** take the error stack processor here and see if it works correctly */
 export function pickInputFile(e: Error, pattern = '__decorateClass'): string {
