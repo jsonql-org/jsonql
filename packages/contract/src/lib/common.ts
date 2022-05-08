@@ -1,7 +1,8 @@
 import {
-  stripTypeParams,
+  stripAllTypeParams,
   tsBasicParserSync,
   processClassModuleBody,
+  normalize,
   processArgs,
   processFunctionModuleBody,
   processArgParams,
@@ -9,16 +10,6 @@ import {
 import {
   chainFns
 } from '@jsonql/utils'
-
-/** clean up the unused options for contract */
-export function stripAllTypeParams(obj: any) {
-  const cleanResult = {}
-  for (const methodName in obj) {
-    cleanResult[methodName] = stripTypeParams(obj[methodName])
-  }
-
-  return cleanResult
-}
 
 function extractClassDefinition(obj: any) {
 
@@ -44,8 +35,9 @@ function extractClassDefinition(obj: any) {
 export function tsParserSync(filePath: string) {
   const fn = chainFns(
     tsBasicParserSync,
-    // processClassModuleBody,
-    extractClassDefinition
+    (module: any) => processClassModuleBody(module, false),
+    normalize,
+    extractClassDefinition,
   )
   return fn(filePath)
 }

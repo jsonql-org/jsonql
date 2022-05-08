@@ -80,7 +80,7 @@ export function processClassModuleBody(
 /** processing the class methods arguments **/
 export function processArgs(
   classBody: SwcProcessedBody,
-  publicOnly = false
+  publicOnly = true // should always pick the public methods
 ) {
   if (classBody.body) {
     return classBody.body
@@ -93,6 +93,7 @@ export function processArgs(
       })
       .map((body: any) => {
         const propertyName = body.key.value
+        // const { accessibility } = body
         return {
           [propertyName]: body.function.params.map((params: any) => {
             const { pat } = params
