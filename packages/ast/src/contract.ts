@@ -11,13 +11,7 @@ export class JsonqlContract {
   /** instead of run the parser again we just load the ast map */
   constructor(astMap: any) {
     //we are going to add props to it
-    this._contract.data = astMap
-  }
-
-
-
-  public get astMap() {
-    return this._astMap
+    this._contract.data = stripAllTypeParams(astMap)
   }
 
   // we are going to have three root properties
@@ -30,6 +24,10 @@ export class JsonqlContract {
   }
 
   public meta() {
+
+  }
+
+  public write() {
 
   }
 
