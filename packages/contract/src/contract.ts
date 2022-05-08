@@ -1,38 +1,20 @@
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
 import {
-  tsClassParser,
-  tsFunctionParser
-} from '@jsonql/ast'
-import {
   stripAllTypeParams
-} from './lib/common'
+} from '@jsonql/ast'
 
 export class JsonqlContract {
   private _astMap: any
   private _contract = { data: {}, meta: {}, error: {} }
 
-  constructor(pathToFile: string, type = "class") {
-    Reflect.apply(type === 'class' ? tsClassParser : tsFunctionParser, null, [pathToFile])
-      .then((result: any) => {
-        this._astMap = stripAllTypeParams(result)
-      })
+  /** instead of run the parser again we just load the ast map */
+  constructor(astMap: any) {
+    //we are going to add props to it
+    this._contract.data = astMap
   }
 
-  static findByPath(
-    obj: any,
-    path: string,
-    paths: string[] = [],
-    i: number = 0
-  ) {
-    if (paths.length === 0) {
-      paths = path.split('.')
-    }
-    if (obj[paths[i]]) {
 
-    }
-    return null
-  }
 
   public get astMap() {
     return this._astMap

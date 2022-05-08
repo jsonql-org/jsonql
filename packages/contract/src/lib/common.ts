@@ -1,43 +1,18 @@
-import {
-  stripAllTypeParams,
-  tsBasicParserSync,
-  processClassModuleBody,
-  normalize,
-  processArgs,
-  processFunctionModuleBody,
-  processArgParams,
-} from '@jsonql/ast'
-import {
-  chainFns
-} from '@jsonql/utils'
-
-function extractClassDefinition(obj: any) {
-
-  console.dir(obj, { depth: null })
-
-  return {}
-  /*
-  if (obj.body && Array.isArray(obj.body) && obj.body.length) {
-    const astMap = {
-      className: obj.identifier.value,
-      methods: []
+// common share methods 
+export function findByPath(
+  obj: any,
+  path: string,
+) {
+  const parts = path.split('.')
+  const ctn = parts.length
+  let lastPath: any
+  for (let i = 0; i < ctn; ++i) {
+    const _path = parts[i]
+    if (obj[ _path ]) {
+      lastPath = obj[ _path ]
+    } else {
+      return null
     }
-
-
-    return astMap
   }
-  throw new Error(`Could not find the class body!`)
-  */
-}
-
-
-/** parser for contract */
-export function tsParserSync(filePath: string) {
-  const fn = chainFns(
-    tsBasicParserSync,
-    (module: any) => processClassModuleBody(module, false),
-    normalize,
-    extractClassDefinition,
-  )
-  return fn(filePath)
+  return lastPath
 }
