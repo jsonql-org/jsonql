@@ -10,11 +10,11 @@ function processClassModuleBody(module) {
         .body
         .filter((body) => {
         var _a;
-        return body.type === constants_1.CLASS_TYPE
-            ||
-                (body.type === constants_1.EXPORT_TYPE
-                    &&
-                        ((_a = body[constants_1.DECLARATION_NAME]) === null || _a === void 0 ? void 0 : _a.type) === constants_1.CLASS_TYPE)
+        // body.type === CLASS_TYPE <-- we actually want the export class not the internal class
+        // ||
+        return (body.type === constants_1.EXPORT_TYPE
+            &&
+                ((_a = body[constants_1.DECLARATION_NAME]) === null || _a === void 0 ? void 0 : _a.type) === constants_1.CLASS_TYPE)
             || // this is a new situation
                 (body.type === constants_1.EXPORT_DEFAULT_TYPE
                     &&

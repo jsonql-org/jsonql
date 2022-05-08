@@ -1,4 +1,6 @@
 // just a simple test class
+// import { FastApi } from './phony-base'
+
 class FastApi {
 
   protected protectedRouteHandler() {

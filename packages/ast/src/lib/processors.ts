@@ -50,13 +50,18 @@ import {
 
 /** the first one to get call to take the body out from Class module */
 export function processClassModuleBody(
-  module: SwcProcessedModule
+  module: SwcProcessedModule,
+  withClass = true
 ) {
 
   return module
     .body
     .filter((body: any) =>
-      body.type === CLASS_TYPE
+      (
+        withClass
+        &&
+        body.type === CLASS_TYPE
+      ) //<-- we actually want the export class not the internal class
       ||
       (
         body.type === EXPORT_TYPE
