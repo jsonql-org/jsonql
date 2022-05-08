@@ -39,6 +39,10 @@ export default class MyResolver extends MyOtherClass {
     return 'This has no params!'
   }
 
+  protected iDontWantToBeSeen(here: string) {
+    return here
+  }
+
   /* @TODO test to reject the private and protected methods
   private aPrivateMethod() {
 

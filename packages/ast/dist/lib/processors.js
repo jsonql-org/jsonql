@@ -5,16 +5,18 @@ exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furthe
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
 /** the first one to get call to take the body out from Class module */
-function processClassModuleBody(module) {
+function processClassModuleBody(module, withClass = true) {
     return module
         .body
         .filter((body) => {
         var _a;
-        // body.type === CLASS_TYPE <-- we actually want the export class not the internal class
-        // ||
-        return (body.type === constants_1.EXPORT_TYPE
+        return (withClass
             &&
-                ((_a = body[constants_1.DECLARATION_NAME]) === null || _a === void 0 ? void 0 : _a.type) === constants_1.CLASS_TYPE)
+                body.type === constants_1.CLASS_TYPE) //<-- we actually want the export class not the internal class
+            ||
+                (body.type === constants_1.EXPORT_TYPE
+                    &&
+                        ((_a = body[constants_1.DECLARATION_NAME]) === null || _a === void 0 ? void 0 : _a.type) === constants_1.CLASS_TYPE)
             || // this is a new situation
                 (body.type === constants_1.EXPORT_DEFAULT_TYPE
                     &&
@@ -23,10 +25,16 @@ function processClassModuleBody(module) {
 }
 exports.processClassModuleBody = processClassModuleBody;
 /** processing the class methods arguments **/
-function processArgs(classBody) {
+function processArgs(classBody, publicOnly = false) {
     if (classBody.body) {
         return classBody.body
-            .filter((body) => body.type === constants_1.CLASS_METHOD)
+            .filter((body) => {
+            const isMethod = body.type === constants_1.CLASS_METHOD;
+            if (publicOnly) {
+                return (isMethod && body.accessibility === 'public');
+            }
+            return isMethod;
+        })
             .map((body) => {
             const propertyName = body.key.value;
             return {

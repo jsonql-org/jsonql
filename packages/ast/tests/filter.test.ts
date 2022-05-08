@@ -2,7 +2,9 @@
 import test from 'ava'
 import {
   tsBasicParserSync,
-  processClassModuleBody
+  processClassModuleBody,
+  normalize,
+  processArgs
 } from '../src'
 import { join } from 'node:path'
 
@@ -14,6 +16,10 @@ test(`test the new tsBasicParserSync`, t => {
 
   const body = processClassModuleBody(result, false)
 
-  console.dir(body, { depth: null })
+  const params = normalize(body)
+
+  const args = processArgs(params, true)
+
+  // console.dir(args, { depth: null })
   t.truthy(result)
 })

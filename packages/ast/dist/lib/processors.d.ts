@@ -1,8 +1,8 @@
 import { SwcProcessedModule, JsonqlParamInfo, SwcProcessedBody, SwcPatEntry } from '../types';
 /** the first one to get call to take the body out from Class module */
-export declare function processClassModuleBody(module: SwcProcessedModule): any;
+export declare function processClassModuleBody(module: SwcProcessedModule, withClass?: boolean): any;
 /** processing the class methods arguments **/
-export declare function processArgs(classBody: SwcProcessedBody): any;
+export declare function processArgs(classBody: SwcProcessedBody, publicOnly?: boolean): any;
 export declare function extractAssignmentPattern(pat: SwcPatEntry): {
     name: string;
     required: boolean;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pickInputFile = exports.stripTypeParams = exports.stripSpan = void 0;
+exports.pickInputFile = exports.stripAllTypeParams = exports.stripTypeParams = exports.stripSpan = void 0;
 // take out some of the common methods to keep the processor files size down
 const constants_1 = require("@jsonql/constants");
 /** remove all the span props they are no use to us */
@@ -37,6 +37,15 @@ function stripTypeParams(astMap) {
     });
 }
 exports.stripTypeParams = stripTypeParams;
+/** clean up the unused options for contract */
+function stripAllTypeParams(obj) {
+    const cleanResult = {};
+    for (const methodName in obj) {
+        cleanResult[methodName] = stripTypeParams(obj[methodName]);
+    }
+    return cleanResult;
+}
+exports.stripAllTypeParams = stripAllTypeParams;
 /** take the error stack processor here and see if it works correctly */
 function pickInputFile(e, pattern = '__decorateClass') {
     var _a;

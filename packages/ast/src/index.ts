@@ -5,5 +5,5 @@ export * from './lib/processors'
 // this will get use in the other Decorator
 export {
   pickInputFile,
-  stripTypeParams
+  stripAllTypeParams
 } from './lib/common'

@@ -34,6 +34,16 @@ export function stripTypeParams(astMap: Array<JsonqlProcessedEntry>) {
   })
 }
 
+/** clean up the unused options for contract */
+export function stripAllTypeParams(obj: any) {
+  const cleanResult = {}
+  for (const methodName in obj) {
+    cleanResult[methodName] = stripTypeParams(obj[methodName])
+  }
+
+  return cleanResult
+}
+
 
 /** take the error stack processor here and see if it works correctly */
 export function pickInputFile(e: Error, pattern = '__decorateClass'): string {

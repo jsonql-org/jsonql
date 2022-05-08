@@ -78,10 +78,19 @@ export function processClassModuleBody(
 }
 
 /** processing the class methods arguments **/
-export function processArgs(classBody: SwcProcessedBody) {
+export function processArgs(
+  classBody: SwcProcessedBody,
+  publicOnly = false
+) {
   if (classBody.body) {
     return classBody.body
-      .filter((body: any) => body.type === CLASS_METHOD)
+      .filter((body: any) => {
+        const isMethod = body.type === CLASS_METHOD
+        if (publicOnly) {
+          return (isMethod && body.accessibility === 'public')
+        }
+        return isMethod
+      })
       .map((body: any) => {
         const propertyName = body.key.value
         return {
