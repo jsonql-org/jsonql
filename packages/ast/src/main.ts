@@ -21,6 +21,14 @@ export function tsBasicParserSync(filePath: string) {
   return swcParserSync(filePath, options)
 }
 
+export function tsClassParserSync(infile: string) {
+  const step1 = tsBasicParserSync(infile)
+  const step2 = processClassModuleBody(step1)
+  
+  return step2
+}
+
+
 /** This will pass the code directly for parsing */
 export async function tsFileParser(code: string) {
   const parser = getParser('ts', true)
