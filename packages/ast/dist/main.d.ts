@@ -1,5 +1,7 @@
 /** just the core parser sync version */
 export declare function tsBasicParserSync(filePath: string): import("@swc/core").Script;
+/** parse ts file sync */
+export declare function tsClassParserSync(infile: string): any;
 /** This will pass the code directly for parsing */
 export declare function tsFileParser(code: string): Promise<{
     [x: string]: ({

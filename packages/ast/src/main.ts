@@ -21,12 +21,15 @@ export function tsBasicParserSync(filePath: string) {
   return swcParserSync(filePath, options)
 }
 
+/** parse ts file sync */
 export function tsClassParserSync(infile: string) {
   const step1 = tsBasicParserSync(infile)
+  // @ts-ignore another non-sense from Typscript - it runs but won't compiled
   const step2 = processClassModuleBody(step1, false)
   const step3 = normalize(step2)
-  
-  return step3
+  const step4 = processArgs(step3)
+
+  return step4
 }
 
 

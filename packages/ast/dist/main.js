@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = exports.tsBasicParserSync = void 0;
+exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = exports.tsClassParserSync = exports.tsBasicParserSync = void 0;
 const tslib_1 = require("tslib");
 // ast index export
 const swc_parser_base_1 = require("./lib/swc-parser-base");
@@ -12,6 +12,16 @@ function tsBasicParserSync(filePath) {
     return (0, swc_parser_base_1.swcParserSync)(filePath, options);
 }
 exports.tsBasicParserSync = tsBasicParserSync;
+/** parse ts file sync */
+function tsClassParserSync(infile) {
+    const step1 = tsBasicParserSync(infile);
+    // @ts-ignore another non-sense from Typscript - it runs but won't compiled
+    const step2 = (0, processors_1.processClassModuleBody)(step1, false);
+    const step3 = (0, processors_1.normalize)(step2);
+    const step4 = (0, processors_1.processArgs)(step3);
+    return step4;
+}
+exports.tsClassParserSync = tsClassParserSync;
 /** This will pass the code directly for parsing */
 function tsFileParser(code) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {

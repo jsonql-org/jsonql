@@ -5,7 +5,7 @@ exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furthe
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
 /** the first one to get call to take the body out from Class module */
-function processClassModuleBody(module, withClass = true) {
+function processClassModuleBody(module, withClass = false) {
     return module
         .body
         .filter((body) => {
@@ -25,18 +25,21 @@ function processClassModuleBody(module, withClass = true) {
 }
 exports.processClassModuleBody = processClassModuleBody;
 /** processing the class methods arguments **/
-function processArgs(classBody, publicOnly = false) {
+function processArgs(classBody, publicOnly = true // should always pick the public methods
+) {
     if (classBody.body) {
         return classBody.body
             .filter((body) => {
             const isMethod = body.type === constants_1.CLASS_METHOD;
             if (publicOnly) {
-                return (isMethod && body.accessibility === 'public');
+                return (isMethod &&
+                    (body.accessibility === 'public' || body.accessibility === null));
             }
             return isMethod;
         })
             .map((body) => {
             const propertyName = body.key.value;
+            // const { accessibility } = body
             return {
                 [propertyName]: body.function.params.map((params) => {
                     const { pat } = params;
@@ -126,10 +129,13 @@ function normalize(body) {
         return body.map((code) => {
             switch (code.type) {
                 case constants_1.EXPORT_TYPE:
+                    // console.log(EXPORT_TYPE)
                     return code[constants_1.DECLARATION_NAME];
                 case constants_1.EXPORT_DEFAULT_TYPE:
+                    // console.log(DECLARATION_SHORT_NAME)
                     return code[constants_1.DECLARATION_SHORT_NAME];
                 default:
+                    // console.log('code')
                     return code;
             }
         })[0];

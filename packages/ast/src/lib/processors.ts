@@ -191,13 +191,13 @@ export function normalize(body: Array<any>) {
     return body.map((code) => {
       switch (code.type) {
         case EXPORT_TYPE:
-          console.log(EXPORT_TYPE)
+          // console.log(EXPORT_TYPE)
           return code[DECLARATION_NAME]
         case EXPORT_DEFAULT_TYPE:
-          console.log(DECLARATION_SHORT_NAME)
+          // console.log(DECLARATION_SHORT_NAME)
           return code[DECLARATION_SHORT_NAME]
         default:
-          console.log(code)
+          // console.log('code')
           return code
       }
     })[0]
