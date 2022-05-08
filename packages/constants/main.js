@@ -33,6 +33,12 @@ module.exports = {
     "DATA_KEY": "data",
     "ERROR_KEY": "error",
     "HEADERS_KEY": "headers",
+    "JSONQL_NAME": "jsonql",
+    "REST_NAME": "rest",
+    "AVAILABLE_FORMATS": [
+        "jsonql",
+        "rest"
+    ],
     "JSONQL_PATH": "jsonql",
     "CONTENT_TYPE": "application/vnd.api+json",
     "CHARSET": "charset=utf-8",

@@ -60,6 +60,9 @@ Please consult the detail break down below.
 - DATA_KEY
 - ERROR_KEY
 - HEADERS_KEY
+- JSONQL_NAME
+- REST_NAME
+- AVAILABLE_FORMATS
 - JSONQL_PATH
 - CONTENT_TYPE
 - CHARSET
@@ -306,4 +309,4 @@ Please consult the detail break down below.
 MIT
 
 [TO1SOURCE](https://to1source.com) / [NEWBRAN LTD](https://newbran.co.uk) (c) 2022
-1651802449542
+1652053985076
