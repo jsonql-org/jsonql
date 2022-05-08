@@ -7,13 +7,18 @@ export type JsonqlContractMeta = {
 }
 
 export type JsonqlContractData = {
-
-
+  routes: Array<any> // @TODO import the entry type from ast
+  [key: string]: any // free style
 }
 
+export type JsonqlContractError = {
+  message?: string
+  detail?: any
+  className?: string
+}
 
 export type JsonqlContract = {
-  data: any
-  error: any
-  meta: any
+  data: JsonqlContractData
+  error: JsonqlContractError
+  meta: JsonqlContractMeta
 }

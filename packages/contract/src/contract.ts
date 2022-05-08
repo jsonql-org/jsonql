@@ -3,13 +3,20 @@
 import {
   stripAllTypeParams
 } from '@jsonql/ast'
+import {
+  readOnly
+} from '@jsonql/utils'
+import {
+  JsonqlError
+} from '@jsonql/errors'
 
 export class JsonqlContract {
   private _astMap: any
   private _contract = { data: {}, meta: {}, error: {} }
 
   /** instead of run the parser again we just load the ast map */
-  constructor(astMap: any) {
+  constructor(astMap: any, type = '') {
+    this._astMap = readOnly(astMap) // keep an original
     //we are going to add props to it
     this._contract.data = stripAllTypeParams(astMap)
   }
@@ -19,15 +26,16 @@ export class JsonqlContract {
     this._contract.data = entry
   }
 
-  public error() {
-
+  public error(error: JsonqlError) {
+    this._contract.error = error
   }
 
-  public meta() {
-
+  public meta(entry: any, path?: string) {
+    this._contract.meta
   }
 
-  public write() {
+  /** we output several different contracts all at once */
+  public write(outDir: string) {
 
   }
 

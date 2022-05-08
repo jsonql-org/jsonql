@@ -8,6 +8,11 @@ export const DATA_KEY = 'data'
 export const ERROR_KEY = 'error'
 export const HEADERS_KEY = 'headers'
 
+export const JSONQL_NAME = 'jsonql'
+export const REST_NAME = 'rest'
+
+export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
+
 export const JSONQL_PATH = 'jsonql'
 // according to the json query spec
 export const CONTENT_TYPE = 'application/vnd.api+json'
@@ -138,4 +143,3 @@ export const DEFAULT_PORT_NUM = 6557
 export const CSRF_HEADER_KEY = 'X-CSRF-Token'
 export const ORIGIN_HEADER_KEYS = ['Origin']
 export const WILD_CARD_CHAR = '*'
-
