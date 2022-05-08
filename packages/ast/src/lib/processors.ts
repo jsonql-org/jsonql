@@ -51,7 +51,7 @@ import {
 /** the first one to get call to take the body out from Class module */
 export function processClassModuleBody(
   module: SwcProcessedModule,
-  withClass = true
+  withClass = false
 ) {
 
   return module
@@ -83,11 +83,14 @@ export function processArgs(
   publicOnly = true // should always pick the public methods
 ) {
   if (classBody.body) {
+
     return classBody.body
       .filter((body: any) => {
         const isMethod = body.type === CLASS_METHOD
         if (publicOnly) {
-          return (isMethod && body.accessibility === 'public')
+          return (isMethod &&
+            ( body.accessibility === 'public' || body.accessibility === null )
+          )
         }
         return isMethod
       })
@@ -188,10 +191,13 @@ export function normalize(body: Array<any>) {
     return body.map((code) => {
       switch (code.type) {
         case EXPORT_TYPE:
+          console.log(EXPORT_TYPE)
           return code[DECLARATION_NAME]
         case EXPORT_DEFAULT_TYPE:
+          console.log(DECLARATION_SHORT_NAME)
           return code[DECLARATION_SHORT_NAME]
         default:
+          console.log(code)
           return code
       }
     })[0]

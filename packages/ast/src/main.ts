@@ -23,9 +23,10 @@ export function tsBasicParserSync(filePath: string) {
 
 export function tsClassParserSync(infile: string) {
   const step1 = tsBasicParserSync(infile)
-  const step2 = processClassModuleBody(step1)
+  const step2 = processClassModuleBody(step1, false)
+  const step3 = normalize(step2)
   
-  return step2
+  return step3
 }
 
 
