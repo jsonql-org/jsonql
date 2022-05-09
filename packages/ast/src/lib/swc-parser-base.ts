@@ -1,7 +1,13 @@
 // Using the swc/core to parse the TS file into AST
 // and we extract the method's argument along with their type
 // for validation
-import * as swc from '@swc/core'
+// import * as swc from '@swc/core'
+import {
+  parse,
+  parseSync,
+  parseFile ,
+  parseFileSync,
+} from '@swc/core'
 /*
 import {
   SwcParserOptions,
@@ -12,14 +18,14 @@ export async function swcParserBase(
   infile: string,
   options: any // @TODO
 ): Promise<any> { // @TODO
-  return swc.parseFile(infile, options)
+  return parseFile(infile, options)
 }
 /** sync version of above method */
 export function swcParserSync(
   infile: string,
   options: any
 ) {
-  return swc.parseFileSync(infile, options)
+  return parseFileSync(infile, options)
 }
 
 /*
@@ -58,12 +64,12 @@ export async function swcParseFileBase(
     code: string,
     options: any
   ) {
-  return swc.parse(code, options)
+  return parse(code, options)
 }
-
+/** parse file sync version */
 export function swcParseFileSync(
   code: string,
   options: any
 ) {
-  return swc.parseSync(code, options)
+  return parseSync(code, options)
 }

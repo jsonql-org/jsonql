@@ -1,5 +1,6 @@
 // take out some of the common methods to keep the processor files size down
 import { TYPE_PARAMS } from '@jsonql/constants'
+import { SYNTAXS } from './constants'
 import { JsonqlProcessedEntry } from '../types'
 /** remove all the span props they are no use to us */
 export function stripSpan(obj: any) {
@@ -51,4 +52,21 @@ export function pickInputFile(e: Error, pattern = '__decorateClass'): string {
   const where = stacks ? stacks[stacks.length - 1].split('(')[1].split(':')[0] : ''
 
   return where
+}
+
+/** wrapper to get the options  */
+export function getOptions(syntax: string) {
+  if (!SYNTAXS[syntax]) {
+    throw new Error(`Unsupported syntax! Only allow ts or js`)
+  }
+
+  return {
+    syntax: SYNTAXS[syntax],
+    comments: false,
+    script: true,
+    target: "es5",
+    decorators: true,
+    // Input source code are treated as module by default
+    // isModule: true,
+  }
 }

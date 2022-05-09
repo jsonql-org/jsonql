@@ -1,5 +1,4 @@
-declare module "@jsonql/ast" {
-    // specify your types here
+// specify your types here
 // Need to take the original swc types here - its kick itself in the teeth
 
 export type SwcSpanObject = {
@@ -129,6 +128,4 @@ export type JsonqlParamInfo = {
 
 export type JsonqlAstMap = {
   [methodName: string]: Array<JsonqlProcessedEntry>
-}
-
 }

@@ -5,7 +5,8 @@ const tslib_1 = require("tslib");
 // Using the swc/core to parse the TS file into AST
 // and we extract the method's argument along with their type
 // for validation
-const swc = tslib_1.__importStar(require("@swc/core"));
+// import * as swc from '@swc/core'
+const core_1 = require("@swc/core");
 /*
 import {
   SwcParserOptions,
@@ -15,13 +16,13 @@ import {
 function swcParserBase(infile, options // @TODO
 ) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        return swc.parseFile(infile, options);
+        return (0, core_1.parseFile)(infile, options);
     });
 }
 exports.swcParserBase = swcParserBase;
 /** sync version of above method */
 function swcParserSync(infile, options) {
-    return swc.parseFileSync(infile, options);
+    return (0, core_1.parseFileSync)(infile, options);
 }
 exports.swcParserSync = swcParserSync;
 /*
@@ -57,11 +58,11 @@ Type 'SwcParserOptions' is not assignable to type 'EsParserConfig'.
 /** breaking this out to create a api using just the file */
 function swcParseFileBase(code, options) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        return swc.parse(code, options);
+        return (0, core_1.parse)(code, options);
     });
 }
 exports.swcParseFileBase = swcParseFileBase;
 function swcParseFileSync(code, options) {
-    return swc.parseSync(code, options);
+    return (0, core_1.parseSync)(code, options);
 }
 exports.swcParseFileSync = swcParseFileSync;

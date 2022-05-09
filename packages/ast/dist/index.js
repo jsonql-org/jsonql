@@ -10,3 +10,5 @@ tslib_1.__exportStar(require("./lib/processors"), exports);
 var common_1 = require("./lib/common");
 Object.defineProperty(exports, "pickInputFile", { enumerable: true, get: function () { return common_1.pickInputFile; } });
 Object.defineProperty(exports, "stripAllTypeParams", { enumerable: true, get: function () { return common_1.stripAllTypeParams; } });
+// try export all the types and see what happen
+// export * from './types' // <-- when include this ts compiler throw error 

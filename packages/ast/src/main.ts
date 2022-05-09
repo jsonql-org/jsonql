@@ -12,7 +12,10 @@ import {
   processFunctionModuleBody,
   processArgParams,
 } from './lib/processors'
-import { IS_DEBUG, SYNTAXS } from './lib/constants'
+import {
+  getOptions
+} from './lib/common'
+import { IS_DEBUG } from './lib/constants'
 
 /** just the core parser sync version */
 export function tsBasicParserSync(filePath: string) {
@@ -93,22 +96,5 @@ export function getParser(syntax: string, file = false) {
   return function(infile: string) {
     return file ? swcParseFileBase(infile, options)
                 : swcParserBase(infile, options)
-  }
-}
-
-/** wrapper to get the options  */
-function getOptions(syntax: string) {
-  if (!SYNTAXS[syntax]) {
-    throw new Error(`Unsupported syntax! Only allow ts or js`)
-  }
-
-  return {
-    syntax: SYNTAXS[syntax],
-    comments: false,
-    script: true,
-    target: "es5",
-    decorators: true,
-    // Input source code are treated as module by default
-    // isModule: true,
   }
 }

@@ -3,7 +3,7 @@
 import { join } from 'node:path'
 import { outputJson } from 'fs-extra'
 import {
-  stripAllTypeParams
+  stripAllTypeParams,
 } from '@jsonql/ast'
 import {
   chainPromises,
