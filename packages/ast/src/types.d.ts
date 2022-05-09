@@ -114,13 +114,13 @@ Type 'SwcParserOptions' is not assignable to type
 */
 
 export type SwcParserOptions = {
-  syntax: string = "typescript"
-  comments: boolean = false
-  script: boolean = true
-  target: string = "es6" // @TODO find out about the JscTarget
-  decorators: boolean = true
+  syntax: string // = "typescript"
+  comments: boolean // = false
+  script: boolean // = true
+  target: string // = "es6" // @TODO find out about the JscTarget
+  decorators: boolean // = true
   // Input source code are treated as module by default
-  isModule: boolean = true
+  isModule?: boolean // = true
 }
 // this should just use the SwcSpanObject instead
 export type SwcParamsSpan = {
@@ -138,7 +138,7 @@ export type SwcTypeParamsEntry = {
 export type JsonqlProcessedEntry = {
   name: string
   required: boolean
-  type: string
+  type: string | Array<string>
   tstype?: string
   defaultvalue?: any
   types?: any
@@ -151,4 +151,8 @@ export type JsonqlParamInfo = {
   required: boolean
   // dynanic fields
   [key: string]: any
+}
+
+export type JsonqlAstMap = {
+  [methodName: string]: Array<JsonqlProcessedEntry>
 }

@@ -35,7 +35,7 @@ test(`Should able to get the correct parser`, async t => {
 
 test.only(`Should able to generate AST from a ts class file`, async t => {
   const result = await tsClassParser(tsFile)
-  // show(result)
+  show(result)
   t.truthy(result)
 })
 
