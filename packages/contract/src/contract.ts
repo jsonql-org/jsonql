@@ -57,7 +57,7 @@ export class JsonqlContract {
   /**
    * need to change the format for our use
    */
-  private _prepareData(astMap: any) {
+  private _prepareData(astMap: JsonqlAstMap) {
     const cleanObj = stripAllTypeParams(astMap)
     const c = getObjValue(cleanObj)
     const l: Array<JsonqlContractEntry> = []

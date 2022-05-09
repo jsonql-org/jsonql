@@ -1,6 +1,6 @@
 // define your types here
 // @TODO need to fix this from @jsonql/ast firs
-import { JsonqlProcessedEntry } from '@jsonql/ast/types'
+import { JsonqlProcessedEntry } from '@jsonql/ast/index'
 import { JsonqlError } from '@jsonql/errors'
 
 export type JsonqlContractPublicEntry = {

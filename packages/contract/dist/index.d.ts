@@ -1,0 +1,1 @@
+export { JsonqlContract } from './contract';
