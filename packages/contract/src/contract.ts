@@ -6,6 +6,9 @@ import {
   stripAllTypeParams,
 } from '@jsonql/ast'
 import {
+  JsonqlAstMap
+} from '@jsonql/ast/index'
+import {
   chainPromises,
   assign,
 } from '@jsonql/utils'
@@ -38,7 +41,7 @@ export class JsonqlContract {
   }
 
   /** instead of run the parser again we just load the ast map */
-  constructor(astMap: any, type = REST_NAME) {
+  constructor(astMap: JsonqlAstMap, type = REST_NAME) {
     //we are going to add props to it
     this._contract[META_KEY] = { type }
     // @TODO jsonql
