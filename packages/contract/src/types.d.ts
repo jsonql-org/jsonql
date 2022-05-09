@@ -12,3 +12,9 @@ export type JsonqlContractPublicEntry = {
 export type JsonqlContractEntry = JsonqlContractPublicEntry & {
   file?: string
 }
+
+export type JsonqlContractTemplate = {
+  data: Array<JsonqlContractEntry>
+  meta: any
+  error: any
+}

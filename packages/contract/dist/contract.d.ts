@@ -2,7 +2,7 @@ import { JsonqlError } from '@jsonql/errors';
 export declare class JsonqlContract {
     private _contract;
     /** instead of run the parser again we just load the ast map */
-    constructor(astMap: any, type?: any);
+    constructor(astMap: any, type?: "rest");
     /**
      * need to change the format for our use
      */

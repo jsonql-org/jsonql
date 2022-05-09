@@ -8,28 +8,24 @@ const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
 const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
-const constants = tslib_1.__importStar(require("@jsonql/constants"));
-console.log(constants);
-const { REST_NAME, DATA_KEY, META_KEY, ERROR_KEY, 
-// DEFAULT_CONTRACT_DIR,
-DEFAULT_CONTRACT_FILE_NAME, PUBLIC_CONTRACT_FILE_NAME, } = constants;
+const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
 // main
 class JsonqlContract {
     /** instead of run the parser again we just load the ast map */
-    constructor(astMap, type = REST_NAME) {
+    constructor(astMap, type = constants_1.REST_NAME) {
         // form the basic structure
         this._contract = {
-            [DATA_KEY]: [],
-            [META_KEY]: {},
-            [ERROR_KEY]: {}
+            [constants_1.DATA_KEY]: [],
+            [constants_1.META_KEY]: {},
+            [constants_1.ERROR_KEY]: {}
         };
         //we are going to add props to it
-        this._contract[META_KEY] = { type };
+        this._contract[constants_1.META_KEY] = { type };
         // @TODO jsonql
         switch (type) {
-            case REST_NAME:
-                this._contract[DATA_KEY] = this._prepareData(astMap);
+            case constants_1.REST_NAME:
+                this._contract[constants_1.DATA_KEY] = this._prepareData(astMap);
                 break;
             default:
             // @TODO
@@ -52,16 +48,16 @@ class JsonqlContract {
     }
     /** insert extra data */
     data(name, value) {
-        const contractData = this._contract[DATA_KEY];
-        this._contract[DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
+        const contractData = this._contract[constants_1.DATA_KEY];
+        this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
     }
     /** this will always overwrite the last one */
     error(error) {
-        this._contract[ERROR_KEY] = error;
+        this._contract[constants_1.ERROR_KEY] = error;
     }
     /** always make sure it's immutable */
     meta(entry) {
-        this._contract[META_KEY] = (0, utils_1.assign)({}, this._contract[META_KEY], entry);
+        this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, this._contract[constants_1.META_KEY], entry);
     }
     /** generate the contract pub false then just the raw output for server use */
     output(pub = true) {
@@ -75,8 +71,8 @@ class JsonqlContract {
     write(outDir) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return (0, utils_1.chainPromises)([
-                [DEFAULT_CONTRACT_FILE_NAME, this.output(false)],
-                [PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
+                [constants_1.DEFAULT_CONTRACT_FILE_NAME, this.output(false)],
+                [constants_1.PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
             ].map(([file, contract]) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                 const dest = (0, node_path_1.join)(outDir, file);
                 return (0, fs_extra_1.outputJson)(dest, contract, { spaces: 2 })

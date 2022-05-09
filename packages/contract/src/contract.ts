@@ -24,12 +24,13 @@ import {
 } from '@jsonql/constants'
 import { getObjValue } from './common'
 import {
-  JsonqlContractEntry
+  JsonqlContractEntry,
+  JsonqlContractTemplate
 } from './types'
 // main
 export class JsonqlContract {
   // form the basic structure
-  private _contract = {
+  private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
     [META_KEY]: {},
     [ERROR_KEY]: {}
