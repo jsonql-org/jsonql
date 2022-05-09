@@ -32,8 +32,8 @@ export class JsonqlContract {
   // form the basic structure
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
-    [META_KEY]: {},
-    [ERROR_KEY]: {}
+    [META_KEY]: { type: ''},
+    [ERROR_KEY]: { message: '', detail: '', className: '', name: ''}
   }
 
   /** instead of run the parser again we just load the ast map */

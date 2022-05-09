@@ -1,6 +1,7 @@
 // define your types here
 // @TODO need to fix this from @jsonql/ast firs
 import { JsonqlProcessedEntry } from '@jsonql/ast/types'
+import { JsonqlError } from '@jsonql/errors'
 
 export type JsonqlContractPublicEntry = {
   name: string
@@ -23,6 +24,6 @@ export type JsonqlContractMetaEntry = {
 
 export type JsonqlContractTemplate = {
   data: Array<JsonqlContractEntry>
-  meta: any
-  error: any
+  meta: JsonqlContractMetaEntry
+  error: JsonqlError
 }

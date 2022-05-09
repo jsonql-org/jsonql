@@ -24,6 +24,7 @@ import {
   getErrorNameByInstanceWithDefault,
   getErrorNameByInstance,
 } from './fn/get-error-name-by-instance'
+import { templateErrorObject } from './base/template'
 export {
   Jsonql406Error,
   Jsonql500Error,
@@ -45,4 +46,5 @@ export {
   getErrorByStatus,
   getErrorNameByInstanceWithDefault,
   getErrorNameByInstance,
+  templateErrorObject,
 }
