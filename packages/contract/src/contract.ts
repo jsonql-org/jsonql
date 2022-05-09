@@ -6,8 +6,6 @@ import {
   stripAllTypeParams
 } from '@jsonql/ast'
 import {
-  // readOnly,
-  // isEmptyObj,
   chainPromises,
   assign,
 } from '@jsonql/utils'
@@ -25,7 +23,9 @@ import {
 import { getObjValue } from './common'
 import {
   JsonqlContractEntry,
-  JsonqlContractTemplate
+  JsonqlContractTemplate,
+  JsonqlContractMetaEntry,
+  JsonqlContractExtraEntry,
 } from './types'
 // main
 export class JsonqlContract {
@@ -68,9 +68,9 @@ export class JsonqlContract {
   }
 
   /** insert extra data */
-  public data(name: string, value: any): void {
+  public data(name: string, value: JsonqlContractExtraEntry): void {
     const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
-    this._contract[DATA_KEY] = contractData.map((c: any) => (
+    this._contract[DATA_KEY] = contractData.map((c: JsonqlContractEntry) => (
        c.name === name ? assign(c, value) : c
     ))
   }
@@ -81,12 +81,12 @@ export class JsonqlContract {
   }
 
   /** always make sure it's immutable */
-  public meta(entry: any): void {
+  public meta(entry: JsonqlContractMetaEntry): void {
     this._contract[META_KEY] = assign({}, this._contract[META_KEY], entry)
   }
 
   /** generate the contract pub false then just the raw output for server use */
-  public output(pub = true): any {
+  public output(pub = true): JsonqlContractTemplate {
     const contract = this._contract
     if (pub) {
       // @TODO what info we need to strip out
@@ -95,13 +95,13 @@ export class JsonqlContract {
   }
 
   /** we output several different contracts all at once */
-  public async write(outDir: string): Promise<any> {
+  public async write(outDir: string): Promise<string> {
 
     return chainPromises([
       [DEFAULT_CONTRACT_FILE_NAME, this.output(false)], // server contract
       [PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
     ].map(async ([file, contract]) => {
-      const dest = join(outDir, file)
+      const dest = join(outDir, file as unknown as string)
       return outputJson(dest, contract, { spaces: 2})
                 .then(() => dest)
     }))
