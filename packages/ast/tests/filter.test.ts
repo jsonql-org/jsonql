@@ -13,7 +13,7 @@ const tsFile = join(fixture, 'test-file-x.ts')
 
 test(`test the new tsBasicParserSync`, t => {
   const result = tsBasicParserSync(tsFile)
-
+  // @ts-ignore 
   const body = processClassModuleBody(result, false)
 
   const params = normalize(body)

@@ -86,33 +86,6 @@ export type SwcParsedResult = {
   interpreter: null
 }
 
-/*
-No overload matches this call. Overload 1 of 2,
-'(src: string, options: ParseOptions & { isModule: false; }): Promise<Script>',
-gave the following error. Argument of type 'SwcParserOptions' is not assignable to parameter of type
-'ParseOptions & { isModule: false; }'.
-Type 'SwcParserOptions' is not assignable to type
-'EsParserConfig & {
-  comments?: boolean | undefined;
-  script?: boolean | undefined;
-  target?: JscTarget | undefined;
-} & { isModule: false; }'.
-Type 'SwcParserOptions' is not assignable to type 'EsParserConfig'.
-Types of property 'syntax' are incompatible.
-Type 'string | undefined' is not assignable to type '"ecmascript"'.
-Type 'undefined' is not assignable to type '"ecmascript"'.
-Overload 2 of 2,
-'(src: string, options?: ParseOptions | undefined): Promise<Module>',
-gave the following error.
-Argument of type 'SwcParserOptions' is not assignable to parameter of type 'ParseOptions | undefined'.
-Type 'SwcParserOptions' is not assignable to type
-'EsParserConfig & {
-  comments?: boolean | undefined;
-  script?: boolean | undefined;
-  target?: JscTarget | undefined;
-}'. Type 'SwcParserOptions' is not assignable to type 'EsParserConfig'.
-*/
-
 export type SwcParserOptions = {
   syntax: string // = "typescript"
   comments: boolean // = false
