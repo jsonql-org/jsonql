@@ -1,7 +1,7 @@
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
 import { join } from 'node:path'
-import { writeJson } from 'fs-extra'
+import { outputJson } from 'fs-extra'
 import {
   stripAllTypeParams
 } from '@jsonql/ast'
@@ -101,9 +101,11 @@ export class JsonqlContract {
     return chainPromises([
       [DEFAULT_CONTRACT_FILE_NAME, this.output(false)], // server contract
       [PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
-    ].map(([file, contract]) =>
-      writeJson(join(outDir, file), contract, { spaces: 2})
-    ))
+    ].map(async ([file, contract]) => {
+      const dest = join(outDir, file)
+      return outputJson(dest, contract, { spaces: 2})
+                .then(() => dest)
+    }))
   }
 
 }

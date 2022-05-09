@@ -1,13 +1,18 @@
 import test from 'ava'
 import { join } from 'node:path'
 import { tsClassParserSync } from '@jsonql/ast'
+import * as fs from 'fs-extra'
+import {
+  DEFAULT_CONTRACT_FILE_NAME,
+  PUBLIC_CONTRACT_FILE_NAME,
+} from '@jsonql/constants'
 import {
   JsonqlContractEntry
 } from '../src/types'
 import { JsonqlContract } from '../src/contract'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
-
-const show = (code: any) => console.dir(code, { depth: null })
+const dest = join(__dirname, 'fixtures', 'tmp')
+// const show = (code: any) => console.dir(code, { depth: null })
 
 let astMap: any
 let contractInstance: JsonqlContract
@@ -15,6 +20,11 @@ let contractInstance: JsonqlContract
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
   contractInstance = new JsonqlContract(astMap)
+})
+
+test.after(() => {
+  // @TODO remove the test files
+  fs.removeSync(dest)
 })
 
 test(`Test the basic class init and output the contract`, t => {
@@ -30,10 +40,18 @@ test(`Testing the data method to insert new data to node`, t => {
   contractInstance.data(name, { route: '/posts/:month/:year:/:day' })
 
   const c = contractInstance.output()
-  show(c)
   const found = c.data.filter((data: JsonqlContractEntry) => data.name === name && data.route !== undefined)
 
   t.true(!!found.length)
 })
 
-test.todo(`Test the write file output method`)
+test(`Test the write file output method`, async t => {
+  t.plan(2)
+
+  const files = [DEFAULT_CONTRACT_FILE_NAME, PUBLIC_CONTRACT_FILE_NAME]
+  await contractInstance.write(dest)
+
+  files.forEach((fileName: string) => {
+    t.true(fs.existsSync(join(dest, fileName)))
+  })
+})
