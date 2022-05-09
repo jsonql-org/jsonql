@@ -9,6 +9,7 @@ const srcDir = join(__dirname, 'src')
 const files = [
   'ast',
   'base',
+  'contract',
   'prop',
   'socket',
   'validation'
@@ -65,6 +66,6 @@ Promise.all([
         return
       }
 
-      console.log('[ contants.json generated ]')
+      console.log('[ contants.json generated ]', Date.now())
     })
 })
