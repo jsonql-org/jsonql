@@ -8,6 +8,7 @@ const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
 const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
+const errors_1 = require("@jsonql/errors");
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
 // main
@@ -17,8 +18,8 @@ class JsonqlContract {
         // form the basic structure
         this._contract = {
             [constants_1.DATA_KEY]: [],
-            [constants_1.META_KEY]: {},
-            [constants_1.ERROR_KEY]: {}
+            [constants_1.META_KEY]: { type: '' },
+            [constants_1.ERROR_KEY]: errors_1.templateErrorObject
         };
         //we are going to add props to it
         this._contract[constants_1.META_KEY] = { type };
