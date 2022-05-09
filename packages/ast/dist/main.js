@@ -5,10 +5,11 @@ const tslib_1 = require("tslib");
 // ast index export
 const swc_parser_base_1 = require("./lib/swc-parser-base");
 const processors_1 = require("./lib/processors");
+const common_1 = require("./lib/common");
 const constants_1 = require("./lib/constants");
 /** just the core parser sync version */
 function tsBasicParserSync(filePath) {
-    const options = getOptions('ts');
+    const options = (0, common_1.getOptions)('ts');
     return (0, swc_parser_base_1.swcParserSync)(filePath, options);
 }
 exports.tsBasicParserSync = tsBasicParserSync;
@@ -35,7 +36,7 @@ function tsFileParser(code) {
 exports.tsFileParser = tsFileParser;
 /** The string version for individual function */
 function tsFileParserSync(code) {
-    const options = getOptions('ts');
+    const options = (0, common_1.getOptions)('ts');
     return (0, swc_parser_base_1.swcParseFileSync)(code, options);
 }
 exports.tsFileParserSync = tsFileParserSync;
@@ -81,25 +82,10 @@ function tsClassParser(infile) {
 exports.tsClassParser = tsClassParser;
 /** preconfig */
 function getParser(syntax, file = false) {
-    const options = getOptions(syntax);
+    const options = (0, common_1.getOptions)(syntax);
     return function (infile) {
         return file ? (0, swc_parser_base_1.swcParseFileBase)(infile, options)
             : (0, swc_parser_base_1.swcParserBase)(infile, options);
     };
 }
 exports.getParser = getParser;
-/** wrapper to get the options  */
-function getOptions(syntax) {
-    if (!constants_1.SYNTAXS[syntax]) {
-        throw new Error(`Unsupported syntax! Only allow ts or js`);
-    }
-    return {
-        syntax: constants_1.SYNTAXS[syntax],
-        comments: false,
-        script: true,
-        target: "es5",
-        decorators: true,
-        // Input source code are treated as module by default
-        // isModule: true,
-    };
-}

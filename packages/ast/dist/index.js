@@ -11,4 +11,5 @@ var common_1 = require("./lib/common");
 Object.defineProperty(exports, "pickInputFile", { enumerable: true, get: function () { return common_1.pickInputFile; } });
 Object.defineProperty(exports, "stripAllTypeParams", { enumerable: true, get: function () { return common_1.stripAllTypeParams; } });
 // try export all the types and see what happen
-// export * from './types' // <-- when include this ts compiler throw error 
+// export * from './types' // <-- when include this ts compiler throw error
+tslib_1.__exportStar(require("./js-main"), exports);

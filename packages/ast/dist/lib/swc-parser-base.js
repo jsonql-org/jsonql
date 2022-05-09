@@ -62,6 +62,7 @@ function swcParseFileBase(code, options) {
     });
 }
 exports.swcParseFileBase = swcParseFileBase;
+/** parse file sync version */
 function swcParseFileSync(code, options) {
     return (0, core_1.parseSync)(code, options);
 }

@@ -7,3 +7,11 @@ export declare function stripTypeParams(astMap: Array<JsonqlProcessedEntry>): Js
 export declare function stripAllTypeParams(obj: any): {};
 /** take the error stack processor here and see if it works correctly */
 export declare function pickInputFile(e: Error, pattern?: string): string;
+/** wrapper to get the options  */
+export declare function getOptions(syntax: string): {
+    syntax: any;
+    comments: boolean;
+    script: boolean;
+    target: string;
+    decorators: boolean;
+};
