@@ -25,11 +25,14 @@ import {
   // JSONQL_NAME,
 } from '@jsonql/constants'
 import { getObjValue } from './common'
+import {
+  JsonqlContractEntry
+} from './types'
 // main
 export class JsonqlContract {
   // form the basic structure
   private _contract = {
-    [DATA_KEY]: {},
+    [DATA_KEY]: [],
     [META_KEY]: {},
     [ERROR_KEY]: {}
   }
@@ -41,23 +44,36 @@ export class JsonqlContract {
     // @TODO jsonql
     switch (type) {
       case REST_NAME:
-        const cleanObj = stripAllTypeParams(astMap)
-        this._contract[DATA_KEY] = getObjValue(cleanObj)
+        this._contract[DATA_KEY] = this._prepareData(astMap)
         break
       default:
         // @TODO
     }
   }
 
-  /** insert extrac data */
+  /**
+   * need to change the format for our use
+   */
+  private _prepareData(astMap: any) {
+    const cleanObj = stripAllTypeParams(astMap)
+    const c = getObjValue(cleanObj)
+    const l: Array<JsonqlContractEntry> = []
+    for (const methodName in c) {
+      l.push({
+        name: methodName,
+        params: c[methodName]
+      })
+    }
+
+    return l
+  }
+
+  /** insert extra data */
   public data(name: string, value: any): void {
-    const contract = assign({}, this._contract) // work on the copy
-    this._contract = contract.map((c: any) => {
-      if (c.name === name) {
-        return assign(c, value)
-      }
-      return c
-    })
+    const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
+    this._contract[DATA_KEY] = contractData.map((c: any) => (
+       c.name === name ? assign(c, value) : c
+    ))
   }
 
   /** this will always overwrite the last one */
