@@ -10,7 +10,8 @@ import {
   assign,
 } from '@jsonql/utils'
 import {
-  JsonqlError
+  JsonqlError,
+  templateErrorObject
 } from '@jsonql/errors'
 import {
   REST_NAME,
@@ -33,7 +34,7 @@ export class JsonqlContract {
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
     [META_KEY]: { type: ''},
-    [ERROR_KEY]: { message: '', detail: '', className: '', name: ''}
+    [ERROR_KEY]: templateErrorObject
   }
 
   /** instead of run the parser again we just load the ast map */
