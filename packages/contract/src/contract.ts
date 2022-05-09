@@ -6,8 +6,9 @@ import {
   stripAllTypeParams
 } from '@jsonql/ast'
 import {
-  readOnly,
+  // readOnly,
   // isEmptyObj,
+  chainPromises,
   assign,
 } from '@jsonql/utils'
 import {
@@ -18,7 +19,7 @@ import {
   DATA_KEY,
   META_KEY,
   ERROR_KEY,
-  DEFAULT_CONTRACT_DIR,
+  // DEFAULT_CONTRACT_DIR,
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
   // JSONQL_NAME,
@@ -44,40 +45,33 @@ export class JsonqlContract {
         this._contract[DATA_KEY] = getObjValue(cleanObj)
         break
       default:
-        
-    }
-
-
-  }
-
-  /** insert into the object and make sure it's immutatable */
-
-  /*
-  protected insert(obj: any, entry: any, path: string) {
-    const paths = path.split('.')
-    const ctn = paths.length
-    const _obj = {}
-    for (let i = 0; i < ctn; ++i) {
-      const key = paths[i]
-      if ()
+        // @TODO
     }
   }
-  */
 
-
+  /** insert extrac data */
+  public data(name: string, value: any): void {
+    const contract = assign({}, this._contract) // work on the copy
+    this._contract = contract.map((c: any) => {
+      if (c.name === name) {
+        return assign(c, value)
+      }
+      return c
+    })
+  }
 
   /** this will always overwrite the last one */
-  public error(error: JsonqlError) {
+  public error(error: JsonqlError): void {
     this._contract[ERROR_KEY] = error
   }
 
   /** always make sure it's immutable */
-  public meta(entry: any) {
+  public meta(entry: any): void {
     this._contract[META_KEY] = assign({}, this._contract[META_KEY], entry)
   }
 
   /** generate the contract pub false then just the raw output for server use */
-  public output(pub = true) {
+  public output(pub = true): any {
     const contract = this._contract
     if (pub) {
       // @TODO what info we need to strip out
@@ -86,10 +80,14 @@ export class JsonqlContract {
   }
 
   /** we output several different contracts all at once */
-  public write(outDir = DEFAULT_CONTRACT_DIR) {
-    const contract = assign({}, this._contract)
-    // need to process the pubic contract
+  public async write(outDir: string): Promise<any> {
 
+    return chainPromises([
+      [DEFAULT_CONTRACT_FILE_NAME, this.output(false)], // server contract
+      [PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
+    ].map(([file, contract]) =>
+      writeJson(join(outDir, file), contract, { spaces: 2})
+    ))
   }
 
 }
