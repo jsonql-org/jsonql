@@ -30,15 +30,7 @@
   "TS_EXT": "ts",
   "HELLO": "Hello world!",
   "HELLO_FN": "helloWorld",
-  "DATA_KEY": "data",
-  "ERROR_KEY": "error",
   "HEADERS_KEY": "headers",
-  "JSONQL_NAME": "jsonql",
-  "REST_NAME": "rest",
-  "AVAILABLE_FORMATS": [
-    "jsonql",
-    "rest"
-  ],
   "JSONQL_PATH": "jsonql",
   "CONTENT_TYPE": "application/vnd.api+json",
   "CHARSET": "charset=utf-8",
@@ -47,8 +39,6 @@
     "Content-Type": "application/vnd.api+jsoncharset=utf-8"
   },
   "DEFAULT_TYPE": "any",
-  "DEFAULT_CONTRACT_FILE_NAME": "contract.json",
-  "PUBLIC_CONTRACT_FILE_NAME": "public-contract.json",
   "DEFAULT_RESOLVER_LIST_FILE_NAME": "resolver.js",
   "DEFAULT_RESOLVER_IMPORT_FILE_NAME": "import.js",
   "MODULE_TYPE": "module",
@@ -138,6 +128,17 @@
     "Origin"
   ],
   "WILD_CARD_CHAR": "*",
+  "DATA_KEY": "data",
+  "ERROR_KEY": "error",
+  "META_KEY": "meta",
+  "JSONQL_NAME": "jsonql",
+  "REST_NAME": "rest",
+  "AVAILABLE_FORMATS": [
+    "jsonql",
+    "rest"
+  ],
+  "DEFAULT_CONTRACT_FILE_NAME": "contract.json",
+  "PUBLIC_CONTRACT_FILE_NAME": "public-contract.json",
   "TYPE_KEY": "type",
   "OPTIONAL_KEY": "optional",
   "ENUM_KEY": "enumv",

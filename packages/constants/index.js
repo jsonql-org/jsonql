@@ -48,15 +48,8 @@ export const TS_EXT = 'ts'
 
 export const HELLO = 'Hello world!'
 export const HELLO_FN = 'helloWorld'
-// the core stuff to id if it's calling with jsonql
-export const DATA_KEY = 'data'
-export const ERROR_KEY = 'error'
+
 export const HEADERS_KEY = 'headers'
-
-export const JSONQL_NAME = 'jsonql'
-export const REST_NAME = 'rest'
-
-export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
 
 export const JSONQL_PATH = 'jsonql'
 // according to the json query spec
@@ -69,11 +62,7 @@ export const DEFAULT_HEADER = {
 
 // export const INDEX = 'index' use INDEX_KEY instead
 export const DEFAULT_TYPE = 'any'
-// contract file names
-// export const DEFAULT_FILE_NAME = 'contract.json' // @TODO remove once all changed
-// export const PUBLIC_FILE_NAME = 'public-contract.json' // @TODO remove once all changed
-export const DEFAULT_CONTRACT_FILE_NAME = 'contract.json'
-export const PUBLIC_CONTRACT_FILE_NAME = 'public-contract.json'
+
 // this is for the ES6 module import and export @TODO remove later
 export const DEFAULT_RESOLVER_LIST_FILE_NAME = 'resolver.js'
 export const DEFAULT_RESOLVER_IMPORT_FILE_NAME = 'import.js'
@@ -188,6 +177,23 @@ export const DEFAULT_PORT_NUM = 6557
 export const CSRF_HEADER_KEY = 'X-CSRF-Token'
 export const ORIGIN_HEADER_KEYS = ['Origin']
 export const WILD_CARD_CHAR = '*'
+/* contract */
+
+// split out the constants for contracts
+
+// the core stuff to id if it's calling with jsonql
+export const DATA_KEY = 'data'
+export const ERROR_KEY = 'error'
+export const META_KEY = 'meta'
+
+export const JSONQL_NAME = 'jsonql'
+export const REST_NAME = 'rest'
+
+export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
+
+// contract file names
+export const DEFAULT_CONTRACT_FILE_NAME = 'contract.json'
+export const PUBLIC_CONTRACT_FILE_NAME = 'public-contract.json'
 /* prop */
 
 // this is all the key name for the config check map

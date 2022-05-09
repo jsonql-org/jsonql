@@ -30,7 +30,7 @@
   "homepage": "https://jsonql.org",
   "license": "MIT",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.6.2"
+    "@jsonql/constants": "workspace:^0.7.0"
   },
   "ava": {
     "ignoredByWatcher": [
