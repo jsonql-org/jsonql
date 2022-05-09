@@ -17,8 +17,9 @@
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
-    "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
+    "prepare:types": "cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js {{projectName}}",
+    "make:module": "node ../../make-module.js {{projectName}} {{name}}/src/types.d.ts {{name}}",
     "clean:dist": "rimraf ./dist",
     "build": "pnpm clean:dist && pnpm build:tsc && pnpm prepare:types",
     "prepublishOnly": "pnpm test",
@@ -27,7 +28,7 @@
     "minor": "npm version minor",
     "major": "npm version major"
   },
-  "author": "{{author}}",
+  "author": "{{{author}}}",
   "license": "{{license}}",
   "homepage": "https://jsonql.org",
   "dependencies": {
