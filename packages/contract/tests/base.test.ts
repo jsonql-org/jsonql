@@ -1,21 +1,22 @@
 import test from 'ava'
-import { REST_NAME, DATA_KEY, META_KEY, ERROR_KEY } from '@jsonql/constants'
-test.todo('You need to write some test')
+import { join } from 'node:path'
+import { tsClassParserSync } from '@jsonql/ast'
+import { JsonqlContract } from '../src/contract'
+const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 
-// develop the insert method
-const contractObj = {
-  [DATA_KEY]: {
-    className: 'SomeClass'
-  },
-  [META_KEY]: {
-    type: REST_NAME
-  },
-  [ERROR_KEY]: {}
-}
+const show = (code: any) => console.dir(code, { depth: null })
 
-test(`Developing the insert method`, t => {
+let astMap: any
+let contractInstance: JsonqlContract
 
-  // const { data, body } = contractObj 
+test.before(() => {
+  astMap = tsClassParserSync(targetFile)
+  contractInstance = new JsonqlContract(astMap)
+})
 
+test(`Test the basic class init and output the contract`, t => {
+  const c = contractInstance.output()
 
+  t.truthy(c.data)
+  t.is(c.meta.type, 'rest')
 })
