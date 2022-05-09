@@ -1,7 +1,7 @@
 "use strict";
 // custom validation error class
 // when validaton failed
-// should there also be a errors result somewhere 
+// should there also be a errors result somewhere
 Object.defineProperty(exports, "__esModule", { value: true });
 class JsonqlValidationError extends Error {
     constructor(...args) {

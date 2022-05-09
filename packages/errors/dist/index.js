@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralError = exports.JsonqlServerError = exports.JsonqlError = exports.JsonqlValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
+exports.templateErrorObject = exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralError = exports.JsonqlServerError = exports.JsonqlError = exports.JsonqlValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
 const tslib_1 = require("tslib");
 const base_1 = require("./base");
 Object.defineProperty(exports, "Jsonql406Error", { enumerable: true, get: function () { return base_1.Jsonql406Error; } });
@@ -27,3 +27,5 @@ exports.getErrorByStatus = get_error_by_status_1.default;
 const get_error_name_by_instance_1 = require("./fn/get-error-name-by-instance");
 Object.defineProperty(exports, "getErrorNameByInstanceWithDefault", { enumerable: true, get: function () { return get_error_name_by_instance_1.getErrorNameByInstanceWithDefault; } });
 Object.defineProperty(exports, "getErrorNameByInstance", { enumerable: true, get: function () { return get_error_name_by_instance_1.getErrorNameByInstance; } });
+const template_1 = require("./base/template");
+Object.defineProperty(exports, "templateErrorObject", { enumerable: true, get: function () { return template_1.templateErrorObject; } });

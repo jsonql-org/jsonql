@@ -33,7 +33,7 @@
   "dependencies": {
     "@jsonql/ast": "workspace:^0.8.1",
     "@jsonql/constants": "workspace:^0.7.2",
-    "@jsonql/errors": "workspace:^0.6.0",
+    "@jsonql/errors": "workspace:^0.6.1",
     "@jsonql/utils": "workspace:^0.6.5",
     "debug": "^4.3.4",
     "fs-extra": "^10.0.1",
