@@ -107,6 +107,15 @@ export const CSRF_HEADER_KEY: "X-CSRF-Token";
 export const ORIGIN_HEADER_KEYS: string[];
 export const WILD_CARD_CHAR: "*";
 //# sourceMappingURL=base.d.mts.map
+export const DATA_KEY: "data";
+export const ERROR_KEY: "error";
+export const META_KEY: "meta";
+export const JSONQL_NAME: "jsonql";
+export const REST_NAME: "rest";
+export const AVAILABLE_FORMATS: string[];
+export const DEFAULT_CONTRACT_FILE_NAME: "contract.json";
+export const PUBLIC_CONTRACT_FILE_NAME: "public-contract.json";
+//# sourceMappingURL=contract.d.mts.map
 export const TYPE_KEY: "type";
 export const OPTIONAL_KEY: "optional";
 export const ENUM_KEY: "enumv";

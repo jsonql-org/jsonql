@@ -17,7 +17,7 @@
     "build:browser": "esbuild ./index.mjs --bundle --outfile=./browser.js",
     "build": "pnpm build:tsc && pnpm build:js",
     "swcbuild": "npx swc ./index.mjs -o ./out.js",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm build",
     "postpublish": "pnpm updateDeps",
     "updateDeps": "node ../../update-deps.js constants",
     "test": "node ./test.js"

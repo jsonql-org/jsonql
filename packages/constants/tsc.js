@@ -3,7 +3,7 @@
 const fsx = require('fs-extra')
 const { join } = require('path')
 
-const targets = ['ast', 'base', 'prop', 'socket', 'validation']
+const targets = ['ast', 'base', 'contract', 'prop', 'socket', 'validation']
 Promise.all(
   targets.map(target => {
     return fsx.readFile(join(__dirname, 'dist', `${target}.d.mts`))

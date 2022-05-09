@@ -19,10 +19,8 @@ import {
   DATA_KEY,
   META_KEY,
   ERROR_KEY,
-  // DEFAULT_CONTRACT_DIR,
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
-  // JSONQL_NAME,
 } from '@jsonql/constants'
 import { getObjValue } from './common'
 import {
