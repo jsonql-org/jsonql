@@ -23,10 +23,9 @@ import {
   PUBLIC_CONTRACT_FILE_NAME,
   // JSONQL_NAME,
 } from '@jsonql/constants'
-
+import { getObjValue } from './common'
 // main
 export class JsonqlContract {
-  private _astMap: any
   // form the basic structure
   private _contract = {
     [DATA_KEY]: {},
@@ -36,10 +35,19 @@ export class JsonqlContract {
 
   /** instead of run the parser again we just load the ast map */
   constructor(astMap: any, type = REST_NAME) {
-    this._astMap = readOnly(astMap) // keep an original
     //we are going to add props to it
-    this._contract[DATA_KEY] = stripAllTypeParams(astMap)
     this._contract[META_KEY] = { type }
+    // @TODO jsonql
+    switch (type) {
+      case REST_NAME:
+        const cleanObj = stripAllTypeParams(astMap)
+        this._contract[DATA_KEY] = getObjValue(cleanObj)
+        break
+      default:
+        
+    }
+
+
   }
 
   /** insert into the object and make sure it's immutatable */
@@ -56,7 +64,7 @@ export class JsonqlContract {
   }
   */
 
-  
+
 
   /** this will always overwrite the last one */
   public error(error: JsonqlError) {
@@ -66,6 +74,15 @@ export class JsonqlContract {
   /** always make sure it's immutable */
   public meta(entry: any) {
     this._contract[META_KEY] = assign({}, this._contract[META_KEY], entry)
+  }
+
+  /** generate the contract pub false then just the raw output for server use */
+  public output(pub = true) {
+    const contract = this._contract
+    if (pub) {
+      // @TODO what info we need to strip out
+    }
+    return contract
   }
 
   /** we output several different contracts all at once */
