@@ -8,4 +8,5 @@ export {
   stripAllTypeParams
 } from './lib/common'
 // try export all the types and see what happen
-// export * from './types' // <-- when include this ts compiler throw error 
+// export * from './types' // <-- when include this ts compiler throw error
+export * from './js-main'
