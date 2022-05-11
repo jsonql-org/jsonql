@@ -10,11 +10,14 @@ export type JsonqlContractPublicEntry = {
 
 export type JsonqlContractExtraEntry = {
   route?: string
-  method?: string
+  method?: string,
+  name?: string,
+  params?: Array<JsonqlProcessedEntry>
 }
 
 export type JsonqlContractEntry = JsonqlContractExtraEntry & JsonqlContractPublicEntry & {
   file?: string
+  [key: string]: any 
 }
 
 export type JsonqlContractMetaEntry = {

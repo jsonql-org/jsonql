@@ -9,7 +9,7 @@ import {
 import {
   JsonqlContractEntry
 } from '../src/types'
-import { JsonqlContract } from '../src/contract'
+import { JsonqlContract } from '../dist'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 const dest = join(__dirname, 'fixtures', 'tmp')
 // const show = (code: any) => console.dir(code, { depth: null })
@@ -21,11 +21,6 @@ let contractInstance: JsonqlContract
 
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
-
-  //console.dir(astMap, { depth: null })
-  //const clean = stripAllTypeParams(astMap)
-  //console.log(clean)
-
   contractInstance = new JsonqlContract(astMap)
 })
 
@@ -41,15 +36,29 @@ test(`Test the basic class init and output the contract`, t => {
   t.is(c.meta.type, 'rest')
 })
 
-test(`Testing the data method to insert new data to node`, t => {
+test(`Testing the data method to insert new data to existing node`, t => {
   t.plan(1)
   const name = 'post'
   contractInstance.data(name, { route: '/posts/:month/:year:/:day', method: 'get' })
-
   const c = contractInstance.output()
   const found = c.data.filter(
     (data: JsonqlContractEntry) => data.name === name && data.route !== undefined
   )
+  t.true(!!found.length)
+})
+
+test(`Testing the data method to insert new node`, t => {
+  t.plan(1)
+  const name = '_contractHandler'
+  contractInstance.data(name, {
+    route: '/veloce/contract',
+    method: 'get',
+    params: [],
+    name,
+  })
+  const c = contractInstance.output()
+
+  const found = c.data.filter((data: JsonqlContractEntry) => data.name === name)
 
   t.true(!!found.length)
 })

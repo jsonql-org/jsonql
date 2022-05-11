@@ -50,7 +50,14 @@ class JsonqlContract {
     /** insert extra data into node by name */
     data(name, value) {
         const contractData = this._contract[constants_1.DATA_KEY];
-        this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
+        // first to see if the name actually exist, we might want to add new entry
+        const existed = contractData.filter((c) => c.name === name);
+        if (existed.length) {
+            this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
+        }
+        else { // add new entry
+            this._contract[constants_1.DATA_KEY].push(value);
+        }
     }
     /** this will always overwrite the last one */
     error(error) {
