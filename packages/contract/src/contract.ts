@@ -7,9 +7,6 @@ import {
   existsSync,
 } from 'fs-extra'
 import {
-  stripAllTypeParams,
-} from '@jsonql/ast'
-import {
   JsonqlAstMap
 } from '@jsonql/ast/index'
 import {
@@ -64,13 +61,12 @@ export class JsonqlContract {
    * need to change the format for our use
    */
   private _prepareData(astMap: JsonqlAstMap) {
-    const c = stripAllTypeParams(astMap)
-    debug(`striped data`, c)
+    // const c = stripAllTypeParams(astMap)
     const l: Array<JsonqlContractEntry> = []
-    for (const methodName in c) {
+    for (const methodName in astMap) {
       l.push({
         name: methodName,
-        params: c[methodName]
+        params: astMap[methodName]
       })
     }
     debug('prepared data', l)

@@ -6,7 +6,6 @@ const tslib_1 = require("tslib");
 // this is for the Velocejs FastApi
 const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
-const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
 const constants_1 = require("@jsonql/constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -37,13 +36,12 @@ class JsonqlContract {
      * need to change the format for our use
      */
     _prepareData(astMap) {
-        const c = (0, ast_1.stripAllTypeParams)(astMap);
-        debug(`striped data`, c);
+        // const c = stripAllTypeParams(astMap)
         const l = [];
-        for (const methodName in c) {
+        for (const methodName in astMap) {
             l.push({
                 name: methodName,
-                params: c[methodName]
+                params: astMap[methodName]
             });
         }
         debug('prepared data', l);

@@ -14,11 +14,18 @@ const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 const dest = join(__dirname, 'fixtures', 'tmp')
 // const show = (code: any) => console.dir(code, { depth: null })
 
+// import { stripAllTypeParams } from '@jsonql/ast'
+
 let astMap: any
 let contractInstance: JsonqlContract
 
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
+
+  //console.dir(astMap, { depth: null })
+  //const clean = stripAllTypeParams(astMap)
+  //console.log(clean)
+
   contractInstance = new JsonqlContract(astMap)
 })
 
