@@ -9,7 +9,7 @@ export declare class JsonqlContract {
      * need to change the format for our use
      */
     private _prepareData;
-    /** insert extra data */
+    /** insert extra data into node by name */
     data(name: string, value: JsonqlContractExtraEntry): void;
     /** this will always overwrite the last one */
     error(error: JsonqlError): void;
@@ -19,6 +19,7 @@ export declare class JsonqlContract {
     output(pub?: boolean): JsonqlContractTemplate;
     /** serving up the public contract */
     serve(cacheDir: string): any;
+    /** serve up the dynamic generated contract during transport */
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;
 }

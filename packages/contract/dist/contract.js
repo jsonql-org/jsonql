@@ -8,7 +8,6 @@ const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
 const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
-const errors_1 = require("@jsonql/errors");
 const constants_1 = require("@jsonql/constants");
 const common_1 = require("./common");
 // main
@@ -19,10 +18,10 @@ class JsonqlContract {
         this._contract = {
             [constants_1.DATA_KEY]: [],
             [constants_1.META_KEY]: { type: '' },
-            [constants_1.ERROR_KEY]: errors_1.templateErrorObject
+            // [ERROR_KEY]: null // templateErrorObject
         };
         //we are going to add props to it
-        this._contract[constants_1.META_KEY] = { type };
+        this.meta({ type });
         // @TODO jsonql
         switch (type) {
             case constants_1.REST_NAME:
@@ -47,7 +46,7 @@ class JsonqlContract {
         }
         return l;
     }
-    /** insert extra data */
+    /** insert extra data into node by name */
     data(name, value) {
         const contractData = this._contract[constants_1.DATA_KEY];
         this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
@@ -72,6 +71,8 @@ class JsonqlContract {
     serve(cacheDir) {
         return (0, fs_extra_1.readJsonSync)((0, node_path_1.join)(cacheDir, constants_1.PUBLIC_CONTRACT_FILE_NAME));
     }
+    /** serve up the dynamic generated contract during transport */
+    // @TODO
     /** we output several different contracts all at once */
     write(outDir) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {

@@ -18,12 +18,12 @@ export type JsonqlContractEntry = JsonqlContractExtraEntry & JsonqlContractPubli
 }
 
 export type JsonqlContractMetaEntry = {
-  type: string
+  type?: string
   timestamp?: Array<number>
 }
 
 export type JsonqlContractTemplate = {
-  data: Array<JsonqlContractEntry>
+  data: Array<JsonqlContractEntry | null>
   meta: JsonqlContractMetaEntry
-  error: JsonqlError
+  error?: JsonqlError | null // the public contract dont need the error field
 }
