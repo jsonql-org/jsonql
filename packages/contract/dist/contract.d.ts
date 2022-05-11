@@ -4,7 +4,7 @@ import { JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlContractExtraEnt
 export declare class JsonqlContract {
     private _contract;
     /** instead of run the parser again we just load the ast map */
-    constructor(astMap: JsonqlAstMap, type?: "rest");
+    constructor(astMap: JsonqlAstMap, type?: string);
     /**
      * need to change the format for our use
      */
@@ -18,7 +18,7 @@ export declare class JsonqlContract {
     /** generate the contract pub false then just the raw output for server use */
     output(pub?: boolean): JsonqlContractTemplate;
     /** serving up the public contract */
-    serve(cacheDir: string): any;
+    serve(cacheDir: string): Promise<any>;
     /** serve up the dynamic generated contract during transport */
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;

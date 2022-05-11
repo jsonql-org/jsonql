@@ -9,7 +9,6 @@ const fs_extra_1 = require("fs-extra");
 const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
 const constants_1 = require("@jsonql/constants");
-const common_1 = require("./common");
 // main
 class JsonqlContract {
     /** instead of run the parser again we just load the ast map */
@@ -20,6 +19,7 @@ class JsonqlContract {
             [constants_1.META_KEY]: { type: '' },
             // [ERROR_KEY]: null // templateErrorObject
         };
+        console.dir(astMap, { depth: null });
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
@@ -35,8 +35,10 @@ class JsonqlContract {
      * need to change the format for our use
      */
     _prepareData(astMap) {
-        const cleanObj = (0, ast_1.stripAllTypeParams)(astMap);
-        const c = (0, common_1.getObjValue)(cleanObj);
+        const c = (0, ast_1.stripAllTypeParams)(astMap);
+        // console.dir(cleanObj, { depth: null })
+        // const c = getObjValue(cleanObj)
+        console.dir(c, { depth: null });
         const l = [];
         for (const methodName in c) {
             l.push({
@@ -69,7 +71,13 @@ class JsonqlContract {
     }
     /** serving up the public contract */
     serve(cacheDir) {
-        return (0, fs_extra_1.readJsonSync)((0, node_path_1.join)(cacheDir, constants_1.PUBLIC_CONTRACT_FILE_NAME));
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const jsonFile = (0, node_path_1.join)(cacheDir, constants_1.PUBLIC_CONTRACT_FILE_NAME);
+            if (!(0, fs_extra_1.existsSync)(jsonFile)) {
+                yield this.write(cacheDir);
+            }
+            return (0, fs_extra_1.readJsonSync)(jsonFile);
+        });
     }
     /** serve up the dynamic generated contract during transport */
     // @TODO

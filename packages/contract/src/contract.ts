@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import {
   outputJson,
   readJsonSync,
+  existsSync,
 } from 'fs-extra'
 import {
   stripAllTypeParams,
@@ -27,7 +28,6 @@ import {
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
 } from '@jsonql/constants'
-import { getObjValue } from './common'
 import {
   JsonqlContractEntry,
   JsonqlContractTemplate,
@@ -44,7 +44,10 @@ export class JsonqlContract {
   }
 
   /** instead of run the parser again we just load the ast map */
-  constructor(astMap: JsonqlAstMap, type = REST_NAME) {
+  constructor(astMap: JsonqlAstMap, type: string = REST_NAME) {
+
+    console.dir(astMap, { depth: null })
+
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
@@ -61,8 +64,7 @@ export class JsonqlContract {
    * need to change the format for our use
    */
   private _prepareData(astMap: JsonqlAstMap) {
-    const cleanObj = stripAllTypeParams(astMap)
-    const c = getObjValue(cleanObj)
+    const c = stripAllTypeParams(astMap)
     const l: Array<JsonqlContractEntry> = []
     for (const methodName in c) {
       l.push({
@@ -102,8 +104,13 @@ export class JsonqlContract {
   }
 
   /** serving up the public contract */
-  public serve(cacheDir: string) {
-    return readJsonSync(join(cacheDir, PUBLIC_CONTRACT_FILE_NAME))
+  public async serve(cacheDir: string) {
+    const jsonFile = join(cacheDir, PUBLIC_CONTRACT_FILE_NAME)
+    if (!existsSync(jsonFile)) {
+      await this.write(cacheDir)
+    }
+
+    return readJsonSync(jsonFile)
   }
 
   /** serve up the dynamic generated contract during transport */
