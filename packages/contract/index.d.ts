@@ -3,21 +3,13 @@
 import { JsonqlProcessedEntry } from '@jsonql/ast/index'
 import { JsonqlError } from '@jsonql/errors'
 
-export type JsonqlContractPublicEntry = {
-  name: string
-  params: Array<JsonqlProcessedEntry>
-}
-
-export type JsonqlContractExtraEntry = {
-  route?: string
-  method?: string,
+export type JsonqlContractEntry = {
   name?: string,
   params?: Array<JsonqlProcessedEntry>
-}
-
-export type JsonqlContractEntry = JsonqlContractExtraEntry & JsonqlContractPublicEntry & {
+  route?: string
+  method?: string
   file?: string
-  [key: string]: any 
+  [key: string]: any
 }
 
 export type JsonqlContractMetaEntry = {

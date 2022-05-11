@@ -39,10 +39,15 @@ class JsonqlContract {
         // const c = stripAllTypeParams(astMap)
         const l = [];
         for (const methodName in astMap) {
-            l.push({
-                name: methodName,
-                params: astMap[methodName]
-            });
+            let entry = { name: methodName, params: [] };
+            const params = astMap[methodName];
+            if (Array.isArray(params)) {
+                entry.params = params;
+            }
+            else if (typeof params === 'object') {
+                entry = (0, utils_1.assign)(entry, params);
+            }
+            l.push(entry);
         }
         debug('prepared data', l);
         return l;

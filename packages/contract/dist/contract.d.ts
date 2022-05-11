@@ -1,6 +1,6 @@
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import { JsonqlError } from '@jsonql/errors';
-import { JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlContractExtraEntry } from './types';
+import { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry } from './types';
 export declare class JsonqlContract {
     private _contract;
     /** instead of run the parser again we just load the ast map */
@@ -10,7 +10,7 @@ export declare class JsonqlContract {
      */
     private _prepareData;
     /** insert extra data into node by name */
-    data(name: string, value: JsonqlContractExtraEntry): void;
+    data(name: string, value: JsonqlContractEntry): void;
     /** this will always overwrite the last one */
     error(error: JsonqlError): void;
     /** always make sure it's immutable */
