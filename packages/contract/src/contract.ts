@@ -18,7 +18,6 @@ import {
 } from '@jsonql/utils'
 import {
   JsonqlError,
-  // templateErrorObject
 } from '@jsonql/errors'
 import {
   REST_NAME,
@@ -34,6 +33,9 @@ import {
   JsonqlContractMetaEntry,
   JsonqlContractExtraEntry,
 } from './types'
+import debugFn from 'debug'
+const debug = debugFn(`jsonql:contract:class`)
+
 // main
 export class JsonqlContract {
   // form the basic structure
@@ -45,9 +47,7 @@ export class JsonqlContract {
 
   /** instead of run the parser again we just load the ast map */
   constructor(astMap: JsonqlAstMap, type: string = REST_NAME) {
-
-    console.dir(astMap, { depth: null })
-
+    debug('astMap', astMap)
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
@@ -65,6 +65,7 @@ export class JsonqlContract {
    */
   private _prepareData(astMap: JsonqlAstMap) {
     const c = stripAllTypeParams(astMap)
+    debug(`striped data`, c)
     const l: Array<JsonqlContractEntry> = []
     for (const methodName in c) {
       l.push({
@@ -72,7 +73,7 @@ export class JsonqlContract {
         params: c[methodName]
       })
     }
-
+    debug('prepared data', l)
     return l
   }
 

@@ -34,10 +34,10 @@ test(`Test the basic class init and output the contract`, t => {
   t.is(c.meta.type, 'rest')
 })
 
-test.only(`Testing the data method to insert new data to node`, t => {
+test(`Testing the data method to insert new data to node`, t => {
   t.plan(1)
   const name = 'post'
-  contractInstance.data(name, { route: '/posts/:month/:year:/:day' })
+  contractInstance.data(name, { route: '/posts/:month/:year:/:day', method: 'get' })
 
   const c = contractInstance.output()
   const found = c.data.filter(
