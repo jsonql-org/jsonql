@@ -9,6 +9,8 @@ const fs_extra_1 = require("fs-extra");
 const ast_1 = require("@jsonql/ast");
 const utils_1 = require("@jsonql/utils");
 const constants_1 = require("@jsonql/constants");
+const debug_1 = tslib_1.__importDefault(require("debug"));
+const debug = (0, debug_1.default)(`jsonql:contract:class`);
 // main
 class JsonqlContract {
     /** instead of run the parser again we just load the ast map */
@@ -19,7 +21,7 @@ class JsonqlContract {
             [constants_1.META_KEY]: { type: '' },
             // [ERROR_KEY]: null // templateErrorObject
         };
-        console.dir(astMap, { depth: null });
+        debug('astMap', astMap);
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
@@ -36,9 +38,7 @@ class JsonqlContract {
      */
     _prepareData(astMap) {
         const c = (0, ast_1.stripAllTypeParams)(astMap);
-        // console.dir(cleanObj, { depth: null })
-        // const c = getObjValue(cleanObj)
-        console.dir(c, { depth: null });
+        debug(`striped data`, c);
         const l = [];
         for (const methodName in c) {
             l.push({
@@ -46,6 +46,7 @@ class JsonqlContract {
                 params: c[methodName]
             });
         }
+        debug('prepared data', l);
         return l;
     }
     /** insert extra data into node by name */
