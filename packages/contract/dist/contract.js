@@ -68,6 +68,10 @@ class JsonqlContract {
         }
         return contract;
     }
+    /** serving up the public contract */
+    serve(cacheDir) {
+        return (0, fs_extra_1.readJsonSync)((0, node_path_1.join)(cacheDir, constants_1.PUBLIC_CONTRACT_FILE_NAME));
+    }
     /** we output several different contracts all at once */
     write(outDir) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {

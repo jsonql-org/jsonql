@@ -45,8 +45,8 @@ test(`Testing the data method to insert new data to node`, t => {
   t.true(!!found.length)
 })
 
-test(`Test the write file output method`, async t => {
-  t.plan(2)
+test(`Test the write file output method and the serve method`, async t => {
+  t.plan(3)
 
   const files = [DEFAULT_CONTRACT_FILE_NAME, PUBLIC_CONTRACT_FILE_NAME]
   await contractInstance.write(dest)
@@ -54,4 +54,8 @@ test(`Test the write file output method`, async t => {
   files.forEach((fileName: string) => {
     t.true(fs.existsSync(join(dest, fileName)))
   })
+
+  const contractJson = contractInstance.serve(dest)
+  // console.dir(contractJson, { depth: null })
+  t.truthy(contractJson)
 })

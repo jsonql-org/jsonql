@@ -1,3 +1,3 @@
-// start your project here
-
+// main export 
 export { JsonqlContract } from './contract'
+export { JsonqlContractTransport } from './transport'

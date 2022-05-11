@@ -17,6 +17,8 @@ export declare class JsonqlContract {
     meta(entry: JsonqlContractMetaEntry): void;
     /** generate the contract pub false then just the raw output for server use */
     output(pub?: boolean): JsonqlContractTemplate;
+    /** serving up the public contract */
+    serve(cacheDir: string): any;
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;
 }

@@ -1,7 +1,10 @@
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
 import { join } from 'node:path'
-import { outputJson } from 'fs-extra'
+import {
+  outputJson,
+  readJsonSync,
+} from 'fs-extra'
 import {
   stripAllTypeParams,
 } from '@jsonql/ast'
@@ -14,7 +17,7 @@ import {
 } from '@jsonql/utils'
 import {
   JsonqlError,
-  templateErrorObject
+  // templateErrorObject
 } from '@jsonql/errors'
 import {
   REST_NAME,
@@ -37,13 +40,13 @@ export class JsonqlContract {
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
     [META_KEY]: { type: ''},
-    [ERROR_KEY]: templateErrorObject
+    // [ERROR_KEY]: null // templateErrorObject
   }
 
   /** instead of run the parser again we just load the ast map */
   constructor(astMap: JsonqlAstMap, type = REST_NAME) {
     //we are going to add props to it
-    this._contract[META_KEY] = { type }
+    this.meta({ type })
     // @TODO jsonql
     switch (type) {
       case REST_NAME:
@@ -71,7 +74,7 @@ export class JsonqlContract {
     return l
   }
 
-  /** insert extra data */
+  /** insert extra data into node by name */
   public data(name: string, value: JsonqlContractExtraEntry): void {
     const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
     this._contract[DATA_KEY] = contractData.map((c: JsonqlContractEntry) => (
@@ -97,6 +100,14 @@ export class JsonqlContract {
     }
     return contract
   }
+
+  /** serving up the public contract */
+  public serve(cacheDir: string) {
+    return readJsonSync(join(cacheDir, PUBLIC_CONTRACT_FILE_NAME))
+  }
+
+  /** serve up the dynamic generated contract during transport */
+  // @TODO
 
   /** we output several different contracts all at once */
   public async write(outDir: string): Promise<string> {
