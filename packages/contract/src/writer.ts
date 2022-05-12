@@ -33,7 +33,7 @@ import debugFn from 'debug'
 const debug = debugFn(`jsonql:contract:class`)
 
 // main
-export class JsonqlContract {
+export class JsonqlContractWriter {
   // form the basic structure
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
