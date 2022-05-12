@@ -53,10 +53,10 @@ export {
   isString,
   isPlainObject,
   merge,
-  mapValues,
-  mapKeys,
-  omitBy,
-  findKey,
+  // mapValues,
+  // mapKeys,
+  // omitBy,
+  // findKey,
   curry,
   // isEqual
 } from './lodash'

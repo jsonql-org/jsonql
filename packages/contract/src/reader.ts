@@ -4,7 +4,7 @@ import { JsonqlContractTemplate } from './types'
 
 export class JsonqlContractReader {
   private _contract: JsonqlContractTemplate
-
+  s
   constructor(contract: JsonqlContractTemplate) {
     this._contract = readOnly(contract)
   }
