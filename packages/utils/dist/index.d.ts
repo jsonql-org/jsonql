@@ -1,3 +1,4 @@
+export { accessByPath } from './access';
 export { chainFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, queuePromisesProcess, } from './chain-promises';
 export { dasherize } from './dasherize';

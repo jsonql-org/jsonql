@@ -1,4 +1,5 @@
 // start your project here
+export { accessByPath } from './access'
 export { chainFns } from './chain-fns'
 export {
   chainPromises,
@@ -53,10 +54,5 @@ export {
   isString,
   isPlainObject,
   merge,
-  // mapValues,
-  // mapKeys,
-  // omitBy,
-  // findKey,
   curry,
-  // isEqual
 } from './lodash'
