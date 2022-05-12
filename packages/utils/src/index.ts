@@ -7,6 +7,10 @@ export {
   queuePromisesProcess,
 } from './chain-promises'
 export {
+  strToNum,
+  strToBool,
+} from './convert'
+export {
   dasherize
 } from './dasherize'
 export {
