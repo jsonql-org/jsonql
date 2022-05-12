@@ -5,7 +5,7 @@ import { accessByPath } from '../src/access'
 
 const obj = {
   prop1: {
-    params: [],
+    params: ['a', 'b', 'c'],
     deeper: {
       something: 1
     }
@@ -17,12 +17,12 @@ const obj = {
 
 test(`Testing the accessByPath method`, t => {
 
-  const result = accessByPath(obj, 'prop1.params')
+  const result = accessByPath(obj, 'prop1.params.2')
 
-  t.deepEqual(result, [])
+  t.is(result, 'c')
 
   const result2 = accessByPath(obj, 'prop1.deeper.something')
 
   t.is(result2 , 1)
-  
+
 })

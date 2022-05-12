@@ -1,6 +1,7 @@
 export { accessByPath } from './access';
 export { chainFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, queuePromisesProcess, } from './chain-promises';
+export { strToNum, strToBool, } from './convert';
 export { dasherize } from './dasherize';
 export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, isFunction, assign, nil, readOnly, showDeep, formatStr, } from './common';
 export { logger, getLogger } from './logger';
