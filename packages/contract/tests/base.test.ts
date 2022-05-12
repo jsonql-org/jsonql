@@ -26,7 +26,7 @@ test.before(() => {
 
 test.after(() => {
   // @TODO remove the test files
-  // fs.removeSync(dest)
+  fs.removeSync(dest)
 })
 
 test(`Test the basic class init and output the contract`, t => {
