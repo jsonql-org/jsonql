@@ -4,7 +4,7 @@ import { readJsonSync } from 'fs-extra'
 import {
   JsonqlContractReader,
   DEFAULT_CONTRACT_FILE_NAME
-} from '../src'
+} from '../dist'
 const contractFile = join(__dirname, 'fixtures', 'contracts', DEFAULT_CONTRACT_FILE_NAME)
 let reader: JsonqlContractReader
 
@@ -14,7 +14,16 @@ test.before(() => {
 })
 
 test(`Testing the JsonqlContractReader`, t => {
-  const data = reader.data()
-  console.dir(data, { depth: null })
-  t.truthy(data)
+  const data = reader.data('1.name')
+  // console.dir(data, { depth: null })
+  t.is(data, 'someEndpoint')
+
+  const meta = reader.meta('type')
+
+  t.is(meta, 'rest')
+
+  const error = reader.error()
+
+  t.falsy(error)
+
 })
