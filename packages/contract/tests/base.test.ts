@@ -9,7 +9,7 @@ import {
 import {
   JsonqlContractEntry
 } from '../src/types'
-import { JsonqlContract } from '../dist'
+import { JsonqlContractWriter } from '../dist'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 const dest = join(__dirname, 'fixtures', 'tmp')
 // const show = (code: any) => console.dir(code, { depth: null })
@@ -17,16 +17,16 @@ const dest = join(__dirname, 'fixtures', 'tmp')
 // import { stripAllTypeParams } from '@jsonql/ast'
 
 let astMap: any
-let contractInstance: JsonqlContract
+let contractInstance: JsonqlContractWriter
 
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
-  contractInstance = new JsonqlContract(astMap)
+  contractInstance = new JsonqlContractWriter(astMap)
 })
 
 test.after(() => {
   // @TODO remove the test files
-  fs.removeSync(dest)
+  // fs.removeSync(dest)
 })
 
 test(`Test the basic class init and output the contract`, t => {

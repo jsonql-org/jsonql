@@ -1,7 +1,7 @@
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import { JsonqlError } from '@jsonql/errors';
 import { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry } from './types';
-export declare class JsonqlContract {
+export declare class JsonqlContractWriter {
     private _contract;
     /** instead of run the parser again we just load the ast map */
     constructor(astMap: JsonqlAstMap, type?: string);

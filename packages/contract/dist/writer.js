@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JsonqlContract = void 0;
+exports.JsonqlContractWriter = void 0;
 const tslib_1 = require("tslib");
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
@@ -11,7 +11,7 @@ const constants_1 = require("@jsonql/constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)(`jsonql:contract:class`);
 // main
-class JsonqlContract {
+class JsonqlContractWriter {
     /** instead of run the parser again we just load the ast map */
     constructor(astMap, type = constants_1.REST_NAME) {
         // form the basic structure
@@ -106,4 +106,4 @@ class JsonqlContract {
         });
     }
 }
-exports.JsonqlContract = JsonqlContract;
+exports.JsonqlContractWriter = JsonqlContractWriter;

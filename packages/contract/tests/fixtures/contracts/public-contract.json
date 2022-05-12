@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "name": "post",
+      "params": [
+        {
+          "name": "year",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "month",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "day",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "route": "/posts/:month/:year:/:day",
+      "method": "get"
+    },
+    {
+      "name": "someEndpoint",
+      "params": []
+    },
+    {
+      "name": "login",
+      "params": [
+        {
+          "name": "username",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "route": "/veloce/contract",
+      "method": "get",
+      "params": [],
+      "name": "_contractHandler"
+    }
+  ],
+  "meta": {
+    "type": "rest"
+  }
+}
