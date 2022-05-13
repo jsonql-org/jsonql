@@ -21,11 +21,11 @@ export const SOCKET_CLIENT_TS_KEY = '__socket_client_ts_key__'
 // although it should never happens, but in some edge case might want to
 // disconnect from the current server, then re-establish connection later
 export const CONNECT_EVENT_NAME = '__connect__'
-// we still need the connected event because after the connection establish 
-// we need to change a state within the client to let the front end know that 
-// it's current hook up to the server but we don't want to loop back the client 
-// inside the setup phrase, intead just trigger a connected event and the listener 
-// setup this property 
+// we still need the connected event because after the connection establish
+// we need to change a state within the client to let the front end know that
+// it's current hook up to the server but we don't want to loop back the client
+// inside the setup phrase, intead just trigger a connected event and the listener
+// setup this property
 export const CONNECTED_EVENT_NAME = '__connected__'
 export const DISCONNECT_EVENT_NAME = '__disconnect__'
 // instead of using an event name in place of resolverName in the param
@@ -67,9 +67,9 @@ export const USERDATA_PROP_NAME = 'userdata'
 // this is somewhat vague about what is suppose to do
 export const EMIT_REPLY_TYPE = 'emit_reply'
 // this is a new event for a may be feature
-export const EMIT_SEND_TYPE = 'emit_send' 
+export const EMIT_SEND_TYPE = 'emit_send'
 export const ACKNOWLEDGE_REPLY_TYPE = 'emit_acknowledge'
-// this is for inter communication 
+// this is for inter communication
 export const INTER_EMIT_SEND_TYPE = 'inter_emit_send'
 export const INTER_EMIT_REPLY_TYPE = 'inter_emit_reply'
 
@@ -80,8 +80,6 @@ export const JS_WS_SOCKET_IO_NAME = 'socket.io'
 export const JS_WS_NAME = 'ws'
 export const JS_PRIMUS_NAME = 'primus'
 export const GO_WS_COOLPY7_NAME = 'coolpy7'
-
-
 // this is the default time to wait for reply if exceed this then we
 // trigger an error --> 5 seconds
 export const DEFAULT_WS_WAIT_TIME = 5000
@@ -126,4 +124,3 @@ export const NSP_CLIENT = 'nspClient'
 // this is the value for TOKEN_DELIVER_LOCATION_PROP_KEY
 export const TOKEN_IN_HEADER = 'header'
 export const TOKEN_IN_URL = 'url'
-

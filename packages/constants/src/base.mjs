@@ -68,8 +68,6 @@ export const CONTRACT_REQUEST_METHODS = ['GET', 'HEAD']
 export const KEY_WORD = 'continue'
 export const PUBLIC_KEY = 'public'
 export const PRIVATE_KEY = 'private'
-
-
 // author
 export const AUTH_TYPE = 'auth'
 export const AUTH_NAME = AUTH_TYPE // alias
