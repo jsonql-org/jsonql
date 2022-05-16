@@ -155,10 +155,17 @@ export function extractIdentifier(pat: any) {
 export function processFunctionModuleBody(
   module: SwcProcessedModule
 ) {
-  return module.body.filter((body: any) =>
-    body.type === EXPORT_DEFAULT_TYPE
+  // we are not suporting the non default export ExportDeclaration
+  // console.dir(module.body, { depth: null })
+  return module.body.filter((body: any) => (
+      body.type === EXPORT_DEFAULT_TYPE
     &&
-    body[DECLARATION_SHORT_NAME].type === FUNC_EXP
+      (
+        body[DECLARATION_SHORT_NAME].type === FUNC_EXP
+      ||
+        body[DECLARATION_NAME].type === FUNC_EXP
+      )
+    )
   )
 }
 
@@ -201,6 +208,8 @@ export function normalize(body: Array<any>) {
           return code
       }
     })[0]
+  } else {
+    console.dir(body, { depth: null })
   }
   // console.dir(body, { depth: null })
   throw new Error(`Could not find any code to work with!`)

@@ -35,7 +35,6 @@ export function tsClassParserSync(infile: string) {
   return step4
 }
 
-
 /** This will pass the code directly for parsing */
 export async function tsFileParser(code: string) {
   const parser = getParser('ts', true)
