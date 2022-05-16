@@ -95,9 +95,13 @@ exports.extractIdentifier = extractIdentifier;
 // --------------------------------------------------------- //
 /** extract ast from function expression */
 function processFunctionModuleBody(module) {
-    return module.body.filter((body) => body.type === constants_1.EXPORT_DEFAULT_TYPE
+    // we are not suporting the non default export ExportDeclaration
+    // console.dir(module.body, { depth: null })
+    return module.body.filter((body) => (body.type === constants_1.EXPORT_DEFAULT_TYPE
         &&
-            body[constants_1.DECLARATION_SHORT_NAME].type === constants_1.FUNC_EXP);
+            (body[constants_1.DECLARATION_SHORT_NAME].type === constants_1.FUNC_EXP
+                ||
+                    body[constants_1.DECLARATION_NAME].type === constants_1.FUNC_EXP)));
 }
 exports.processFunctionModuleBody = processFunctionModuleBody;
 /** process the function argument params */
@@ -139,6 +143,9 @@ function normalize(body) {
                     return code;
             }
         })[0];
+    }
+    else {
+        console.dir(body, { depth: null });
     }
     // console.dir(body, { depth: null })
     throw new Error(`Could not find any code to work with!`);
