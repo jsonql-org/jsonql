@@ -62,7 +62,7 @@ test(`Testing the multi level of Throw promies`, async t => {
 })
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
-  // @ts-ignore
+  
   const rules = createAutomaticRules(context.classAstInput.main)
   // showDeep(rules)
   t.truthy(rules)

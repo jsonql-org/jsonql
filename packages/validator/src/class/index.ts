@@ -27,6 +27,7 @@ import type {
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
 } from '../types'
+import { SPREAD_PREFIX } from '../constants'
 import {
   queuePromisesProcess,
 } from '@jsonql/utils'
@@ -80,6 +81,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   async prepareValidateResult(
     validateResult: JsonqlGenericObject
   ): Promise<any[]> {
+    // @TODO need to fix the spread input type return result
     return this._arguments.map(name => validateResult[name])
   }
 

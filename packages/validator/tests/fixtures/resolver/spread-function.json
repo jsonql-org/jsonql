@@ -1,0 +1,15 @@
+{
+  "spread": [
+    {
+      "name": "args",
+      "required": true,
+      "tstype": "RestElement",
+      "type": "array",
+      "types": "string",
+      "typeParams": {
+        "elemType": "TsKeywordType",
+        "kind": "string"
+      }
+    }
+  ]
+}

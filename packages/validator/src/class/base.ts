@@ -56,6 +56,7 @@ import {
   RULES_KEY,
   NAME_KEY,
   PARAMS_KEY,
+  SPREAD_PREFIX,
 } from '../constants'
 // ---- DEBUG ---- //
 import debugFn from 'debug'
@@ -140,8 +141,9 @@ export class ValidatorFactoryBase {
       case vCtn > pCtn: // this is the spread style argument
         debug('spread parameters')
         return values.map((value, i) => {
+          // @NOTE there is another situation where it might be mix and match ?
           // const required = !(i > pCtn ? true : !!params[i].required)
-          const param = params[i] || { type: DEFAULT_TYPE, name: `_${i}`}
+          const param = params[i] || { type: DEFAULT_TYPE, name: `${SPREAD_PREFIX}${i}`}
           const _value = getOptionalValue(value, param)
           // @TODO if it's optional field and using the provide value
           // should we skip the validation
@@ -251,7 +253,7 @@ export class ValidatorFactoryBase {
     })
   }
 
-  /** here is the one that will transform the rules */
+  /** this will transform the rules to executable */
   private _transformInput(
     input: Array<JsonqlValidationRule>,
     propName: string
