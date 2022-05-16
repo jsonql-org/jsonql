@@ -25,6 +25,7 @@ export function tsBasicParserSync(filePath: string) {
 }
 
 /** parse ts file sync */
+// @TODO change this to chainFn should fix the type problem
 export function tsClassParserSync(infile: string) {
   const step1 = tsBasicParserSync(infile)
   // @ts-ignore another non-sense from Typscript - it runs but won't compiled
