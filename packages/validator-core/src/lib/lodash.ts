@@ -5,9 +5,9 @@ export {
   isPlainObject,
   isFunction,
   merge,
-  mapValues,
-  mapKeys,
-  omitBy,
+  //mapValues,
+  //mapKeys,
+  //omitBy,
   // isEqual,
-  findKey,
+  // findKey,
 } from '@jsonql/utils'

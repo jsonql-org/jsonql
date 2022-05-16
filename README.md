@@ -53,7 +53,7 @@ the way you have been, be it plain old CJS, ESM, or our new friend TS. And it do
 the other non-js coder? Python, Rust, Go, Kotlin, Dart ...? Yes they are all welcome, and you can help to
 make it happens too.
 
-I will rewrite the documentation once the [Velocejs](https://github.com/veloce-js) reach v.1 which is soon.
+I will rewrite the documentation once the [Velocejs](https://github.com/veloce-js) reach v.1, which is soon.
 
 In the mean time, help test this tech stack and try them out:
 
@@ -61,16 +61,17 @@ In the mean time, help test this tech stack and try them out:
 - [@jsonql/contract](./packages/contract/README.md)
 - [@jsonql/validator](./packages/validator/README.md)
 
-There are three major share supporting libraries
+There are several supporting libraries
 
 - [@jsonql/constants](./packages/constants/README.md)
 - [@jsonql/errors](./packages/errors/README.md)
 - [@jsonql/utils](./packages/utils/README.md)
+- [@jsonql/validator-core](./packages/validator-core/README.md)
 
-Update soon
+Coming soon
 
 May 2022
 
 ---
 
-2022  
+Joel Chu (c) 2022

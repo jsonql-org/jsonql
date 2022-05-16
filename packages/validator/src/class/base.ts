@@ -31,7 +31,7 @@ import {
   checkPluginArg,
   pluginHasFunc,
 } from './fn'
-import {
+import type {
   JsonqlValidationPlugin,
   JsonqlValidationRule,
   JsonqlPropertyParamMap,
@@ -41,10 +41,10 @@ import {
   JsonqlGenericObject,
   JsonqlValidateFn,
 } from '../types'
-import {
+import type {
   JsonqlPluginInput,
   JsonqlPluginConfig
-} from '@jsonql/validator-core/src/types'
+} from '@jsonql/validator-core/index'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,

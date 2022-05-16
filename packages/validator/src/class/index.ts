@@ -21,7 +21,7 @@
 import {
   ValidatorFactoryBase
 } from './base'
-import {
+import type {
   JsonqlValidationPlugin,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
@@ -68,7 +68,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     debug('queues', queues)
 
     return queuePromisesProcess(
-      queues  as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
+      queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
       {}
     )
   }
