@@ -2,7 +2,7 @@
 
 _This was call `jsonql-param-validator` now move into the `@jsonql` scope with many additional features_
 
-**We are now making it a general purpose validation library to use with Typescript project**
+**We are now making it a general purpose validation library to use with Javascript / Typescript project**
 
 ## Usage
 
@@ -23,6 +23,8 @@ validator.validate(values)
 
 ## Decorator
 
+@TODO
+
 ## Register your plugin
 
 ```ts
@@ -31,7 +33,7 @@ import { ValidatorFactory } from '@jsonql/validator'
 const validator = new ValidatorFactory(ast)
 
 validator.registerPlugin('myPlugin', { main: (value: any): boolean => {
-  // your validation the result must be boolean
+  // must return boolean
 }})
 
 validator.registerPlugin('myPluginRequireArg', {
@@ -41,10 +43,9 @@ validator.registerPlugin('myPluginRequireArg', {
   params: ['arg1', 'arg2']
 })
 
-
 ```
 
-
+More coming soon
 
 
 ---
