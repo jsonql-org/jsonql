@@ -161,7 +161,12 @@ export class ValidatorFactoryBase {
     return values.map((value, i) => {
       const param = params[i] || assign(spreadParam, { name: `${SPREAD_PREFIX}${i}`})
       const _value = getOptionalValue(value, param)
-      // debug('spreand param', param)
+      // @NOTE here is the problem for spread there is only 1 validator register with the
+      // init name and all subsequence value pass to the same validation function
+      // so for Spread we need to recreate the function here again for the default validator
+      // but change a way of thinking, using the same rule is actually not a problem
+
+      debug('spreand param', _value, param.name)
       return this._prepareForExecution(_value, param, i)
     })
   }
@@ -188,7 +193,7 @@ export class ValidatorFactoryBase {
             successThen(name, value, lastResult, [idx, i])(true)
           )
         }
-        
+
         // when it fail then we provide with the index number
         return async (lastResult: JsonqlGenericObject) =>
           Reflect.apply(rule, null, [value, lastResult, [idx, i]])

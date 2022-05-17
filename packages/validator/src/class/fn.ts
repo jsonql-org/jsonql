@@ -40,6 +40,7 @@ import {
   assign,
   getRegex,
   inArray,
+  toArray,
   isFunction,
   notEmpty,
 } from '@jsonql/utils'
@@ -108,6 +109,12 @@ export function successThen(
   return (result: any) => {
     debug('passed', name, value, result, pos)
     debug('lastResult', lastResult)
+    // here is the problem with spread result - they have the same name
+    if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
+      lastResult[name] = toArray(lastResult[name]).concat([value])
+      return lastResult
+    }
+
     // return the argument name with the value
     return assign(lastResult, { [name]: value })
   }
@@ -156,7 +163,8 @@ export function getOptionalValue(
   arg: any,
   param: JsonqlGenericObject
 ) {
-  if (param.tstype !== SPREAD_ARG_TYPE && arg !== undefined) { // spread argument can not have default value
+  // should be the value undefined then search for defaultvalue
+  if (param.tstype !== SPREAD_ARG_TYPE && arg === undefined) { // spread argument can not have default value
     return param[DEFAULT_VALUE] !== undefined
             ? param[DEFAULT_VALUE]
             : undefined
