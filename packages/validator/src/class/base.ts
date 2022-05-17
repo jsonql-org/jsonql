@@ -1,4 +1,19 @@
 // this is the base class for all the helper methods
+import type {
+  JsonqlValidationPlugin,
+  JsonqlValidationRule,
+  JsonqlPropertyParamMap,
+  JsonqlValidateCbFn,
+  JsonqlArrayValidateInput,
+  JsonqlObjectValidateInput,
+  JsonqlGenericObject,
+  JsonqlValidateFn,
+} from '../types'
+import type {
+  JsonqlPluginInput,
+  JsonqlPluginConfig
+} from '@jsonql/validator-core/index'
+
 import {
   JsonqlValidationError,
   JsonqlError,
@@ -8,9 +23,11 @@ import {
   isFunction,
   toArray,
   inArray,
+  assign,
 } from '@jsonql/utils'
 import {
-  DEFAULT_TYPE,
+  // DEFAULT_TYPE,
+  SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import {
   checkString,
@@ -31,20 +48,6 @@ import {
   checkPluginArg,
   pluginHasFunc,
 } from './fn'
-import type {
-  JsonqlValidationPlugin,
-  JsonqlValidationRule,
-  JsonqlPropertyParamMap,
-  JsonqlValidateCbFn,
-  JsonqlArrayValidateInput,
-  JsonqlObjectValidateInput,
-  JsonqlGenericObject,
-  JsonqlValidateFn,
-} from '../types'
-import type {
-  JsonqlPluginInput,
-  JsonqlPluginConfig
-} from '@jsonql/validator-core/index'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
@@ -81,7 +84,7 @@ export class ValidatorFactoryBase {
   // use this list to make callable argument
   protected _arguments!: Array<string>
   // @TODO properly type the astMap
-  constructor(astMap: any) {
+  constructor(astMap: Array<JsonqlPropertyParamMap>) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument list in order
     this._arguments = this._astWithBaseRules.map(rule => rule[NAME_KEY])
@@ -139,21 +142,30 @@ export class ValidatorFactoryBase {
           return this._prepareForExecution(_value, param, i)
         })
       case vCtn > pCtn: // this is the spread style argument
-        debug('spread parameters')
-        return values.map((value, i) => {
-          // @NOTE there is another situation where it might be mix and match ?
-          // const required = !(i > pCtn ? true : !!params[i].required)
-          const param = params[i] || { type: DEFAULT_TYPE, name: `${SPREAD_PREFIX}${i}`}
-          const _value = getOptionalValue(value, param)
-          // @TODO if it's optional field and using the provide value
-          // should we skip the validation
-
-          return this._prepareForExecution(_value, param, i)
-        })
+        debug('spread params', vCtn, pCtn)
+        return this._processSpreadLikeArg(values, params)
       default: // will not fall through here @TODO
         throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
     }
   }
+
+  /** The spread or mix with spread argument is too complicated to process in couple lines */
+  private _processSpreadLikeArg(
+    values: any[],
+    params: Array<JsonqlPropertyParamMap>
+  ) {
+    // if it's spread only then there should be just one param
+    // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
+    const spreadParam = params.filter(p => p.tstype = SPREAD_ARG_TYPE)[0]
+    // the problem is the type is any after the first param
+    return values.map((value, i) => {
+      const param = params[i] || assign(spreadParam, { name: `${SPREAD_PREFIX}${i}`})
+      const _value = getOptionalValue(value, param)
+      // debug('spreand param', param)
+      return this._prepareForExecution(_value, param, i)
+    })
+  }
+
   /**
     at this point we actually put the rules in the queue
     but we dont' run it yet until all rules are in the main queue
@@ -164,7 +176,8 @@ export class ValidatorFactoryBase {
     param: JsonqlPropertyParamMap,
     idx: number
   ) {
-    const { rules, required } = param
+    const { rules, required, name } = param
+
     if (rules && rules.length) {
       // we only need to return the queue
       return rules.map((rule: JsonqlValidateCbFn, i: number) => {
@@ -172,15 +185,17 @@ export class ValidatorFactoryBase {
         if (value === undefined && !required) {
           debug(`skip the validation`, required)
           return async (lastResult: JsonqlGenericObject) => (
-            successThen(param[NAME_KEY], value, lastResult, [idx, i])(true)
+            successThen(name, value, lastResult, [idx, i])(true)
           )
         }
+        
         // when it fail then we provide with the index number
         return async (lastResult: JsonqlGenericObject) =>
-          Reflect.apply(rule, null, [value, lastResult, [idx, i]]).then((result: any) => {
-            debug('Post rule result', result)
-            return result
-          })
+          Reflect.apply(rule, null, [value, lastResult, [idx, i]])
+            .then((result: any) => {
+              debug('Post rule result', result)
+              return result
+            })
       })
     }
     // stuff it with a placeholder fuction?

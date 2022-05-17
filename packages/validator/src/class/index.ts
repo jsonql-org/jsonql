@@ -61,12 +61,16 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   ): void {
     this._createSchema(validationMap)
   }
-
+  /** create an alias for createSchema (and replace it later ) because ii make more sense */
+  addValidationRules(
+    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+  ): void {
+    this._createSchema(validationMap)
+  }
   /** this is where validation happens */
   async validate(values: Array<any>) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
-    debug('queues', queues)
 
     return queuePromisesProcess(
       queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
@@ -81,6 +85,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   async prepareValidateResult(
     validateResult: JsonqlGenericObject
   ): Promise<any[]> {
+    debug('validateResult', validateResult)
+
     // @TODO need to fix the spread input type return result
     return this._arguments.map(name => validateResult[name])
   }

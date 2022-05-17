@@ -9,7 +9,7 @@ _This was call `jsonql-param-validator` now move into the `@jsonql` scope with m
 ```ts
 import { ValidatorFactory } from '@jsonql/validator'
 // @TODO how to get the ast
-const validator = new ValidatorFactory(ast)
+const validator = new ValidatorFactory(ast: Array<JsonqlPropertyParamMap>)
 
 validator.validate(values)
         .then(result => {
@@ -20,6 +20,28 @@ validator.validate(values)
           // contains position where your validation failed
         })
 ```
+
+### Type JsonqlPropertyParamMap
+
+This is what the `ast` looks like, we use our other plugin `@jsonql/ast`
+to generate this automatically, but you can write your own
+
+```ts
+declare type JsonqlPropertyParamMap = {
+  name: string // the argument name
+  required: boolean
+  type: any
+  tstype?: string
+  types?: any
+  optional?: boolean // alias will remove in the future
+  // rules get contractured the moment we init the object
+  rules: Array<JsonqlValidateCbFn> = []
+  // tmp will be occasionally we MIGHT have to store it
+  tmp?: Array<JsonqlValidationRule>
+}
+```
+
+Example: @TODO
 
 ## Decorator
 

@@ -81,6 +81,7 @@ export function constructRuleCb(
   ruleFn: JsonqlValidateFn,
   ruleName?: string
 ) {
+  debug('ruleFn', ruleFn, name)
   return async (
     value: any,
     lastResult: JsonqlGenericObject,
@@ -116,22 +117,37 @@ export function successThen(
 function getValidateRules(ast: any): JsonqlValidateFn {
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
-      return async (value: any) => checkUnion(value, ast.type)
+      return async function unionFn(value: any) {
+        return checkUnion(value, ast.type)
+      }
     case TS_ARRAY_TYPE || SPREAD_ARG_TYPE:
       // need to apply for the type as well
        // @TODO need to examine the input to see what more sutation could come up
-      return async (value: Array<any>) => promisify(checkArray)(value, ast.types)
+      return async function arrayFn(value: Array<any>) {
+        return promisify(checkArray)(value, ast.types)
+      }
     case TS_TYPE_REF || TS_TYPE_LIT:
     // @TODO should this get a special treatment
-      return async (value: any) => promisify(checkAny)(value)
+      return async function anyFn(value: any) {
+        return promisify(checkAny)(value)
+      }
+    case SPREAD_ARG_TYPE: // we need to create rule for this one, its been wrong rule
+      return async function combineFn(value: any) {
+        return promisify(combineCheck(ast.types))(value)
+      }
     default: // no tstype then should be primitive
       if (checkString(ast.type)) {
-        return async (value: any) => promisify(combineCheck(ast.type))(value)
+        debug('validation type', ast.type)
+        return async function combineFn(value: any) {
+          return promisify(combineCheck(ast.type))(value)
+        }
       }
       // if both are not presented that means this could be a JS code
       // this happen when we use Decorator and toString() to extract the ast
       debug(`getValidateRules`, ast)
-      return async (value: any) => promisify(notEmpty)(value, true)
+      return async function emptyFn(value: any) {
+        return promisify(notEmpty)(value, true)
+      }
   }
 }
 
@@ -140,12 +156,13 @@ export function getOptionalValue(
   arg: any,
   param: JsonqlGenericObject
 ) {
-  if (arg !== undefined) {
-    return arg
+  if (param.tstype !== SPREAD_ARG_TYPE && arg !== undefined) { // spread argument can not have default value
+    return param[DEFAULT_VALUE] !== undefined
+            ? param[DEFAULT_VALUE]
+            : undefined
   }
-  return param[DEFAULT_VALUE] !== undefined
-          ? param[DEFAULT_VALUE]
-          : undefined
+
+  return arg
 }
 
 /** check plugin argument */

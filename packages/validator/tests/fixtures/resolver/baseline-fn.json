@@ -1,0 +1,20 @@
+{
+  "baselineFn": [
+    {
+      "name": "value1",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "name": "value2",
+      "required": true,
+      "type": "number"
+    },
+    {
+      "name": "value3",
+      "required": true,
+      "type": "boolean",
+      "defaultvalue": false
+    }
+  ]
+}
