@@ -62,7 +62,7 @@ test(`Testing the multi level of Throw promies`, async t => {
 })
 
 test(`Should able to generate automatic validation rule from ast map`, t => {
-  
+
   const rules = createAutomaticRules(context.classAstInput.main)
   // showDeep(rules)
   t.truthy(rules)
@@ -76,11 +76,7 @@ test(`It should able validate`, async t => {
 
   return validator.validate(values)
                   .then(result => {
-                    t.deepEqual(result, {
-                      email: 'hello@email.com',
-                      age: 10,
-                      arg3: false
-                    })
+                    t.deepEqual(result, values)
                   })
                   .catch(err => {
                     console.log('err')

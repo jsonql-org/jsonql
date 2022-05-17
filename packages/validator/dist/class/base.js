@@ -86,6 +86,7 @@ class ValidatorFactoryBase {
         // if it's spread only then there should be just one param
         // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
         const spreadParam = params.filter(p => p.tstype = constants_1.SPREAD_ARG_TYPE)[0];
+        // this._spreadTypeKey = spreadParam.name
         // the problem is the type is any after the first param
         return values.map((value, i) => {
             const param = params[i] || (0, utils_1.assign)(spreadParam, { name: `${constants_2.SPREAD_PREFIX}${i}` });

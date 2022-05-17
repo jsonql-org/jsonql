@@ -15,26 +15,27 @@ test(`Testing the user define custom plugin`, async t => {
     main: (argx: number, value: number) => argx !== value,
     params: ['argx']
   })
-  validateObj.createSchema({
+  validateObj.addValidationRules({
     age: { plugin: 'notEqual', argx: 50}
   })
 
   return validateObj.validate(['some@email', 51])
             .then(result => {
-              t.deepEqual(result, {email: 'some@email', age: 51, arg3: false})
+              t.deepEqual(result, ['some@email', 51, false])
             })
 })
 
 test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
     t.plan(1)
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
-    validateObj1.createSchema({
+    validateObj1.addValidationRules({
       email: { plugin: 'email' },
       age: { plugin: 'moreThan', num: 50}
     })
-    return validateObj1.validate(['some@email.com', 65, true])
+    const inputValues = ['some@email.com', 65, true]
+    return validateObj1.validate(inputValues)
               .then(result => {
-                t.deepEqual(result, {email: 'some@email.com', age: 65, arg3: true})
+                t.deepEqual(result, inputValues)
               })
 })
 
@@ -44,7 +45,7 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-co
   /// @TODO need to test it without the t.throws and see if the catch actually catch the error
   t.throws(() => {
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver)
-    validateObj1.createSchema({
+    validateObj1.addValidationRules({
       email: { plugin: 'email' },
       age: { plugin: 'moreThan', min: 50}
     })
@@ -58,14 +59,14 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-co
 test(`Testing the JsonqlArrayValidateInput with built-in plugins` , async t => {
   t.plan(1)
   const validateObj2 = new ValidatorFactory(context.funcAstInput.resolver)
-  validateObj2.createSchema([
+  validateObj2.addValidationRules([
     {plugin: 'email'},
     {plugin: 'moreThan', num: 50},
   ])
 
   return validateObj2.validate(['something@email.com', 51])
                 .then(result => {
-                  console.log(result)
+                  // console.log(result)
                   t.truthy(result)
                 })
 })
@@ -76,32 +77,32 @@ test(`Test again with the automatic rule generated return result`, async t => {
 
   return validateObj4.validate(loginValues)
                     .then(result => {
-                      t.deepEqual(result, expectedLoginResult)
+                      t.deepEqual(result, loginValues)
                     })
 })
 
 test(`Testing the plugin with a test case from the velocejs which causing problem (Array input)`, async t => {
   t.plan(1)
   const validateObj3 = new ValidatorFactory(context.funcAInput.login)
-  validateObj3.createSchema([
+  validateObj3.addValidationRules([
     {plugin: 'lessThan', num: 10},
     {plugin: 'moreThan', num: 5}
   ])
   return validateObj3.validate(loginValues)
                   .then(result => {
-                    t.deepEqual(result, expectedLoginResult)
+                    t.deepEqual(result, loginValues)
                   })
 })
 
 test(`Testing the plugin with a test case from the velocejs which causing problem (Object input)`, async t => {
   t.plan(1)
   const validateObj3 = new ValidatorFactory(context.funcAInput.login)
-  validateObj3.createSchema({
+  validateObj3.addValidationRules({
     username: {plugin: 'lessThan', num: 10},
     password: {plugin: 'moreThan', num: 5}
   })
   return validateObj3.validate(loginValues)
                   .then(result => {
-                    t.deepEqual(result, expectedLoginResult)
+                    t.deepEqual(result, loginValues)
                   })
 })

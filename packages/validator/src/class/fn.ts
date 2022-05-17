@@ -1,8 +1,7 @@
 // develop the small functions here one by one
 // import utils from '@jsonql/utils'
-import {
+import type {
   JsonqlPropertyParamMap,
-  // JsonqlValidateCbFn,
   JsonqlValidateFn,
   JsonqlGenericObject,
 } from '../types'
@@ -10,7 +9,6 @@ import {
   checkString,
   checkArray,
   checkAny,
-  // checkObject,
   checkUnion,
   combineCheck,
   promisify,
@@ -135,6 +133,7 @@ export function successThen(
     return assign(lastResult, { [name]: newResult })
   }
 }
+
 /** check to see if the lastResult contain our lastResult package format or just their value */
 export function isResultPackage(lastResult: any, key = IDX_KEY) {
   try {
@@ -142,7 +141,7 @@ export function isResultPackage(lastResult: any, key = IDX_KEY) {
       return !!lastResult.filter((res: any) => key in res).length
     }
   } catch(e) {}
-  
+
   return false
 }
 
@@ -165,6 +164,7 @@ export async function processValidateResults(
     return validateResult[name]
   })
 }
+
 /** final step to unwarp the pack result for spread arguments */
 export async function unwrapPreparedValidateResult(
   result: Array<any>
@@ -186,9 +186,6 @@ export async function unwrapPreparedValidateResult(
   }
   return result // nothing to do should be all correct
 }
-
-
-
 
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast: any): JsonqlValidateFn {

@@ -19,7 +19,7 @@
   @TODO how to integrete this into the contract generator
 */
 import { ValidatorFactoryBase } from './base';
-import type { JsonqlValidationPlugin, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
+import type { JsonqlValidationPlugin, JsonqlArrayValidateInput, JsonqlObjectValidateInput } from '../types';
 export declare class ValidatorFactory extends ValidatorFactoryBase {
     constructor(astMap: any);
     /** accept an object name => plugin in one go */
@@ -28,17 +28,16 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
     }): void;
     /** wrapper for the protected register plugin method */
     registerPlugin(name: string, plugin: JsonqlValidationPlugin): void;
-    /** takes the user define rules and generate the full map */
-    createSchema(validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
+    /** allow dev to register their error messages */
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
     /** this is where validation happens */
-    validate(values: Array<any>): Promise<any>;
+    validate(values: Array<any>, raw?: boolean): Promise<any>;
+    /** this will export the map for generate contract */
+    export(server?: boolean): void;
     /** After the validation the success will get an object with
     argumentName: value object and we make it to an array matching
     the order of the call, then we can pass it directly to method that
     get validated */
-    prepareValidateResult(validateResult: JsonqlGenericObject): Promise<any[]>;
-    /** this will export the map for generate contract */
-    export(server?: boolean): void;
+    private _prepareValidateResult;
 }

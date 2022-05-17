@@ -27,6 +27,9 @@ import type {
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
 } from '../types'
+/* import {
+  JsonqlValidationError
+} from '@jsonql/errors' */
 // import { SPREAD_PREFIX } from '../constants'
 import {
   queuePromisesProcess,
@@ -39,6 +42,8 @@ import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
+  // private _errorMessages: Array<Array<string>> = []
+
   // @TODO need to properly type this astMap
   constructor(astMap: any) {
     super(astMap)
@@ -58,12 +63,15 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   ): void {
     this._registerPlugin(name, plugin)
   }
-  /** takes the user define rules and generate the full map */
-  createSchema(
-    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
-  ): void {
-    this._createSchema(validationMap)
+
+  /** allow dev to register their error messages */
+  /*
+  registerErrorMessages(messages: Array<Array<string>>): void {
+    // @TODO need to check the format
+    this._errorMessages = messages
   }
+  */
+
   /** create an alias for createSchema (and replace it later ) because ii make more sense */
   addValidationRules(
     validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
@@ -85,6 +93,11 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     )
   }
 
+  /** this will export the map for generate contract */
+  export(server = false) {
+    console.log(`@TODO`, server)
+  }
+
   /** After the validation the success will get an object with
   argumentName: value object and we make it to an array matching
   the order of the call, then we can pass it directly to method that
@@ -92,14 +105,16 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   private async _prepareValidateResult(
     validateResult: JsonqlGenericObject
   ): Promise<any[]> {
-    debug('validateResult', validateResult, this._arguments)
+    debug('validateResult', this._arguments, validateResult)
     // @TODO need to fix the spread input type return result
     return processValidateResults(this._arguments, validateResult)
             .then(unwrapPreparedValidateResult)
   }
 
-  /** this will export the map for generate contract */
-  export(server = false) {
-    console.log(`@TODO`, server)
+  /** map the developer defined error messages */
+  /*
+  private async _mapErrorMessages(error: JsonqlValidationError) {
+    debug(this._errorMessages, error)
   }
+  */
 }

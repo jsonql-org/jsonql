@@ -29,7 +29,7 @@ test(`Should able to generate minimum valdiation rule when pass function without
 test(`Should able to apply additional rule just like a normal ts function`, async t => {
   t.plan(1)
   const obj = new ValidatorFactory(astMap['login'])
-  obj.createSchema({
+  obj.addValidationRules({
     username: {plugin: 'between', max: 20, min: 5}
   })
 
@@ -39,4 +39,4 @@ test(`Should able to apply additional rule just like a normal ts function`, asyn
             })
 })
 
-test.todo(`Should able to apply override rules`)
+// test.todo(`Should able to apply override rules`)

@@ -17,7 +17,7 @@ test(`Testing with the spread argument function first`,  async t => {
 
   return obj.validate(['a', '1', 'c'])
             .then(result => {
-              console.log('success', result)
+              // console.log('success', result)
               t.pass()
             })
             .catch(err => {

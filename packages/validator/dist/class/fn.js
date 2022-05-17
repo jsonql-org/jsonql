@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patternPluginFanctory = exports.pluginHasFunc = exports.checkPluginArg = exports.getOptionalValue = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
+exports.patternPluginFanctory = exports.pluginHasFunc = exports.checkPluginArg = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("@jsonql/constants");
@@ -53,18 +53,87 @@ exports.constructRuleCb = constructRuleCb;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 function successThen(name, value, lastResult, pos) {
     return (result) => {
+        const idx = pos[0];
         debug('passed', name, value, result, pos);
         debug('lastResult', lastResult);
+        const newResult = { [constants_2.IDX_KEY]: idx, [constants_2.VALUE_KEY]: value };
+        if (lastResult === undefined) { // init
+            return { [name]: newResult };
+        }
         // here is the problem with spread result - they have the same name
         if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
-            lastResult[name] = (0, utils_1.toArray)(lastResult[name]).concat([value]);
+            const lr = lastResult[name];
+            if (isResultPackage(lr)) {
+                if (!lr.includes(newResult)) {
+                    lastResult[name].push(newResult);
+                }
+            }
+            else if (lr[constants_2.IDX_KEY] !== idx) {
+                lastResult[name] = (0, utils_1.toArray)(lastResult[name]).concat([newResult]);
+            }
+            // if it's the same then do nothing
             return lastResult;
         }
         // return the argument name with the value
-        return (0, utils_1.assign)(lastResult, { [name]: value });
+        return (0, utils_1.assign)(lastResult, { [name]: newResult });
     };
 }
 exports.successThen = successThen;
+/** check to see if the lastResult contain our lastResult package format or just their value */
+function isResultPackage(lastResult, key = constants_2.IDX_KEY) {
+    try {
+        if (Array.isArray(lastResult)) {
+            return !!lastResult.filter((res) => key in res).length;
+        }
+    }
+    catch (e) { }
+    return false;
+}
+exports.isResultPackage = isResultPackage;
+/** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
+function processValidateResults(argNames, validateResult) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return argNames.map(name => {
+            if (constants_2.VALUE_KEY in validateResult[name]) {
+                return validateResult[name][constants_2.VALUE_KEY];
+            }
+            else if (isResultPackage(validateResult[name])) {
+                // @BUG this is still wrong its array wrap in an array
+                // we need to wrap this one more time for the next step
+                return {
+                    [constants_2.IS_SPREAD_VALUES_KEY]: validateResult[name].map((res) => res[constants_2.VALUE_KEY])
+                };
+            }
+            debug(`Result when we couldn't find way to destruct: ${name}`, validateResult[name]);
+            return validateResult[name];
+        });
+    });
+}
+exports.processValidateResults = processValidateResults;
+/** final step to unwarp the pack result for spread arguments */
+function unwrapPreparedValidateResult(result) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        debug('unwrapPreparedValidateResult', result);
+        const ctn = result.length;
+        if (ctn === 1 && (0, utils_1.objectHasKey)(result[0], constants_2.IS_SPREAD_VALUES_KEY)) {
+            return result[0][constants_2.IS_SPREAD_VALUES_KEY];
+        }
+        else if (isResultPackage(result, constants_2.IS_SPREAD_VALUES_KEY)) {
+            let tmp = [];
+            for (let i = 0; i < ctn; ++i) {
+                if (constants_2.IS_SPREAD_VALUES_KEY in result[i]) {
+                    tmp = tmp.concat(result[i][constants_2.IS_SPREAD_VALUES_KEY]);
+                }
+                else {
+                    tmp.push(result[i]);
+                }
+            }
+            return tmp;
+        }
+        return result; // nothing to do should be all correct
+    });
+}
+exports.unwrapPreparedValidateResult = unwrapPreparedValidateResult;
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast) {
     switch (ast[constants_1.TS_TYPE_NAME]) {

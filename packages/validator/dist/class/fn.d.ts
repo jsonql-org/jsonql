@@ -1,4 +1,4 @@
-import { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject } from '../types';
+import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject } from '../types';
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -19,6 +19,12 @@ this will get re-use in the class to create method for the queue execution
 export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn, ruleName?: string): (value: any, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 export declare function successThen(name: string, value: any, lastResult: JsonqlGenericObject, pos: number[]): (result: any) => any;
+/** check to see if the lastResult contain our lastResult package format or just their value */
+export declare function isResultPackage(lastResult: any, key?: string): boolean;
+/** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
+export declare function processValidateResults(argNames: Array<string>, validateResult: JsonqlGenericObject): Promise<any[]>;
+/** final step to unwarp the pack result for spread arguments */
+export declare function unwrapPreparedValidateResult(result: Array<any>): Promise<any>;
 /** extract the default value if there is none */
 export declare function getOptionalValue(arg: any, param: JsonqlGenericObject): any;
 /** check plugin argument */

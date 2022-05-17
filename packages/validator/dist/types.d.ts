@@ -93,6 +93,12 @@ export type JsonqlClassValidationMap = {
   [propName: string]: Array<JsonqlPropertyParamMap>
 }
 
+// wrap the last result in this structure for processing
+export type JsonqlLastResult = {
+  $$idx: number
+  $$value: any
+}
+
 export interface JsonqlCheckObjectKeys {
   name: string
   type: Array<string>

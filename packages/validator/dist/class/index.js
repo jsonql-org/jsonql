@@ -23,12 +23,17 @@ const tslib_1 = require("tslib");
   @TODO how to integrete this into the contract generator
 */
 const base_1 = require("./base");
+/* import {
+  JsonqlValidationError
+} from '@jsonql/errors' */
 // import { SPREAD_PREFIX } from '../constants'
 const utils_1 = require("@jsonql/utils");
+const fn_1 = require("./fn");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
 class ValidatorFactory extends base_1.ValidatorFactoryBase {
+    // private _errorMessages: Array<Array<string>> = []
     // @TODO need to properly type this astMap
     constructor(astMap) {
         super(astMap);
@@ -43,36 +48,43 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     registerPlugin(name, plugin) {
         this._registerPlugin(name, plugin);
     }
-    /** takes the user define rules and generate the full map */
-    createSchema(validationMap) {
-        this._createSchema(validationMap);
+    /** allow dev to register their error messages */
+    /*
+    registerErrorMessages(messages: Array<Array<string>>): void {
+      // @TODO need to check the format
+      this._errorMessages = messages
     }
+    */
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap) {
         this._createSchema(validationMap);
     }
     /** this is where validation happens */
-    validate(values) {
+    validate(values, raw = false) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            debug(`raw`, raw);
             // this come out with a queue then we put into the chainProcessPromises
             const queues = this._normalizeArgValues(values);
-            return (0, utils_1.queuePromisesProcess)(queues, {});
-        });
-    }
-    /** After the validation the success will get an object with
-    argumentName: value object and we make it to an array matching
-    the order of the call, then we can pass it directly to method that
-    get validated */
-    prepareValidateResult(validateResult) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            debug('validateResult', validateResult);
-            // @TODO need to fix the spread input type return result
-            return this._arguments.map(name => validateResult[name]);
+            return (0, utils_1.queuePromisesProcess)(queues, undefined // the init value will now be undefined to know if its first
+            )
+                .then((finalResult) => raw ? finalResult : this._prepareValidateResult(finalResult));
         });
     }
     /** this will export the map for generate contract */
     export(server = false) {
         console.log(`@TODO`, server);
+    }
+    /** After the validation the success will get an object with
+    argumentName: value object and we make it to an array matching
+    the order of the call, then we can pass it directly to method that
+    get validated */
+    _prepareValidateResult(validateResult) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            debug('validateResult', this._arguments, validateResult);
+            // @TODO need to fix the spread input type return result
+            return (0, fn_1.processValidateResults)(this._arguments, validateResult)
+                .then(fn_1.unwrapPreparedValidateResult);
+        });
     }
 }
 exports.ValidatorFactory = ValidatorFactory;
