@@ -12,7 +12,7 @@ import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
 // const debug = debugFn('jsonql-params-validator:test:primitive-type')
 
-test.only(`test the isEmptyObject method`, t => {
+test(`test the isEmptyObject method`, t => {
 
   t.true(isEmptyObject({}))
   t.false(isEmptyObject({key: 'value'}))
