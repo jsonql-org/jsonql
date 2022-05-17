@@ -68,7 +68,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     this._createSchema(validationMap)
   }
   /** this is where validation happens */
-  async validate(values: Array<any>) {
+  async validate(values: Array<any>, raw = false) {
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
 
@@ -76,7 +76,9 @@ export class ValidatorFactory extends ValidatorFactoryBase {
       queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
       undefined // the init value will now be undefined to know if its first
     )
-    // we need to add one more method to clean up the lastResult
+    .then((finalResult: any) =>
+      raw ? finalResult : this.prepareValidateResult(finalResult)
+    )
   }
 
   /** After the validation the success will get an object with
@@ -87,9 +89,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     validateResult: JsonqlGenericObject
   ): Promise<any[]> {
     debug('validateResult', validateResult)
-
     // @TODO need to fix the spread input type return result
-    return this._arguments.map(name => validateResult[name])
+    return this._arguments.map(name => validateResult[name].value)
   }
 
   /** this will export the map for generate contract */
