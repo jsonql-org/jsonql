@@ -6,10 +6,23 @@ import {
   checkNumber,
   checkObject,
   checkString,
+  isEmptyObject,
 } from  '../dist'
 import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
 // const debug = debugFn('jsonql-params-validator:test:primitive-type')
+
+test.only(`test the isEmptyObject method`, t => {
+
+  t.true(isEmptyObject({}))
+  t.false(isEmptyObject({key: 'value'}))
+
+  t.false(isEmptyObject('something'))
+  t.false(isEmptyObject(12345))
+  t.false(isEmptyObject(null))
+  t.false(isEmptyObject([]))
+})
+
 
 test('checking if a value consider empty or not', t => {
 

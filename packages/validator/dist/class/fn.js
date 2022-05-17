@@ -37,6 +37,7 @@ exports.createAutomaticRules = createAutomaticRules;
 this will get re-use in the class to create method for the queue execution
  */
 function constructRuleCb(name, ruleFn, ruleName) {
+    debug('ruleFn', ruleFn, name);
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Reflect.apply(ruleFn, null, [value])
             .then(successThen(name, value, lastResult, pos))
@@ -54,6 +55,11 @@ function successThen(name, value, lastResult, pos) {
     return (result) => {
         debug('passed', name, value, result, pos);
         debug('lastResult', lastResult);
+        // here is the problem with spread result - they have the same name
+        if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
+            lastResult[name] = (0, utils_1.toArray)(lastResult[name]).concat([value]);
+            return lastResult;
+        }
         // return the argument name with the value
         return (0, utils_1.assign)(lastResult, { [name]: value });
     };
@@ -63,32 +69,60 @@ exports.successThen = successThen;
 function getValidateRules(ast) {
     switch (ast[constants_1.TS_TYPE_NAME]) {
         case constants_1.TS_UNION_TYPE:
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.checkUnion)(value, ast.type); });
+            return function unionFn(value) {
+                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return (0, validator_core_1.checkUnion)(value, ast.type);
+                });
+            };
         case constants_1.TS_ARRAY_TYPE || constants_1.SPREAD_ARG_TYPE:
             // need to apply for the type as well
             // @TODO need to examine the input to see what more sutation could come up
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(validator_core_1.checkArray)(value, ast.types); });
+            return function arrayFn(value) {
+                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return (0, validator_core_1.promisify)(validator_core_1.checkArray)(value, ast.types);
+                });
+            };
         case constants_1.TS_TYPE_REF || constants_1.TS_TYPE_LIT:
             // @TODO should this get a special treatment
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(validator_core_1.checkAny)(value); });
+            return function anyFn(value) {
+                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return (0, validator_core_1.promisify)(validator_core_1.checkAny)(value);
+                });
+            };
+        case constants_1.SPREAD_ARG_TYPE: // we need to create rule for this one, its been wrong rule
+            return function combineFn(value) {
+                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return (0, validator_core_1.promisify)((0, validator_core_1.combineCheck)(ast.types))(value);
+                });
+            };
         default: // no tstype then should be primitive
             if ((0, validator_core_1.checkString)(ast.type)) {
-                return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)((0, validator_core_1.combineCheck)(ast.type))(value); });
+                debug('validation type', ast.type);
+                return function combineFn(value) {
+                    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                        return (0, validator_core_1.promisify)((0, validator_core_1.combineCheck)(ast.type))(value);
+                    });
+                };
             }
             // if both are not presented that means this could be a JS code
             // this happen when we use Decorator and toString() to extract the ast
             debug(`getValidateRules`, ast);
-            return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return (0, validator_core_1.promisify)(utils_1.notEmpty)(value, true); });
+            return function emptyFn(value) {
+                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                    return (0, validator_core_1.promisify)(utils_1.notEmpty)(value, true);
+                });
+            };
     }
 }
 /** extract the default value if there is none */
 function getOptionalValue(arg, param) {
-    if (arg !== undefined) {
-        return arg;
+    // should be the value undefined then search for defaultvalue
+    if (param.tstype !== constants_1.SPREAD_ARG_TYPE && arg === undefined) { // spread argument can not have default value
+        return param[constants_1.DEFAULT_VALUE] !== undefined
+            ? param[constants_1.DEFAULT_VALUE]
+            : undefined;
     }
-    return param[constants_1.DEFAULT_VALUE] !== undefined
-        ? param[constants_1.DEFAULT_VALUE]
-        : undefined;
+    return arg;
 }
 exports.getOptionalValue = getOptionalValue;
 /** check plugin argument */

@@ -1,12 +1,12 @@
-import { checkAny } from './base/any';
-import { checkArray, isArrayLike, arrayTypeHandler } from './base/array';
+import { checkString } from './base/string';
 import { checkBoolean } from './base/boolean';
 import { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number';
-import { checkString } from './base/string';
-import { checkObject, objectTypeHandler } from './base/object';
+import { checkAny } from './base/any';
+import { checkArray, isArrayLike, arrayTypeHandler } from './base/array';
+import { checkObject, objectTypeHandler, isEmptyObject } from './base/object';
 import { combineCheck } from './base/combine';
 import { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union';
 import { promisify, reversePromisifyResult } from './lib/promisify';
 import { plugins } from './plugins';
 import { curryPlugin, createCoreCurryPlugin } from './plugins/plugins';
-export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, combineCheck, checkUnion, generateReversePromisesFn, checkUnionSync, promisify, reversePromisifyResult, plugins, curryPlugin, createCoreCurryPlugin, };
+export { checkAny, checkArray, isArrayLike, arrayTypeHandler, checkBoolean, checkNumber, checkInteger, checkFloat, checkUnsigned, checkString, checkObject, objectTypeHandler, isEmptyObject, combineCheck, checkUnion, generateReversePromisesFn, checkUnionSync, promisify, reversePromisifyResult, plugins, curryPlugin, createCoreCurryPlugin, };

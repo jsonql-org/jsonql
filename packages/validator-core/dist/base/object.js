@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.objectTypeHandler = exports.checkObject = void 0;
+exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = void 0;
 // validate object type
 const lodash_1 = require("../lib/lodash");
 // import filter from 'lodash-es/filter'
@@ -69,3 +69,12 @@ const objectTypeHandler = function (p) {
     return Reflect.apply(checkObject, null, _args);
 };
 exports.objectTypeHandler = objectTypeHandler;
+/** check if an object is empty */
+const isEmptyObject = function (value) {
+    if ((0, lodash_1.isPlainObject)(value)) {
+        const keys = Object.keys(value);
+        return !keys.length;
+    }
+    return false;
+};
+exports.isEmptyObject = isEmptyObject;

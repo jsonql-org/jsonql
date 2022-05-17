@@ -23,6 +23,7 @@ const tslib_1 = require("tslib");
   @TODO how to integrete this into the contract generator
 */
 const base_1 = require("./base");
+// import { SPREAD_PREFIX } from '../constants'
 const utils_1 = require("@jsonql/utils");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
@@ -46,12 +47,15 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     createSchema(validationMap) {
         this._createSchema(validationMap);
     }
+    /** create an alias for createSchema (and replace it later ) because ii make more sense */
+    addValidationRules(validationMap) {
+        this._createSchema(validationMap);
+    }
     /** this is where validation happens */
     validate(values) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             // this come out with a queue then we put into the chainProcessPromises
             const queues = this._normalizeArgValues(values);
-            debug('queues', queues);
             return (0, utils_1.queuePromisesProcess)(queues, {});
         });
     }
@@ -61,6 +65,8 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     get validated */
     prepareValidateResult(validateResult) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            debug('validateResult', validateResult);
+            // @TODO need to fix the spread input type return result
             return this._arguments.map(name => validateResult[name]);
         });
     }

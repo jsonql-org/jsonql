@@ -27,7 +27,7 @@ import type {
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
 } from '../types'
-import { SPREAD_PREFIX } from '../constants'
+// import { SPREAD_PREFIX } from '../constants'
 import {
   queuePromisesProcess,
 } from '@jsonql/utils'

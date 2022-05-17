@@ -1,4 +1,4 @@
-import { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
+import type { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -14,7 +14,7 @@ export declare class ValidatorFactoryBase {
     private _schema;
     private _errors;
     protected _arguments: Array<string>;
-    constructor(astMap: any);
+    constructor(astMap: Array<JsonqlPropertyParamMap>);
     protected get schema(): JsonqlPropertyParamMap[];
     /** @TODO map the index array to name */
     protected get errors(): number[][];
@@ -24,6 +24,8 @@ export declare class ValidatorFactoryBase {
       argument values turn into an executable queue
     */
     protected _normalizeArgValues(values: any[]): (((lastResult: JsonqlGenericObject) => Promise<any>)[] | (() => Promise<boolean>))[];
+    /** The spread or mix with spread argument is too complicated to process in couple lines */
+    private _processSpreadLikeArg;
     /**
       at this point we actually put the rules in the queue
       but we dont' run it yet until all rules are in the main queue
@@ -36,7 +38,7 @@ export declare class ValidatorFactoryBase {
     private _applyArrayInput;
     /** nomalize the object style rules input */
     private _applyObjectInput;
-    /** here is the one that will transform the rules */
+    /** this will transform the rules to executable */
     private _transformInput;
     private _lookupPlugin;
     /** register plugins */

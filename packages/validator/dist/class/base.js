@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorFactoryBase = void 0;
 const tslib_1 = require("tslib");
-// this is the base class for all the helper methods
 const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
 const constants_1 = require("@jsonql/constants");
@@ -76,18 +75,28 @@ class ValidatorFactoryBase {
                     return this._prepareForExecution(_value, param, i);
                 });
             case vCtn > pCtn: // this is the spread style argument
-                debug('spread parameters');
-                return values.map((value, i) => {
-                    // const required = !(i > pCtn ? true : !!params[i].required)
-                    const param = params[i] || { type: constants_1.DEFAULT_TYPE, name: `_${i}` };
-                    const _value = (0, fn_1.getOptionalValue)(value, param);
-                    // @TODO if it's optional field and using the provide value
-                    // should we skip the validation
-                    return this._prepareForExecution(_value, param, i);
-                });
+                debug('spread params', vCtn, pCtn);
+                return this._processSpreadLikeArg(values, params);
             default: // will not fall through here @TODO
                 throw new errors_1.JsonqlValidationError(constants_2.EXCEPTION_CASE_ERR, [vCtn, pCtn]);
         }
+    }
+    /** The spread or mix with spread argument is too complicated to process in couple lines */
+    _processSpreadLikeArg(values, params) {
+        // if it's spread only then there should be just one param
+        // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
+        const spreadParam = params.filter(p => p.tstype = constants_1.SPREAD_ARG_TYPE)[0];
+        // the problem is the type is any after the first param
+        return values.map((value, i) => {
+            const param = params[i] || (0, utils_1.assign)(spreadParam, { name: `${constants_2.SPREAD_PREFIX}${i}` });
+            const _value = (0, fn_1.getOptionalValue)(value, param);
+            // @NOTE here is the problem for spread there is only 1 validator register with the
+            // init name and all subsequence value pass to the same validation function
+            // so for Spread we need to recreate the function here again for the default validator
+            // but change a way of thinking, using the same rule is actually not a problem
+            debug('spreand param', _value, param.name);
+            return this._prepareForExecution(_value, param, i);
+        });
     }
     /**
       at this point we actually put the rules in the queue
@@ -95,7 +104,7 @@ class ValidatorFactoryBase {
       this way, if one fail then the whole queue exited without running
     */
     _prepareForExecution(value, param, idx) {
-        const { rules, required } = param;
+        const { rules, required, name } = param;
         if (rules && rules.length) {
             // we only need to return the queue
             return rules.map((rule, i) => {
@@ -103,12 +112,13 @@ class ValidatorFactoryBase {
                 if (value === undefined && !required) {
                     debug(`skip the validation`, required);
                     return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-                        return ((0, fn_1.successThen)(param[constants_2.NAME_KEY], value, lastResult, [idx, i])(true));
+                        return ((0, fn_1.successThen)(name, value, lastResult, [idx, i])(true));
                     });
                 }
                 // when it fail then we provide with the index number
                 return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-                    return Reflect.apply(rule, null, [value, lastResult, [idx, i]]).then((result) => {
+                    return Reflect.apply(rule, null, [value, lastResult, [idx, i]])
+                        .then((result) => {
                         debug('Post rule result', result);
                         return result;
                     });
@@ -172,7 +182,7 @@ class ValidatorFactoryBase {
             return ast;
         });
     }
-    /** here is the one that will transform the rules */
+    /** this will transform the rules to executable */
     _transformInput(input, propName) {
         debug('_transformInput', input);
         return input.map((_input) => {

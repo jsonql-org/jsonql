@@ -111,7 +111,9 @@ export function successThen(
     debug('lastResult', lastResult)
     // here is the problem with spread result - they have the same name
     if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
+      console.log(pos)
       lastResult[name] = toArray(lastResult[name]).concat([value])
+
       return lastResult
     }
 

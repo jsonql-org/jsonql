@@ -84,3 +84,13 @@ export const objectTypeHandler = function(p: any) {
   // just simple check
   return Reflect.apply(checkObject, null, _args)
 }
+
+/** check if an object is empty */
+export const isEmptyObject = function(value: any) {
+  if (isPlainObject(value)) {
+    const keys = Object.keys(value)
+    
+    return !keys.length
+  }
+  return false
+}

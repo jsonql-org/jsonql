@@ -80,11 +80,11 @@ export type JsonqlPropertyParamMap = {
   name: string // the argument name
   required: boolean
   type: any
+  // rules get contractured the moment we init the object
+  rules: Array<JsonqlValidateCbFn> = []
   tstype?: string
   types?: any
   optional?: boolean // alias will remove in the future
-  // rules get contractured the moment we init the object
-  rules: Array<JsonqlValidateCbFn> = []
   // tmp will be occasionally we MIGHT have to store it
   tmp?: Array<JsonqlValidationRule>
 }

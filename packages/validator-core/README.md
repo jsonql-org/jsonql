@@ -25,7 +25,9 @@ export default {
 }
 ```
 
-more coming soon
+## Built-in plugins
+
+
 
 ---
 

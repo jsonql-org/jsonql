@@ -8,3 +8,5 @@ export declare function checkObject(value: any, keys?: string | Array<string> | 
  * fold this into it's own function to handler different object type
  */
 export declare const objectTypeHandler: (p: any) => any;
+/** check if an object is empty */
+export declare const isEmptyObject: (value: any) => boolean;

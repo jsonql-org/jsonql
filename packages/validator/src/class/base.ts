@@ -81,8 +81,10 @@ export class ValidatorFactoryBase {
   private _schema!: Array<JsonqlPropertyParamMap>
   // the first level is the param pos the second level is the rule
   private _errors!: Array<Array<number>>
+  // private _spreadTypeKey = '' // there should be only one spread param in one function!
   // use this list to make callable argument
   protected _arguments!: Array<string>
+
   // @TODO properly type the astMap
   constructor(astMap: Array<JsonqlPropertyParamMap>) {
     this._astWithBaseRules = createAutomaticRules(astMap)
@@ -157,6 +159,7 @@ export class ValidatorFactoryBase {
     // if it's spread only then there should be just one param
     // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
     const spreadParam = params.filter(p => p.tstype = SPREAD_ARG_TYPE)[0]
+    // this._spreadTypeKey = spreadParam.name
     // the problem is the type is any after the first param
     return values.map((value, i) => {
       const param = params[i] || assign(spreadParam, { name: `${SPREAD_PREFIX}${i}`})
