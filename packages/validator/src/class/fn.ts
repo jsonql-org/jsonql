@@ -107,18 +107,27 @@ export function successThen(
   pos: number[]
 ) {
   return (result: any) => {
+    const idx = pos[0]
     debug('passed', name, value, result, pos)
     debug('lastResult', lastResult)
+    const newResult = { idx, value }
+    if (lastResult === undefined) { // init
+      return {[name]: newResult } // change the format to array
+    }
     // here is the problem with spread result - they have the same name
     if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
-      console.log(pos)
-      lastResult[name] = toArray(lastResult[name]).concat([value])
-
+      const lr = lastResult[name]
+      if (Array.isArray(lr)) {
+        if (!lr.includes(newResult)) {
+          lastResult[name].push(newResult)
+        }
+      } else if (lr.idx !== idx) {
+        lastResult[name] = toArray(lastResult[name]).concat([{ idx, value }])
+      } // if it's the same then do nothing
       return lastResult
     }
-
     // return the argument name with the value
-    return assign(lastResult, { [name]: value })
+    return assign(lastResult, { [name]: newResult })
   }
 }
 

@@ -74,8 +74,9 @@ export class ValidatorFactory extends ValidatorFactoryBase {
 
     return queuePromisesProcess(
       queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
-      {}
+      undefined // the init value will now be undefined to know if its first
     )
+    // we need to add one more method to clean up the lastResult
   }
 
   /** After the validation the success will get an object with
