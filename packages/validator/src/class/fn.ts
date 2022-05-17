@@ -31,6 +31,9 @@ import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
   PATTERN_KEY,
+  IDX_KEY,
+  VALUE_KEY,
+  IS_SPREAD_VALUES_KEY,
 } from '../constants'
 import {
   JsonqlValidationError,
@@ -110,26 +113,76 @@ export function successThen(
     const idx = pos[0]
     debug('passed', name, value, result, pos)
     debug('lastResult', lastResult)
-    const newResult = { idx, value }
+    const newResult = { [IDX_KEY]: idx, [VALUE_KEY]: value }
     if (lastResult === undefined) { // init
-      return {[name]: newResult } // change the format to array
+      return {[name]: newResult }
     }
     // here is the problem with spread result - they have the same name
     if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
       const lr = lastResult[name]
-      if (Array.isArray(lr)) {
+      if (isResultPackage(lr) ) {
         if (!lr.includes(newResult)) {
           lastResult[name].push(newResult)
         }
-      } else if (lr.idx !== idx) {
-        lastResult[name] = toArray(lastResult[name]).concat([{ idx, value }])
-      } // if it's the same then do nothing
+      } else if (lr[IDX_KEY] !== idx) {
+        lastResult[name] = toArray(lastResult[name]).concat([ newResult ])
+      }
+      // if it's the same then do nothing
       return lastResult
     }
     // return the argument name with the value
     return assign(lastResult, { [name]: newResult })
   }
 }
+/** check to see if the lastResult contain our lastResult package format or just their value */
+export function isResultPackage(lastResult: any, key = IDX_KEY) {
+  if (Array.isArray(lastResult)) {
+    return !!lastResult.filter((res: any) => key in res).length
+  }
+  return false
+}
+
+/** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
+export async function processValidateResults(
+  argNames: Array<string>,
+  validateResult: JsonqlGenericObject
+) {
+  return argNames.map(name => {
+    if ('value' in validateResult[name]) {
+      return validateResult[name].value
+    } else if (isResultPackage(validateResult[name])) {
+      // @BUG this is still wrong its array wrap in an array
+      // we need to wrap this one more time for the next step
+      return {
+        [IS_SPREAD_VALUES_KEY]: validateResult[name].map((res: any) => res[VALUE_KEY])
+      }
+    }
+    debug(`Result when we couldn't find way to destruct: ${name}`, validateResult[name])
+    return validateResult[name]
+  })
+}
+/** final step to unwarp the pack result for spread arguments */
+export async function unwrapPreparedValidateResult(
+  result: Array<any>
+) {
+  debug('unwrapPreparedValidateResult', result)
+  const ctn = result.length
+  if (ctn === 1 && IS_SPREAD_VALUES_KEY in result[0]) {
+    return result[0][IS_SPREAD_VALUES_KEY]
+  } else if (isResultPackage(result, IS_SPREAD_VALUES_KEY)) {
+    let tmp: any[] = []
+    for (let i = 0; i < ctn; ++i) {
+      if (IS_SPREAD_VALUES_KEY in result[i]) {
+        tmp = tmp.concat(result[i][IS_SPREAD_VALUES_KEY])
+      } else {
+        tmp.push(result[i])
+      }
+    }
+    return tmp
+  }
+  return result // nothing to do should be all correct
+}
+
 
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast: any): JsonqlValidateFn {

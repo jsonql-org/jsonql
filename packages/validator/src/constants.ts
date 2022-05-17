@@ -12,8 +12,10 @@ export const PATTERN_KEY = 'pattern'
 export const RULES_KEY = 'rules'
 export const NAME_KEY = 'name'
 export const PARAMS_KEY = 'params'
-
-
+// just to avoid the name collision
+export const IDX_KEY = '$$idx'
+export const VALUE_KEY = '$$value'
+export const IS_SPREAD_VALUES_KEY = '$$is_spread_values'
 // when dev register their plugin, they can pass extra param but no the word in this list
 export const KEYWORDS = [
   'name',

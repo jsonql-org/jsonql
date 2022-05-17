@@ -5,7 +5,7 @@ import { ValidatorFactory } from '../src'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
 
-const file2 = join(__dirname, 'fixtures', 'resolver', 'mix-spread-fn.json')
+// const file2 = join(__dirname, 'fixtures', 'resolver', 'mix-spread-fn.json')
 const file1 = join(__dirname, 'fixtures', 'resolver', 'spread-function.json')
 
 test(`Testing with the spread argument function first`,  async t => {

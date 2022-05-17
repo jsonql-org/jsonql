@@ -33,8 +33,8 @@ test.only(`This is going to test and fix the duplicate return value due to the s
 
   return valx.validate(['world', 12346, true])
              .then(result => {
-               console.log(result)
-               t.pass()
+
+               t.deepEqual(result, ['world', 12346, true])
              })
 
 

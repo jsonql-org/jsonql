@@ -31,7 +31,10 @@ import type {
 import {
   queuePromisesProcess,
 } from '@jsonql/utils'
-
+import {
+  processValidateResults,
+  unwrapPreparedValidateResult,
+} from './fn'
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
@@ -69,6 +72,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   }
   /** this is where validation happens */
   async validate(values: Array<any>, raw = false) {
+    debug(`raw`, raw)
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
 
@@ -77,7 +81,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
       undefined // the init value will now be undefined to know if its first
     )
     .then((finalResult: any) =>
-      raw ? finalResult : this.prepareValidateResult(finalResult)
+      raw ? finalResult : this._prepareValidateResult(finalResult)
     )
   }
 
@@ -85,12 +89,13 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   argumentName: value object and we make it to an array matching
   the order of the call, then we can pass it directly to method that
   get validated */
-  async prepareValidateResult(
+  private async _prepareValidateResult(
     validateResult: JsonqlGenericObject
   ): Promise<any[]> {
-    debug('validateResult', validateResult)
+    debug('validateResult', validateResult, this._arguments)
     // @TODO need to fix the spread input type return result
-    return this._arguments.map(name => validateResult[name].value)
+    return processValidateResults(this._arguments, validateResult)
+            .then(unwrapPreparedValidateResult)
   }
 
   /** this will export the map for generate contract */
