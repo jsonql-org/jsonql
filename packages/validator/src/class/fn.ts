@@ -46,6 +46,7 @@ import {
   toArray,
   isFunction,
   notEmpty,
+  objectHasKey,
 } from '@jsonql/utils'
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')
@@ -136,9 +137,12 @@ export function successThen(
 }
 /** check to see if the lastResult contain our lastResult package format or just their value */
 export function isResultPackage(lastResult: any, key = IDX_KEY) {
-  if (Array.isArray(lastResult)) {
-    return !!lastResult.filter((res: any) => key in res).length
-  }
+  try {
+    if (Array.isArray(lastResult)) {
+      return !!lastResult.filter((res: any) => key in res).length
+    }
+  } catch(e) {}
+  
   return false
 }
 
@@ -148,8 +152,8 @@ export async function processValidateResults(
   validateResult: JsonqlGenericObject
 ) {
   return argNames.map(name => {
-    if ('value' in validateResult[name]) {
-      return validateResult[name].value
+    if (VALUE_KEY in validateResult[name]) {
+      return validateResult[name][VALUE_KEY]
     } else if (isResultPackage(validateResult[name])) {
       // @BUG this is still wrong its array wrap in an array
       // we need to wrap this one more time for the next step
@@ -167,7 +171,7 @@ export async function unwrapPreparedValidateResult(
 ) {
   debug('unwrapPreparedValidateResult', result)
   const ctn = result.length
-  if (ctn === 1 && IS_SPREAD_VALUES_KEY in result[0]) {
+  if (ctn === 1 && objectHasKey(result[0], IS_SPREAD_VALUES_KEY)) {
     return result[0][IS_SPREAD_VALUES_KEY]
   } else if (isResultPackage(result, IS_SPREAD_VALUES_KEY)) {
     let tmp: any[] = []
@@ -182,6 +186,8 @@ export async function unwrapPreparedValidateResult(
   }
   return result // nothing to do should be all correct
 }
+
+
 
 
 /** only deal with constructing the basic rules validation fucntion */
