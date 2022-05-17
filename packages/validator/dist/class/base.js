@@ -85,17 +85,12 @@ class ValidatorFactoryBase {
     _processSpreadLikeArg(values, params) {
         // if it's spread only then there should be just one param
         // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
-        const spreadParam = params.filter(p => p.tstype = constants_1.SPREAD_ARG_TYPE)[0];
-        // this._spreadTypeKey = spreadParam.name
+        const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
         // the problem is the type is any after the first param
         return values.map((value, i) => {
             const param = params[i] || (0, utils_1.assign)(spreadParam, { name: `${constants_2.SPREAD_PREFIX}${i}` });
             const _value = (0, fn_1.getOptionalValue)(value, param);
-            // @NOTE here is the problem for spread there is only 1 validator register with the
-            // init name and all subsequence value pass to the same validation function
-            // so for Spread we need to recreate the function here again for the default validator
-            // but change a way of thinking, using the same rule is actually not a problem
-            debug('spreand param', _value, param.name);
+            debug('spread param', _value, param.name);
             return this._prepareForExecution(_value, param, i);
         });
     }

@@ -13,7 +13,7 @@ const validator = new ValidatorFactory(ast: Array<JsonqlPropertyParamMap>)
 
 validator.validate(values)
         .then(result => {
-          // a list of your method argument name with value
+          // The same that comes in - if there is default value then nit will be apply
         })
         .catch(error => {
           console.log(error.details)
@@ -50,8 +50,8 @@ export default function baselineFn(value1: string, value2: number, value3 = fals
 }
 ```
 _please note we our extractor only support default export - not export
-this is todo with how we organize code within a jsonql project
-but fear not if this doesn't work for you. The way we build our @jsonql/ast is
+this is to do with how we organize code within a `jsonql` project
+but fear not if this doesn't work for you. The way we build our `@jsonql/ast` is
 like many small parts, and you can easily mix and match to build one for your need_
 
 Then it will transform into this for the validator:
@@ -141,7 +141,9 @@ validator.validate([101])
             // result will be an object
             // {arg: 101}
           })
-          .catch((err: Array<numbebr>) => {
+          .catch((err: JsonqlValidationError) => {
+            // look for err.detail
+
             // if this fail you will get an array contain two number
             // [1,0]
             // what that means is it failed the second rule (zero based index) on the first position
@@ -160,7 +162,7 @@ The build in rules only support all primitive types: string, number, boolean, ar
 
 All the built-in plugins provide by another packaage, please see [@jsonql/validator-core]('../valdiator-core/README.md') for more info.
 
-## Server side only validation
+## Server side only validation rule
 
 @TODO
 

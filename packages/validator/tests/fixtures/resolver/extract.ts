@@ -23,7 +23,7 @@ tsFunctionParser(join(__dirname, 'function-style.ts'))
   })
 */
 
-['baseline-fn'/*, 'spread-function'*/].forEach(name => {
+['strange-fn-def'/*, 'spread-function'*/].forEach(name => {
   console.log('extract from ', name)
   tsFunctionParser(join(__dirname, [name, 'ts'].join('.')))
     .then(result => {
