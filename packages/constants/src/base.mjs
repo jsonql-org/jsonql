@@ -63,7 +63,7 @@ export const JSONP_CALLBACK_NAME = 'jsonqlJsonpCallback'
 
 // methods allow
 export const API_REQUEST_METHODS = ['POST', 'PUT']
-export const CONTRACT_REQUEST_METHODS = ['GET', 'HEAD']
+export const CONTRACT_REQUEST_METHODS = 'GET'
 // for  contract-cli
 export const KEY_WORD = 'continue'
 export const PUBLIC_KEY = 'public'

@@ -59,4 +59,5 @@ export {
   isPlainObject,
   merge,
   curry,
+  flatMap,
 } from './lodash'

@@ -1,7 +1,7 @@
 // configuration
 
 export type DescriptorMeta = {
-  value?: function
+  value?: Function
   writable?: boolean
   enumerable?: boolean
   configurable?: boolean
