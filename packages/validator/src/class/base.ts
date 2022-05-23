@@ -84,8 +84,7 @@ export class ValidatorFactoryBase {
   // private _spreadTypeKey = '' // there should be only one spread param in one function!
   // use this list to make callable argument
   protected _arguments!: Array<string>
-
-  // @TODO properly type the astMap
+  // main
   constructor(astMap: Array<JsonqlPropertyParamMap>) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument list in order
@@ -102,6 +101,7 @@ export class ValidatorFactoryBase {
     })
   }
 
+  /** just return the internal schema for validation for use, see export */
   protected get schema() {
     return this._schema || this._astWithBaseRules
   }
