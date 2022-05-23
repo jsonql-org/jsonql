@@ -72,7 +72,7 @@ export class ValidatorPlugins {
   }
 
   /** find the plugin internal or external */
-  private _lookupPlugin(
+  public lookupPlugin(
     input: JsonqlValidationRule,
     propName: string
   ): JsonqlValidateFn {
@@ -88,19 +88,32 @@ export class ValidatorPlugins {
           pluginName,
         )
       } else if (pluginConfig && pluginConfig[PARAMS_KEY]) {
-        debug('_pluign', pluginConfig)
-        debug('input', input)
+        debug('_pluign', pluginConfig, 'input', input)
         const _input = input as unknown as JsonqlPluginInput
-        // need to check if the _plugin is internal or not
-        const fn = inArray(this._internalPluginNames, pluginName) ?
-                    createCoreCurryPlugin(_input) :
-                    curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
 
-        return constructRuleCb(propName, promisify(fn), pluginName)
+        return constructRuleCb(
+          propName,
+          promisify( // need to check if the _plugin is internal or not
+            inArray(this._internalPluginNames, pluginName) ?
+              createCoreCurryPlugin(_input) :
+              curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
+          ),
+          pluginName
+        )
       }
     }
     throw new JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`)
   }
+
+  /** The public api to register a plugin */
+  public regigsterPlugin(
+    name: string,
+    pluginConfig: JsonqlValidationPlugin
+  ): void {
+    this._registerPlugin(name, pluginConfig)
+  }
+
+  // ------------------------- PRIVATE --------------------------//
 
   /** register plugins */
   protected _registerPlugin(

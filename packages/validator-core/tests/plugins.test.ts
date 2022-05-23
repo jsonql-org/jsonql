@@ -38,10 +38,16 @@ test.only(`Provide wrong data and expect the curryPlugin to throw`, t => {
 })
 
 test(`Just testing the email plugin`, t => {
-  const email = 'some@email.com'
-  const result = Reflect.apply(plugins[1].main, null , [email])
+  const email1 = 'some@email.com'
+  const email2 = 'something#isnothgemail.com'
 
-  t.true(result)
+  const fn = plugins[1].main
+
+  const result1 = Reflect.apply(fn, null , [email1])
+  const result2 = Reflect.apply(fn, null, [email2])
+  
+  t.true(result1)
+  t.false(result2)
 })
 
 test(`test the plugins with curry`, t => {
