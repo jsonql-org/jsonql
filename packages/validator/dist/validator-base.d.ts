@@ -1,4 +1,4 @@
-import type { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from '../types';
+import type { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from './types';
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -47,7 +47,7 @@ export declare class ValidatorFactoryBase {
     protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
     /**
      We need to keep this library light and can be use in browser / server
-     therefore we deligate this import to a external module also by doing so
+     therefore we delegate this import to a external module also by doing so
      we can transport the rules across from server to client
     */
     importValidationFunction(payload: {

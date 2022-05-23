@@ -22,7 +22,7 @@ const tslib_1 = require("tslib");
   })
   @TODO how to integrete this into the contract generator
 */
-const base_1 = require("./base");
+const validator_base_1 = require("./validator-base");
 /* import {
   JsonqlValidationError
 } from '@jsonql/errors' */
@@ -32,7 +32,7 @@ const fn_1 = require("./fn");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
-class ValidatorFactory extends base_1.ValidatorFactoryBase {
+class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
     constructor(astMap) {
         super(astMap);
     }
@@ -46,17 +46,16 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     registerPlugin(name, plugin) {
         this._registerPlugin(name, plugin);
     }
-    /** allow dev to register their error messages */
-    /*
-    registerErrorMessages(messages: Array<Array<string>>): void {
-      // @TODO need to check the format
-      this._errorMessages = messages
-    }
-    */
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap) {
         this._createSchema(validationMap);
     }
+    /** map the developer defined error messages */
+    /*
+    mapErrorMessages(error: JsonqlValidationError) {
+      debug(this._errorMessages, error)
+    }
+    */
     /** this is where validation happens */
     validate(values, raw = false) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {

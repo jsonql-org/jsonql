@@ -8,7 +8,7 @@ const constants_1 = require("@jsonql/constants");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
-const constants_2 = require("../constants");
+const constants_2 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:base');
@@ -26,7 +26,7 @@ class ValidatorFactoryBase {
         this._plugins = new Map();
         this._internalPluginNames = [];
         this._astWithBaseRules = (0, fn_1.createAutomaticRules)(astMap);
-        // create the argument list in order
+        // create the argument name list in order
         this._arguments = this._astWithBaseRules.map(rule => rule[constants_2.NAME_KEY]);
         // register internal plugins
         validator_core_1.plugins.forEach((plugin) => {
@@ -148,11 +148,11 @@ class ValidatorFactoryBase {
             var _a;
             if (arrayInput[i]) { // the user didn't provide additonal rules
                 const input2 = this._transformInput(arrayInput[i], ast.name);
-                /*
-                @TODO at this point ast[RULES_KEY] has the rule generated
-                when this is run with a js file there won't be any type info
-                so the first rule could provide the "override" and "type"
-                then we need to override it with the type
+                /**
+                @TODO
+                We took the info and create the function but we need to keep
+                the original input and store into the astMap.org field for generate
+                contract later
                 */
                 if (input2) {
                     ast[constants_2.RULES_KEY] = (_a = ast[constants_2.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(input2);
@@ -243,11 +243,17 @@ class ValidatorFactoryBase {
                 }
             }
             if (!(0, fn_1.pluginHasFunc)(pluginConfig)) {
-                throw new errors_1.JsonqlError(`Can not find any executable within your plugin config`);
+                throw new errors_1.JsonqlError(`Can not find any executable definition within your plugin config`);
             }
         }
         // put the name back in
         pluginConfig.name = name;
+        /**
+        Here is a problem, when we need to add this to the contract
+        the info here is already constructed for running with validation
+        which is not suitable to transport over the wire, we need to
+        go higher (register via file base) to add such info
+        */
         switch (true) {
             // this rule is not really in use but keep here for future
             case (!pluginConfig[constants_2.VALIDATE_ASYNC_KEY] &&
@@ -275,7 +281,7 @@ class ValidatorFactoryBase {
     // -------------------- import validation function / plugin ---------------- //
     /**
      We need to keep this library light and can be use in browser / server
-     therefore we deligate this import to a external module also by doing so
+     therefore we delegate this import to a external module also by doing so
      we can transport the rules across from server to client
     */
     importValidationFunction(payload) {

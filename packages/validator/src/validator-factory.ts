@@ -20,14 +20,14 @@
 */
 import {
   ValidatorFactoryBase
-} from './base'
+} from './validator-base'
 import type {
   JsonqlValidationPlugin,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
   JsonqlPropertyParamMap,
-} from '../types'
+} from './types'
 /* import {
   JsonqlValidationError
 } from '@jsonql/errors' */
@@ -63,20 +63,20 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     this._registerPlugin(name, plugin)
   }
 
-  /** allow dev to register their error messages */
-  /*
-  registerErrorMessages(messages: Array<Array<string>>): void {
-    // @TODO need to check the format
-    this._errorMessages = messages
-  }
-  */
-
   /** create an alias for createSchema (and replace it later ) because ii make more sense */
   addValidationRules(
     validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
   ): void {
     this._createSchema(validationMap)
   }
+
+  /** map the developer defined error messages */
+  /*
+  mapErrorMessages(error: JsonqlValidationError) {
+    debug(this._errorMessages, error)
+  }
+  */
+
   /** this is where validation happens */
   async validate(values: Array<unknown>, raw = false) {
     debug(`raw flag`, raw)
@@ -111,10 +111,5 @@ export class ValidatorFactory extends ValidatorFactoryBase {
             .then(unwrapPreparedValidateResult)
   }
 
-  /** map the developer defined error messages */
-  /*
-  private async _mapErrorMessages(error: JsonqlValidationError) {
-    debug(this._errorMessages, error)
-  }
-  */
+
 }

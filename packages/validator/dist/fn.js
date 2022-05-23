@@ -4,7 +4,7 @@ exports.checkDuplicateRules = exports.patternPluginFanctory = exports.pluginHasF
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("@jsonql/constants");
-const constants_2 = require("../constants");
+const constants_2 = require("./constants");
 const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -24,6 +24,7 @@ because the plugins are apply there
 */
 function createAutomaticRules(astMap) {
     return astMap.map((ast) => {
+        // process the rest
         const { name } = ast;
         const ruleFn = getValidateRules(ast);
         const ruleName = ast[constants_1.TS_TYPE_NAME] || ast.type;
@@ -141,7 +142,7 @@ function unwrapPreparedValidateResult(result // can not use unknown here
     });
 }
 exports.unwrapPreparedValidateResult = unwrapPreparedValidateResult;
-/** only deal with constructing the basic rules validation fucntion */
+/** only deal with constructing the basic rules validation function */
 function getValidateRules(ast) {
     debug('getValidateRules ast', ast);
     switch (ast[constants_1.TS_TYPE_NAME]) {

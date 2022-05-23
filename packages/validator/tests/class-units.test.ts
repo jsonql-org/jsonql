@@ -5,7 +5,7 @@ import { join } from 'path'
 import { showDeep } from '@jsonql/utils'
 import {
   createAutomaticRules
-} from '../src/class/fn'
+} from '../src/fn'
 import {
   ValidatorFactory
 } from '../dist'

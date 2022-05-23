@@ -1,1 +1,1 @@
-export { ValidatorFactory } from './class';
+export { ValidatorFactory } from './validator-factory';

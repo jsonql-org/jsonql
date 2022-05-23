@@ -8,7 +8,7 @@ import type {
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
   JsonqlValidateFn,
-} from '../types'
+} from './types'
 import type {
   JsonqlPluginInput,
   JsonqlPluginConfig
@@ -61,7 +61,7 @@ import {
   NAME_KEY,
   PARAMS_KEY,
   SPREAD_PREFIX,
-} from '../constants'
+} from './constants'
 // ---- DEBUG ---- //
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:base')
@@ -88,7 +88,7 @@ export class ValidatorFactoryBase {
   // main
   constructor(astMap: Array<JsonqlPropertyParamMap>) {
     this._astWithBaseRules = createAutomaticRules(astMap)
-    // create the argument list in order
+    // create the argument name list in order
     this._arguments = this._astWithBaseRules.map(rule => rule[NAME_KEY])
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
@@ -231,11 +231,11 @@ export class ValidatorFactoryBase {
     return astMap.map((ast: JsonqlPropertyParamMap, i: number) => {
       if (arrayInput[i]) { // the user didn't provide additonal rules
         const input2 = this._transformInput(arrayInput[i], ast.name)
-        /*
-        @TODO at this point ast[RULES_KEY] has the rule generated
-        when this is run with a js file there won't be any type info
-        so the first rule could provide the "override" and "type"
-        then we need to override it with the type
+        /**
+        @TODO
+        We took the info and create the function but we need to keep
+        the original input and store into the astMap.org field for generate
+        contract later
         */
         if (input2) {
           ast[RULES_KEY] = ast[RULES_KEY]?.concat(input2)
@@ -354,11 +354,17 @@ export class ValidatorFactoryBase {
         }
       }
       if (!pluginHasFunc(pluginConfig)) {
-        throw new JsonqlError(`Can not find any executable within your plugin config`)
+        throw new JsonqlError(`Can not find any executable definition within your plugin config`)
       }
     }
     // put the name back in
     pluginConfig.name = name
+    /**
+    Here is a problem, when we need to add this to the contract
+    the info here is already constructed for running with validation
+    which is not suitable to transport over the wire, we need to
+    go higher (register via file base) to add such info
+    */
     switch (true) {
       // this rule is not really in use but keep here for future
       case (!pluginConfig[VALIDATE_ASYNC_KEY] &&
@@ -389,7 +395,7 @@ export class ValidatorFactoryBase {
 
   /**
    We need to keep this library light and can be use in browser / server
-   therefore we deligate this import to a external module also by doing so
+   therefore we delegate this import to a external module also by doing so
    we can transport the rules across from server to client
   */
   public importValidationFunction(payload: {[key: string]: unknown}) {

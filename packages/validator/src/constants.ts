@@ -12,6 +12,7 @@ export const PATTERN_KEY = 'pattern'
 export const RULES_KEY = 'rules'
 export const NAME_KEY = 'name'
 export const PARAMS_KEY = 'params'
+export const ORG_KEY = 'org'
 // just to avoid the name collision
 export const IDX_KEY = '$$idx'
 export const VALUE_KEY = '$$value'

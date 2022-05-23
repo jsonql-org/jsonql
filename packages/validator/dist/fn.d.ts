@@ -1,4 +1,4 @@
-import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject, JsonqlValidationRule } from '../types';
+import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject, JsonqlValidationRule } from './types';
 /**
 The input is what the dev wrote in the validate
 The input has two styles

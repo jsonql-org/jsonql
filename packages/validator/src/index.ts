@@ -2,4 +2,4 @@
 // class method
 export {
   ValidatorFactory
-} from './class'
+} from './validator-factory'

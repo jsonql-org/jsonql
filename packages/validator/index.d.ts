@@ -12,7 +12,7 @@ export type DescriptorMeta = {
 }
 
 export declare type JsonqlGenericObject = {
-  [key: string]: any
+  [key: string]: any // for generic object still need to use any for now
 }
 // @TODO this should move to the validator-config package
 export declare type JsonqlConfigParams = {

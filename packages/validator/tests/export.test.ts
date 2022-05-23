@@ -30,7 +30,6 @@ test(`Should able to generate a validaton map for contract to use`, t => {
 
   const schema = api.export()
 
-  console.dir(schema, { depth: null })
-
-  t.pass()
+  // console.dir(schema, { depth: null })
+  t.truthy(schema)
 })

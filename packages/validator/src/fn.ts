@@ -5,7 +5,7 @@ import type {
   JsonqlValidateFn,
   JsonqlGenericObject,
   JsonqlValidationRule,
-} from '../types'
+} from './types'
 import {
   checkString,
   checkArray,
@@ -33,7 +33,7 @@ import {
   IDX_KEY,
   VALUE_KEY,
   IS_SPREAD_VALUES_KEY,
-} from '../constants'
+} from './constants'
 import {
   JsonqlValidationError,
   // JsonqlError,
@@ -67,6 +67,8 @@ export function createAutomaticRules(
   astMap: Array<JsonqlPropertyParamMap>
 ): Array<JsonqlPropertyParamMap> {
   return astMap.map((ast: JsonqlPropertyParamMap) => {
+
+    // process the rest
     const { name } = ast
     const ruleFn = getValidateRules(ast)
     const ruleName = ast[TS_TYPE_NAME] || ast.type
@@ -191,7 +193,7 @@ export async function unwrapPreparedValidateResult(
   return result // nothing to do should be all correct
 }
 
-/** only deal with constructing the basic rules validation fucntion */
+/** only deal with constructing the basic rules validation function */
 function getValidateRules(ast: JsonqlPropertyParamMap): JsonqlValidateFn {
   debug('getValidateRules ast', ast)
   switch (ast[TS_TYPE_NAME]) {
