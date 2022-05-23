@@ -36,7 +36,7 @@ export declare type JsonqlValidationPlugin = {
   name?: string
   main?: CallbackFunction<T> // after transform the plugin we remove it from the object
   params?: Array<string>
-  pattern?: string | RegExp
+  pattern?: string | RegExp // should this be a string only for transport?
   // plugin?: string
   // we apply the JSON Schema validation here
   server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only

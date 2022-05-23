@@ -107,7 +107,7 @@ export class ValidatorFactoryBase {
     return this._schema || this._astWithBaseRules
   }
 
-  /** @TODO map the index array to name */
+  /** @TODO map the index array to dev speify error messages? */
   protected get errors() {
     return this._errors || null
   }
@@ -141,7 +141,6 @@ export class ValidatorFactoryBase {
         debug(`Values pass less than params`)
         return params.map((param, i) => {
           const _value = getOptionalValue(values[i], param)
-
           return this._prepareForExecution(_value, param, i)
         })
       case vCtn > pCtn: // this is the spread style argument
@@ -172,7 +171,7 @@ export class ValidatorFactoryBase {
   /**
     at this point we actually put the rules in the queue
     but we dont' run it yet until all rules are in the main queue
-    this way, if one fail then the whole queue exited without running
+    this way, if one fail then the whole queue exited without running further
   */
   private _prepareForExecution(
     value: unknown,
@@ -191,8 +190,7 @@ export class ValidatorFactoryBase {
             successThen(name, value, lastResult, [idx, i])(true)
           )
         }
-
-        // when it fail then we provide with the index number
+        // when it fail then we return the index number
         return async (lastResult: JsonqlGenericObject) =>
           Reflect.apply(rule, null, [value, lastResult, [idx, i]])
             .then((result: unknown) => {
@@ -273,7 +271,7 @@ export class ValidatorFactoryBase {
 
   /** this will transform the rules to executable */
   private _transformInput(
-    input: Array<JsonqlValidationRule>,
+    input: Array<JsonqlValidationRule>, // @TODO this could be just a name (string)
     propName: string
   ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
     debug('_transformInput', input)
@@ -379,5 +377,26 @@ export class ValidatorFactoryBase {
         // @TODO more situations
     }
     this._plugins.set(name, pluginConfig)
+  }
+
+  /*
+  private _lookupFunction() {
+    debug('@TODO')
+  }
+  */
+
+  // -------------------- import validation function / plugin ---------------- //
+
+  /**
+   We need to keep this library light and can be use in browser / server
+   therefore we deligate this import to a external module also by doing so
+   we can transport the rules across from server to client
+  */
+  public importValidationFunction(payload: {[key: string]: unknown}) {
+    debug('@TODO allow import function', payload)
+    /*
+    idea the payload should take the format of plugin plus serverOnly field
+    to let use know where to use it
+    */
   }
 }

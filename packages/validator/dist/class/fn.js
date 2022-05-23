@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patternPluginFanctory = exports.pluginHasFunc = exports.checkPluginArg = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
+exports.checkDuplicateRules = exports.patternPluginFanctory = exports.pluginHasFunc = exports.checkPluginArg = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("@jsonql/constants");
@@ -36,13 +36,13 @@ exports.createAutomaticRules = createAutomaticRules;
 /**
 this will get re-use in the class to create method for the queue execution
  */
-function constructRuleCb(name, ruleFn, ruleName) {
-    debug('ruleFn', ruleFn, name);
+function constructRuleCb(argName, ruleFn, ruleName) {
+    debug('ruleFn', ruleFn, argName);
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Reflect.apply(ruleFn, null, [value])
-            .then(successThen(name, value, lastResult, pos))
+            .then(successThen(argName, value, lastResult, pos))
             .catch((error) => {
-            debug('failed', name, value, error, pos);
+            debug('failed', argName, value, error, pos);
             // the name should be the validator name - not the property name
             // because the pos already indicator the property
             return Promise.reject(new errors_1.JsonqlValidationError(ruleName, pos));
@@ -51,31 +51,32 @@ function constructRuleCb(name, ruleFn, ruleName) {
 }
 exports.constructRuleCb = constructRuleCb;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
-function successThen(name, value, lastResult, pos) {
+function successThen(argName, value, lastResult, pos // for internal debug use only
+) {
     return (result) => {
         const idx = pos[0];
-        debug('passed', name, value, result, pos);
+        debug('passed', argName, value, result, pos);
         debug('lastResult', lastResult);
         const newResult = { [constants_2.IDX_KEY]: idx, [constants_2.VALUE_KEY]: value };
         if (lastResult === undefined) { // init
-            return { [name]: newResult };
+            return { [argName]: newResult };
         }
         // here is the problem with spread result - they have the same name
-        if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
-            const lr = lastResult[name];
+        if (argName in lastResult) { // we need to check if the key exist this is import NOT VALUE check
+            const lr = lastResult[argName];
             if (isResultPackage(lr)) {
                 if (!lr.includes(newResult)) {
-                    lastResult[name].push(newResult);
+                    lastResult[argName].push(newResult);
                 }
             }
             else if (lr[constants_2.IDX_KEY] !== idx) {
-                lastResult[name] = (0, utils_1.toArray)(lastResult[name]).concat([newResult]);
+                lastResult[argName] = (0, utils_1.toArray)(lastResult[argName]).concat([newResult]);
             }
             // if it's the same then do nothing
             return lastResult;
         }
         // return the argument name with the value
-        return (0, utils_1.assign)(lastResult, { [name]: newResult });
+        return (0, utils_1.assign)(lastResult, { [argName]: newResult });
     };
 }
 exports.successThen = successThen;
@@ -95,19 +96,19 @@ exports.isResultPackage = isResultPackage;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 function processValidateResults(argNames, validateResult) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        return argNames.map(name => {
-            if (constants_2.VALUE_KEY in validateResult[name]) {
-                return validateResult[name][constants_2.VALUE_KEY];
+        return argNames.map((argName) => {
+            if (constants_2.VALUE_KEY in validateResult[argName]) {
+                return validateResult[argName][constants_2.VALUE_KEY];
             }
-            else if (isResultPackage(validateResult[name])) {
+            else if (isResultPackage(validateResult[argName])) {
                 // @BUG this is still wrong its array wrap in an array
                 // we need to wrap this one more time for the next step
                 return {
-                    [constants_2.IS_SPREAD_VALUES_KEY]: validateResult[name].map((res) => res[constants_2.VALUE_KEY])
+                    [constants_2.IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res) => res[constants_2.VALUE_KEY])
                 };
             }
-            debug(`Return result when we couldn't find way to destruct: ${name}`, validateResult[name]);
-            return validateResult[name];
+            debug(`Return result when we couldn't find way to destruct: ${argName}`, validateResult[argName]);
+            return validateResult[argName];
         });
     });
 }
@@ -230,3 +231,10 @@ function patternPluginFanctory(pattern) {
     });
 }
 exports.patternPluginFanctory = patternPluginFanctory;
+/** check if the rule contain duplicate rules that can not be resolve */
+function checkDuplicateRules(rule) {
+    return [
+        constants_2.VALIDATE_KEY, constants_2.VALIDATE_ASYNC_KEY, constants_2.PLUGIN_FN_KEY // @TODO should pattern be standalone?
+    ].filter((key) => rule[key] !== undefined);
+}
+exports.checkDuplicateRules = checkDuplicateRules;

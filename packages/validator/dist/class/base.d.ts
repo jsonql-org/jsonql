@@ -15,6 +15,7 @@ export declare class ValidatorFactoryBase {
     private _errors;
     protected _arguments: Array<string>;
     constructor(astMap: Array<JsonqlPropertyParamMap>);
+    /** just return the internal schema for validation for use, see export */
     protected get schema(): JsonqlPropertyParamMap[];
     /** @TODO map the index array to name */
     protected get errors(): number[][];

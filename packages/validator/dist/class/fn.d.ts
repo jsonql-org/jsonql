@@ -1,4 +1,4 @@
-import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject } from '../types';
+import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject, JsonqlValidationRule } from '../types';
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -16,9 +16,9 @@ export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamMa
 /**
 this will get re-use in the class to create method for the queue execution
  */
-export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn, ruleName?: string | unknown): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
+export declare function constructRuleCb(argName: string, ruleFn: JsonqlValidateFn, ruleName?: string | unknown): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
-export declare function successThen(name: string, value: unknown, lastResult: JsonqlGenericObject, pos: number[]): (result: unknown) => any;
+export declare function successThen(argName: string, value: unknown, lastResult: JsonqlGenericObject, pos: number[]): (result: unknown) => any;
 /** check to see if the lastResult contain our lastResult package format or just their value */
 export declare function isResultPackage(lastResult: unknown, key?: string): boolean;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
@@ -33,3 +33,5 @@ export declare function checkPluginArg(params: Array<string>): boolean;
 export declare function pluginHasFunc(rule: JsonqlGenericObject): boolean;
 /** If the plugin provide a pattern and we construct a function out of it */
 export declare function patternPluginFanctory(pattern: string): (value: string) => Promise<boolean>;
+/** check if the rule contain duplicate rules that can not be resolve */
+export declare function checkDuplicateRules(rule: JsonqlValidationRule): Array<string>;

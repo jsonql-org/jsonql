@@ -21,7 +21,7 @@ The sequence how this should run
 5. Call the validate method with the data input then the validation will run
 */
 class ValidatorFactoryBase {
-    // @TODO properly type the astMap
+    // main
     constructor(astMap) {
         this._plugins = new Map();
         this._internalPluginNames = [];
@@ -39,6 +39,7 @@ class ValidatorFactoryBase {
             this._registerPlugin(name, plugin, true);
         });
     }
+    /** just return the internal schema for validation for use, see export */
     get schema() {
         return this._schema || this._astWithBaseRules;
     }
@@ -184,6 +185,10 @@ class ValidatorFactoryBase {
     _transformInput(input, propName) {
         debug('_transformInput', input);
         return input.map((_input, i) => {
+            const ruleKeys = (0, fn_1.checkDuplicateRules)(_input);
+            if (ruleKeys.length > 1) {
+                throw new Error(`You can only set one rule at a time! We found ${ruleKeys.join(',')}`);
+            }
             // the name is not that important but still need one, if there is none we generate it
             const pluginName = _input.name || `customPluginName${i}`;
             switch (true) {
