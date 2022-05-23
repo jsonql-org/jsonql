@@ -16,7 +16,7 @@ test(`Testing with the spread argument function first`,  async t => {
   const obj = new ValidatorFactory(json.spread)
 
   return obj.validate(['a', '1', 'c'])
-            .then(result => {
+            .then(() => {
               // console.log('success', result)
               t.pass()
             })
@@ -34,7 +34,7 @@ test(`Test a function with normal argument with spread argument`, async t => {
 
   return obj.validate([100, 'a', 'b', 'c'])
             .then(result => {
-              console.log(result)
+              // console.log(result)
               t.truthy(result)
             })
 

@@ -34,7 +34,7 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
     /** this is where validation happens */
     validate(values: Array<unknown>, raw?: boolean): Promise<any>;
     /** this will export the map for generate contract */
-    export(server?: boolean): void;
+    export(server?: boolean): JsonqlPropertyParamMap[];
     /** After the validation the success will get an object with
     argumentName: value object and we make it to an array matching
     the order of the call, then we can pass it directly to method that

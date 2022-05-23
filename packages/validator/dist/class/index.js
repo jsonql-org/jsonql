@@ -71,6 +71,7 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     /** this will export the map for generate contract */
     export(server = false) {
         console.log(`@TODO`, server);
+        return this.schema;
     }
     /** After the validation the success will get an object with
     argumentName: value object and we make it to an array matching

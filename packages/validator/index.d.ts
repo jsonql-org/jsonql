@@ -68,13 +68,13 @@ export type JsonqlObjectValidateInput = {
   [argName: string]: JsonqlValidationRule | Array<JsonqlValidationRule>
 }
 
-export type JsonqlValidateFn = AsyncCallbackFunction<any, boolean>
+export type JsonqlValidateFn = AsyncCallbackFunction<unknown, boolean>
 
 export type JsonqlValidateCbFn = (
-  value: any,
+  value: unknown,
   lastResult: JsonqlGenericObject,
   pos: number[]
-) => Promise<any>
+) => Promise<unknown>
 
 export type JsonqlPropertyParamMap = {
   name: string // the argument name
@@ -82,10 +82,11 @@ export type JsonqlPropertyParamMap = {
   type: unknown
   // rules get contractured the moment we init the object
   rules?: Array<JsonqlValidateCbFn> = []
+  rulesMeta?: Array<unknown>
   tstype?: string
   types?: unknown
-  optional?: boolean // alias will remove in the future
-  // tmp will be occasionally we MIGHT have to store it
+  optional?: boolean // this alias will get remove in the future
+  // we MIGHT have to store it the org input for reference later
   tmp?: Array<JsonqlValidationRule>
 }
 
