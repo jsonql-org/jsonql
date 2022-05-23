@@ -40,7 +40,7 @@ Simple ... well, simple idea was never easy to implement. But I manage to create
 and its the core system that drive a (near) real time system that serve up over 7000 handsets in UK, it
 provides near real time railway information for the largest train company in the country.
 
-And lots happens, and kind of stop on the development, but I keep thinking about the short coming of this system,
+Lots happens since, and the development were on and off, but I keep thinking about the short coming of this system,
 namely the socket part and performance, because trying to mix a CORS http system with socket is no easy task.
 
 In V.2 I change the approach from one big system to many smaller parts that provide distinctive feature,

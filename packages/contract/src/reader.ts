@@ -2,6 +2,7 @@
 import { readOnly, accessByPath } from '@jsonql/utils'
 import { JsonqlContractTemplate } from './types'
 import { DATA_KEY, META_KEY, ERROR_KEY } from '@jsonql/constants'
+// @TODO add protobuf 
 
 export class JsonqlContractReader {
   private _contract: JsonqlContractTemplate

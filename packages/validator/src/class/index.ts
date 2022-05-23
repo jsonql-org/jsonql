@@ -26,6 +26,7 @@ import type {
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlGenericObject,
+  JsonqlPropertyParamMap,
 } from '../types'
 /* import {
   JsonqlValidationError
@@ -42,10 +43,8 @@ import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
-  // private _errorMessages: Array<Array<string>> = []
 
-  // @TODO need to properly type this astMap
-  constructor(astMap: any) {
+  constructor(astMap: Array<JsonqlPropertyParamMap>) {
     super(astMap)
   }
   /** accept an object name => plugin in one go */
@@ -79,8 +78,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     this._createSchema(validationMap)
   }
   /** this is where validation happens */
-  async validate(values: Array<any>, raw = false) {
-    debug(`raw`, raw)
+  async validate(values: Array<unknown>, raw = false) {
+    debug(`raw flag`, raw)
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
 
@@ -88,8 +87,8 @@ export class ValidatorFactory extends ValidatorFactoryBase {
       queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
       undefined // the init value will now be undefined to know if its first
     )
-    .then((finalResult: any) =>
-      raw ? finalResult : this._prepareValidateResult(finalResult)
+    .then((finalResult: unknown) =>
+      raw ? finalResult : this._prepareValidateResult(finalResult as JsonqlGenericObject)
     )
   }
 
@@ -104,7 +103,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   get validated */
   private async _prepareValidateResult(
     validateResult: JsonqlGenericObject
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     debug('validateResult', this._arguments, validateResult)
     // @TODO need to fix the spread input type return result
     return processValidateResults(this._arguments, validateResult)

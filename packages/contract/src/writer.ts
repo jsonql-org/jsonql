@@ -1,5 +1,6 @@
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
+// @TODO add protobuf
 import { join } from 'node:path'
 import {
   outputJson,
@@ -134,5 +135,4 @@ export class JsonqlContractWriter {
                 .then(() => dest)
     }))
   }
-
 }

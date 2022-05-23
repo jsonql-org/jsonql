@@ -82,11 +82,11 @@ this will get re-use in the class to create method for the queue execution
 export function constructRuleCb(
   name: string,
   ruleFn: JsonqlValidateFn,
-  ruleName?: string
+  ruleName?: string | unknown
 ) {
   debug('ruleFn', ruleFn, name)
   return async (
-    value: any,
+    value: unknown,
     lastResult: JsonqlGenericObject,
     pos: number[]
   ) => Reflect.apply(ruleFn, null, [value])
@@ -104,11 +104,11 @@ export function constructRuleCb(
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 export function successThen(
   name: string,
-  value: any,
+  value: unknown,
   lastResult: JsonqlGenericObject,
   pos: number[]
 ) {
-  return (result: any) => {
+  return (result: unknown) => {
     const idx = pos[0]
     debug('passed', name, value, result, pos)
     debug('lastResult', lastResult)
@@ -135,12 +135,12 @@ export function successThen(
 }
 
 /** check to see if the lastResult contain our lastResult package format or just their value */
-export function isResultPackage(lastResult: any, key = IDX_KEY) {
+export function isResultPackage(lastResult: unknown, key = IDX_KEY) {
   try {
     if (Array.isArray(lastResult)) {
-      return !!lastResult.filter((res: any) => key in res).length
+      return !!lastResult.filter((res: {[key: string]: unknown}) => key in res).length
     }
-  } catch(e) {}
+  } catch(e) { debug('isResultPackage', e) }
 
   return false
 }
@@ -157,24 +157,27 @@ export async function processValidateResults(
       // @BUG this is still wrong its array wrap in an array
       // we need to wrap this one more time for the next step
       return {
-        [IS_SPREAD_VALUES_KEY]: validateResult[name].map((res: any) => res[VALUE_KEY])
+        [IS_SPREAD_VALUES_KEY]: validateResult[name].map((res: {[key: string]: unknown}) => res[VALUE_KEY])
       }
     }
-    debug(`Result when we couldn't find way to destruct: ${name}`, validateResult[name])
+    debug(`Return result when we couldn't find way to destruct: ${name}`, validateResult[name])
     return validateResult[name]
   })
 }
 
 /** final step to unwarp the pack result for spread arguments */
+// @NOTE there is a potential bug here when the spread type is Array<Array<any>>
+// then when we use in the velocejs we flatMap and all the Array inside get flattern
+// then again using spread with this wild open types is really BAD API design
 export async function unwrapPreparedValidateResult(
-  result: Array<any>
+  result: Array<any> // can not use unknown here
 ) {
   debug('unwrapPreparedValidateResult', result)
   const ctn = result.length
   if (ctn === 1 && objectHasKey(result[0], IS_SPREAD_VALUES_KEY)) {
     return result[0][IS_SPREAD_VALUES_KEY]
   } else if (isResultPackage(result, IS_SPREAD_VALUES_KEY)) {
-    let tmp: any[] = []
+    let tmp: unknown[] = []
     for (let i = 0; i < ctn; ++i) {
       if (IS_SPREAD_VALUES_KEY in result[i]) {
         tmp = tmp.concat(result[i][IS_SPREAD_VALUES_KEY])
@@ -188,38 +191,39 @@ export async function unwrapPreparedValidateResult(
 }
 
 /** only deal with constructing the basic rules validation fucntion */
-function getValidateRules(ast: any): JsonqlValidateFn {
+function getValidateRules(ast: JsonqlPropertyParamMap): JsonqlValidateFn {
+  debug('getValidateRules ast', ast)
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
-      return async function unionFn(value: any) {
-        return checkUnion(value, ast.type)
+      return async function unionFn(value: unknown) {
+        return checkUnion(value, ast.type as string[])
       }
     case TS_ARRAY_TYPE || SPREAD_ARG_TYPE:
       // need to apply for the type as well
        // @TODO need to examine the input to see what more sutation could come up
-      return async function arrayFn(value: Array<any>) {
+      return async function arrayFn(value: Array<unknown>) {
         return promisify(checkArray)(value, ast.types)
       }
     case TS_TYPE_REF || TS_TYPE_LIT:
     // @TODO should this get a special treatment
-      return async function anyFn(value: any) {
+      return async function anyFn(value: unknown) {
         return promisify(checkAny)(value)
       }
     case SPREAD_ARG_TYPE: // we need to create rule for this one, its been wrong rule
-      return async function combineFn(value: any) {
-        return promisify(combineCheck(ast.types))(value)
+      return async function combineFn(value: unknown) {
+        return promisify(combineCheck(ast.types as string))(value)
       }
     default: // no tstype then should be primitive
       if (checkString(ast.type)) {
         debug('validation type', ast.type)
-        return async function combineFn(value: any) {
-          return promisify(combineCheck(ast.type))(value)
+        return async function combineFn(value: unknown) {
+          return promisify(combineCheck(ast.type as string))(value)
         }
       }
       // if both are not presented that means this could be a JS code
       // this happen when we use Decorator and toString() to extract the ast
       debug(`getValidateRules`, ast)
-      return async function emptyFn(value: any) {
+      return async function emptyFn(value: unknown) {
         return promisify(notEmpty)(value, true)
       }
   }
@@ -227,7 +231,7 @@ function getValidateRules(ast: any): JsonqlValidateFn {
 
 /** extract the default value if there is none */
 export function getOptionalValue(
-  arg: any,
+  arg: unknown,
   param: JsonqlGenericObject
 ) {
   // should be the value undefined then search for defaultvalue

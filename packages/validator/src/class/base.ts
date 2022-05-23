@@ -118,7 +118,7 @@ export class ValidatorFactoryBase {
     correspond to out map, and apply the values
     argument values turn into an executable queue
   */
-  protected _normalizeArgValues(values: any[]) {
+  protected _normalizeArgValues(values: unknown[]) {
     debug('_normalizeArgValues', values)
     // there might not be a dev provided schema
     const params = this.schema
@@ -153,7 +153,7 @@ export class ValidatorFactoryBase {
 
   /** The spread or mix with spread argument is too complicated to process in couple lines */
   private _processSpreadLikeArg(
-    values: any[],
+    values: unknown[],
     params: Array<JsonqlPropertyParamMap>
   ) {
     // if it's spread only then there should be just one param
@@ -174,7 +174,7 @@ export class ValidatorFactoryBase {
     this way, if one fail then the whole queue exited without running
   */
   private _prepareForExecution(
-    value: any,
+    value: unknown,
     param: JsonqlPropertyParamMap,
     idx: number
   ) {
@@ -194,7 +194,7 @@ export class ValidatorFactoryBase {
         // when it fail then we provide with the index number
         return async (lastResult: JsonqlGenericObject) =>
           Reflect.apply(rule, null, [value, lastResult, [idx, i]])
-            .then((result: any) => {
+            .then((result: unknown) => {
               debug('Post rule result', result)
               return result
             })
@@ -276,14 +276,15 @@ export class ValidatorFactoryBase {
     propName: string
   ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
     debug('_transformInput', input)
-    return input.map((_input: JsonqlValidationRule) => {
-      const pluginName = _input.name
+    return input.map((_input: JsonqlValidationRule, i: number) => {
+      // the name is not that important but still need one, if there is none we generate it
+      const pluginName = _input.name || `customPluginName${i}`
       switch (true) {
         case _input[PLUGIN_KEY] !== undefined:
           debug(`Should got here`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input, propName)
         case _input[VALIDATE_KEY] !== undefined:
-          // @TODO need to transform this
+          // @TODO need to able to take in a file path as well
           return constructRuleCb(
             propName,
             promisify(_input[VALIDATE_KEY]),
@@ -303,6 +304,7 @@ export class ValidatorFactoryBase {
 
   /// ----------------------- PLUGINS ----------------------- ///
 
+  /** find the plugin internal or external */
   private _lookupPlugin(
     input: JsonqlValidationRule,
     propName: string
