@@ -4,6 +4,7 @@ import type {
   JsonqlPropertyParamMap,
   JsonqlValidateFn,
   JsonqlGenericObject,
+  JsonqlValidationRule,
 } from '../types'
 import {
   checkString,
@@ -80,21 +81,21 @@ export function createAutomaticRules(
 this will get re-use in the class to create method for the queue execution
  */
 export function constructRuleCb(
-  name: string,
+  argName: string,
   ruleFn: JsonqlValidateFn,
   ruleName?: string | unknown
 ) {
-  debug('ruleFn', ruleFn, name)
+  debug('ruleFn', ruleFn, argName)
   return async (
     value: unknown,
     lastResult: JsonqlGenericObject,
     pos: number[]
   ) => Reflect.apply(ruleFn, null, [value])
                 .then(
-                  successThen(name, value, lastResult, pos)
+                  successThen(argName, value, lastResult, pos)
                 )
                 .catch((error: boolean) => {
-                  debug('failed', name, value, error, pos)
+                  debug('failed', argName, value, error, pos)
                   // the name should be the validator name - not the property name
                   // because the pos already indicator the property
                   return Promise.reject(new JsonqlValidationError(ruleName, pos))
@@ -103,34 +104,34 @@ export function constructRuleCb(
 
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 export function successThen(
-  name: string,
+  argName: string,
   value: unknown,
   lastResult: JsonqlGenericObject,
-  pos: number[]
+  pos: number[] // for internal debug use only
 ) {
   return (result: unknown) => {
     const idx = pos[0]
-    debug('passed', name, value, result, pos)
+    debug('passed', argName, value, result, pos)
     debug('lastResult', lastResult)
     const newResult = { [IDX_KEY]: idx, [VALUE_KEY]: value }
     if (lastResult === undefined) { // init
-      return {[name]: newResult }
+      return {[argName]: newResult }
     }
     // here is the problem with spread result - they have the same name
-    if (name in lastResult) { // we need to check if the key exist this is import NOT VALUE check
-      const lr = lastResult[name]
+    if (argName in lastResult) { // we need to check if the key exist this is import NOT VALUE check
+      const lr = lastResult[argName]
       if (isResultPackage(lr) ) {
         if (!lr.includes(newResult)) {
-          lastResult[name].push(newResult)
+          lastResult[argName].push(newResult)
         }
       } else if (lr[IDX_KEY] !== idx) {
-        lastResult[name] = toArray(lastResult[name]).concat([ newResult ])
+        lastResult[argName] = toArray(lastResult[argName]).concat([ newResult ])
       }
       // if it's the same then do nothing
       return lastResult
     }
     // return the argument name with the value
-    return assign(lastResult, { [name]: newResult })
+    return assign(lastResult, { [argName]: newResult })
   }
 }
 
@@ -150,18 +151,18 @@ export async function processValidateResults(
   argNames: Array<string>,
   validateResult: JsonqlGenericObject
 ) {
-  return argNames.map(name => {
-    if (VALUE_KEY in validateResult[name]) {
-      return validateResult[name][VALUE_KEY]
-    } else if (isResultPackage(validateResult[name])) {
+  return argNames.map((argName: string) => {
+    if (VALUE_KEY in validateResult[argName]) {
+      return validateResult[argName][VALUE_KEY]
+    } else if (isResultPackage(validateResult[argName])) {
       // @BUG this is still wrong its array wrap in an array
       // we need to wrap this one more time for the next step
       return {
-        [IS_SPREAD_VALUES_KEY]: validateResult[name].map((res: {[key: string]: unknown}) => res[VALUE_KEY])
+        [IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res: {[key: string]: unknown}) => res[VALUE_KEY])
       }
     }
-    debug(`Return result when we couldn't find way to destruct: ${name}`, validateResult[name])
-    return validateResult[name]
+    debug(`Return result when we couldn't find way to destruct: ${argName}`, validateResult[argName])
+    return validateResult[argName]
   })
 }
 
@@ -273,4 +274,11 @@ export function patternPluginFanctory(
                                     Promise.resolve(true) :
                                     Promise.reject(false)
 
+}
+
+/** check if the rule contain duplicate rules that can not be resolve */
+export function checkDuplicateRules(rule: JsonqlValidationRule): Array<string> {
+  return [
+    VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY // @TODO should pattern be standalone?
+  ].filter((key: string) => rule[key] !== undefined)
 }

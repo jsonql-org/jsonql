@@ -47,6 +47,7 @@ import {
   successThen,
   checkPluginArg,
   pluginHasFunc,
+  checkDuplicateRules,
 } from './fn'
 import {
   ARGS_NOT_ARRAY_ERR,
@@ -277,6 +278,10 @@ export class ValidatorFactoryBase {
   ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
     debug('_transformInput', input)
     return input.map((_input: JsonqlValidationRule, i: number) => {
+      const ruleKeys = checkDuplicateRules(_input)
+      if (ruleKeys.length > 1) {
+        throw new Error(`You can only set one rule at a time! We found ${ruleKeys.join(',')}`)
+      }
       // the name is not that important but still need one, if there is none we generate it
       const pluginName = _input.name || `customPluginName${i}`
       switch (true) {

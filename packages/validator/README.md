@@ -218,8 +218,6 @@ All the function(s) expect a true / false `boolean` return result and nothing el
 
 Next will explain more when we use with our jsonql / velocejs system, and how you can fine tune your client / server side validation.
 
-
-
 ## Server side only validation rule
 
 **@TODO will be available in next release**
@@ -227,7 +225,7 @@ Next will explain more when we use with our jsonql / velocejs system, and how yo
 By default, all your inline plugin, `validate`, `validateAsync` function will treat as `server: true`
 what that means is, when using our jsonql / velocejs system, the contract will not contain (@TODO in the next release) those validation info.
 
-The reason is, very often on a SPA system, you validate user input on your <abbr title="User Interface">UI</abbr> once then the same rule will run again on the server side. Which is a lot of duplicate, and in our example about validate a email address, you might want to do some server side only check (i.e. check against the database). We provide this mapping to separate rules for front end / back end. Hence improve the overall performance.  
+The reason is, very often on a SPA system, you validate user input on your <abbr title="User Interface">UI</abbr> once then the same rule will run again on the server side. Which is a lot of duplication; and in our example about validate an email address, you might want to do some server side only check (i.e. check against the database). We provide this mapping to separate rules for front end / back end.
 
 More to come.
 
