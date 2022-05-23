@@ -19,9 +19,9 @@
   @TODO how to integrete this into the contract generator
 */
 import { ValidatorFactoryBase } from './base';
-import type { JsonqlValidationPlugin, JsonqlArrayValidateInput, JsonqlObjectValidateInput } from '../types';
+import type { JsonqlValidationPlugin, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlPropertyParamMap } from '../types';
 export declare class ValidatorFactory extends ValidatorFactoryBase {
-    constructor(astMap: any);
+    constructor(astMap: Array<JsonqlPropertyParamMap>);
     /** accept an object name => plugin in one go */
     registerPlugins(plugins: {
         [name: string]: JsonqlValidationPlugin;
@@ -32,7 +32,7 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
     /** this is where validation happens */
-    validate(values: Array<any>, raw?: boolean): Promise<any>;
+    validate(values: Array<unknown>, raw?: boolean): Promise<any>;
     /** this will export the map for generate contract */
     export(server?: boolean): void;
     /** After the validation the success will get an object with

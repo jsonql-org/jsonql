@@ -1,15 +1,15 @@
 // configuration
 
+export declare type CallbackFunction<T> = (...args: T[]) => boolean
+
+export declare type AsyncCallbackFunction<T> = (...args: T[]) => Promise<boolean>
+
 export type DescriptorMeta = {
-  value?: function
+  value?: (...args: any[]) => any
   writable?: boolean
   enumerable?: boolean
   configurable?: boolean
 }
-
-export declare type CallbackFunction<T,O> = (...args: T[]) => O
-
-export declare type AsyncCallbackFunction<T,O> = (...args: T[]) => Promise<O>
 
 export declare type JsonqlGenericObject = {
   [key: string]: any
@@ -19,7 +19,7 @@ export declare type JsonqlConfigParams = {
   enumv?: any[]
   required?: boolean
   optional?: boolean // opposite alias of required
-  checker?: CallbackFunction,
+  checker?: CallbackFunction<T>,
   alias?: string
 }
 
@@ -34,14 +34,14 @@ export type JsonqlConstantProps = JsonqlConfigBase
 
 export declare type JsonqlValidationPlugin = {
   name?: string
-  main?: CallbackFunction<any, boolean> // after transform the plugin we remove it from the object
+  main?: CallbackFunction<T> // after transform the plugin we remove it from the object
   params?: Array<string>
   pattern?: string | RegExp
   // plugin?: string
   // we apply the JSON Schema validation here
   server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only
-  validate?: CallbackFunction<any, boolean>
-  validateAsync?: AsyncCallbackFunction<any, boolean>
+  validate?: CallbackFunction<T>
+  validateAsync?: AsyncCallbackFunction<T>
   [key: string]: any
 }
 
@@ -55,8 +55,8 @@ export declare type JsonqlValidationRule = {
   plugin?: string
   value?: any // if the rule require a value to compare, normaly it should be a number
   server?: boolean // mark if this is a server side only rules
-  validate?: CallbackFunction<any, boolean> // apply a function
-  validateAsync?: AsyncCallbackFunction<any, boolean>
+  validate?: CallbackFunction<T> // apply a function
+  validateAsync?: AsyncCallbackFunction<T>
   override?: boolean
   [key: string]: any // free form to apply the plugins
 }
@@ -79,11 +79,11 @@ export type JsonqlValidateCbFn = (
 export type JsonqlPropertyParamMap = {
   name: string // the argument name
   required: boolean
-  type: any
+  type: unknown
   // rules get contractured the moment we init the object
-  rules: Array<JsonqlValidateCbFn> = []
+  rules?: Array<JsonqlValidateCbFn> = []
   tstype?: string
-  types?: any
+  types?: unknown
   optional?: boolean // alias will remove in the future
   // tmp will be occasionally we MIGHT have to store it
   tmp?: Array<JsonqlValidationRule>
@@ -96,7 +96,7 @@ export type JsonqlClassValidationMap = {
 // wrap the last result in this structure for processing
 export type JsonqlLastResult = {
   $$idx: number
-  $$value: any
+  $$value: unknown
 }
 
 export interface JsonqlCheckObjectKeys {

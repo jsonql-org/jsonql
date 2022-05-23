@@ -86,7 +86,9 @@ function isResultPackage(lastResult, key = constants_2.IDX_KEY) {
             return !!lastResult.filter((res) => key in res).length;
         }
     }
-    catch (e) { }
+    catch (e) {
+        debug('isResultPackage', e);
+    }
     return false;
 }
 exports.isResultPackage = isResultPackage;
@@ -104,14 +106,18 @@ function processValidateResults(argNames, validateResult) {
                     [constants_2.IS_SPREAD_VALUES_KEY]: validateResult[name].map((res) => res[constants_2.VALUE_KEY])
                 };
             }
-            debug(`Result when we couldn't find way to destruct: ${name}`, validateResult[name]);
+            debug(`Return result when we couldn't find way to destruct: ${name}`, validateResult[name]);
             return validateResult[name];
         });
     });
 }
 exports.processValidateResults = processValidateResults;
 /** final step to unwarp the pack result for spread arguments */
-function unwrapPreparedValidateResult(result) {
+// @NOTE there is a potential bug here when the spread type is Array<Array<any>>
+// then when we use in the velocejs we flatMap and all the Array inside get flattern
+// then again using spread with this wild open types is really BAD API design
+function unwrapPreparedValidateResult(result // can not use unknown here
+) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         debug('unwrapPreparedValidateResult', result);
         const ctn = result.length;
@@ -136,6 +142,7 @@ function unwrapPreparedValidateResult(result) {
 exports.unwrapPreparedValidateResult = unwrapPreparedValidateResult;
 /** only deal with constructing the basic rules validation fucntion */
 function getValidateRules(ast) {
+    debug('getValidateRules ast', ast);
     switch (ast[constants_1.TS_TYPE_NAME]) {
         case constants_1.TS_UNION_TYPE:
             return function unionFn(value) {

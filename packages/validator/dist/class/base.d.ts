@@ -23,7 +23,7 @@ export declare class ValidatorFactoryBase {
       correspond to out map, and apply the values
       argument values turn into an executable queue
     */
-    protected _normalizeArgValues(values: any[]): (((lastResult: JsonqlGenericObject) => Promise<any>)[] | (() => Promise<boolean>))[];
+    protected _normalizeArgValues(values: unknown[]): (((lastResult: JsonqlGenericObject) => Promise<any>)[] | (() => Promise<boolean>))[];
     /** The spread or mix with spread argument is too complicated to process in couple lines */
     private _processSpreadLikeArg;
     /**
@@ -40,6 +40,7 @@ export declare class ValidatorFactoryBase {
     private _applyObjectInput;
     /** this will transform the rules to executable */
     private _transformInput;
+    /** find the plugin internal or external */
     private _lookupPlugin;
     /** register plugins */
     protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;

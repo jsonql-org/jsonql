@@ -33,8 +33,6 @@ const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
 class ValidatorFactory extends base_1.ValidatorFactoryBase {
-    // private _errorMessages: Array<Array<string>> = []
-    // @TODO need to properly type this astMap
     constructor(astMap) {
         super(astMap);
     }
@@ -62,7 +60,7 @@ class ValidatorFactory extends base_1.ValidatorFactoryBase {
     /** this is where validation happens */
     validate(values, raw = false) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            debug(`raw`, raw);
+            debug(`raw flag`, raw);
             // this come out with a queue then we put into the chainProcessPromises
             const queues = this._normalizeArgValues(values);
             return (0, utils_1.queuePromisesProcess)(queues, undefined // the init value will now be undefined to know if its first

@@ -239,7 +239,7 @@ export class ValidatorFactoryBase {
         then we need to override it with the type
         */
         if (input2) {
-          ast[RULES_KEY] = ast[RULES_KEY].concat(input2)
+          ast[RULES_KEY] = ast[RULES_KEY]?.concat(input2)
         }
       }
       return ast
@@ -263,7 +263,7 @@ export class ValidatorFactoryBase {
         const rules = this._transformInput(_input, propName)
         // debug('ast[RULES_KEY]', ast[RULES_KEY])
         if (rules && rules.length) {
-          ast[RULES_KEY] = ast[RULES_KEY].concat(rules)
+          ast[RULES_KEY] = ast[RULES_KEY]?.concat(rules)
         }
       }
       return ast

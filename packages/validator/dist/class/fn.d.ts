@@ -16,17 +16,17 @@ export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamMa
 /**
 this will get re-use in the class to create method for the queue execution
  */
-export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn, ruleName?: string): (value: any, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
+export declare function constructRuleCb(name: string, ruleFn: JsonqlValidateFn, ruleName?: string | unknown): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
-export declare function successThen(name: string, value: any, lastResult: JsonqlGenericObject, pos: number[]): (result: any) => any;
+export declare function successThen(name: string, value: unknown, lastResult: JsonqlGenericObject, pos: number[]): (result: unknown) => any;
 /** check to see if the lastResult contain our lastResult package format or just their value */
-export declare function isResultPackage(lastResult: any, key?: string): boolean;
+export declare function isResultPackage(lastResult: unknown, key?: string): boolean;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 export declare function processValidateResults(argNames: Array<string>, validateResult: JsonqlGenericObject): Promise<any[]>;
 /** final step to unwarp the pack result for spread arguments */
 export declare function unwrapPreparedValidateResult(result: Array<any>): Promise<any>;
 /** extract the default value if there is none */
-export declare function getOptionalValue(arg: any, param: JsonqlGenericObject): any;
+export declare function getOptionalValue(arg: unknown, param: JsonqlGenericObject): any;
 /** check plugin argument */
 export declare function checkPluginArg(params: Array<string>): boolean;
 /** check if the actually provide a func or pattern to construct function */

@@ -144,6 +144,7 @@ class ValidatorFactoryBase {
         const arrayInput = input.map(utils_1.toArray);
         // We just need to take the validate methods and concat to the rules here
         return astMap.map((ast, i) => {
+            var _a;
             if (arrayInput[i]) { // the user didn't provide additonal rules
                 const input2 = this._transformInput(arrayInput[i], ast.name);
                 /*
@@ -153,7 +154,7 @@ class ValidatorFactoryBase {
                 then we need to override it with the type
                 */
                 if (input2) {
-                    ast[constants_2.RULES_KEY] = ast[constants_2.RULES_KEY].concat(input2);
+                    ast[constants_2.RULES_KEY] = (_a = ast[constants_2.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(input2);
                 }
             }
             return ast;
@@ -162,6 +163,7 @@ class ValidatorFactoryBase {
     /** nomalize the object style rules input */
     _applyObjectInput(astMap, input) {
         return astMap.map((ast) => {
+            var _a;
             const propName = ast.name;
             if (input[propName]) {
                 // there might not be a name in there and it's important
@@ -172,7 +174,7 @@ class ValidatorFactoryBase {
                 const rules = this._transformInput(_input, propName);
                 // debug('ast[RULES_KEY]', ast[RULES_KEY])
                 if (rules && rules.length) {
-                    ast[constants_2.RULES_KEY] = ast[constants_2.RULES_KEY].concat(rules);
+                    ast[constants_2.RULES_KEY] = (_a = ast[constants_2.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(rules);
                 }
             }
             return ast;
@@ -181,14 +183,15 @@ class ValidatorFactoryBase {
     /** this will transform the rules to executable */
     _transformInput(input, propName) {
         debug('_transformInput', input);
-        return input.map((_input) => {
-            const pluginName = _input.name;
+        return input.map((_input, i) => {
+            // the name is not that important but still need one, if there is none we generate it
+            const pluginName = _input.name || `customPluginName${i}`;
             switch (true) {
                 case _input[constants_2.PLUGIN_KEY] !== undefined:
                     debug(`Should got here`, _input[constants_2.PLUGIN_KEY]);
                     return this._lookupPlugin(_input, propName);
                 case _input[constants_2.VALIDATE_KEY] !== undefined:
-                    // @TODO need to transform this
+                    // @TODO need to able to take in a file path as well
                     return (0, fn_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[constants_2.VALIDATE_KEY]), pluginName);
                 case _input[constants_2.VALIDATE_ASYNC_KEY] !== undefined:
                     return (0, fn_1.constructRuleCb)(propName, _input[constants_2.VALIDATE_ASYNC_KEY], pluginName);
@@ -198,6 +201,7 @@ class ValidatorFactoryBase {
         });
     }
     /// ----------------------- PLUGINS ----------------------- ///
+    /** find the plugin internal or external */
     _lookupPlugin(input, propName) {
         const pluginName = input[constants_2.PLUGIN_KEY];
         if (pluginName && this._plugins.has(pluginName)) {
