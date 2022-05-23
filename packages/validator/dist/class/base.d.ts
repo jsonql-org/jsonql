@@ -17,7 +17,7 @@ export declare class ValidatorFactoryBase {
     constructor(astMap: Array<JsonqlPropertyParamMap>);
     /** just return the internal schema for validation for use, see export */
     protected get schema(): JsonqlPropertyParamMap[];
-    /** @TODO map the index array to name */
+    /** @TODO map the index array to dev speify error messages? */
     protected get errors(): number[][];
     /**
       when validate happens we check the input value
@@ -30,7 +30,7 @@ export declare class ValidatorFactoryBase {
     /**
       at this point we actually put the rules in the queue
       but we dont' run it yet until all rules are in the main queue
-      this way, if one fail then the whole queue exited without running
+      this way, if one fail then the whole queue exited without running further
     */
     private _prepareForExecution;
     /** put the rule in here and make it into an async method */
@@ -45,4 +45,12 @@ export declare class ValidatorFactoryBase {
     private _lookupPlugin;
     /** register plugins */
     protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
+    /**
+     We need to keep this library light and can be use in browser / server
+     therefore we deligate this import to a external module also by doing so
+     we can transport the rules across from server to client
+    */
+    importValidationFunction(payload: {
+        [key: string]: unknown;
+    }): void;
 }

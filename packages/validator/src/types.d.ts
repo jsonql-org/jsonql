@@ -5,7 +5,7 @@ export declare type CallbackFunction<T> = (...args: T[]) => boolean
 export declare type AsyncCallbackFunction<T> = (...args: T[]) => Promise<boolean>
 
 export type DescriptorMeta = {
-  value?: (...args: any[]) => any
+  value?: (...args: unknown[]) => unknown
   writable?: boolean
   enumerable?: boolean
   configurable?: boolean
@@ -14,12 +14,12 @@ export type DescriptorMeta = {
 export declare type JsonqlGenericObject = {
   [key: string]: any
 }
-
+// @TODO this should move to the validator-config package
 export declare type JsonqlConfigParams = {
-  enumv?: any[]
+  enumv?: unknown[]
   required?: boolean
   optional?: boolean // opposite alias of required
-  checker?: CallbackFunction<T>,
+  checker?: CallbackFunction<T>
   alias?: string
 }
 
@@ -31,7 +31,7 @@ export type JsonqlAppProps = JsonqlConfigBase
 export type JsonqlConstantProps = JsonqlConfigBase
 
 // validation
-
+// duplicated
 export declare type JsonqlValidationPlugin = {
   name?: string
   main?: CallbackFunction<T> // after transform the plugin we remove it from the object
@@ -42,23 +42,20 @@ export declare type JsonqlValidationPlugin = {
   server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only
   validate?: CallbackFunction<T>
   validateAsync?: AsyncCallbackFunction<T>
-  [key: string]: any
+  [key: string]: unknown
 }
 
-export declare type JsonqlValidationMap = {
-  [propName: string]: any
-}
-
+// duplicated
 export declare type JsonqlValidationRule = {
   type?: string
   pattern?: string | RegExp
   plugin?: string
-  value?: any // if the rule require a value to compare, normaly it should be a number
+  value?: unknown // if the rule require a value to compare, normaly it should be a number
   server?: boolean // mark if this is a server side only rules
   validate?: CallbackFunction<T> // apply a function
   validateAsync?: AsyncCallbackFunction<T>
   override?: boolean
-  [key: string]: any // free form to apply the plugins
+  [key: string]: unknown // free form to apply the plugins
 }
 
 // then the developer can provide Array style
@@ -75,7 +72,7 @@ export type JsonqlValidateCbFn = (
   lastResult: JsonqlGenericObject,
   pos: number[]
 ) => Promise<unknown>
-
+// this is for the execution
 export type JsonqlPropertyParamMap = {
   name: string // the argument name
   required: boolean

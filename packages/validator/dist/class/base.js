@@ -43,7 +43,7 @@ class ValidatorFactoryBase {
     get schema() {
         return this._schema || this._astWithBaseRules;
     }
-    /** @TODO map the index array to name */
+    /** @TODO map the index array to dev speify error messages? */
     get errors() {
         return this._errors || null;
     }
@@ -98,7 +98,7 @@ class ValidatorFactoryBase {
     /**
       at this point we actually put the rules in the queue
       but we dont' run it yet until all rules are in the main queue
-      this way, if one fail then the whole queue exited without running
+      this way, if one fail then the whole queue exited without running further
     */
     _prepareForExecution(value, param, idx) {
         const { rules, required, name } = param;
@@ -112,7 +112,7 @@ class ValidatorFactoryBase {
                         return ((0, fn_1.successThen)(name, value, lastResult, [idx, i])(true));
                     });
                 }
-                // when it fail then we provide with the index number
+                // when it fail then we return the index number
                 return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                     return Reflect.apply(rule, null, [value, lastResult, [idx, i]])
                         .then((result) => {
@@ -182,7 +182,8 @@ class ValidatorFactoryBase {
         });
     }
     /** this will transform the rules to executable */
-    _transformInput(input, propName) {
+    _transformInput(input, // @TODO this could be just a name (string)
+    propName) {
         debug('_transformInput', input);
         return input.map((_input, i) => {
             const ruleKeys = (0, fn_1.checkDuplicateRules)(_input);
@@ -265,6 +266,24 @@ class ValidatorFactoryBase {
             // @TODO more situations
         }
         this._plugins.set(name, pluginConfig);
+    }
+    /*
+    private _lookupFunction() {
+      debug('@TODO')
+    }
+    */
+    // -------------------- import validation function / plugin ---------------- //
+    /**
+     We need to keep this library light and can be use in browser / server
+     therefore we deligate this import to a external module also by doing so
+     we can transport the rules across from server to client
+    */
+    importValidationFunction(payload) {
+        debug('@TODO allow import function', payload);
+        /*
+        idea the payload should take the format of plugin plus serverOnly field
+        to let use know where to use it
+        */
     }
 }
 exports.ValidatorFactoryBase = ValidatorFactoryBase;
