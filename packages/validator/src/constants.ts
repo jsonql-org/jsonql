@@ -3,7 +3,13 @@ export const PARAMS_NOT_ARRAY_ERR = `Parameter is not an array`
 export const EXCEPTION_CASE_ERR = `Exception happened don't know how to handle it`
 // use this to id if the input is spread
 export const SPREAD_PREFIX = '$_spread_arg_'
+// just to avoid the name collision
+export const IDX_KEY = '$$idx'
+export const VALUE_KEY = '$$value'
+export const IS_SPREAD_VALUES_KEY = '$$is_spread_values'
+// when dev register their plugin, they can pass extra param but no the word in this list
 
+// @TODO these has moved to validator-core and reimport from there
 export const VALIDATE_KEY = 'validate'
 export const VALIDATE_ASYNC_KEY = 'validateAsync'
 export const PLUGIN_KEY = 'plugin'
@@ -13,11 +19,7 @@ export const RULES_KEY = 'rules'
 export const NAME_KEY = 'name'
 export const PARAMS_KEY = 'params'
 export const ORG_KEY = 'org'
-// just to avoid the name collision
-export const IDX_KEY = '$$idx'
-export const VALUE_KEY = '$$value'
-export const IS_SPREAD_VALUES_KEY = '$$is_spread_values'
-// when dev register their plugin, they can pass extra param but no the word in this list
+
 export const KEYWORDS = [
   'name',
   'type',

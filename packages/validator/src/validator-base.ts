@@ -13,7 +13,6 @@ import type {
   JsonqlPluginInput,
   JsonqlPluginConfig
 } from '@jsonql/validator-core/index'
-
 import {
   JsonqlValidationError,
   JsonqlError,
@@ -77,12 +76,10 @@ export class ValidatorFactoryBase {
 
   private _plugins = new Map<string, JsonqlValidationPlugin>()
   private _internalPluginNames: string[] = []
+  private _externalPluginNames: string[] = []
   // we keep two set
   private _astWithBaseRules: Array<JsonqlPropertyParamMap>
   private _schema!: Array<JsonqlPropertyParamMap>
-  // the first level is the param pos the second level is the rule
-  private _errors!: Array<Array<number>>
-  // private _spreadTypeKey = '' // there should be only one spread param in one function!
   // use this list to make callable argument
   protected _arguments!: Array<string>
   // main
@@ -105,11 +102,6 @@ export class ValidatorFactoryBase {
   /** just return the internal schema for validation for use, see export */
   protected get schema() {
     return this._schema || this._astWithBaseRules
-  }
-
-  /** @TODO map the index array to dev speify error messages? */
-  protected get errors() {
-    return this._errors || null
   }
 
   // ----------------- validate ------------------ //
@@ -179,7 +171,6 @@ export class ValidatorFactoryBase {
     idx: number
   ) {
     const { rules, required, name } = param
-
     if (rules && rules.length) {
       // we only need to return the queue
       return rules.map((rule: JsonqlValidateCbFn, i: number) => {
@@ -383,26 +374,5 @@ export class ValidatorFactoryBase {
         // @TODO more situations
     }
     this._plugins.set(name, pluginConfig)
-  }
-
-  /*
-  private _lookupFunction() {
-    debug('@TODO')
-  }
-  */
-
-  // -------------------- import validation function / plugin ---------------- //
-
-  /**
-   We need to keep this library light and can be use in browser / server
-   therefore we delegate this import to a external module also by doing so
-   we can transport the rules across from server to client
-  */
-  public importValidationFunction(payload: {[key: string]: unknown}) {
-    debug('@TODO allow import function', payload)
-    /*
-    idea the payload should take the format of plugin plus serverOnly field
-    to let use know where to use it
-    */
   }
 }

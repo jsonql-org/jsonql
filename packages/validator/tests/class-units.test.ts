@@ -46,6 +46,7 @@ test(`Testing the multi level of Throw promies`, async t => {
     [() => wrapper(falsy, 1)],
     [() => wrapper(truthy, 0)]
   ]
+  // @ts-ignore
   return queuePromisesProcess(queue, null)
             .then(result => {
               // console.log('------ RESULT -------')

@@ -161,17 +161,13 @@ validator.validate([101])
 At first it might sound weird why the Error return `[argNameIndex, validationRuleIndex]`.
 The reason behind this is because we need to have a super tiny format that travel between server side / client side. Instead of adding loads of code just to deal with an Error message. We just tell you the position which rule failed. And you can map it out yourself. And the up side is - you can map it in multiple languages, in different code, your imagination is the limitation :)
 
-## mapErrorsMessage method
-
-@TODO we will provide a method for you to map the `[argNameIndex, validationRuleIndex]` to a message you specify. This will be particularly useful in the <abbr title="User Interface">UI</abbr>.
-
 ## The built-in rule supported types
 
 The build in rules only support primitive types: `string`, `number`, `boolean`, `array` checking (without value check, just `Array.isArray`) and `object` (`typeof`) check. If you need complex array or object key/value check, please <abbr title="Do It Yourself">DIY</abbr> that's what the plugin is for!  
 
 ## Built-in plugins
 
-All the built-in plugins provide by another packaage, please see [@jsonql/validator-core]('../valdiator-core/README.md') for more info.
+All the built-in plugins provide by another package, please see [@jsonql/validator-core]('../valdiator-core/README.md') for more info.
 
 ## Writing plugin vs writing function
 
@@ -194,7 +190,7 @@ The above method will automatically insert into the validation sequence right af
 
 If this fail then you will get `[1,1]` as an error result.
 
-You could also add async method (all rules convert to async internally):
+You could also add `async` method (all rules convert to `async` internally):
 
 ```ts
 // let say we want to validate an email address against the database
@@ -216,7 +212,13 @@ validator.addValidatorRules({
 
 All the function(s) expect a true / false `boolean` return result and nothing else.  
 
-Next will explain more when we use with our jsonql / velocejs system, and how you can fine tune your client / server side validation.
+**Important** unlike using `registerPlugin`, you can not pass extra parameters
+(of course you can just put the required value inside the function itself). Also
+this validate method will always be one side only (`server:true` if you use the jsonql / velocejs) system
+because we can not pass your inline function over the wire.
+
+If you need share this rule between client / server. You **MUST** create it in an external file,
+and use the `loadPlugin` method.
 
 ## Server side only validation rule
 
