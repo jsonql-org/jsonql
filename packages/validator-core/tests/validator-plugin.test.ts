@@ -17,6 +17,9 @@ test(`Should able to use the ValidatorPlugin class to perform the same task`, t 
   const result  = plugin.lookupPlugin({ plugin: 'int' }, 'someKey')
 
   t.true(typeof result === 'function')
+
+  const names = plugin.getPluginNames()
+  t.true(names.length > 0)
 })
 
 

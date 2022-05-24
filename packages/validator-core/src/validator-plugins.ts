@@ -56,7 +56,7 @@ export class ValidatorPlugins {
 
   private _plugins = new Map<string, JsonqlValidationPlugin>()
   private _internalPluginNames: string[] = []
-  // private _externalPluginNames: string[] = []
+  private _externalPluginNames: string[] = []
 
   constructor() {
     // register internal plugins
@@ -114,6 +114,27 @@ export class ValidatorPlugins {
     pluginConfig: JsonqlValidationPlugin
   ): void {
     this._registerPlugin(name, pluginConfig)
+  }
+
+  /** basically overload the _registerPlugin with adding name to ext list */
+  public loadExtPlugin(
+    name: string,
+    pluginConfig: JsonqlValidationPlugin
+  ): void {
+    if (!this._externalPluginNames.includes(name) ) {
+      this._internalPluginNames.push(name)
+      this._registerPlugin(name, pluginConfig)
+    } else {
+      throw new JsonqlError(`${name} already added!`, name)
+    }
+  }
+
+  /** get a list of the plugin names */
+  public getPluginNames(ext = false) {
+    if (ext === true) {
+      return this._externalPluginNames
+    }
+    return this._internalPluginNames.concat(this._externalPluginNames)
   }
 
   // ------------------------- PRIVATE --------------------------//

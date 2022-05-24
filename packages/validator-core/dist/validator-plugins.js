@@ -14,10 +14,10 @@ const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:validator-plugin');
 // main
 class ValidatorPlugins {
-    // private _externalPluginNames: string[] = []
     constructor() {
         this._plugins = new Map();
         this._internalPluginNames = [];
+        this._externalPluginNames = [];
         // register internal plugins
         plugins_2.plugins.forEach((plugin) => {
             if (!plugin[constants_1.PARAMS_KEY]) {
@@ -56,6 +56,23 @@ class ValidatorPlugins {
     /** The public api to register a plugin */
     regigsterPlugin(name, pluginConfig) {
         this._registerPlugin(name, pluginConfig);
+    }
+    /** basically overload the _registerPlugin with adding name to ext list */
+    loadExtPlugin(name, pluginConfig) {
+        if (!this._externalPluginNames.includes(name)) {
+            this._internalPluginNames.push(name);
+            this._registerPlugin(name, pluginConfig);
+        }
+        else {
+            throw new errors_1.JsonqlError(`${name} already added!`, name);
+        }
+    }
+    /** get a list of the plugin names */
+    getPluginNames(ext = false) {
+        if (ext === true) {
+            return this._externalPluginNames;
+        }
+        return this._internalPluginNames.concat(this._externalPluginNames);
     }
     // ------------------------- PRIVATE --------------------------//
     /** register plugins */
