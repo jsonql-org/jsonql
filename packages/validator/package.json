@@ -65,7 +65,7 @@
     "@jsonql/constants": "workspace:^0.7.2",
     "@jsonql/errors": "workspace:^0.6.1",
     "@jsonql/utils": "workspace:^0.6.9",
-    "@jsonql/validator-core": "workspace:^0.8.2",
+    "@jsonql/validator-core": "workspace:^0.8.3",
     "debug": "^4.3.4",
     "reflect-metadata": "^0.1.13"
   }

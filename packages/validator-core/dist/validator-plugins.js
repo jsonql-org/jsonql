@@ -14,7 +14,9 @@ const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:validator-plugin');
 // main
 class ValidatorPlugins {
-    constructor() {
+    /** with a idx to id this instance */
+    constructor(idx) {
+        this.idx = idx;
         this._plugins = new Map();
         this._internalPluginNames = [];
         this._externalPluginNames = [];

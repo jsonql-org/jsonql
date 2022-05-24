@@ -5,10 +5,12 @@
 */
 import type { JsonqlValidationPlugin, JsonqlValidationRule } from './types';
 export declare class ValidatorPlugins {
+    idx?: number | undefined;
     private _plugins;
     private _internalPluginNames;
     private _externalPluginNames;
-    constructor();
+    /** with a idx to id this instance */
+    constructor(idx?: number | undefined);
     /**
     find the plugin internal or external
     propName is the argument name

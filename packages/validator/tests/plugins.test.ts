@@ -5,13 +5,12 @@ import test from 'ava'
 import { ValidatorFactory, ValidatorPlugins } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
-
-const pluginInstance = new ValidatorPlugins()
+const pluginInstance = new ValidatorPlugins(1)
 const expectedLoginResult = {username: 'John', password: '123456'}
 const loginValues = [expectedLoginResult.username, expectedLoginResult.password]
 
 test(`Testing the user define custom plugin`, async t => {
-  t.plan(1)
+  t.plan(2)
   const validateObj = new ValidatorFactory(context.funcAstInput.resolver, pluginInstance)
   validateObj.registerPlugin('notEqual', {
     main: (argx: number, value: number) => argx !== value,
@@ -21,6 +20,8 @@ test(`Testing the user define custom plugin`, async t => {
     age: { plugin: 'notEqual', argx: 50}
   })
 
+  t.is(validateObj.$idx, 1)
+
   return validateObj.validate(['some@email.com', 51])
             .then(result => {
               t.deepEqual(result, ['some@email.com', 51, false])
@@ -28,8 +29,11 @@ test(`Testing the user define custom plugin`, async t => {
 })
 
 test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
-    t.plan(1)
+    t.plan(2)
     const validateObj1 = new ValidatorFactory(context.funcAstInput.resolver, pluginInstance)
+
+    t.is(validateObj1.$idx, 1)
+
     validateObj1.addValidationRules({
       email: { plugin: 'email' },
       age: { plugin: 'moreThan', num: 50}

@@ -80,6 +80,10 @@ export class ValidatorFactoryBase {
     return this._schema || this._astWithBaseRules
   }
 
+  public get $idx() {
+    return this._validatorPluginsInstance.idx
+  }
+
   // ----------------- validate ------------------ //
 
   /**
