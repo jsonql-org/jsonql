@@ -32,6 +32,9 @@ class ValidatorFactoryBase {
     get schema() {
         return this._schema || this._astWithBaseRules;
     }
+    get $idx() {
+        return this._validatorPluginsInstance.idx;
+    }
     // ----------------- validate ------------------ //
     /**
       when validate happens we check the input value

@@ -17,6 +17,7 @@ export declare class ValidatorFactoryBase {
     constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance: ValidatorPlugins);
     /** just return the internal schema for validation for use, see export */
     get schema(): JsonqlPropertyParamMap[];
+    get $idx(): number | undefined;
     /**
       when validate happens we check the input value
       correspond to out map, and apply the values
