@@ -73,12 +73,12 @@ export class ValidatorPlugins {
 
   /**
   find the plugin internal or external
-  propName is the argument name 
+  propName is the argument name
   */
   public lookupPlugin(
     input: JsonqlValidationRule,
     propName: string
-  ): JsonqlValidateFn {
+  ) {
     const pluginName = input[PLUGIN_KEY]
     if (pluginName && this._plugins.has(pluginName)) {
       // @TODO need to transform this

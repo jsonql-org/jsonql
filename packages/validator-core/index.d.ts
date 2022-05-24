@@ -15,7 +15,7 @@ export type JsonqlPluginInput = {
   plugin: string
 } & JsonqlGenericObject
 
-export type JsonqlValidateFn = AsyncCallbackFunction<unknown, boolean>
+export type JsonqlValidateFn = AsyncCallbackFunction<unknown>
 
 export type JsonqlPluginConfig = {
   name: string
@@ -26,7 +26,7 @@ export type JsonqlPluginConfig = {
 export declare type JsonqlValidationBase = {
   pattern?: string | RegExp // should this be a string only for transport?
   // we apply the JSON Schema validation here
-  server?: boolean = false // server only, if there is only a validate || validateAsync then it will become a server only
+  server?: boolean // server only, if there is only a validate || validateAsync then it will become a server only
   validate?: CallbackFunction<T>
   validateAsync?: AsyncCallbackFunction<T>
 } & JsonqlGenericObject

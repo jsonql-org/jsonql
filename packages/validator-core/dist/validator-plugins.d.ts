@@ -3,7 +3,7 @@
   we should create a base class that load all internal plugins
   and each ValidatorFactory add their extra plugin into this to share
 */
-import type { JsonqlValidationPlugin, JsonqlValidationRule, JsonqlValidateFn } from './types';
+import type { JsonqlValidationPlugin, JsonqlValidationRule } from './types';
 export declare class ValidatorPlugins {
     private _plugins;
     private _internalPluginNames;
@@ -12,7 +12,7 @@ export declare class ValidatorPlugins {
     find the plugin internal or external
     propName is the argument name
     */
-    lookupPlugin(input: JsonqlValidationRule, propName: string): JsonqlValidateFn;
+    lookupPlugin(input: JsonqlValidationRule, propName: string): (value: unknown, lastResult: import("./types").JsonqlGenericObject, pos: number[]) => Promise<any>;
     /** The public api to register a plugin */
     regigsterPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** register plugins */

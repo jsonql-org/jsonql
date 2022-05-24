@@ -1,48 +1,34 @@
 // start your project here
 // this contains all the primitive types checking methods
-import { checkString } from './base/string'
-import { checkBoolean } from './base/boolean'
-import { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number'
-import { checkAny } from './base/any'
+export { checkString } from './base/string'
+export { checkBoolean } from './base/boolean'
+export { checkNumber, checkInteger, checkFloat, checkUnsigned } from './base/number'
+export { checkAny } from './base/any'
 
-import { checkArray, isArrayLike, arrayTypeHandler } from './base/array'
-import { checkObject, objectTypeHandler, isEmptyObject } from './base/object'
+export { checkArray, isArrayLike, arrayTypeHandler } from './base/array'
+export { checkObject, objectTypeHandler, isEmptyObject } from './base/object'
 // wrapper fn
-import { combineCheck } from './base/combine'
+export { combineCheck } from './base/combine'
 // union type check
-import { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union'
-import { promisify, reversePromisifyResult } from './lib/promisify'
+export { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union'
+export { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
-import { plugins } from './plugins'
+export { plugins } from './plugins'
 // avoid a circular reference
-import { curryPlugin, createCoreCurryPlugin } from './plugins/plugins'
+export { curryPlugin, createCoreCurryPlugin } from './plugins/plugins'
 
-
-
+export { ValidatorPlugins } from './validator-plugins'
+// export all constants
 export {
-  checkAny,
-  checkArray,
-  isArrayLike,
-  arrayTypeHandler,
-  checkBoolean,
-  checkNumber,
-  checkInteger,
-  checkFloat,
-  checkUnsigned,
-  checkString,
-  checkObject,
-  objectTypeHandler,
-  isEmptyObject,
-  combineCheck,
-
-  checkUnion,
-  generateReversePromisesFn,
-  checkUnionSync,
-
-  promisify,
-  reversePromisifyResult,
-  // 0.3.0 move plugins from validator to here
-  plugins,
-  curryPlugin,
-  createCoreCurryPlugin,
-}
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  PLUGIN_KEY,
+  PLUGIN_FN_KEY,
+  PATTERN_KEY,
+  RULES_KEY,
+  NAME_KEY,
+  PARAMS_KEY,
+  ORG_KEY,
+  IDX_KEY,
+  VALUE_KEY,
+} from './constants'

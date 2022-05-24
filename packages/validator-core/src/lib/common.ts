@@ -50,7 +50,7 @@ this will get re-use in the class to create method for the queue execution
 export function constructRuleCb(
   argName: string,
   ruleFn: JsonqlValidateFn,
-  ruleName?: string | unknown
+  ruleName?: string
 ) {
   debug('ruleFn', ruleFn, argName)
   return async (

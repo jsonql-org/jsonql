@@ -6,7 +6,7 @@ export declare function pluginHasFunc(rule: JsonqlGenericObject): boolean;
 /**
 this will get re-use in the class to create method for the queue execution
  */
-export declare function constructRuleCb(argName: string, ruleFn: JsonqlValidateFn, ruleName?: string | unknown): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
+export declare function constructRuleCb(argName: string, ruleFn: JsonqlValidateFn, ruleName?: string): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
 export declare function successThen(argName: string, value: unknown, lastResult: JsonqlGenericObject, pos: number[]): (result: unknown) => any;
 /** check to see if the lastResult contain our lastResult package format or just their value */
