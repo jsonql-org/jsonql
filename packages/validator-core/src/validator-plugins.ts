@@ -59,7 +59,7 @@ export class ValidatorPlugins {
   private _externalPluginNames: string[] = []
 
   /** with a idx to id this instance */
-  constructor(public idx?: number) {
+  constructor(public $idx?: number) {
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
       if (!plugin[PARAMS_KEY]) {
