@@ -54,7 +54,7 @@ class ValidatorPlugins {
         throw new errors_1.JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`);
     }
     /** The public api to register a plugin */
-    regigsterPlugin(name, pluginConfig) {
+    registerPlugin(name, pluginConfig) {
         this._registerPlugin(name, pluginConfig);
     }
     /** basically overload the _registerPlugin with adding name to ext list */

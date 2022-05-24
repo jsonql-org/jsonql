@@ -109,7 +109,7 @@ export class ValidatorPlugins {
   }
 
   /** The public api to register a plugin */
-  public regigsterPlugin(
+  public registerPlugin(
     name: string,
     pluginConfig: JsonqlValidationPlugin
   ): void {

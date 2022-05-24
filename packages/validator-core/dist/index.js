@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.createCoreCurryPlugin = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
+exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.createCoreCurryPlugin = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 var string_1 = require("./base/string");
@@ -51,6 +51,7 @@ var validator_plugins_1 = require("./validator-plugins");
 Object.defineProperty(exports, "ValidatorPlugins", { enumerable: true, get: function () { return validator_plugins_1.ValidatorPlugins; } });
 // export all constants
 var constants_1 = require("./constants");
+Object.defineProperty(exports, "KEYWORDS", { enumerable: true, get: function () { return constants_1.KEYWORDS; } });
 Object.defineProperty(exports, "VALIDATE_KEY", { enumerable: true, get: function () { return constants_1.VALIDATE_KEY; } });
 Object.defineProperty(exports, "VALIDATE_ASYNC_KEY", { enumerable: true, get: function () { return constants_1.VALIDATE_ASYNC_KEY; } });
 Object.defineProperty(exports, "PLUGIN_KEY", { enumerable: true, get: function () { return constants_1.PLUGIN_KEY; } });

@@ -2,26 +2,22 @@
 import type {
   JsonqlValidationPlugin,
   JsonqlValidationRule,
+  JsonqlGenericObject,
+  JsonqlValidateFn,
+} from '@jsonql/validator-core/index'
+import type {
   JsonqlPropertyParamMap,
   JsonqlValidateCbFn,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
-  JsonqlGenericObject,
-  JsonqlValidateFn,
 } from './types'
-import type {
-  JsonqlPluginInput,
-  JsonqlPluginConfig
-} from '@jsonql/validator-core/index'
 import {
   JsonqlValidationError,
   JsonqlError,
 } from '@jsonql/errors'
 import {
   notEmpty,
-  isFunction,
   toArray,
-  inArray,
   assign,
 } from '@jsonql/utils'
 import {
@@ -29,36 +25,27 @@ import {
   SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import {
-  checkString,
+  ValidatorPlugins,
   checkArray,
   checkObject,
   promisify,
-  createCoreCurryPlugin,
-  curryPlugin,
-  plugins,
+  constructRuleCb,
+  successThen,
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  PLUGIN_KEY,
+  RULES_KEY,
+  NAME_KEY,
 } from '@jsonql/validator-core'
 // ----- LOCAL ---- //
 import {
   createAutomaticRules,
   getOptionalValue,
-  patternPluginFanctory,
-  constructRuleCb,
-  successThen,
-  checkPluginArg,
-  pluginHasFunc,
   checkDuplicateRules,
 } from './fn'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
-  VALIDATE_KEY,
-  VALIDATE_ASYNC_KEY,
-  PLUGIN_KEY,
-  PLUGIN_FN_KEY,
-  PATTERN_KEY,
-  RULES_KEY,
-  NAME_KEY,
-  PARAMS_KEY,
   SPREAD_PREFIX,
 } from './constants'
 // ---- DEBUG ---- //
@@ -79,7 +66,10 @@ export class ValidatorFactoryBase {
   // use this list to make callable argument
   protected _arguments!: Array<string>
   // main
-  constructor(astMap: Array<JsonqlPropertyParamMap>) {
+  constructor(
+    astMap: Array<JsonqlPropertyParamMap>,
+    private _validatorPluginsInstance: ValidatorPlugins
+  ) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument name list in order
     this._arguments = this._astWithBaseRules.map(rule => rule[NAME_KEY])
@@ -281,4 +271,28 @@ export class ValidatorFactoryBase {
       }
     })
   }
+
+  /** wrapper methods for ValidatorPlugins */
+
+  private _lookupPlugin(
+    input: JsonqlValidationRule,
+    propName: string
+  ) {
+    return this._validatorPluginsInstance.lookupPlugin(input, propName)
+  }
+
+  protected _registerPlugin(
+    name: string,
+    pluginConfig: JsonqlValidationPlugin
+  ) {
+    return this._validatorPluginsInstance.registerPlugin(name, pluginConfig)
+  }
+
+  protected _loadExtPlugin(
+    name: string,
+    pluginConfig: JsonqlValidationPlugin
+  ) {
+    return this._validatorPluginsInstance.loadExtPlugin(name, pluginConfig)
+  }
+
 }

@@ -21,13 +21,18 @@
 import {
   ValidatorFactoryBase
 } from './validator-base'
+import {
+  JsonqlGenericObject,
+} from '@jsonql/validator-core/index'
 import type {
   JsonqlValidationPlugin,
   JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
-  JsonqlGenericObject,
   JsonqlPropertyParamMap,
 } from './types'
+import {
+  ValidatorPlugins
+} from '@jsonql/validator-core'
 /* import {
   JsonqlValidationError
 } from '@jsonql/errors' */
@@ -44,15 +49,18 @@ const debug = debugFn('jsonql:validator:class:index')
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
 
-  constructor(astMap: Array<JsonqlPropertyParamMap>) {
-    super(astMap)
+  constructor(
+    astMap: Array<JsonqlPropertyParamMap>,
+    _validatorPluginsInstance: ValidatorPlugins
+  ) {
+    super(astMap, _validatorPluginsInstance)
   }
   /** accept an object name => plugin in one go */
   registerPlugins(
     plugins: {[name: string]: JsonqlValidationPlugin}
   ): void {
     for (const name in plugins) {
-      this._registerPlugin(name, plugins[name])
+      this.registerPlugin(name, plugins[name])
     }
   }
   /** wrapper for the protected register plugin method */
@@ -60,7 +68,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     name: string,
     plugin: JsonqlValidationPlugin
   ): void {
-    this._registerPlugin(name, plugin)
+    this.registerPlugin(name, plugin)
   }
 
   /** create an alias for createSchema (and replace it later ) because ii make more sense */
