@@ -33,10 +33,6 @@ import type {
 import {
   ValidatorPlugins
 } from '@jsonql/validator-core'
-/* import {
-  JsonqlValidationError
-} from '@jsonql/errors' */
-// import { SPREAD_PREFIX } from '../constants'
 import {
   queuePromisesProcess,
 } from '@jsonql/utils'
@@ -48,45 +44,22 @@ import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
 export class ValidatorFactory extends ValidatorFactoryBase {
-
+  /**
+    this is now change to accept an instance of ValidatorPlugins (share)
+    if only call it with the astMap then it init it as a standalone like before
+  */
   constructor(
     astMap: Array<JsonqlPropertyParamMap>,
-    _validatorPluginsInstance: ValidatorPlugins
+    _validatorPluginsInstance?: ValidatorPlugins
   ) {
+    if (!_validatorPluginsInstance) {
+      _validatorPluginsInstance = new ValidatorPlugins()
+    }
     super(astMap, _validatorPluginsInstance)
   }
-  /** accept an object name => plugin in one go */
-  registerPlugins(
-    plugins: {[name: string]: JsonqlValidationPlugin}
-  ): void {
-    for (const name in plugins) {
-      this.registerPlugin(name, plugins[name])
-    }
-  }
-  /** wrapper for the protected register plugin method */
-  registerPlugin(
-    name: string,
-    plugin: JsonqlValidationPlugin
-  ): void {
-    this.registerPlugin(name, plugin)
-  }
-
-  /** create an alias for createSchema (and replace it later ) because ii make more sense */
-  addValidationRules(
-    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
-  ): void {
-    this._createSchema(validationMap)
-  }
-
-  /** map the developer defined error messages */
-  /*
-  mapErrorMessages(error: JsonqlValidationError) {
-    debug(this._errorMessages, error)
-  }
-  */
 
   /** this is where validation happens */
-  async validate(values: Array<unknown>, raw = false) {
+  public async validate(values: Array<unknown>, raw = false) {
     debug(`raw flag`, raw)
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
@@ -100,10 +73,27 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     )
   }
 
-  /** this will export the map for generate contract */
-  export(server = false) {
-    console.log(`@TODO`, server)
-    return this.schema
+  /** accept an object name => plugin in one go */
+  public registerPlugins(
+    plugins: {[name: string]: JsonqlValidationPlugin}
+  ): void {
+    for (const name in plugins) {
+      this.registerPlugin(name, plugins[name])
+    }
+  }
+  /** wrapper for the protected register plugin method */
+  public registerPlugin(
+    name: string,
+    plugin: JsonqlValidationPlugin
+  ): void {
+    this.registerPlugin(name, plugin)
+  }
+
+  /** create an alias for createSchema (and replace it later ) because ii make more sense */
+  public addValidationRules(
+    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+  ): void {
+    this._createSchema(validationMap)
   }
 
   /** After the validation the success will get an object with
@@ -118,6 +108,4 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     return processValidateResults(this._arguments, validateResult)
             .then(unwrapPreparedValidateResult)
   }
-
-
 }

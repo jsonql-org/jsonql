@@ -1,4 +1,6 @@
-import type { JsonqlValidationPlugin, JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlGenericObject } from './types';
+import type { JsonqlValidationPlugin, JsonqlGenericObject } from '@jsonql/validator-core/index';
+import type { JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput } from './types';
+import { ValidatorPlugins } from '@jsonql/validator-core';
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -8,17 +10,13 @@ The sequence how this should run
 5. Call the validate method with the data input then the validation will run
 */
 export declare class ValidatorFactoryBase {
-    private _plugins;
-    private _internalPluginNames;
+    private _validatorPluginsInstance;
     private _astWithBaseRules;
     private _schema;
-    private _errors;
     protected _arguments: Array<string>;
-    constructor(astMap: Array<JsonqlPropertyParamMap>);
+    constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance: ValidatorPlugins);
     /** just return the internal schema for validation for use, see export */
-    protected get schema(): JsonqlPropertyParamMap[];
-    /** @TODO map the index array to dev speify error messages? */
-    protected get errors(): number[][];
+    get schema(): JsonqlPropertyParamMap[];
     /**
       when validate happens we check the input value
       correspond to out map, and apply the values
@@ -41,16 +39,8 @@ export declare class ValidatorFactoryBase {
     private _applyObjectInput;
     /** this will transform the rules to executable */
     private _transformInput;
-    /** find the plugin internal or external */
+    /** wrapper methods for ValidatorPlugins */
     private _lookupPlugin;
-    /** register plugins */
-    protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
-    /**
-     We need to keep this library light and can be use in browser / server
-     therefore we delegate this import to a external module also by doing so
-     we can transport the rules across from server to client
-    */
-    importValidationFunction(payload: {
-        [key: string]: unknown;
-    }): void;
+    protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
+    protected _loadExtPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
 }

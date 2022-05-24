@@ -20,8 +20,15 @@
 */
 import { ValidatorFactoryBase } from './validator-base';
 import type { JsonqlValidationPlugin, JsonqlArrayValidateInput, JsonqlObjectValidateInput, JsonqlPropertyParamMap } from './types';
+import { ValidatorPlugins } from '@jsonql/validator-core';
 export declare class ValidatorFactory extends ValidatorFactoryBase {
-    constructor(astMap: Array<JsonqlPropertyParamMap>);
+    /**
+      this is now change to accept an instance of ValidatorPlugins (share)
+      if only call it with the astMap then it init it as a standalone like before
+    */
+    constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance?: ValidatorPlugins);
+    /** this is where validation happens */
+    validate(values: Array<unknown>, raw?: boolean): Promise<any>;
     /** accept an object name => plugin in one go */
     registerPlugins(plugins: {
         [name: string]: JsonqlValidationPlugin;
@@ -30,11 +37,6 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
     registerPlugin(name: string, plugin: JsonqlValidationPlugin): void;
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
-    /** map the developer defined error messages */
-    /** this is where validation happens */
-    validate(values: Array<unknown>, raw?: boolean): Promise<any>;
-    /** this will export the map for generate contract */
-    export(server?: boolean): JsonqlPropertyParamMap[];
     /** After the validation the success will get an object with
     argumentName: value object and we make it to an array matching
     the order of the call, then we can pass it directly to method that

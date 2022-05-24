@@ -22,30 +22,15 @@ The sequence how this should run
 */
 class ValidatorFactoryBase {
     // main
-    constructor(astMap) {
-        this._plugins = new Map();
-        this._internalPluginNames = [];
+    constructor(astMap, _validatorPluginsInstance) {
+        this._validatorPluginsInstance = _validatorPluginsInstance;
         this._astWithBaseRules = (0, fn_1.createAutomaticRules)(astMap);
         // create the argument name list in order
-        this._arguments = this._astWithBaseRules.map(rule => rule[constants_2.NAME_KEY]);
-        // register internal plugins
-        validator_core_1.plugins.forEach((plugin) => {
-            if (!plugin[constants_2.PARAMS_KEY]) {
-                // We skip those need to curry and do that JIT
-                plugin[constants_2.VALIDATE_ASYNC_KEY] = (0, validator_core_1.promisify)(plugin[constants_2.PLUGIN_FN_KEY]);
-            }
-            const name = plugin[constants_2.NAME_KEY];
-            this._internalPluginNames.push(name);
-            this._registerPlugin(name, plugin, true);
-        });
+        this._arguments = this._astWithBaseRules.map(rule => rule[validator_core_1.NAME_KEY]);
     }
     /** just return the internal schema for validation for use, see export */
     get schema() {
         return this._schema || this._astWithBaseRules;
-    }
-    /** @TODO map the index array to dev speify error messages? */
-    get errors() {
-        return this._errors || null;
     }
     // ----------------- validate ------------------ //
     /**
@@ -109,7 +94,7 @@ class ValidatorFactoryBase {
                 if (value === undefined && !required) {
                     debug(`skip the validation`, required);
                     return (lastResult) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-                        return ((0, fn_1.successThen)(name, value, lastResult, [idx, i])(true));
+                        return ((0, validator_core_1.successThen)(name, value, lastResult, [idx, i])(true));
                     });
                 }
                 // when it fail then we return the index number
@@ -155,7 +140,7 @@ class ValidatorFactoryBase {
                 contract later
                 */
                 if (input2) {
-                    ast[constants_2.RULES_KEY] = (_a = ast[constants_2.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(input2);
+                    ast[validator_core_1.RULES_KEY] = (_a = ast[validator_core_1.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(input2);
                 }
             }
             return ast;
@@ -175,7 +160,7 @@ class ValidatorFactoryBase {
                 const rules = this._transformInput(_input, propName);
                 // debug('ast[RULES_KEY]', ast[RULES_KEY])
                 if (rules && rules.length) {
-                    ast[constants_2.RULES_KEY] = (_a = ast[constants_2.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(rules);
+                    ast[validator_core_1.RULES_KEY] = (_a = ast[validator_core_1.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(rules);
                 }
             }
             return ast;
@@ -193,103 +178,28 @@ class ValidatorFactoryBase {
             // the name is not that important but still need one, if there is none we generate it
             const pluginName = _input.name || `customPluginName${i}`;
             switch (true) {
-                case _input[constants_2.PLUGIN_KEY] !== undefined:
-                    debug(`Should got here`, _input[constants_2.PLUGIN_KEY]);
+                case _input[validator_core_1.PLUGIN_KEY] !== undefined:
+                    debug(`Should got here`, _input[validator_core_1.PLUGIN_KEY]);
                     return this._lookupPlugin(_input, propName);
-                case _input[constants_2.VALIDATE_KEY] !== undefined:
+                case _input[validator_core_1.VALIDATE_KEY] !== undefined:
                     // @TODO need to able to take in a file path as well
-                    return (0, fn_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[constants_2.VALIDATE_KEY]), pluginName);
-                case _input[constants_2.VALIDATE_ASYNC_KEY] !== undefined:
-                    return (0, fn_1.constructRuleCb)(propName, _input[constants_2.VALIDATE_ASYNC_KEY], pluginName);
+                    return (0, validator_core_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[validator_core_1.VALIDATE_KEY]), pluginName);
+                case _input[validator_core_1.VALIDATE_ASYNC_KEY] !== undefined:
+                    return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
                     throw new errors_1.JsonqlError(`unable to find rule for ${propName}`);
             }
         });
     }
-    /// ----------------------- PLUGINS ----------------------- ///
-    /** find the plugin internal or external */
+    /** wrapper methods for ValidatorPlugins */
     _lookupPlugin(input, propName) {
-        const pluginName = input[constants_2.PLUGIN_KEY];
-        if (pluginName && this._plugins.has(pluginName)) {
-            // @TODO need to transform this
-            const pluginConfig = this._plugins.get(pluginName);
-            if (pluginConfig && pluginConfig[constants_2.VALIDATE_ASYNC_KEY]) {
-                // here is the problem the name should be the param not the plugin
-                return (0, fn_1.constructRuleCb)(propName, pluginConfig[constants_2.VALIDATE_ASYNC_KEY], pluginName);
-            }
-            else if (pluginConfig && pluginConfig[constants_2.PARAMS_KEY]) {
-                debug('_pluign', pluginConfig);
-                debug('input', input);
-                const _input = input;
-                // need to check if the _plugin is internal or not
-                const fn = (0, utils_1.inArray)(this._internalPluginNames, pluginName) ?
-                    (0, validator_core_1.createCoreCurryPlugin)(_input) :
-                    (0, validator_core_1.curryPlugin)(_input, pluginConfig);
-                return (0, fn_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(fn), pluginName);
-            }
-        }
-        throw new errors_1.JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`);
+        return this._validatorPluginsInstance.lookupPlugin(input, propName);
     }
-    /** register plugins */
-    _registerPlugin(name, pluginConfig, skipCheck = false // when register internal plugin then skip it
-    ) {
-        if (!skipCheck) {
-            if (this._plugins.has(name)) {
-                throw new errors_1.JsonqlError(`plugin ${name} already existed!`);
-            }
-            if (pluginConfig[constants_2.PARAMS_KEY] !== undefined) {
-                if (!(0, fn_1.checkPluginArg)(pluginConfig[constants_2.PARAMS_KEY])) {
-                    throw new errors_1.JsonqlError(`Your plugin config argument contains reserved keywords`);
-                }
-            }
-            if (!(0, fn_1.pluginHasFunc)(pluginConfig)) {
-                throw new errors_1.JsonqlError(`Can not find any executable definition within your plugin config`);
-            }
-        }
-        // put the name back in
-        pluginConfig.name = name;
-        /**
-        Here is a problem, when we need to add this to the contract
-        the info here is already constructed for running with validation
-        which is not suitable to transport over the wire, we need to
-        go higher (register via file base) to add such info
-        */
-        switch (true) {
-            // this rule is not really in use but keep here for future
-            case (!pluginConfig[constants_2.VALIDATE_ASYNC_KEY] &&
-                pluginConfig[constants_2.VALIDATE_KEY] &&
-                (0, utils_1.isFunction)(pluginConfig[constants_2.VALIDATE_KEY])):
-                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, validator_core_1.promisify)(pluginConfig[constants_2.VALIDATE_KEY]);
-                break;
-            // use the pattern key to generate plugin method
-            case (pluginConfig[constants_2.PATTERN_KEY] &&
-                (0, validator_core_1.checkString)(pluginConfig[constants_2.PATTERN_KEY])):
-                pluginConfig[constants_2.VALIDATE_ASYNC_KEY] = (0, fn_1.patternPluginFanctory)(pluginConfig[constants_2.PATTERN_KEY]);
-                break;
-            // @NOTE we can not create the curryPlugin here because it needs to be generic
-            // and the arguement provide at validation time, this need to get create at the _lookupPlugin
-            default:
-            // @TODO more situations
-        }
-        this._plugins.set(name, pluginConfig);
+    _registerPlugin(name, pluginConfig) {
+        return this._validatorPluginsInstance.registerPlugin(name, pluginConfig);
     }
-    /*
-    private _lookupFunction() {
-      debug('@TODO')
-    }
-    */
-    // -------------------- import validation function / plugin ---------------- //
-    /**
-     We need to keep this library light and can be use in browser / server
-     therefore we delegate this import to a external module also by doing so
-     we can transport the rules across from server to client
-    */
-    importValidationFunction(payload) {
-        debug('@TODO allow import function', payload);
-        /*
-        idea the payload should take the format of plugin plus serverOnly field
-        to let use know where to use it
-        */
+    _loadExtPlugin(name, pluginConfig) {
+        return this._validatorPluginsInstance.loadExtPlugin(name, pluginConfig);
     }
 }
 exports.ValidatorFactoryBase = ValidatorFactoryBase;

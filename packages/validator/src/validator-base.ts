@@ -76,7 +76,7 @@ export class ValidatorFactoryBase {
   }
 
   /** just return the internal schema for validation for use, see export */
-  protected get schema() {
+  public get schema() {
     return this._schema || this._astWithBaseRules
   }
 

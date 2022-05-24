@@ -1,4 +1,5 @@
-import type { JsonqlPropertyParamMap, JsonqlValidateFn, JsonqlGenericObject, JsonqlValidationRule } from './types';
+import type { JsonqlPropertyParamMap } from './types';
+import type { JsonqlGenericObject, JsonqlValidationRule } from '@jsonql/validator-core/index';
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -13,25 +14,11 @@ because the plugins are apply there
   generate valdiation rules
 */
 export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamMap>): Array<JsonqlPropertyParamMap>;
-/**
-this will get re-use in the class to create method for the queue execution
- */
-export declare function constructRuleCb(argName: string, ruleFn: JsonqlValidateFn, ruleName?: string | unknown): (value: unknown, lastResult: JsonqlGenericObject, pos: number[]) => Promise<any>;
-/** This is taken out from the above then call for re-use when we want to fall through a rule */
-export declare function successThen(argName: string, value: unknown, lastResult: JsonqlGenericObject, pos: number[]): (result: unknown) => any;
-/** check to see if the lastResult contain our lastResult package format or just their value */
-export declare function isResultPackage(lastResult: unknown, key?: string): boolean;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 export declare function processValidateResults(argNames: Array<string>, validateResult: JsonqlGenericObject): Promise<any[]>;
 /** final step to unwarp the pack result for spread arguments */
 export declare function unwrapPreparedValidateResult(result: Array<any>): Promise<any>;
 /** extract the default value if there is none */
 export declare function getOptionalValue(arg: unknown, param: JsonqlGenericObject): any;
-/** check plugin argument */
-export declare function checkPluginArg(params: Array<string>): boolean;
-/** check if the actually provide a func or pattern to construct function */
-export declare function pluginHasFunc(rule: JsonqlGenericObject): boolean;
-/** If the plugin provide a pattern and we construct a function out of it */
-export declare function patternPluginFanctory(pattern: string): (value: string) => Promise<boolean>;
 /** check if the rule contain duplicate rules that can not be resolve */
 export declare function checkDuplicateRules(rule: JsonqlValidationRule): Array<string>;

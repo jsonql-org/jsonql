@@ -23,39 +23,23 @@ const tslib_1 = require("tslib");
   @TODO how to integrete this into the contract generator
 */
 const validator_base_1 = require("./validator-base");
-/* import {
-  JsonqlValidationError
-} from '@jsonql/errors' */
-// import { SPREAD_PREFIX } from '../constants'
+const validator_core_1 = require("@jsonql/validator-core");
 const utils_1 = require("@jsonql/utils");
 const fn_1 = require("./fn");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
 class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
-    constructor(astMap) {
-        super(astMap);
-    }
-    /** accept an object name => plugin in one go */
-    registerPlugins(plugins) {
-        for (const name in plugins) {
-            this._registerPlugin(name, plugins[name]);
-        }
-    }
-    /** wrapper for the protected register plugin method */
-    registerPlugin(name, plugin) {
-        this._registerPlugin(name, plugin);
-    }
-    /** create an alias for createSchema (and replace it later ) because ii make more sense */
-    addValidationRules(validationMap) {
-        this._createSchema(validationMap);
-    }
-    /** map the developer defined error messages */
-    /*
-    mapErrorMessages(error: JsonqlValidationError) {
-      debug(this._errorMessages, error)
-    }
+    /**
+      this is now change to accept an instance of ValidatorPlugins (share)
+      if only call it with the astMap then it init it as a standalone like before
     */
+    constructor(astMap, _validatorPluginsInstance) {
+        if (!_validatorPluginsInstance) {
+            _validatorPluginsInstance = new validator_core_1.ValidatorPlugins();
+        }
+        super(astMap, _validatorPluginsInstance);
+    }
     /** this is where validation happens */
     validate(values, raw = false) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -67,10 +51,19 @@ class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
                 .then((finalResult) => raw ? finalResult : this._prepareValidateResult(finalResult));
         });
     }
-    /** this will export the map for generate contract */
-    export(server = false) {
-        console.log(`@TODO`, server);
-        return this.schema;
+    /** accept an object name => plugin in one go */
+    registerPlugins(plugins) {
+        for (const name in plugins) {
+            this.registerPlugin(name, plugins[name]);
+        }
+    }
+    /** wrapper for the protected register plugin method */
+    registerPlugin(name, plugin) {
+        this.registerPlugin(name, plugin);
+    }
+    /** create an alias for createSchema (and replace it later ) because ii make more sense */
+    addValidationRules(validationMap) {
+        this._createSchema(validationMap);
     }
     /** After the validation the success will get an object with
     argumentName: value object and we make it to an array matching

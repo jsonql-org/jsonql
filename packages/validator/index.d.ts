@@ -1,4 +1,8 @@
 // configuration
+import type {
+  JsonqlGenericObject,
+  JsonqlValidationRule,
+} from '@jsonql/validator-core/index'
 
 export declare type CallbackFunction<T> = (...args: T[]) => boolean
 
@@ -11,9 +15,6 @@ export type DescriptorMeta = {
   configurable?: boolean
 }
 
-export declare type JsonqlGenericObject = {
-  [key: string]: any // for generic object still need to use any for now
-}
 // @TODO this should move to the validator-config package
 export declare type JsonqlConfigParams = {
   enumv?: unknown[]
@@ -45,19 +46,6 @@ export declare type JsonqlValidationPlugin = {
   [key: string]: unknown
 }
 
-// duplicated
-export declare type JsonqlValidationRule = {
-  type?: string
-  pattern?: string | RegExp
-  plugin?: string
-  value?: unknown // if the rule require a value to compare, normaly it should be a number
-  server?: boolean // mark if this is a server side only rules
-  validate?: CallbackFunction<T> // apply a function
-  validateAsync?: AsyncCallbackFunction<T>
-  override?: boolean
-  [key: string]: unknown // free form to apply the plugins
-}
-
 // then the developer can provide Array style
 export type JsonqlArrayValidateInput = Array<JsonqlValidationRule> | Array<Array<JsonqlValidationRule>>
 
@@ -65,7 +53,6 @@ export type JsonqlObjectValidateInput = {
   [argName: string]: JsonqlValidationRule | Array<JsonqlValidationRule>
 }
 
-export type JsonqlValidateFn = AsyncCallbackFunction<unknown, boolean>
 
 export type JsonqlValidateCbFn = (
   value: unknown,
