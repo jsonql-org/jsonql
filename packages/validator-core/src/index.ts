@@ -30,6 +30,7 @@ export {
 export { ValidatorPlugins } from './validator-plugins'
 // export all constants
 export {
+  KEYWORDS,
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,

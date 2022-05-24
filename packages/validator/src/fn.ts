@@ -2,10 +2,12 @@
 // import utils from '@jsonql/utils'
 import type {
   JsonqlPropertyParamMap,
+} from './types'
+import type {
   JsonqlValidateFn,
   JsonqlGenericObject,
   JsonqlValidationRule,
-} from './types'
+} from '@jsonql/validator-core/index'
 import {
   checkString,
   checkArray,
@@ -13,13 +15,12 @@ import {
   checkUnion,
   combineCheck,
   promisify,
-  KEYWORDS,
+  constructRuleCb,
+  isResultPackage,
   RULES_KEY,
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
-  PATTERN_KEY,
-  IDX_KEY,
   VALUE_KEY,
 } from '@jsonql/validator-core'
 import {
@@ -35,15 +36,6 @@ import {
   IS_SPREAD_VALUES_KEY,
 } from './constants'
 import {
-  JsonqlValidationError,
-  // JsonqlError,
-} from '@jsonql/errors'
-import {
-  assign,
-  getRegex,
-  inArray,
-  toArray,
-  isFunction,
   notEmpty,
   objectHasKey,
 } from '@jsonql/utils'
@@ -67,13 +59,15 @@ export function createAutomaticRules(
   astMap: Array<JsonqlPropertyParamMap>
 ): Array<JsonqlPropertyParamMap> {
   return astMap.map((ast: JsonqlPropertyParamMap) => {
-
-    // process the rest
     const { name } = ast
     const ruleFn = getValidateRules(ast)
     const ruleName = ast[TS_TYPE_NAME] || ast.type
     debug('createAutomaticRules', name, ruleName)
-    ast[RULES_KEY] = [ constructRuleCb(name, ruleFn, ruleName) ]
+    ast[RULES_KEY] = [constructRuleCb(
+      name,
+      ruleFn as JsonqlValidateFn,
+      ruleName as string
+    )]
 
     return ast
   })
@@ -126,7 +120,7 @@ export async function unwrapPreparedValidateResult(
 }
 
 /** only deal with constructing the basic rules validation function */
-function getValidateRules(ast: JsonqlPropertyParamMap): JsonqlValidateFn {
+function getValidateRules(ast: JsonqlPropertyParamMap) {
   debug('getValidateRules ast', ast)
   switch (ast[TS_TYPE_NAME]) {
     case TS_UNION_TYPE:
@@ -177,37 +171,6 @@ export function getOptionalValue(
   }
 
   return arg
-}
-
-/** check plugin argument */
-export function checkPluginArg(params: Array<string>): boolean {
-  return !(params.filter(param => inArray(KEYWORDS, param)).length > 0)
-}
-
-/** check if the actually provide a func or pattern to construct function */
-export function pluginHasFunc(rule: JsonqlGenericObject): boolean {
-  if (!rule[PATTERN_KEY]) {
-    const checks = [VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY]
-    for (let i = 0; i < checks.length; ++i) {
-      const fn = rule[checks[i]]
-      if (fn && isFunction(fn)) {
-        return true
-      }
-    }
-  }
-  return false
-}
-
-/** If the plugin provide a pattern and we construct a function out of it */
-export function patternPluginFanctory(
-  pattern: string
-): (value: string) => Promise<boolean> {
-  const regex = getRegex(pattern)
-
-  return async (value: string) => regex.test(value) ?
-                                    Promise.resolve(true) :
-                                    Promise.reject(false)
-
 }
 
 /** check if the rule contain duplicate rules that can not be resolve */
