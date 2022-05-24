@@ -8,7 +8,7 @@ let plugin: ValidatorPlugins
 
 test.before(() => {
 
-  plugin = new ValidatorPlugins()
+  plugin = new ValidatorPlugins(1)
 })
 
 
@@ -25,10 +25,19 @@ test(`Should able to use the ValidatorPlugin class to perform the same task`, t 
 
 test(`Test the load external methods`, async t => {
   t.plan(1)
-
   return import([pluginPath, 'js'].join('.'))
             .then(module => {
               // console.log(module)
               t.truthy(module.default)
             })
+})
+
+test(`Testing the idx options`, t => {
+
+  t.is(plugin.idx, 1)
+
+  const anotherPlugin = new ValidatorPlugins(2)
+
+  t.is(anotherPlugin.idx, 2)
+  
 })

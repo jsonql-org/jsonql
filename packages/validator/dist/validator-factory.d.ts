@@ -26,7 +26,7 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
       this is now change to accept an instance of ValidatorPlugins (share)
       if only call it with the astMap then it init it as a standalone like before
     */
-    constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance?: ValidatorPlugins);
+    constructor(astMap: Array<JsonqlPropertyParamMap>, vp?: ValidatorPlugins);
     /** this is where validation happens */
     validate(values: Array<unknown>, raw?: boolean): Promise<any>;
     /** accept an object name => plugin in one go */

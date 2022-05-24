@@ -34,11 +34,8 @@ class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
       this is now change to accept an instance of ValidatorPlugins (share)
       if only call it with the astMap then it init it as a standalone like before
     */
-    constructor(astMap, _validatorPluginsInstance) {
-        if (!_validatorPluginsInstance) {
-            _validatorPluginsInstance = new validator_core_1.ValidatorPlugins();
-        }
-        super(astMap, _validatorPluginsInstance);
+    constructor(astMap, vp) {
+        super(astMap, vp && vp instanceof validator_core_1.ValidatorPlugins ? vp : new validator_core_1.ValidatorPlugins());
     }
     /** this is where validation happens */
     validate(values, raw = false) {
