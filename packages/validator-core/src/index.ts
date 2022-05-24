@@ -16,6 +16,9 @@ import { promisify, reversePromisifyResult } from './lib/promisify'
 import { plugins } from './plugins'
 // avoid a circular reference
 import { curryPlugin, createCoreCurryPlugin } from './plugins/plugins'
+
+
+
 export {
   checkAny,
   checkArray,

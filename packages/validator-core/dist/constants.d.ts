@@ -1,0 +1,12 @@
+export declare const VALIDATE_KEY = "validate";
+export declare const VALIDATE_ASYNC_KEY = "validateAsync";
+export declare const PLUGIN_KEY = "plugin";
+export declare const PLUGIN_FN_KEY = "main";
+export declare const PATTERN_KEY = "pattern";
+export declare const RULES_KEY = "rules";
+export declare const NAME_KEY = "name";
+export declare const PARAMS_KEY = "params";
+export declare const ORG_KEY = "org";
+export declare const IDX_KEY = "$$idx";
+export declare const VALUE_KEY = "$$value";
+export declare const KEYWORDS: string[];

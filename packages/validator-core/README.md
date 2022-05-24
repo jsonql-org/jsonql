@@ -3,6 +3,13 @@
 This library provide all the core validation functions for couple other libraries.
 Also it has a plugin system, and some commonly use plugins to help with the validation.
 
+## ValidatorPlugins
+
+As of version 0.8.0, we move all the plugins related methods into this module. And this will be able to share between many different
+`@jsonql/validator` instance to use, instead of every time we init a `ValidatorFactory` and have to load all the plugins again.
+
+More to come 
+
 ## About the plugin system
 
 The core library provide function to validate against primitive types and their value.
@@ -54,7 +61,7 @@ export default {
 
 ```
 
-The `value` that will get validate **MUST** be the last argument. Because we will curry the main method before insert into our validation queue system. 
+The `value` that will get validate **MUST** be the last argument. Because we will curry the main method before insert into our validation queue system.
 
 ## Built-in plugins
 

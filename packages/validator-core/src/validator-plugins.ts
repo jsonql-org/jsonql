@@ -71,7 +71,10 @@ export class ValidatorPlugins {
     })
   }
 
-  /** find the plugin internal or external */
+  /**
+  find the plugin internal or external
+  propName is the argument name 
+  */
   public lookupPlugin(
     input: JsonqlValidationRule,
     propName: string
