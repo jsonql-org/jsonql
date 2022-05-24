@@ -9,5 +9,6 @@ export { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/un
 export { promisify, reversePromisifyResult } from './lib/promisify';
 export { plugins } from './plugins';
 export { curryPlugin, createCoreCurryPlugin } from './plugins/plugins';
+export { checkPluginArg, pluginHasFunc, constructRuleCb, successThen, isResultPackage, patternPluginFanctory } from './lib/common';
 export { ValidatorPlugins } from './validator-plugins';
 export { VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_KEY, PLUGIN_FN_KEY, PATTERN_KEY, RULES_KEY, NAME_KEY, PARAMS_KEY, ORG_KEY, IDX_KEY, VALUE_KEY, } from './constants';

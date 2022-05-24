@@ -15,8 +15,18 @@ export { promisify, reversePromisifyResult } from './lib/promisify'
 // for some reason the downstream keep complaining the js version has no export member of X
 export { plugins } from './plugins'
 // avoid a circular reference
-export { curryPlugin, createCoreCurryPlugin } from './plugins/plugins'
-
+export {
+  curryPlugin,
+  createCoreCurryPlugin
+} from './plugins/plugins'
+export {
+  checkPluginArg,
+  pluginHasFunc,
+  constructRuleCb,
+  successThen,
+  isResultPackage,
+  patternPluginFanctory
+} from './lib/common'
 export { ValidatorPlugins } from './validator-plugins'
 // export all constants
 export {

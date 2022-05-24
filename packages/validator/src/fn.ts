@@ -13,6 +13,14 @@ import {
   checkUnion,
   combineCheck,
   promisify,
+  KEYWORDS,
+  RULES_KEY,
+  VALIDATE_KEY,
+  VALIDATE_ASYNC_KEY,
+  PLUGIN_FN_KEY,
+  PATTERN_KEY,
+  IDX_KEY,
+  VALUE_KEY,
 } from '@jsonql/validator-core'
 import {
   TS_TYPE_NAME,
@@ -24,14 +32,6 @@ import {
   SPREAD_ARG_TYPE,
 } from '@jsonql/constants'
 import {
-  KEYWORDS,
-  RULES_KEY,
-  VALIDATE_KEY,
-  VALIDATE_ASYNC_KEY,
-  PLUGIN_FN_KEY,
-  PATTERN_KEY,
-  IDX_KEY,
-  VALUE_KEY,
   IS_SPREAD_VALUES_KEY,
 } from './constants'
 import {
@@ -79,74 +79,6 @@ export function createAutomaticRules(
   })
 }
 
-/**
-this will get re-use in the class to create method for the queue execution
- */
-export function constructRuleCb(
-  argName: string,
-  ruleFn: JsonqlValidateFn,
-  ruleName?: string | unknown
-) {
-  debug('ruleFn', ruleFn, argName)
-  return async (
-    value: unknown,
-    lastResult: JsonqlGenericObject,
-    pos: number[]
-  ) => Reflect.apply(ruleFn, null, [value])
-                .then(
-                  successThen(argName, value, lastResult, pos)
-                )
-                .catch((error: boolean) => {
-                  debug('failed', argName, value, error, pos)
-                  // the name should be the validator name - not the property name
-                  // because the pos already indicator the property
-                  return Promise.reject(new JsonqlValidationError(ruleName, pos))
-                })
-}
-
-/** This is taken out from the above then call for re-use when we want to fall through a rule */
-export function successThen(
-  argName: string,
-  value: unknown,
-  lastResult: JsonqlGenericObject,
-  pos: number[] // for internal debug use only
-) {
-  return (result: unknown) => {
-    const idx = pos[0]
-    debug('passed', argName, value, result, pos)
-    debug('lastResult', lastResult)
-    const newResult = { [IDX_KEY]: idx, [VALUE_KEY]: value }
-    if (lastResult === undefined) { // init
-      return {[argName]: newResult }
-    }
-    // here is the problem with spread result - they have the same name
-    if (argName in lastResult) { // we need to check if the key exist this is import NOT VALUE check
-      const lr = lastResult[argName]
-      if (isResultPackage(lr) ) {
-        if (!lr.includes(newResult)) {
-          lastResult[argName].push(newResult)
-        }
-      } else if (lr[IDX_KEY] !== idx) {
-        lastResult[argName] = toArray(lastResult[argName]).concat([ newResult ])
-      }
-      // if it's the same then do nothing
-      return lastResult
-    }
-    // return the argument name with the value
-    return assign(lastResult, { [argName]: newResult })
-  }
-}
-
-/** check to see if the lastResult contain our lastResult package format or just their value */
-export function isResultPackage(lastResult: unknown, key = IDX_KEY) {
-  try {
-    if (Array.isArray(lastResult)) {
-      return !!lastResult.filter((res: {[key: string]: unknown}) => key in res).length
-    }
-  } catch(e) { debug('isResultPackage', e) }
-
-  return false
-}
 
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 export async function processValidateResults(
