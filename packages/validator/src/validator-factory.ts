@@ -50,12 +50,12 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   */
   constructor(
     astMap: Array<JsonqlPropertyParamMap>,
-    _validatorPluginsInstance?: ValidatorPlugins
+    vp?: ValidatorPlugins
   ) {
-    if (!_validatorPluginsInstance) {
-      _validatorPluginsInstance = new ValidatorPlugins()
-    }
-    super(astMap, _validatorPluginsInstance)
+    super(
+      astMap,
+      vp && vp instanceof ValidatorPlugins ? vp : new ValidatorPlugins()
+    )
   }
 
   /** this is where validation happens */
@@ -89,7 +89,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   ): void {
     this._validatorPluginsInstance.registerPlugin(name, plugin)
   }
-  
+
   /** overload the ValidatorPlugins loadExtPlugin method */
   public loadExtPlugin(
     name: string,
