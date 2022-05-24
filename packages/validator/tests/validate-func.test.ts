@@ -34,7 +34,7 @@ test(`It should allow to add validate method directly to the validate rules`, as
       {
         name: 'customRule1',
         validate: function(value: number) {
-          console.log('call with value', value)
+          // console.log('call with value', value)
           return value > 10000
         }
       }
@@ -43,7 +43,7 @@ test(`It should allow to add validate method directly to the validate rules`, as
 
   return api.validate(['ABC', 123456])
             .then((result: Array<string|number|boolean>) => {
-              console.log('result', result)
+              // console.log('result', result)
 
               t.true(Array.isArray(result))
             })

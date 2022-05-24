@@ -68,7 +68,7 @@ export class ValidatorFactoryBase {
   // main
   constructor(
     astMap: Array<JsonqlPropertyParamMap>,
-    private _validatorPluginsInstance: ValidatorPlugins
+    protected _validatorPluginsInstance: ValidatorPlugins
   ) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument name list in order
@@ -279,20 +279,6 @@ export class ValidatorFactoryBase {
     propName: string
   ) {
     return this._validatorPluginsInstance.lookupPlugin(input, propName)
-  }
-
-  protected _registerPlugin(
-    name: string,
-    pluginConfig: JsonqlValidationPlugin
-  ) {
-    return this._validatorPluginsInstance.registerPlugin(name, pluginConfig)
-  }
-
-  protected _loadExtPlugin(
-    name: string,
-    pluginConfig: JsonqlValidationPlugin
-  ) {
-    return this._validatorPluginsInstance.loadExtPlugin(name, pluginConfig)
   }
 
 }

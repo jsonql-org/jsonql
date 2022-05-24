@@ -78,15 +78,24 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     plugins: {[name: string]: JsonqlValidationPlugin}
   ): void {
     for (const name in plugins) {
-      this.registerPlugin(name, plugins[name])
+      this._validatorPluginsInstance.registerPlugin(name, plugins[name])
     }
   }
+
   /** wrapper for the protected register plugin method */
   public registerPlugin(
     name: string,
     plugin: JsonqlValidationPlugin
   ): void {
-    this.registerPlugin(name, plugin)
+    this._validatorPluginsInstance.registerPlugin(name, plugin)
+  }
+  
+  /** overload the ValidatorPlugins loadExtPlugin method */
+  public loadExtPlugin(
+    name: string,
+    plugin: JsonqlValidationPlugin
+  ) {
+    this._validatorPluginsInstance.loadExtPlugin(name, plugin)
   }
 
   /** create an alias for createSchema (and replace it later ) because ii make more sense */
