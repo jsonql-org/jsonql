@@ -1,4 +1,4 @@
-import type { JsonqlValidationPlugin, JsonqlGenericObject } from '@jsonql/validator-core/index';
+import type { JsonqlGenericObject } from '@jsonql/validator-core/index';
 import type { JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput } from './types';
 import { ValidatorPlugins } from '@jsonql/validator-core';
 /**
@@ -10,7 +10,7 @@ The sequence how this should run
 5. Call the validate method with the data input then the validation will run
 */
 export declare class ValidatorFactoryBase {
-    private _validatorPluginsInstance;
+    protected _validatorPluginsInstance: ValidatorPlugins;
     private _astWithBaseRules;
     private _schema;
     protected _arguments: Array<string>;
@@ -41,6 +41,4 @@ export declare class ValidatorFactoryBase {
     private _transformInput;
     /** wrapper methods for ValidatorPlugins */
     private _lookupPlugin;
-    protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
-    protected _loadExtPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
 }

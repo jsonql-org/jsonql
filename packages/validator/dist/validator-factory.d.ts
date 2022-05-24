@@ -35,6 +35,8 @@ export declare class ValidatorFactory extends ValidatorFactoryBase {
     }): void;
     /** wrapper for the protected register plugin method */
     registerPlugin(name: string, plugin: JsonqlValidationPlugin): void;
+    /** overload the ValidatorPlugins loadExtPlugin method */
+    loadExtPlugin(name: string, plugin: JsonqlValidationPlugin): void;
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
     /** After the validation the success will get an object with

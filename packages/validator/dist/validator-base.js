@@ -195,11 +195,5 @@ class ValidatorFactoryBase {
     _lookupPlugin(input, propName) {
         return this._validatorPluginsInstance.lookupPlugin(input, propName);
     }
-    _registerPlugin(name, pluginConfig) {
-        return this._validatorPluginsInstance.registerPlugin(name, pluginConfig);
-    }
-    _loadExtPlugin(name, pluginConfig) {
-        return this._validatorPluginsInstance.loadExtPlugin(name, pluginConfig);
-    }
 }
 exports.ValidatorFactoryBase = ValidatorFactoryBase;

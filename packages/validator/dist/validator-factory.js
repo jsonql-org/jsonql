@@ -54,12 +54,16 @@ class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
     /** accept an object name => plugin in one go */
     registerPlugins(plugins) {
         for (const name in plugins) {
-            this.registerPlugin(name, plugins[name]);
+            this._validatorPluginsInstance.registerPlugin(name, plugins[name]);
         }
     }
     /** wrapper for the protected register plugin method */
     registerPlugin(name, plugin) {
-        this.registerPlugin(name, plugin);
+        this._validatorPluginsInstance.registerPlugin(name, plugin);
+    }
+    /** overload the ValidatorPlugins loadExtPlugin method */
+    loadExtPlugin(name, plugin) {
+        this._validatorPluginsInstance.loadExtPlugin(name, plugin);
     }
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap) {

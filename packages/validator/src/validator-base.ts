@@ -1,6 +1,6 @@
 // this is the base class for all the helper methods
 import type {
-  JsonqlValidationPlugin,
+  // JsonqlValidationPlugin,
   JsonqlValidationRule,
   JsonqlGenericObject,
   JsonqlValidateFn,
