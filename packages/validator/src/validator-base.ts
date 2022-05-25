@@ -50,7 +50,7 @@ import {
 } from './constants'
 // ---- DEBUG ---- //
 import debugFn from 'debug'
-const debug = debugFn('jsonql:validator:class:base')
+const debug = debugFn('jsonql:validator:validator-base')
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -189,6 +189,7 @@ export class ValidatorFactoryBase {
         astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
       }
     }
+    debug(`_createSchema`, astWithRules)
     this._schema = astWithRules
   }
 
@@ -277,11 +278,13 @@ export class ValidatorFactoryBase {
   }
 
   /** wrapper methods for ValidatorPlugins */
-
   private _lookupPlugin(
     input: JsonqlValidationRule,
     propName: string
   ) {
+    debug('_lookupPlugin', propName, input)
+    // @TODO we should allow validator to use standalone without the plugin system
+    // so when this plugin instance object is undefined we should skip it
     return this._validatorPluginsInstance.lookupPlugin(input, propName)
   }
 

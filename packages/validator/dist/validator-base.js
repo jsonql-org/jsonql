@@ -11,7 +11,7 @@ const fn_1 = require("./fn");
 const constants_2 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
-const debug = (0, debug_1.default)('jsonql:validator:class:base');
+const debug = (0, debug_1.default)('jsonql:validator:validator-base');
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -126,6 +126,7 @@ class ValidatorFactoryBase {
                 astWithRules = this._applyObjectInput(astWithRules, input);
             }
         }
+        debug(`_createSchema`, astWithRules);
         this._schema = astWithRules;
     }
     /** normalize the array style rules input */
@@ -196,6 +197,9 @@ class ValidatorFactoryBase {
     }
     /** wrapper methods for ValidatorPlugins */
     _lookupPlugin(input, propName) {
+        debug('_lookupPlugin', propName, input);
+        // @TODO we should allow validator to use standalone without the plugin system
+        // so when this plugin instance object is undefined we should skip it
         return this._validatorPluginsInstance.lookupPlugin(input, propName);
     }
 }
