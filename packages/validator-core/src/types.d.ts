@@ -10,19 +10,20 @@ export type JsonqlCheckObjectKeys = {
   name: string
   type: Array<string>
 }
-
+// We use this when using the lookupPlugin
 export type JsonqlPluginInput = {
   plugin: string
 } & JsonqlGenericObject
 
 export type JsonqlValidateFn = AsyncCallbackFunction<unknown>
-
+// this is the file or inline input to setup the plugin
 export type JsonqlPluginConfig = {
   name: string
   main: JsonqlValidateFn
   params?: string[]
 }
 
+// this is the internal stucture of plugin stored in Map store
 export declare type JsonqlValidationBase = {
   pattern?: string | RegExp // should this be a string only for transport?
   // we apply the JSON Schema validation here
@@ -36,10 +37,10 @@ export declare type JsonqlValidationPlugin = {
   name?: string
   main?: CallbackFunction<T> // after transform the plugin we remove it from the object
   params?: Array<string>
-} & JsonqlValidationBase
 
+} & JsonqlValidationBase
+// add rules
 export declare type JsonqlValidationRule = {
   type?: string
   plugin?: string
-  value?: unknown // if the rule require a value to compare, normaly it should be a number
 } & JsonqlValidationBase

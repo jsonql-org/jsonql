@@ -10,9 +10,7 @@ import type {
   JsonqlValidationRule,
   JsonqlValidateFn,
 } from './types'
-import {
-  JsonqlError
-} from '@jsonql/errors'
+import JsonqlError from '@jsonql/errors/dist/base/error'
 import {
   inArray,
   isFunction,
@@ -56,8 +54,6 @@ export class ValidatorPlugins {
 
   private _plugins = new Map<string, JsonqlValidationPlugin>()
   private _internalPluginNames: string[] = []
-  private _externalPluginNames: string[] = []
-
   /** with a idx to id this instance */
   constructor(public $idx?: number) {
     // register internal plugins
@@ -74,11 +70,11 @@ export class ValidatorPlugins {
 
   /**
   find the plugin internal or external
-  propName is the argument name
+  argName is the argument name
   */
   public lookupPlugin(
     input: JsonqlValidationRule,
-    propName: string
+    argName: string
   ) {
     const pluginName = input[PLUGIN_KEY]
     if (pluginName && this._plugins.has(pluginName)) {
@@ -87,7 +83,7 @@ export class ValidatorPlugins {
       if (pluginConfig && pluginConfig[VALIDATE_ASYNC_KEY]) {
         // here is the problem the name should be the param not the plugin
         return constructRuleCb(
-          propName,
+          argName,
           pluginConfig[VALIDATE_ASYNC_KEY] as JsonqlValidateFn,
           pluginName,
         )
@@ -96,7 +92,7 @@ export class ValidatorPlugins {
         const _input = input as unknown as JsonqlPluginInput
 
         return constructRuleCb(
-          propName,
+          argName,
           promisify( // need to check if the _plugin is internal or not
             inArray(this._internalPluginNames, pluginName) ?
               createCoreCurryPlugin(_input) :
@@ -106,7 +102,7 @@ export class ValidatorPlugins {
         )
       }
     }
-    throw new JsonqlError(`Unable to find ${pluginName} plugin for ${propName}`)
+    throw new JsonqlError(`Unable to find ${pluginName} plugin for ${argName}`)
   }
 
   /** The public api to register a plugin */
@@ -117,25 +113,9 @@ export class ValidatorPlugins {
     this._registerPlugin(name, pluginConfig)
   }
 
-  /** basically overload the _registerPlugin with adding name to ext list */
-  public loadExtPlugin(
-    name: string,
-    pluginConfig: JsonqlValidationPlugin
-  ): void {
-    if (!this._externalPluginNames.includes(name) ) {
-      this._internalPluginNames.push(name)
-      this._registerPlugin(name, pluginConfig)
-    } else {
-      throw new JsonqlError(`${name} already added!`, name)
-    }
-  }
-
-  /** get a list of the plugin names */
-  public getPluginNames(ext = false) {
-    if (ext === true) {
-      return this._externalPluginNames
-    }
-    return this._internalPluginNames.concat(this._externalPluginNames)
+  /** export all plugins for generate js file */
+  public export() {
+    debug('@TODO')
   }
 
   // ------------------------- PRIVATE --------------------------//
