@@ -105,14 +105,19 @@ class ValidatorPlugins {
                 (0, string_1.checkString)(pluginConfig[constants_1.PATTERN_KEY])):
                 pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_2.patternPluginFanctory)(pluginConfig[constants_1.PATTERN_KEY]);
                 break;
-            case (pluginConfig[constants_1.VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[constants_1.PLUGIN_FN_KEY]):
-                delete pluginConfig[constants_1.PLUGIN_FN_KEY]; // remove it
-                break;
+            /*
+            case (pluginConfig[VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[PLUGIN_FN_KEY]):
+              delete pluginConfig[PLUGIN_FN_KEY] // remove it
+              break */
             // @NOTE we can not create the curryPlugin here because it needs to be generic
             // and the arguement provide at validation time, this need to get create at the _lookupPlugin
             default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(pluginConfig[constants_1.PLUGIN_FN_KEY]);
-                delete pluginConfig[constants_1.PLUGIN_FN_KEY]; // remove it
+                if (!pluginConfig[constants_1.PLUGIN_FN_KEY]) {
+                    throw new error_1.default(`${constants_1.PLUGIN_FN_KEY} is empty?`, pluginConfig);
+                }
+                const fn = pluginConfig[constants_1.PLUGIN_FN_KEY];
+                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_2.isAsyncFn)(fn) ? fn : (0, promisify_1.promisify)(fn);
+            // delete pluginConfig[PLUGIN_FN_KEY] // remove it
         }
         // debug(`add plugin`, name, pluginConfig)
         this._plugins.set(name, pluginConfig);

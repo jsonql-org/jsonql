@@ -163,9 +163,10 @@ export class ValidatorPlugins {
             checkString(pluginConfig[PATTERN_KEY])):
         pluginConfig[VALIDATE_ASYNC_KEY] = patternPluginFanctory(pluginConfig[PATTERN_KEY] as string)
         break
+      /*
       case (pluginConfig[VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[PLUGIN_FN_KEY]):
         delete pluginConfig[PLUGIN_FN_KEY] // remove it
-        break
+        break */
       // @NOTE we can not create the curryPlugin here because it needs to be generic
       // and the arguement provide at validation time, this need to get create at the _lookupPlugin
       default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
@@ -174,7 +175,7 @@ export class ValidatorPlugins {
         }
         const fn = pluginConfig[PLUGIN_FN_KEY]
         pluginConfig[VALIDATE_ASYNC_KEY] = isAsyncFn(fn) ? fn : promisify(fn)
-        delete pluginConfig[PLUGIN_FN_KEY] // remove it
+        // delete pluginConfig[PLUGIN_FN_KEY] // remove it
     }
     // debug(`add plugin`, name, pluginConfig)
     this._plugins.set(name, pluginConfig)

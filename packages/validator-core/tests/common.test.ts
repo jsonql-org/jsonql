@@ -20,7 +20,5 @@ test(`Should able to get an internal plugin`, t => {
 
   const fn = plugin.lookupPlugin({ plugin: 'moreThan', num: 100}, 'myArg')
 
-  console.log(fn.toString())
-
-  t.truthy(fn)
+  t.true(isAsyncFn(fn))
 })

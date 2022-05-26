@@ -22,8 +22,8 @@ test(`Throw wrong data to expect to fail`, async t => {
               console.log(`should not see me here`)
             })
             .catch((type: string) => {
-              console.log('failed type', type)
-              t.is(type, 'string')
+              // console.log('failed type', type)
+              t.is(type, 'string', 'Failed Type is String')
             })
 })
 
