@@ -157,9 +157,10 @@ class ValidatorBase {
                     debug(`Should got here ----->`, _input[validator_core_1.PLUGIN_KEY]);
                     return this._lookupPlugin(_input, propName);
                 case _input[validator_core_1.VALIDATE_KEY] !== undefined:
-                    debug(`${validator_core_1.VALIDATE_KEY}`);
+                    debug(`${validator_core_1.VALIDATE_KEY}`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[validator_core_1.VALIDATE_KEY]), pluginName);
                 case _input[validator_core_1.VALIDATE_ASYNC_KEY] !== undefined:
+                    debug(`${validator_core_1.VALIDATE_ASYNC_KEY}`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
                     throw new errors_1.JsonqlError(`unable to find rule for ${propName}`);
@@ -168,7 +169,7 @@ class ValidatorBase {
     }
     /** wrapper methods for ValidatorPlugins */
     _lookupPlugin(input, propName) {
-        debug('_lookupPlugin', propName, input);
+        debug('_lookupPlugin --->', input, propName);
         // @TODO we should allow validator to use standalone without the plugin system
         // so when this plugin instance object is undefined we should skip it
         return this._validatorPluginsInstance.lookupPlugin(input, propName);

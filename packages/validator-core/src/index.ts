@@ -25,7 +25,6 @@ export {
   successThen,
   isResultPackage,
   patternPluginFanctory,
-  isAsyncFn,
 } from './lib/common'
 export { ValidatorPlugins } from './validator-plugins'
 // export all constants
