@@ -19,14 +19,13 @@
   @TODO how to integrete this into the contract generator
 */
 import {
-  ValidatorFactoryBase
+  ValidatorBase
 } from './validator-base'
 import {
   JsonqlGenericObject,
 } from '@jsonql/validator-core/index'
 import type {
   JsonqlValidationPlugin,
-  JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
   JsonqlPropertyParamMap,
 } from './types'
@@ -43,7 +42,7 @@ import {
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
-export class ValidatorFactory extends ValidatorFactoryBase {
+export class Validator extends ValidatorBase {
   /**
     this is now change to accept an instance of ValidatorPlugins (share)
     if only call it with the astMap then it init it as a standalone like before
@@ -54,7 +53,7 @@ export class ValidatorFactory extends ValidatorFactoryBase {
   ) {
     super(
       astMap,
-      vp && vp instanceof ValidatorPlugins ? vp : new ValidatorPlugins()
+      vp && vp instanceof ValidatorPlugins ? vp : new ValidatorPlugins(-1)
     )
   }
 
@@ -73,15 +72,6 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     )
   }
 
-  /** accept an object name => plugin in one go */
-  public registerPlugins(
-    plugins: {[name: string]: JsonqlValidationPlugin}
-  ): void {
-    for (const name in plugins) {
-      this._validatorPluginsInstance.registerPlugin(name, plugins[name])
-    }
-  }
-
   /** wrapper for the protected register plugin method */
   public registerPlugin(
     name: string,
@@ -90,17 +80,9 @@ export class ValidatorFactory extends ValidatorFactoryBase {
     this._validatorPluginsInstance.registerPlugin(name, plugin)
   }
 
-  /** overload the ValidatorPlugins loadExtPlugin method */
-  public loadExtPlugin(
-    name: string,
-    plugin: JsonqlValidationPlugin
-  ) {
-    this._validatorPluginsInstance.loadExtPlugin(name, plugin)
-  }
-
   /** create an alias for createSchema (and replace it later ) because ii make more sense */
   public addValidationRules(
-    validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+    validationMap: JsonqlObjectValidateInput
   ): void {
     this._createSchema(validationMap)
   }

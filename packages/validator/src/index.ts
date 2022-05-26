@@ -4,5 +4,5 @@ export {
   ValidatorPlugins
 } from '@jsonql/validator-core'
 export {
-  ValidatorFactory
+  Validator
 } from './validator-factory'

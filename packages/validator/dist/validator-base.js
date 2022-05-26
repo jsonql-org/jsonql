@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidatorFactoryBase = void 0;
+exports.ValidatorBase = void 0;
 const tslib_1 = require("tslib");
 const errors_1 = require("@jsonql/errors");
 const utils_1 = require("@jsonql/utils");
@@ -20,7 +20,7 @@ The sequence how this should run
 4. accept the user define rules, at this point we create the full validation map
 5. Call the validate method with the data input then the validation will run
 */
-class ValidatorFactoryBase {
+class ValidatorBase {
     // main
     constructor(astMap, _validatorPluginsInstance) {
         this._validatorPluginsInstance = _validatorPluginsInstance;
@@ -31,9 +31,6 @@ class ValidatorFactoryBase {
     /** just return the internal schema for validation for use, see export */
     get schema() {
         return this._schema || this._astWithBaseRules;
-    }
-    get $idx() {
-        return this._validatorPluginsInstance.idx;
     }
     // ----------------- validate ------------------ //
     /**
@@ -119,36 +116,10 @@ class ValidatorFactoryBase {
         let astWithRules = this._astWithBaseRules;
         // all we need to do is check if its empty input
         if ((0, utils_1.notEmpty)(input, true)) {
-            if ((0, validator_core_1.checkArray)(input)) {
-                astWithRules = this._applyArrayInput(astWithRules, input);
-            }
-            else if ((0, validator_core_1.checkObject)(input)) {
-                astWithRules = this._applyObjectInput(astWithRules, input);
-            }
+            astWithRules = this._applyObjectInput(astWithRules, input);
         }
         debug(`_createSchema`, astWithRules);
         this._schema = astWithRules;
-    }
-    /** normalize the array style rules input */
-    _applyArrayInput(astMap, input) {
-        const arrayInput = input.map(utils_1.toArray);
-        // We just need to take the validate methods and concat to the rules here
-        return astMap.map((ast, i) => {
-            var _a;
-            if (arrayInput[i]) { // the user didn't provide additonal rules
-                const input2 = this._transformInput(arrayInput[i], ast.name);
-                /**
-                @TODO
-                We took the info and create the function but we need to keep
-                the original input and store into the astMap.org field for generate
-                contract later
-                */
-                if (input2) {
-                    ast[validator_core_1.RULES_KEY] = (_a = ast[validator_core_1.RULES_KEY]) === null || _a === void 0 ? void 0 : _a.concat(input2);
-                }
-            }
-            return ast;
-        });
     }
     /** nomalize the object style rules input */
     _applyObjectInput(astMap, input) {
@@ -203,4 +174,4 @@ class ValidatorFactoryBase {
         return this._validatorPluginsInstance.lookupPlugin(input, propName);
     }
 }
-exports.ValidatorFactoryBase = ValidatorFactoryBase;
+exports.ValidatorBase = ValidatorBase;

@@ -1,4 +1,4 @@
-// new test for testing the ValidatorFactory and associate methods
+// new test for testing the Validator and associate methods
 import test from 'ava'
 import * as fs from 'fs-extra'
 import { join } from 'path'
@@ -7,7 +7,7 @@ import {
   createAutomaticRules
 } from '../src/fn'
 import {
-  ValidatorFactory
+  Validator
 } from '../dist'
 import {
   queuePromisesProcess
@@ -73,7 +73,7 @@ test(`It should able validate`, async t => {
   t.plan(1)
   // arg1: string, arg2: string | number, arg3?: boolean
   const values = ['hello@email.com', 10, false]
-  const validator = new ValidatorFactory(context.funcAstInput.resolver)
+  const validator = new Validator(context.funcAstInput.resolver)
 
   return validator.validate(values)
                   .then(result => {
@@ -89,7 +89,7 @@ test(`It should able to capture the error pos`, async t => {
   t.plan(1)
 
   const values = ['hello', false, 'whatever']
-  const validator = new ValidatorFactory(context.funcAstInput.resolver)
+  const validator = new Validator(context.funcAstInput.resolver)
 
   return validator.validate(values)
                   .then(result => {

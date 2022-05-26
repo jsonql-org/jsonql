@@ -8,7 +8,6 @@ import type {
 import type {
   JsonqlPropertyParamMap,
   JsonqlValidateCbFn,
-  JsonqlArrayValidateInput,
   JsonqlObjectValidateInput,
 } from './types'
 import {
@@ -27,7 +26,6 @@ import {
 import {
   ValidatorPlugins,
   checkArray,
-  checkObject,
   promisify,
   constructRuleCb,
   successThen,
@@ -59,7 +57,7 @@ The sequence how this should run
 4. accept the user define rules, at this point we create the full validation map
 5. Call the validate method with the data input then the validation will run
 */
-export class ValidatorFactoryBase {
+export class ValidatorBase {
   // we keep two set
   private _astWithBaseRules: Array<JsonqlPropertyParamMap>
   private _schema!: Array<JsonqlPropertyParamMap>
@@ -78,10 +76,6 @@ export class ValidatorFactoryBase {
   /** just return the internal schema for validation for use, see export */
   public get schema() {
     return this._schema || this._astWithBaseRules
-  }
-
-  public get $idx() {
-    return this._validatorPluginsInstance.idx
   }
 
   // ----------------- validate ------------------ //
@@ -178,43 +172,15 @@ export class ValidatorFactoryBase {
 
   /** put the rule in here and make it into an async method */
   protected _createSchema(
-    input: JsonqlObjectValidateInput | JsonqlArrayValidateInput
+    input: JsonqlObjectValidateInput
   ): void {
     let astWithRules = this._astWithBaseRules
     // all we need to do is check if its empty input
     if (notEmpty(input, true)) {
-      if (checkArray(input)) {
-        astWithRules = this._applyArrayInput(astWithRules, input as JsonqlArrayValidateInput)
-      } else if (checkObject(input)) {
-        astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
-      }
+      astWithRules = this._applyObjectInput(astWithRules, input as JsonqlObjectValidateInput)
     }
     debug(`_createSchema`, astWithRules)
     this._schema = astWithRules
-  }
-
-  /** normalize the array style rules input */
-  private _applyArrayInput(
-    astMap: Array<JsonqlPropertyParamMap>,
-    input: JsonqlArrayValidateInput
-  ) {
-    const arrayInput = input.map(toArray)
-    // We just need to take the validate methods and concat to the rules here
-    return astMap.map((ast: JsonqlPropertyParamMap, i: number) => {
-      if (arrayInput[i]) { // the user didn't provide additonal rules
-        const input2 = this._transformInput(arrayInput[i], ast.name)
-        /**
-        @TODO
-        We took the info and create the function but we need to keep
-        the original input and store into the astMap.org field for generate
-        contract later
-        */
-        if (input2) {
-          ast[RULES_KEY] = ast[RULES_KEY]?.concat(input2)
-        }
-      }
-      return ast
-    })
   }
 
   /** nomalize the object style rules input */

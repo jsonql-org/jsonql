@@ -1,7 +1,7 @@
 // testing when passing a js function
 import test from 'ava'
 
-import { ValidatorFactory } from '../dist'
+import { Validator } from '../dist'
 import { tsFileParser } from '@jsonql/ast'
 
 function login(username: string, password: string) {
@@ -18,7 +18,7 @@ test.before(async () => {
 test(`Should able to generate minimum valdiation rule when pass function without type info`, async t => {
   t.plan(1)
 
-  const obj = new ValidatorFactory(astMap['login'])
+  const obj = new Validator(astMap['login'])
 
   return obj.validate(['john'])
       .catch(err => {
@@ -28,7 +28,7 @@ test(`Should able to generate minimum valdiation rule when pass function without
 
 test(`Should able to apply additional rule just like a normal ts function`, async t => {
   t.plan(1)
-  const obj = new ValidatorFactory(astMap['login'])
+  const obj = new Validator(astMap['login'])
   obj.addValidationRules({
     username: {plugin: 'between', max: 20, min: 5}
   })

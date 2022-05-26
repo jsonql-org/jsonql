@@ -46,13 +46,9 @@ export declare type JsonqlValidationPlugin = {
   [key: string]: unknown
 }
 
-// then the developer can provide Array style
-export type JsonqlArrayValidateInput = Array<JsonqlValidationRule> | Array<Array<JsonqlValidationRule>>
-
 export type JsonqlObjectValidateInput = {
   [argName: string]: JsonqlValidationRule | Array<JsonqlValidationRule>
 }
-
 
 export type JsonqlValidateCbFn = (
   value: unknown,

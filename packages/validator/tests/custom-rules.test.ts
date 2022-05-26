@@ -1,11 +1,11 @@
 import test from 'ava'
 
-import { ValidatorFactory } from '../dist'
+import { Validator } from '../dist'
 import { context } from './fixtures/resolver/export-ast'
 
 test(`Testing custom rules to validate`, async t => {
   t.plan(1)
-  const obj = new ValidatorFactory(context.funcAstInput.resolver)
+  const obj = new Validator(context.funcAstInput.resolver)
 
   obj.addValidationRules({
     age: {

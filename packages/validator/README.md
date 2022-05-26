@@ -7,9 +7,10 @@ _This was call `jsonql-param-validator` now move into the `@jsonql` scope with m
 ## Usage
 
 ```ts
-import { ValidatorFactory } from '@jsonql/validator'
+// breaking change 0.7.0 change to Validator
+import { Validator } from '@jsonql/validator'
 // @TODO how to get the ast
-const validator = new ValidatorFactory(ast: Array<JsonqlPropertyParamMap>)
+const validator = new Validator(ast: Array<JsonqlPropertyParamMap>)
 
 validator.validate(values)
         .then(result => {
@@ -85,7 +86,7 @@ Then it will transform into this for the `validator`:
 To use with the `@jsonql/validator`
 
 ```ts
-const validator = new ValidatorFactory(ast.baselineFn)
+const validator = new Validator(ast.baselineFn)
 ```
 
 _Note that we **ONLY** use the `ast.baselineFn` part which is an array,
@@ -98,9 +99,9 @@ and it will able to understand your parameter types.
 ## Register your plugin
 
 ```ts
-import { ValidatorFactory } from '@jsonql/validator'
+import { Validator } from '@jsonql/validator'
 // See above example how to get the ast
-const validator = new ValidatorFactory(ast)
+const validator = new Validator(ast)
 
 validator.registerPlugin('myStandardPlugin', {
   main: (value: any): boolean => {

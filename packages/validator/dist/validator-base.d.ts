@@ -1,5 +1,5 @@
 import type { JsonqlGenericObject } from '@jsonql/validator-core/index';
-import type { JsonqlPropertyParamMap, JsonqlArrayValidateInput, JsonqlObjectValidateInput } from './types';
+import type { JsonqlPropertyParamMap, JsonqlObjectValidateInput } from './types';
 import { ValidatorPlugins } from '@jsonql/validator-core';
 /**
 The sequence how this should run
@@ -9,7 +9,7 @@ The sequence how this should run
 4. accept the user define rules, at this point we create the full validation map
 5. Call the validate method with the data input then the validation will run
 */
-export declare class ValidatorFactoryBase {
+export declare class ValidatorBase {
     protected _validatorPluginsInstance: ValidatorPlugins;
     private _astWithBaseRules;
     private _schema;
@@ -17,7 +17,6 @@ export declare class ValidatorFactoryBase {
     constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance: ValidatorPlugins);
     /** just return the internal schema for validation for use, see export */
     get schema(): JsonqlPropertyParamMap[];
-    get $idx(): number | undefined;
     /**
       when validate happens we check the input value
       correspond to out map, and apply the values
@@ -33,9 +32,7 @@ export declare class ValidatorFactoryBase {
     */
     private _prepareForExecution;
     /** put the rule in here and make it into an async method */
-    protected _createSchema(input: JsonqlObjectValidateInput | JsonqlArrayValidateInput): void;
-    /** normalize the array style rules input */
-    private _applyArrayInput;
+    protected _createSchema(input: JsonqlObjectValidateInput): void;
     /** nomalize the object style rules input */
     private _applyObjectInput;
     /** this will transform the rules to executable */

@@ -1,7 +1,7 @@
 // this will test the final feature of the validator
 // using a validate / validateAsync function directly in the validationRuleEntry
 import test from 'ava'
-import { ValidatorFactory } from '../src'
+import { Validator } from '../src'
 const baseLineFnAst = {
   "baselineFn": [
     {
@@ -22,9 +22,9 @@ const baseLineFnAst = {
     }
   ]
 }
-let api: ValidatorFactory
+let api: Validator
 test.before(() => {
-  api = new ValidatorFactory(baseLineFnAst.baselineFn)
+  api = new Validator(baseLineFnAst.baselineFn)
 })
 
 test(`It should allow to add validate method directly to the validate rules`, async t => {

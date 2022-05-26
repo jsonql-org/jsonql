@@ -1,6 +1,6 @@
 // TBD for export validation map
 import test from 'ava'
-import { ValidatorFactory } from '../src'
+import { Validator } from '../src'
 const baseLineFnAst = {
   "baselineFn": [
     {
@@ -21,9 +21,9 @@ const baseLineFnAst = {
     }
   ]
 }
-let api: ValidatorFactory
+let api: Validator
 test.before(() => {
-  api = new ValidatorFactory(baseLineFnAst.baselineFn)
+  api = new Validator(baseLineFnAst.baselineFn)
 })
 
 test(`Should able to generate a validaton map for contract to use`, t => {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidatorFactory = void 0;
+exports.Validator = void 0;
 const tslib_1 = require("tslib");
 /**
   this is the new class style Validator
@@ -29,13 +29,13 @@ const fn_1 = require("./fn");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
-class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
+class Validator extends validator_base_1.ValidatorBase {
     /**
       this is now change to accept an instance of ValidatorPlugins (share)
       if only call it with the astMap then it init it as a standalone like before
     */
     constructor(astMap, vp) {
-        super(astMap, vp && vp instanceof validator_core_1.ValidatorPlugins ? vp : new validator_core_1.ValidatorPlugins());
+        super(astMap, vp && vp instanceof validator_core_1.ValidatorPlugins ? vp : new validator_core_1.ValidatorPlugins(-1));
     }
     /** this is where validation happens */
     validate(values, raw = false) {
@@ -48,19 +48,9 @@ class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
                 .then((finalResult) => raw ? finalResult : this._prepareValidateResult(finalResult));
         });
     }
-    /** accept an object name => plugin in one go */
-    registerPlugins(plugins) {
-        for (const name in plugins) {
-            this._validatorPluginsInstance.registerPlugin(name, plugins[name]);
-        }
-    }
     /** wrapper for the protected register plugin method */
     registerPlugin(name, plugin) {
         this._validatorPluginsInstance.registerPlugin(name, plugin);
-    }
-    /** overload the ValidatorPlugins loadExtPlugin method */
-    loadExtPlugin(name, plugin) {
-        this._validatorPluginsInstance.loadExtPlugin(name, plugin);
     }
     /** create an alias for createSchema (and replace it later ) because ii make more sense */
     addValidationRules(validationMap) {
@@ -79,4 +69,4 @@ class ValidatorFactory extends validator_base_1.ValidatorFactoryBase {
         });
     }
 }
-exports.ValidatorFactory = ValidatorFactory;
+exports.Validator = Validator;
