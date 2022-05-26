@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@jsonql/constants': workspace:^0.6.1
+  '@jsonql/constants': workspace:^0.7.2
   '@types/koa': ^2.13.4
   '@types/koa-bodyparser': ^4.3.7
   koa: ^2.13.4
