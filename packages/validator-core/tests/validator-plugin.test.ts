@@ -18,8 +18,6 @@ test(`Should able to use the ValidatorPlugin class to perform the same task`, t 
 
   t.true(typeof result === 'function')
 
-  const names = plugin.getPluginNames()
-  t.true(names.length > 0)
 })
 
 
@@ -34,10 +32,9 @@ test(`Test the load external methods`, async t => {
 
 test(`Testing the idx options`, t => {
 
-  t.is(plugin.idx, 1)
+  t.is(plugin.$version, 1)
 
   const anotherPlugin = new ValidatorPlugins(2)
 
-  t.is(anotherPlugin.idx, 2)
-  
+  t.is(anotherPlugin.$version, 2)
 })

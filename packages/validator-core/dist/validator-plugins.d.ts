@@ -5,23 +5,20 @@
 */
 import type { JsonqlValidationPlugin, JsonqlValidationRule } from './types';
 export declare class ValidatorPlugins {
-    idx?: number | undefined;
+    $version?: number | undefined;
     private _plugins;
     private _internalPluginNames;
-    private _externalPluginNames;
     /** with a idx to id this instance */
-    constructor(idx?: number | undefined);
+    constructor($version?: number | undefined);
     /**
     find the plugin internal or external
-    propName is the argument name
+    argName is the argument name
     */
-    lookupPlugin(input: JsonqlValidationRule, propName: string): (value: unknown, lastResult: import("./types").JsonqlGenericObject, pos: number[]) => Promise<any>;
+    lookupPlugin(input: JsonqlValidationRule, argName: string): (value: unknown, lastResult: import("./types").JsonqlGenericObject, pos: number[]) => Promise<any>;
     /** The public api to register a plugin */
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
-    /** basically overload the _registerPlugin with adding name to ext list */
-    loadExtPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
-    /** get a list of the plugin names */
-    getPluginNames(ext?: boolean): string[];
+    /** export all plugins for generate js file */
+    export(): void;
     /** register plugins */
     protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
 }

@@ -55,7 +55,7 @@ export class ValidatorPlugins {
   private _plugins = new Map<string, JsonqlValidationPlugin>()
   private _internalPluginNames: string[] = []
   /** with a idx to id this instance */
-  constructor(public $idx?: number) {
+  constructor(public $version?: number) {
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
       if (!plugin[PARAMS_KEY]) {
