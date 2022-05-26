@@ -48,14 +48,14 @@ export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
     return false
   }
   if (l > 0 && l === _params.length) {
-    if (!!params.filter((param: string, i: number) => param !== _params[i]).length) {
-      return false
+    if (!params.filter((param: string, i: number) => param !== _params[i]).length) {
+      return true
     }
-    return true
   }
   return false
 }
 
+/** take a function string and return its argument names */
 function splitMethod(fnStr: string): Array<string> {
 
   return fnStr.split('(')[1]
@@ -74,12 +74,18 @@ export function constructRuleCb(
   ruleFn: JsonqlValidateFn,
   ruleName?: string
 ) {
-  debug('ruleFn', ruleFn, argName)
+  debug('ruleFn ------------>', ruleFn.toString(), argName)
+  if (typeof ruleFn !== 'function') {
+    throw new Error('What the f???')
+  }
+
   return async (
     value: unknown,
     lastResult: JsonqlGenericObject,
     pos: number[]
-  ) => Reflect.apply(ruleFn, null, [value])
+  ) => {
+    debug(`value ----> `, value)
+    return Reflect.apply(ruleFn, null, [value])
                 .then(
                   successThen(argName, value, lastResult, pos)
                 )
@@ -89,6 +95,7 @@ export function constructRuleCb(
                   // because the pos already indicator the property
                   return Promise.reject(new JsonqlValidationError(ruleName, pos))
                 })
+  }
 }
 
 /** This is taken out from the above then call for re-use when we want to fall through a rule */

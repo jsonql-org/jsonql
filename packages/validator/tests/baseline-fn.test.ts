@@ -18,16 +18,16 @@ test.before(() => {
   })
 })
 
-test.only(`Just to observe about the baseline function internal to see the different against a spread`, async t => {
+test(`Just to observe about the baseline function internal to see the different against a spread`, async t => {
   t.plan(1)
 
   return val.validate(['hello', 12345])
            .then((result: any) => {
-             t.deepEqual(result, {value1: "hello", value2: 12345, value3: false})
+             t.deepEqual(result, ['hello', 12345, false])
            })
 })
 
-test.skip(`This is going to test and fix the duplicate return value due to the spread argument`, async t => {
+test(`This is going to test and fix the duplicate return value due to the spread argument`, async t => {
   t.plan(1)
 
   return valx.validate(['world', 12346, true])

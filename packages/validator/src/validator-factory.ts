@@ -59,10 +59,9 @@ export class Validator extends ValidatorBase {
 
   /** this is where validation happens */
   public async validate(values: Array<unknown>, raw = false) {
-    debug(`raw flag`, raw)
+    // debug(`raw flag`, raw)
     // this come out with a queue then we put into the chainProcessPromises
     const queues = this._normalizeArgValues(values)
-
     return queuePromisesProcess(
       queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
       undefined // the init value will now be undefined to know if its first

@@ -31,14 +31,14 @@ function paramMatches(rule) {
         return false;
     }
     if (l > 0 && l === _params.length) {
-        if (!!params.filter((param, i) => param !== _params[i]).length) {
-            return false;
+        if (!params.filter((param, i) => param !== _params[i]).length) {
+            return true;
         }
-        return true;
     }
     return false;
 }
 exports.paramMatches = paramMatches;
+/** take a function string and return its argument names */
 function splitMethod(fnStr) {
     return fnStr.split('(')[1]
         .split(')')[0]
@@ -50,8 +50,12 @@ function splitMethod(fnStr) {
 this will get re-use in the class to create method for the queue execution
  */
 function constructRuleCb(argName, ruleFn, ruleName) {
-    debug('ruleFn', ruleFn, argName);
+    debug('ruleFn ------------>', ruleFn.toString(), argName);
+    if (typeof ruleFn !== 'function') {
+        throw new Error('What the f???');
+    }
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        debug(`value ----> `, value);
         return Reflect.apply(ruleFn, null, [value])
             .then(successThen(argName, value, lastResult, pos))
             .catch((error) => {

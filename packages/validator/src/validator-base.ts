@@ -225,14 +225,14 @@ export class ValidatorBase {
           debug(`Should got here ----->`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input, propName)
         case _input[VALIDATE_KEY] !== undefined:
-          debug(`${VALIDATE_KEY}`)
+          debug(`${VALIDATE_KEY}`, _input)
           return constructRuleCb(
             propName,
             promisify(_input[VALIDATE_KEY]),
             pluginName
           )
         case _input[VALIDATE_ASYNC_KEY] !== undefined:
-          
+          debug(`${VALIDATE_ASYNC_KEY}`, _input)
           return constructRuleCb(
             propName,
             _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn,
@@ -249,7 +249,7 @@ export class ValidatorBase {
     input: JsonqlValidationRule,
     propName: string
   ) {
-    debug('_lookupPlugin', propName, input)
+    debug('_lookupPlugin --->', input, propName)
     // @TODO we should allow validator to use standalone without the plugin system
     // so when this plugin instance object is undefined we should skip it
     return this._validatorPluginsInstance.lookupPlugin(input, propName)

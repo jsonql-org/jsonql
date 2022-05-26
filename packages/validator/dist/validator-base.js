@@ -154,10 +154,10 @@ class ValidatorBase {
             const pluginName = _input.name || `customPluginName${i}`;
             switch (true) {
                 case _input[validator_core_1.PLUGIN_KEY] !== undefined:
-                    debug(`Should got here`, _input[validator_core_1.PLUGIN_KEY]);
+                    debug(`Should got here ----->`, _input[validator_core_1.PLUGIN_KEY]);
                     return this._lookupPlugin(_input, propName);
                 case _input[validator_core_1.VALIDATE_KEY] !== undefined:
-                    // @TODO need to able to take in a file path as well
+                    debug(`${validator_core_1.VALIDATE_KEY}`);
                     return (0, validator_core_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[validator_core_1.VALIDATE_KEY]), pluginName);
                 case _input[validator_core_1.VALIDATE_ASYNC_KEY] !== undefined:
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
