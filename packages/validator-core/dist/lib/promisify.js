@@ -17,7 +17,7 @@ exports.promisify = promisify;
 /** When the result is true get rejected and vice vesa */
 function reversePromisifyResult(fn) {
     return (...args) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-        const result = Reflect.apply(fn, null, args);
+        const result = yield Reflect.apply(fn, null, args);
         return result ? Promise.reject(result) : Promise.resolve(result);
     });
 }

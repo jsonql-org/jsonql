@@ -28,7 +28,7 @@ import {
   constructRuleCb,
   checkPluginArg,
   pluginHasFunc,
-  isAsyncFn,
+  // isAsyncFn,
   paramMatches,
 } from './lib/common'
 import {
@@ -68,8 +68,8 @@ export class ValidatorPlugins {
       const pluginConfig = this._plugins.get(pluginName) as JsonqlValidationPlugin
       // unconverted
       if (pluginConfig[PLUGIN_FN_KEY] && !pluginConfig[PARAMS_KEY]) {
-        let mainFn = pluginConfig[PLUGIN_FN_KEY]
-        mainFn = isAsyncFn(mainFn) ? mainFn : promisify(mainFn)
+        const mainFn = promisify(pluginConfig[PLUGIN_FN_KEY])
+        // mainFn = isAsyncFn(mainFn) ? mainFn : promisify(mainFn)
         this._plugins.set(pluginName, {[VALIDATE_ASYNC_KEY]: mainFn, name: pluginName }) // override
         pluginConfig[VALIDATE_ASYNC_KEY] = mainFn // let it fall to the next
       }
@@ -86,7 +86,7 @@ export class ValidatorPlugins {
         debug('pluginConfig --->', pluginConfig)
         debug('input----------->', input)
         const _input = input as unknown as JsonqlPluginInput
-        
+
         return constructRuleCb(
           argName,
           promisify(

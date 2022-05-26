@@ -74,18 +74,12 @@ export function constructRuleCb(
   ruleFn: JsonqlValidateFn,
   ruleName?: string
 ) {
-  debug('ruleFn ------------>', ruleFn.toString(), argName)
-  if (typeof ruleFn !== 'function') {
-    throw new Error('What the f???')
-  }
 
   return async (
     value: unknown,
     lastResult: JsonqlGenericObject,
     pos: number[]
-  ) => {
-    debug(`value ----> `, value)
-    return Reflect.apply(ruleFn, null, [value])
+  ) => Reflect.apply(ruleFn, null, [value])
                 .then(
                   successThen(argName, value, lastResult, pos)
                 )
@@ -95,7 +89,6 @@ export function constructRuleCb(
                   // because the pos already indicator the property
                   return Promise.reject(new JsonqlValidationError(ruleName, pos))
                 })
-  }
 }
 
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
@@ -156,8 +149,8 @@ export function patternPluginFanctory(
 }
 
 // from https://thewebdev.info/2022/03/03/how-to-check-a-function-is-async-with-javascript/
-export function isAsyncFn(fn: any) {
-  const AsyncFunction = (async () => {}).constructor
+export function isAsyncFn(fn: unknown) {
+  const AsyncFunction = (async () => { console.log(0) }).constructor
 
   return fn instanceof AsyncFunction
 }

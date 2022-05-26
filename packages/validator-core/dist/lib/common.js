@@ -50,12 +50,7 @@ function splitMethod(fnStr) {
 this will get re-use in the class to create method for the queue execution
  */
 function constructRuleCb(argName, ruleFn, ruleName) {
-    debug('ruleFn ------------>', ruleFn.toString(), argName);
-    if (typeof ruleFn !== 'function') {
-        throw new Error('What the f???');
-    }
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-        debug(`value ----> `, value);
         return Reflect.apply(ruleFn, null, [value])
             .then(successThen(argName, value, lastResult, pos))
             .catch((error) => {
@@ -122,7 +117,7 @@ function patternPluginFanctory(pattern) {
 exports.patternPluginFanctory = patternPluginFanctory;
 // from https://thewebdev.info/2022/03/03/how-to-check-a-function-is-async-with-javascript/
 function isAsyncFn(fn) {
-    const AsyncFunction = (() => tslib_1.__awaiter(this, void 0, void 0, function* () { })).constructor;
+    const AsyncFunction = (() => tslib_1.__awaiter(this, void 0, void 0, function* () { console.log(0); })).constructor;
     return fn instanceof AsyncFunction;
 }
 exports.isAsyncFn = isAsyncFn;
