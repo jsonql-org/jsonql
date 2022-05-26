@@ -114,7 +114,13 @@ export class ValidatorPlugins {
 
   /** export all plugins for generate js file */
   public export() {
-    debug('@TODO')
+    const plugins: JsonqlValidationPlugin[] = []
+    this._plugins.forEach((p: JsonqlValidationPlugin, n: string) => {
+      if (!this._internalPluginNames.includes(n)) {
+        plugins.push(p)
+      }
+    })
+    return plugins
   }
 
   // ------------------------- PRIVATE --------------------------//
