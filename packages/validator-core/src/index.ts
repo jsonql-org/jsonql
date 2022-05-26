@@ -17,7 +17,6 @@ export { plugins } from './plugins'
 // avoid a circular reference
 export {
   curryPlugin,
-  createCoreCurryPlugin
 } from './plugins/plugins'
 export {
   checkPluginArg,
@@ -25,7 +24,8 @@ export {
   constructRuleCb,
   successThen,
   isResultPackage,
-  patternPluginFanctory
+  patternPluginFanctory,
+  isAsyncFn,
 } from './lib/common'
 export { ValidatorPlugins } from './validator-plugins'
 // export all constants

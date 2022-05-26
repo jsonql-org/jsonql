@@ -3,7 +3,7 @@
   we should create a base class that load all internal plugins
   and each ValidatorFactory add their extra plugin into this to share
 */
-import type { JsonqlValidationPlugin, JsonqlValidationRule } from './types';
+import type { JsonqlPluginConfig, JsonqlValidationPlugin, JsonqlValidationRule } from './types';
 export declare class ValidatorPlugins {
     $version?: number | undefined;
     private _plugins;
@@ -20,5 +20,5 @@ export declare class ValidatorPlugins {
     /** export all plugins for generate js file */
     export(): JsonqlValidationPlugin[];
     /** register plugins */
-    protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
+    protected _registerPlugin(name: string, pluginConfig: Partial<JsonqlPluginConfig>, skipCheck?: boolean): void;
 }

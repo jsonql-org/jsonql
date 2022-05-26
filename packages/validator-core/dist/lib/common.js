@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAsyncFn = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = void 0;
+exports.isAsyncFn = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.paramMatches = exports.pluginHasFunc = exports.checkPluginArg = void 0;
 const tslib_1 = require("tslib");
 const errors_1 = require("@jsonql/errors");
 const constants_1 = require("../constants");
@@ -12,20 +12,40 @@ function checkPluginArg(params) {
     return !(params.filter(param => (0, utils_1.inArray)(constants_1.KEYWORDS, param)).length > 0);
 }
 exports.checkPluginArg = checkPluginArg;
-/** check if the actually provide a func or pattern to construct function */
+/** now simply it with just one prop check main */
 function pluginHasFunc(rule) {
-    if (!rule[constants_1.PATTERN_KEY]) {
-        const checks = [constants_1.VALIDATE_KEY, constants_1.VALIDATE_ASYNC_KEY, constants_1.PLUGIN_FN_KEY];
-        for (let i = 0; i < checks.length; ++i) {
-            const fn = rule[checks[i]];
-            if (fn && (0, utils_1.isFunction)(fn)) {
-                return true;
-            }
+    return rule[constants_1.PLUGIN_FN_KEY] && (0, utils_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
+}
+exports.pluginHasFunc = pluginHasFunc;
+/** check if the params they provide is matching their main method */
+function paramMatches(rule) {
+    const params = splitMethod(rule.main.toString());
+    params.pop();
+    const l = params.length;
+    if (l === 0 && !rule[constants_1.PARAMS_KEY]) {
+        return true; // nothing to check
+    }
+    const _params = rule.params !== undefined && Array.isArray(rule.params)
+        ? rule.params : false;
+    if (_params === false) {
+        return false;
+    }
+    if (l > 0 && l === _params.length) {
+        if (!!params.filter((param, i) => param !== _params[i]).length) {
+            return false;
         }
+        return true;
     }
     return false;
 }
-exports.pluginHasFunc = pluginHasFunc;
+exports.paramMatches = paramMatches;
+function splitMethod(fnStr) {
+    return fnStr.split('(')[1]
+        .split(')')[0]
+        .split(',')
+        .map(t => t.trim())
+        .filter(t => t !== '');
+}
 /**
 this will get re-use in the class to create method for the queue execution
  */

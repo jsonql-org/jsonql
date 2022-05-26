@@ -1,8 +1,10 @@
-import type { JsonqlValidateFn, JsonqlGenericObject } from '../types';
+import type { JsonqlValidateFn, JsonqlGenericObject, JsonqlPluginConfig } from '../types';
 /** check plugin argument against keywords list */
 export declare function checkPluginArg(params: Array<string>): boolean;
-/** check if the actually provide a func or pattern to construct function */
-export declare function pluginHasFunc(rule: JsonqlGenericObject): boolean;
+/** now simply it with just one prop check main */
+export declare function pluginHasFunc(rule: Partial<JsonqlPluginConfig>): boolean;
+/** check if the params they provide is matching their main method */
+export declare function paramMatches(rule: Partial<JsonqlPluginConfig>): boolean;
 /**
 this will get re-use in the class to create method for the queue execution
  */

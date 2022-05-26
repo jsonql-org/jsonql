@@ -9,7 +9,7 @@ const tslib_1 = require("tslib");
 /** it's quite annoying Typescript Function type is useless */
 function promisify(fn) {
     return (...args) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-        const result = Reflect.apply(fn, null, args);
+        const result = yield Reflect.apply(fn, null, args);
         return result ? Promise.resolve(result) : Promise.reject(result);
     });
 }

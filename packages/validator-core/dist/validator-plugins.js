@@ -3,12 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorPlugins = void 0;
 const tslib_1 = require("tslib");
 const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/base/error"));
-const common_1 = require("@jsonql/utils/dist/common");
 const constants_1 = require("./constants");
-const string_1 = require("./base/string");
 const plugins_1 = require("./plugins/plugins");
 const promisify_1 = require("./lib/promisify");
-const common_2 = require("./lib/common");
+const common_1 = require("./lib/common");
 const plugins_2 = require("./plugins");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:validator-plugin');
@@ -21,10 +19,8 @@ class ValidatorPlugins {
         this._internalPluginNames = [];
         // register internal plugins
         plugins_2.plugins.forEach((plugin) => {
-            if (!plugin[constants_1.PARAMS_KEY]) {
-                // We skip those need to curry and do that JIT
-                plugin[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(plugin[constants_1.PLUGIN_FN_KEY]);
-            }
+            // we don't do the convert here anymore, and wait until the look up
+            // then we store it back JIT
             const name = plugin[constants_1.NAME_KEY];
             this._internalPluginNames.push(name);
             this._registerPlugin(name, plugin, true);
@@ -38,21 +34,26 @@ class ValidatorPlugins {
         const pluginName = input[constants_1.PLUGIN_KEY];
         if (pluginName && this._plugins.has(pluginName)) {
             const pluginConfig = this._plugins.get(pluginName);
-            if (pluginConfig && pluginConfig[constants_1.VALIDATE_ASYNC_KEY]) {
-                // here is the problem the name should be the param not the plugin
-                return (0, common_2.constructRuleCb)(argName, pluginConfig[constants_1.VALIDATE_ASYNC_KEY], pluginName);
+            // unconverted
+            if (pluginConfig[constants_1.PLUGIN_FN_KEY] && !pluginConfig[constants_1.PARAMS_KEY]) {
+                let mainFn = pluginConfig[constants_1.PLUGIN_FN_KEY];
+                mainFn = (0, common_1.isAsyncFn)(mainFn) ? mainFn : (0, promisify_1.promisify)(mainFn);
+                this._plugins.set(pluginName, { [constants_1.VALIDATE_ASYNC_KEY]: mainFn, name: pluginName }); // override
+                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = mainFn; // let it fall to the next
             }
-            else if (pluginConfig && pluginConfig[constants_1.PARAMS_KEY]) {
-                debug('-------------------------------_pluign------------------------------', pluginConfig);
-                debug('-------------------------------input--------------------------------', input);
+            // already converted
+            if (pluginConfig && pluginConfig[constants_1.VALIDATE_ASYNC_KEY] && !pluginConfig[constants_1.PARAMS_KEY]) {
+                return (0, common_1.constructRuleCb)(argName, pluginConfig[constants_1.VALIDATE_ASYNC_KEY], pluginName);
+            }
+            // needs to curry
+            if (pluginConfig && pluginConfig[constants_1.PARAMS_KEY]) {
+                debug('pluginConfig --->', pluginConfig);
+                debug('input----------->', input);
                 const _input = input;
-                return (0, common_2.constructRuleCb)(argName, (0, promisify_1.promisify)(// need to check if the _plugin is internal or not
-                this._internalPluginNames.includes(pluginName) ?
-                    (0, plugins_1.createCoreCurryPlugin)(_input) :
-                    (0, plugins_1.curryPlugin)(_input, pluginConfig)), pluginName);
+                return (0, common_1.constructRuleCb)(argName, (0, promisify_1.promisify)((0, plugins_1.curryPlugin)(_input, pluginConfig)), pluginName);
             }
         }
-        throw new error_1.default(`Unable to find ${pluginName} plugin for ${argName}`);
+        throw new error_1.default(`Unable to find plugin: ${pluginName}`);
     }
     /** The public api to register a plugin */
     registerPlugin(name, pluginConfig) {
@@ -76,50 +77,23 @@ class ValidatorPlugins {
             if (this._plugins.has(name)) {
                 throw new error_1.default(`plugin ${name} already existed!`);
             }
+            if (!(0, common_1.pluginHasFunc)(pluginConfig)) {
+                throw new error_1.default(`Can not find 'main' method in your plugin config`);
+            }
+            if (!(0, common_1.paramMatches)(pluginConfig)) {
+                throw new error_1.default(`Your params doesn't matching your main argument list`);
+            }
             if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) {
-                if (!(0, common_2.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
+                if (!(0, common_1.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
                     throw new error_1.default(`Your plugin config argument contains reserved keywords`);
                 }
             }
-            if (!(0, common_2.pluginHasFunc)(pluginConfig)) {
-                throw new error_1.default(`Can not find any executable definition within your plugin config`);
-            }
         }
-        // put the name back in
         pluginConfig.name = name;
         /**
-        Here is a problem, when we need to add this to the contract
-        the info here is already constructed for running with validation
-        which is not suitable to transport over the wire, we need to
-        go higher (register via file base) to add such info
+        At this point it should only contain a main (or plus params) so we
+        do nothing and just store it, we convert it only when they call it
         */
-        switch (true) {
-            // this rule is not really in use but keep here for future
-            case (!pluginConfig[constants_1.VALIDATE_ASYNC_KEY] &&
-                pluginConfig[constants_1.VALIDATE_KEY] &&
-                (0, common_1.isFunction)(pluginConfig[constants_1.VALIDATE_KEY])):
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(pluginConfig[constants_1.VALIDATE_KEY]);
-                break;
-            // use the pattern key to generate plugin method
-            case (pluginConfig[constants_1.PATTERN_KEY] &&
-                (0, string_1.checkString)(pluginConfig[constants_1.PATTERN_KEY])):
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_2.patternPluginFanctory)(pluginConfig[constants_1.PATTERN_KEY]);
-                break;
-            /*
-            case (pluginConfig[VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[PLUGIN_FN_KEY]):
-              delete pluginConfig[PLUGIN_FN_KEY] // remove it
-              break */
-            // @NOTE we can not create the curryPlugin here because it needs to be generic
-            // and the arguement provide at validation time, this need to get create at the _lookupPlugin
-            default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
-                if (!pluginConfig[constants_1.PLUGIN_FN_KEY]) {
-                    throw new error_1.default(`${constants_1.PLUGIN_FN_KEY} is empty?`, pluginConfig);
-                }
-                const fn = pluginConfig[constants_1.PLUGIN_FN_KEY];
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_2.isAsyncFn)(fn) ? fn : (0, promisify_1.promisify)(fn);
-            // delete pluginConfig[PLUGIN_FN_KEY] // remove it
-        }
-        // debug(`add plugin`, name, pluginConfig)
         this._plugins.set(name, pluginConfig);
     }
 }

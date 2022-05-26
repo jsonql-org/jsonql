@@ -11,24 +11,15 @@ import type {
   JsonqlValidateFn,
 } from './types'
 import JsonqlError from '@jsonql/errors/dist/base/error'
-import { isFunction } from '@jsonql/utils/dist/common'
 import {
-  VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,
   PLUGIN_FN_KEY,
-  PATTERN_KEY,
-  // RULES_KEY,
   NAME_KEY,
   PARAMS_KEY,
-  // ORG_KEY,
 } from './constants'
 import {
-  checkString,
-} from'./base/string'
-import {
   curryPlugin,
-  createCoreCurryPlugin
 } from './plugins/plugins'
 import {
   promisify
@@ -79,7 +70,7 @@ export class ValidatorPlugins {
       if (pluginConfig[PLUGIN_FN_KEY] && !pluginConfig[PARAMS_KEY]) {
         let mainFn = pluginConfig[PLUGIN_FN_KEY]
         mainFn = isAsyncFn(mainFn) ? mainFn : promisify(mainFn)
-        this._plugins.set(pluginName, {[VALIDATE_ASYNC_KEY]: mainFn}) // override
+        this._plugins.set(pluginName, {[VALIDATE_ASYNC_KEY]: mainFn, name: pluginName }) // override
         pluginConfig[VALIDATE_ASYNC_KEY] = mainFn // let it fall to the next
       }
       // already converted
@@ -95,11 +86,12 @@ export class ValidatorPlugins {
         debug('pluginConfig --->', pluginConfig)
         debug('input----------->', input)
         const _input = input as unknown as JsonqlPluginInput
-        const fn = curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
-
+        
         return constructRuleCb(
           argName,
-          isAsyncFn(fn) ? fn : promisify(fn),
+          promisify(
+            curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
+          ),
           pluginName
         )
       }

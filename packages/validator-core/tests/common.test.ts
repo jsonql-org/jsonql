@@ -14,17 +14,25 @@ test('Test if a function is async or not', t => {
 
 })
 
-test(`Should able to get an internal plugin`, t => {
+test(`Should able to get an internal plugin`, async t => {
 
   const plugin = new ValidatorPlugins()
 
   const fn = plugin.lookupPlugin({ plugin: 'moreThan', num: 100}, 'myArg')
 
   t.true(isAsyncFn(fn))
+
+  const result = await fn(101, {}, [0,1])
+  t.truthy(result)
+  /*
+  const error = await fn(99, {}, [0, 1])
+  console.log(error)
+  t.deepEqual(error.detail, [0,1])
+  */
 })
 
 
-test.only(`testing paramMatchs to check if the params provide match the required signature`, t => {
+test(`testing paramMatchs to check if the params provide match the required signature`, t => {
   const def = {
     main: function(x: number, y: number, v: number) {
       return (x + y) === v

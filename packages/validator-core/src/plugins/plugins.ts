@@ -8,7 +8,7 @@ import {
   JsonqlPluginInput,
 } from '../types'
 import { PARAMS_KEY } from '../constants'
-
+import { plugins } from './index'
 /**
   construct the curry plugin method
   @0.5.0 we make this generic

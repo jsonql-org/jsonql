@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.createCoreCurryPlugin = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
+exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ValidatorPlugins = exports.isAsyncFn = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 var string_1 = require("./base/string");
@@ -39,7 +39,6 @@ Object.defineProperty(exports, "plugins", { enumerable: true, get: function () {
 // avoid a circular reference
 var plugins_2 = require("./plugins/plugins");
 Object.defineProperty(exports, "curryPlugin", { enumerable: true, get: function () { return plugins_2.curryPlugin; } });
-Object.defineProperty(exports, "createCoreCurryPlugin", { enumerable: true, get: function () { return plugins_2.createCoreCurryPlugin; } });
 var common_1 = require("./lib/common");
 Object.defineProperty(exports, "checkPluginArg", { enumerable: true, get: function () { return common_1.checkPluginArg; } });
 Object.defineProperty(exports, "pluginHasFunc", { enumerable: true, get: function () { return common_1.pluginHasFunc; } });
@@ -47,6 +46,7 @@ Object.defineProperty(exports, "constructRuleCb", { enumerable: true, get: funct
 Object.defineProperty(exports, "successThen", { enumerable: true, get: function () { return common_1.successThen; } });
 Object.defineProperty(exports, "isResultPackage", { enumerable: true, get: function () { return common_1.isResultPackage; } });
 Object.defineProperty(exports, "patternPluginFanctory", { enumerable: true, get: function () { return common_1.patternPluginFanctory; } });
+Object.defineProperty(exports, "isAsyncFn", { enumerable: true, get: function () { return common_1.isAsyncFn; } });
 var validator_plugins_1 = require("./validator-plugins");
 Object.defineProperty(exports, "ValidatorPlugins", { enumerable: true, get: function () { return validator_plugins_1.ValidatorPlugins; } });
 // export all constants

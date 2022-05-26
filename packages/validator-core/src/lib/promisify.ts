@@ -7,7 +7,7 @@
 export function promisify(fn: any) {
 
   return async (...args: any[]): Promise<boolean> => {
-    const result = Reflect.apply(fn, null, args)
+    const result = await Reflect.apply(fn, null, args)
 
     return result ? Promise.resolve(result) : Promise.reject(result)
   }
