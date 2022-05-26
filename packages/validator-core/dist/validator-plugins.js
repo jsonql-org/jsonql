@@ -37,7 +37,6 @@ class ValidatorPlugins {
     lookupPlugin(input, argName) {
         const pluginName = input[constants_1.PLUGIN_KEY];
         if (pluginName && this._plugins.has(pluginName)) {
-            // @TODO need to transform this
             const pluginConfig = this._plugins.get(pluginName);
             if (pluginConfig && pluginConfig[constants_1.VALIDATE_ASYNC_KEY]) {
                 // here is the problem the name should be the param not the plugin
@@ -60,7 +59,13 @@ class ValidatorPlugins {
     }
     /** export all plugins for generate js file */
     export() {
-        debug('@TODO');
+        const plugins = [];
+        this._plugins.forEach((p, n) => {
+            if (!this._internalPluginNames.includes(n)) {
+                plugins.push(p);
+            }
+        });
+        return plugins;
     }
     // ------------------------- PRIVATE --------------------------//
     /** register plugins */
@@ -99,11 +104,16 @@ class ValidatorPlugins {
                 (0, string_1.checkString)(pluginConfig[constants_1.PATTERN_KEY])):
                 pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_1.patternPluginFanctory)(pluginConfig[constants_1.PATTERN_KEY]);
                 break;
+            case (pluginConfig[constants_1.VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[constants_1.PLUGIN_FN_KEY]):
+                delete pluginConfig[constants_1.PLUGIN_FN_KEY]; // remove it
+                break;
             // @NOTE we can not create the curryPlugin here because it needs to be generic
             // and the arguement provide at validation time, this need to get create at the _lookupPlugin
-            default:
-            // @TODO more situations
+            default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
+                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(pluginConfig[constants_1.PLUGIN_FN_KEY]);
+                delete pluginConfig[constants_1.PLUGIN_FN_KEY]; // remove it
         }
+        // debug(`add plugin`, name, pluginConfig)
         this._plugins.set(name, pluginConfig);
     }
 }

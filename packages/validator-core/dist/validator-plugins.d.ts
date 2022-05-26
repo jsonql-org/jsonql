@@ -18,7 +18,7 @@ export declare class ValidatorPlugins {
     /** The public api to register a plugin */
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** export all plugins for generate js file */
-    export(): void;
+    export(): JsonqlValidationPlugin[];
     /** register plugins */
     protected _registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin, skipCheck?: boolean): void;
 }
