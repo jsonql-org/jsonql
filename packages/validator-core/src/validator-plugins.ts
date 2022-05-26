@@ -37,8 +37,8 @@ import {
   constructRuleCb,
   checkPluginArg,
   pluginHasFunc,
-  patternPluginFanctory,
   isAsyncFn,
+  paramMatches,
 } from './lib/common'
 import {
   plugins
@@ -56,10 +56,8 @@ export class ValidatorPlugins {
   constructor(public $version?: number) {
     // register internal plugins
     plugins.forEach((plugin: JsonqlValidationPlugin) => {
-      if (!plugin[PARAMS_KEY]) {
-        // We skip those need to curry and do that JIT
-        plugin[VALIDATE_ASYNC_KEY] = promisify(plugin[PLUGIN_FN_KEY])
-      }
+      // we don't do the convert here anymore, and wait until the look up
+      // then we store it back JIT
       const name = plugin[NAME_KEY] as string
       this._internalPluginNames.push(name)
       this._registerPlugin(name, plugin, true)
@@ -76,31 +74,37 @@ export class ValidatorPlugins {
   ) {
     const pluginName = input[PLUGIN_KEY]
     if (pluginName && this._plugins.has(pluginName)) {
-      const pluginConfig = this._plugins.get(pluginName)
-      if (pluginConfig && pluginConfig[VALIDATE_ASYNC_KEY]) {
-        // here is the problem the name should be the param not the plugin
+      const pluginConfig = this._plugins.get(pluginName) as JsonqlValidationPlugin
+      // unconverted
+      if (pluginConfig[PLUGIN_FN_KEY] && !pluginConfig[PARAMS_KEY]) {
+        let mainFn = pluginConfig[PLUGIN_FN_KEY]
+        mainFn = isAsyncFn(mainFn) ? mainFn : promisify(mainFn)
+        this._plugins.set(pluginName, {[VALIDATE_ASYNC_KEY]: mainFn}) // override
+        pluginConfig[VALIDATE_ASYNC_KEY] = mainFn // let it fall to the next
+      }
+      // already converted
+      if (pluginConfig && pluginConfig[VALIDATE_ASYNC_KEY] && !pluginConfig[PARAMS_KEY]) {
         return constructRuleCb(
           argName,
           pluginConfig[VALIDATE_ASYNC_KEY] as JsonqlValidateFn,
           pluginName,
         )
-      } else if (pluginConfig && pluginConfig[PARAMS_KEY]) {
-        debug('-------------------------------_pluign------------------------------', pluginConfig)
-        debug('-------------------------------input--------------------------------', input)
+      }
+      // needs to curry
+      if (pluginConfig && pluginConfig[PARAMS_KEY]) {
+        debug('pluginConfig --->', pluginConfig)
+        debug('input----------->', input)
         const _input = input as unknown as JsonqlPluginInput
+        const fn = curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
 
         return constructRuleCb(
           argName,
-          promisify( // need to check if the _plugin is internal or not
-            this._internalPluginNames.includes(pluginName) ?
-              createCoreCurryPlugin(_input) :
-              curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
-          ),
+          isAsyncFn(fn) ? fn : promisify(fn),
           pluginName
         )
       }
     }
-    throw new JsonqlError(`Unable to find ${pluginName} plugin for ${argName}`)
+    throw new JsonqlError(`Unable to find plugin: ${pluginName}`)
   }
 
   /** The public api to register a plugin */
@@ -127,57 +131,31 @@ export class ValidatorPlugins {
   /** register plugins */
   protected _registerPlugin(
     name: string,
-    pluginConfig: JsonqlValidationPlugin,
+    pluginConfig: Partial<JsonqlPluginConfig>,
     skipCheck = false // when register internal plugin then skip it
   ): void {
     if (!skipCheck) {
       if (this._plugins.has(name)) {
         throw new JsonqlError(`plugin ${name} already existed!`)
       }
+      if (!pluginHasFunc(pluginConfig)) {
+        throw new JsonqlError(`Can not find 'main' method in your plugin config`)
+      }
+      if (!paramMatches(pluginConfig)) {
+        throw new JsonqlError(`Your params doesn't matching your main argument list`)
+      }
       if (pluginConfig[PARAMS_KEY] !== undefined) {
         if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
           throw new JsonqlError(`Your plugin config argument contains reserved keywords`)
         }
       }
-      if (!pluginHasFunc(pluginConfig)) {
-        throw new JsonqlError(`Can not find any executable definition within your plugin config`)
-      }
     }
-    // put the name back in
     pluginConfig.name = name
+
     /**
-    Here is a problem, when we need to add this to the contract
-    the info here is already constructed for running with validation
-    which is not suitable to transport over the wire, we need to
-    go higher (register via file base) to add such info
+    At this point it should only contain a main (or plus params) so we
+    do nothing and just store it, we convert it only when they call it
     */
-    switch (true) {
-      // this rule is not really in use but keep here for future
-      case (!pluginConfig[VALIDATE_ASYNC_KEY] &&
-            pluginConfig[VALIDATE_KEY] &&
-            isFunction(pluginConfig[VALIDATE_KEY])):
-        pluginConfig[VALIDATE_ASYNC_KEY] = promisify(pluginConfig[VALIDATE_KEY])
-        break
-      // use the pattern key to generate plugin method
-      case (pluginConfig[PATTERN_KEY] &&
-            checkString(pluginConfig[PATTERN_KEY])):
-        pluginConfig[VALIDATE_ASYNC_KEY] = patternPluginFanctory(pluginConfig[PATTERN_KEY] as string)
-        break
-      /*
-      case (pluginConfig[VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[PLUGIN_FN_KEY]):
-        delete pluginConfig[PLUGIN_FN_KEY] // remove it
-        break */
-      // @NOTE we can not create the curryPlugin here because it needs to be generic
-      // and the arguement provide at validation time, this need to get create at the _lookupPlugin
-      default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
-        if (!pluginConfig[PLUGIN_FN_KEY]) {
-          throw new JsonqlError(`${PLUGIN_FN_KEY} is empty?`, pluginConfig)
-        }
-        const fn = pluginConfig[PLUGIN_FN_KEY]
-        pluginConfig[VALIDATE_ASYNC_KEY] = isAsyncFn(fn) ? fn : promisify(fn)
-        // delete pluginConfig[PLUGIN_FN_KEY] // remove it
-    }
-    // debug(`add plugin`, name, pluginConfig)
     this._plugins.set(name, pluginConfig)
   }
 }

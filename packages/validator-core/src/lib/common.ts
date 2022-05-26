@@ -1,6 +1,7 @@
 import type {
   JsonqlValidateFn,
-  JsonqlGenericObject
+  JsonqlGenericObject,
+  JsonqlPluginConfig
 } from '../types'
 import {
   JsonqlValidationError
@@ -9,10 +10,8 @@ import {
   IDX_KEY,
   VALUE_KEY,
   KEYWORDS,
-  PATTERN_KEY,
-  VALIDATE_KEY,
-  VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
+  PARAMS_KEY,
 } from '../constants'
 import {
   inArray,
@@ -30,19 +29,42 @@ export function checkPluginArg(params: Array<string>): boolean {
   return !(params.filter(param => inArray(KEYWORDS, param)).length > 0)
 }
 
-/** check if the actually provide a func or pattern to construct function */
-export function pluginHasFunc(rule: JsonqlGenericObject): boolean {
-  if (!rule[PATTERN_KEY]) {
-    const checks = [VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY]
-    for (let i = 0; i < checks.length; ++i) {
-      const fn = rule[checks[i]]
-      if (fn && isFunction(fn)) {
-        return true
-      }
+/** now simply it with just one prop check main */
+export function pluginHasFunc(rule: Partial<JsonqlPluginConfig>): boolean {
+  return rule[PLUGIN_FN_KEY] && isFunction(rule[PLUGIN_FN_KEY])
+}
+
+/** check if the params they provide is matching their main method */
+export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
+  const params = splitMethod(rule.main.toString())
+  params.pop()
+  const l = params.length
+  if (l === 0 && !rule[PARAMS_KEY]) {
+    return true // nothing to check
+  }
+  const _params = rule.params !== undefined && Array.isArray(rule.params)
+                ? rule.params : false
+  if (_params === false) {
+    return false
+  }
+  if (l > 0 && l === _params.length) {
+    if (!!params.filter((param: string, i: number) => param !== _params[i]).length) {
+      return false
     }
+    return true
   }
   return false
 }
+
+function splitMethod(fnStr: string): Array<string> {
+
+  return fnStr.split('(')[1]
+              .split(')')[0]
+              .split(',')
+              .map(t => t.trim())
+              .filter(t => t !== '')
+}
+
 
 /**
 this will get re-use in the class to create method for the queue execution

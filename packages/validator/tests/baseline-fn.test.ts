@@ -18,8 +18,7 @@ test.before(() => {
   })
 })
 
-
-test(`Just to observe about the baseline function internal to see the different against a spread`, async t => {
+test.only(`Just to observe about the baseline function internal to see the different against a spread`, async t => {
   t.plan(1)
 
   return val.validate(['hello', 12345])
@@ -28,7 +27,7 @@ test(`Just to observe about the baseline function internal to see the different 
            })
 })
 
-test.only(`This is going to test and fix the duplicate return value due to the spread argument`, async t => {
+test.skip(`This is going to test and fix the duplicate return value due to the spread argument`, async t => {
   t.plan(1)
 
   return valx.validate(['world', 12346, true])

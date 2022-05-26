@@ -7,42 +7,30 @@ import {
   JsonqlValidateFn,
   JsonqlPluginInput,
 } from '../types'
-import { plugins } from './index'
 import { PARAMS_KEY } from '../constants'
-const GLOBAL_PLUGINS = plugins
-
-/** This will lookup our internal plugins list */
-export function createCoreCurryPlugin(
-  input: JsonqlPluginInput
-): JsonqlValidateFn {
-  const { plugin } = input
-  const pluginExport = GLOBAL_PLUGINS.filter(p => plugin === p.name)[0]
-
-  return curryPlugin(input, pluginExport as unknown as JsonqlPluginConfig)
-}
 
 /**
   construct the curry plugin method
   @0.5.0 we make this generic
 */
 export function curryPlugin(
-  config: JsonqlPluginInput,
-  pluginExport: JsonqlPluginConfig
+  input: JsonqlPluginInput,
+  pluginConfig: JsonqlPluginConfig
 ): JsonqlValidateFn {
-  const { plugin } = config
+  const { plugin } = input
   if (plugin) {
-    const params = pluginExport[PARAMS_KEY] // if we use pluginExport.params then TS complain!
+    const params = pluginConfig[PARAMS_KEY] // if we use pluginExport.params then TS complain!
     if (params) {
       // @BUG if the input missing the key then it wont throw for example
       // we expect `arg` but pass the `min` then it will run but just failed
-      if (!checkArgKeys(config, params)) {
+      if (!checkArgKeys(input, params)) {
         throw new JsonqlError(`Expected params: ${params.join(',')} not found!`)
       }
-      const args = params.map((param: string) => config[param])
+      const args = params.map((param: string) => input[param])
 
-      return Reflect.apply(curry(pluginExport.main), null, args)
+      return Reflect.apply(curry(pluginConfig.main), null, args)
     } else {
-      throw new JsonqlError(`This plugin ${pluginExport.name} can not be curry`)
+      throw new JsonqlError(`This plugin ${pluginConfig.name} can not be curry`)
     }
   }
   throw new JsonqlError(`Unable to find plugin in config`)

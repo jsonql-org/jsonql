@@ -222,16 +222,17 @@ export class ValidatorBase {
       const pluginName = _input.name || `customPluginName${i}`
       switch (true) {
         case _input[PLUGIN_KEY] !== undefined:
-          debug(`Should got here`, _input[PLUGIN_KEY])
+          debug(`Should got here ----->`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input, propName)
         case _input[VALIDATE_KEY] !== undefined:
-          // @TODO need to able to take in a file path as well
+          debug(`${VALIDATE_KEY}`)
           return constructRuleCb(
             propName,
             promisify(_input[VALIDATE_KEY]),
             pluginName
           )
         case _input[VALIDATE_ASYNC_KEY] !== undefined:
+          
           return constructRuleCb(
             propName,
             _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn,
