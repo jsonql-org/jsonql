@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorPlugins = void 0;
 const tslib_1 = require("tslib");
 const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/base/error"));
-const utils_1 = require("@jsonql/utils");
+const common_1 = require("@jsonql/utils/dist/common");
 const constants_1 = require("./constants");
 const string_1 = require("./base/string");
 const plugins_1 = require("./plugins/plugins");
 const promisify_1 = require("./lib/promisify");
-const common_1 = require("./lib/common");
+const common_2 = require("./lib/common");
 const plugins_2 = require("./plugins");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:validator-plugin');
@@ -40,13 +40,14 @@ class ValidatorPlugins {
             const pluginConfig = this._plugins.get(pluginName);
             if (pluginConfig && pluginConfig[constants_1.VALIDATE_ASYNC_KEY]) {
                 // here is the problem the name should be the param not the plugin
-                return (0, common_1.constructRuleCb)(argName, pluginConfig[constants_1.VALIDATE_ASYNC_KEY], pluginName);
+                return (0, common_2.constructRuleCb)(argName, pluginConfig[constants_1.VALIDATE_ASYNC_KEY], pluginName);
             }
             else if (pluginConfig && pluginConfig[constants_1.PARAMS_KEY]) {
-                debug('_pluign', pluginConfig, 'input', input);
+                debug('-------------------------------_pluign------------------------------', pluginConfig);
+                debug('-------------------------------input--------------------------------', input);
                 const _input = input;
-                return (0, common_1.constructRuleCb)(argName, (0, promisify_1.promisify)(// need to check if the _plugin is internal or not
-                (0, utils_1.inArray)(this._internalPluginNames, pluginName) ?
+                return (0, common_2.constructRuleCb)(argName, (0, promisify_1.promisify)(// need to check if the _plugin is internal or not
+                this._internalPluginNames.includes(pluginName) ?
                     (0, plugins_1.createCoreCurryPlugin)(_input) :
                     (0, plugins_1.curryPlugin)(_input, pluginConfig)), pluginName);
             }
@@ -76,11 +77,11 @@ class ValidatorPlugins {
                 throw new error_1.default(`plugin ${name} already existed!`);
             }
             if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) {
-                if (!(0, common_1.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
+                if (!(0, common_2.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
                     throw new error_1.default(`Your plugin config argument contains reserved keywords`);
                 }
             }
-            if (!(0, common_1.pluginHasFunc)(pluginConfig)) {
+            if (!(0, common_2.pluginHasFunc)(pluginConfig)) {
                 throw new error_1.default(`Can not find any executable definition within your plugin config`);
             }
         }
@@ -96,13 +97,13 @@ class ValidatorPlugins {
             // this rule is not really in use but keep here for future
             case (!pluginConfig[constants_1.VALIDATE_ASYNC_KEY] &&
                 pluginConfig[constants_1.VALIDATE_KEY] &&
-                (0, utils_1.isFunction)(pluginConfig[constants_1.VALIDATE_KEY])):
+                (0, common_1.isFunction)(pluginConfig[constants_1.VALIDATE_KEY])):
                 pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(pluginConfig[constants_1.VALIDATE_KEY]);
                 break;
             // use the pattern key to generate plugin method
             case (pluginConfig[constants_1.PATTERN_KEY] &&
                 (0, string_1.checkString)(pluginConfig[constants_1.PATTERN_KEY])):
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_1.patternPluginFanctory)(pluginConfig[constants_1.PATTERN_KEY]);
+                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, common_2.patternPluginFanctory)(pluginConfig[constants_1.PATTERN_KEY]);
                 break;
             case (pluginConfig[constants_1.VALIDATE_ASYNC_KEY] !== undefined && pluginConfig[constants_1.PLUGIN_FN_KEY]):
                 delete pluginConfig[constants_1.PLUGIN_FN_KEY]; // remove it

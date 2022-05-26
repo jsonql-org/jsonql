@@ -1,14 +1,14 @@
 // it was in the index and should be on it's own file
 /** just make this clear where the plugins coming from */
-import { curry } from '@jsonql/utils'
-import { JsonqlError } from '@jsonql/errors'
+import { curry } from '@jsonql/utils/dist/lodash'
+import JsonqlError from '@jsonql/errors/dist/base/error'
 import {
   JsonqlPluginConfig,
   JsonqlValidateFn,
   JsonqlPluginInput,
 } from '../types'
 import { plugins } from './index'
-
+import { PARAMS_KEY } from '../constants'
 const GLOBAL_PLUGINS = plugins
 
 /** This will lookup our internal plugins list */
@@ -31,7 +31,7 @@ export function curryPlugin(
 ): JsonqlValidateFn {
   const { plugin } = config
   if (plugin) {
-    const params = pluginExport['params'] // if we use pluginExport.params then TS complain!
+    const params = pluginExport[PARAMS_KEY] // if we use pluginExport.params then TS complain!
     if (params) {
       // @BUG if the input missing the key then it wont throw for example
       // we expect `arg` but pass the `min` then it will run but just failed
@@ -55,7 +55,6 @@ export function checkArgKeys(
 ): boolean {
   return params.filter(key => config[key]).length === params.length
 }
-
 
 /** @TODO it needs to be a js file then it must be after compile */
 export function getPlugin(pluginName: string) {

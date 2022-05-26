@@ -124,5 +124,11 @@ export function patternPluginFanctory(
   return async (value: string) => regex.test(value) ?
                                     Promise.resolve(true) :
                                     Promise.reject(false)
+}
 
+// from https://thewebdev.info/2022/03/03/how-to-check-a-function-is-async-with-javascript/
+export function isAsyncFn(fn: any) {
+  const AsyncFunction = (async () => {}).constructor
+
+  return fn instanceof AsyncFunction
 }

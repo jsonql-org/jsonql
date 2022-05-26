@@ -19,7 +19,7 @@ export type JsonqlValidateFn = AsyncCallbackFunction<unknown>
 // this is the file or inline input to setup the plugin
 export type JsonqlPluginConfig = {
   name: string
-  main: JsonqlValidateFn
+  main: JsonqlValidateFn | CallbackFunction
   params?: string[]
 }
 
@@ -33,12 +33,7 @@ export declare type JsonqlValidationBase = {
 } & JsonqlGenericObject
 
 // move back from @jsonql/valdiator
-export declare type JsonqlValidationPlugin = {
-  name?: string
-  main?: CallbackFunction<T> // after transform the plugin we remove it from the object
-  params?: Array<string>
-
-} & JsonqlValidationBase
+export declare type JsonqlValidationPlugin = Partial<JsonqlPluginConfig> & JsonqlValidationBase
 // add rules
 export declare type JsonqlValidationRule = {
   type?: string

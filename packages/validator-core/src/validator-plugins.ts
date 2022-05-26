@@ -11,10 +11,7 @@ import type {
   JsonqlValidateFn,
 } from './types'
 import JsonqlError from '@jsonql/errors/dist/base/error'
-import {
-  inArray,
-  isFunction,
-} from '@jsonql/utils'
+import { isFunction } from '@jsonql/utils/dist/common'
 import {
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,
@@ -41,6 +38,7 @@ import {
   checkPluginArg,
   pluginHasFunc,
   patternPluginFanctory,
+  isAsyncFn,
 } from './lib/common'
 import {
   plugins
@@ -87,13 +85,14 @@ export class ValidatorPlugins {
           pluginName,
         )
       } else if (pluginConfig && pluginConfig[PARAMS_KEY]) {
-        debug('_pluign', pluginConfig, 'input', input)
+        debug('-------------------------------_pluign------------------------------', pluginConfig)
+        debug('-------------------------------input--------------------------------', input)
         const _input = input as unknown as JsonqlPluginInput
 
         return constructRuleCb(
           argName,
           promisify( // need to check if the _plugin is internal or not
-            inArray(this._internalPluginNames, pluginName) ?
+            this._internalPluginNames.includes(pluginName) ?
               createCoreCurryPlugin(_input) :
               curryPlugin(_input, pluginConfig as unknown as JsonqlPluginConfig)
           ),
@@ -170,7 +169,11 @@ export class ValidatorPlugins {
       // @NOTE we can not create the curryPlugin here because it needs to be generic
       // and the arguement provide at validation time, this need to get create at the _lookupPlugin
       default: // the standard {main: fn} then we need to convert it VALIDATE_ASYNC_KEY
-        pluginConfig[VALIDATE_ASYNC_KEY] = promisify(pluginConfig[PLUGIN_FN_KEY])
+        if (!pluginConfig[PLUGIN_FN_KEY]) {
+          throw new JsonqlError(`${PLUGIN_FN_KEY} is empty?`, pluginConfig)
+        }
+        const fn = pluginConfig[PLUGIN_FN_KEY]
+        pluginConfig[VALIDATE_ASYNC_KEY] = isAsyncFn(fn) ? fn : promisify(fn)
         delete pluginConfig[PLUGIN_FN_KEY] // remove it
     }
     // debug(`add plugin`, name, pluginConfig)

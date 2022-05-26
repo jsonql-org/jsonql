@@ -14,9 +14,13 @@ test.before(() => {
 
 test(`Should able to use the ValidatorPlugin class to perform the same task`, t => {
 
-  const result  = plugin.lookupPlugin({ plugin: 'int' }, 'someKey')
+  const result1 = plugin.lookupPlugin({ plugin: 'int' }, 'someKey')
 
-  t.true(typeof result === 'function')
+  t.true(typeof result1 === 'function')
+
+  const result2 = plugin.lookupPlugin({ plugin: 'moreThan', num: 100}, 'SomeValue')
+
+  t.true(typeof result2 === 'function')
 
 })
 

@@ -13,3 +13,4 @@ export declare function successThen(argName: string, value: unknown, lastResult:
 export declare function isResultPackage(lastResult: unknown, key?: string): boolean;
 /** If the plugin provide a pattern and we construct a function out of it */
 export declare function patternPluginFanctory(pattern: string): (value: string) => Promise<boolean>;
+export declare function isAsyncFn(fn: any): boolean;
