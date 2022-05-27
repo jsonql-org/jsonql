@@ -81,12 +81,7 @@ export class Validator extends ValidatorBase {
     this._validatorPluginsInstance.registerPlugin(name, plugin)
   }
 
-  /** create an alias for createSchema (and replace it later ) because ii make more sense */
-  public addValidationRules(
-    validationMap: JsonqlObjectValidateInput
-  ): void {
-    this._createSchema(validationMap)
-  }
+
 
   /** After the validation the success will get an object with
   argumentName: value object and we make it to an array matching

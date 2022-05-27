@@ -58,10 +58,12 @@ export class ValidatorBase {
   private _schema!: Array<JsonqlPropertyParamMap>
   // use this list to make callable argument
   protected _arguments!: Array<string>
+  // Use this to store the inline rules then generate file
+  protected _rulesStore = new Map<string, any>()
   // main
   constructor(
     astMap: Array<JsonqlPropertyParamMap>,
-    protected _validatorPluginsInstance: ValidatorPlugins
+    protected _validatorPluginsInstance?: ValidatorPlugins
   ) {
     this._astWithBaseRules = createAutomaticRules(astMap)
     // create the argument name list in order
@@ -71,6 +73,13 @@ export class ValidatorBase {
   /** just return the internal schema for validation for use, see export */
   public get schema() {
     return this._schema || this._astWithBaseRules
+  }
+
+  /** create an alias for createSchema (and replace it later ) because ii make more sense */
+  public addValidationRules(
+    validationMap: JsonqlObjectValidateInput
+  ): void {
+    this._createSchema(validationMap)
   }
 
   // ----------------- validate ------------------ //
@@ -244,10 +253,16 @@ export class ValidatorBase {
     input: JsonqlValidationRule,
     propName: string
   ) {
-    debug('_lookupPlugin --->', input, propName)
     // @TODO we should allow validator to use standalone without the plugin system
     // so when this plugin instance object is undefined we should skip it
-    return this._validatorPluginsInstance.lookupPlugin(input, propName)
+    if (this._validatorPluginsInstance) {
+      debug('_lookupPlugin --->', input, propName)
+      return this._validatorPluginsInstance.lookupPlugin(input, propName)
+    }
+    return constructRuleCb(
+      propName,
+      async (value: any) => value,
+      'dummy'
+    )
   }
-
 }
