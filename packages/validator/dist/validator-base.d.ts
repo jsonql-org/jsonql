@@ -1,5 +1,5 @@
 import type { JsonqlGenericObject } from '@jsonql/validator-core/index';
-import type { JsonqlPropertyParamMap, JsonqlObjectValidateInput } from './types';
+import type { JsonqlPropertyParamMap, JsonqlObjectValidateInput, MixedValidationInput } from './types';
 import type { ValidatorPlugins } from '@jsonql/validator-core/dist/validator-plugins';
 /**
 The sequence how this should run
@@ -19,8 +19,10 @@ export declare class ValidatorBase {
     validate(values: Array<unknown>): any;
     /** just return the internal schema for validation for use, see export */
     get schema(): JsonqlPropertyParamMap[];
-    /** create an alias for createSchema (and replace it later ) because ii make more sense */
-    addValidationRules(validationMap: JsonqlObjectValidateInput): void;
+    /** overload the addValidationRules method that allow to pass a function or async function */
+    addValidationRules(input: MixedValidationInput): void;
+    /** just put the function into the right key */
+    private _updateInput;
     /**
       when validate happens we check the input value
       correspond to out map, and apply the values

@@ -9,6 +9,10 @@ import type {
   JsonqlPropertyParamMap,
   JsonqlValidateCbFn,
   JsonqlObjectValidateInput,
+  FunctionInput,
+  MixedValidationInput,
+  CallbackFunction,
+  AsyncCallbackFunction,
 } from './types'
 import type {
   ValidatorPlugins,
@@ -41,6 +45,9 @@ import {
   getOptionalValue,
   checkDuplicateRules,
 } from './fn'
+import { isAsyncFn } from '@jsonql/utils/dist/is-async-fn'
+import { isFunction } from '@jsonql/utils/dist/common'
+
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
@@ -88,13 +95,34 @@ export class ValidatorBase {
     return this._schema || this._astWithBaseRules
   }
 
-  /** create an alias for createSchema (and replace it later ) because ii make more sense */
+  /** overload the addValidationRules method that allow to pass a function or async function */
   public addValidationRules(
-    validationMap: JsonqlObjectValidateInput
-  ): void {
-    debug('addValidationRules', validationMap)
+    input: MixedValidationInput
+  ) {
+    debug('addValidationRules', input)
+    const clearInput: JsonqlObjectValidateInput = {}
+    for (const propName in input) {
+      const _input = input[propName]
+      if (isFunction(_input)) {
+        clearInput[propName] = this._updateInput(_input)
+      } else {
+        clearInput[propName] = _input
+      }
+    }
+    // overload the parent method
+    this._createSchema(clearInput)
+  }
 
-    this._createSchema(validationMap)
+  /** just put the function into the right key */
+  private _updateInput(input: FunctionInput): JsonqlValidationRule {
+    if (isAsyncFn(input)) {
+      return {
+        [VALIDATE_ASYNC_KEY]: input as AsyncCallbackFunction<unknown>
+      }
+    }
+    return {
+      [VALIDATE_KEY]: input as CallbackFunction<unknown>
+    }
   }
 
   // ----------------- validate ------------------ //

@@ -81,3 +81,7 @@ export interface JsonqlCheckObjectKeys {
   name: string
   type: Array<string>
 }
+
+export type FunctionInput = CallbackFunction<unknown> | AsyncCallbackFunction<unknown>
+
+export type MixedValidationInput = JsonqlObjectValidateInput | FunctionInput

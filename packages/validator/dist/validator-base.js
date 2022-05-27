@@ -9,6 +9,8 @@ const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
+const is_async_fn_1 = require("@jsonql/utils/dist/is-async-fn");
+const common_2 = require("@jsonql/utils/dist/common");
 const constants_1 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -39,10 +41,32 @@ class ValidatorBase {
     get schema() {
         return this._schema || this._astWithBaseRules;
     }
-    /** create an alias for createSchema (and replace it later ) because ii make more sense */
-    addValidationRules(validationMap) {
-        debug('addValidationRules', validationMap);
-        this._createSchema(validationMap);
+    /** overload the addValidationRules method that allow to pass a function or async function */
+    addValidationRules(input) {
+        debug('addValidationRules', input);
+        const clearInput = {};
+        for (const propName in input) {
+            const _input = input[propName];
+            if ((0, common_2.isFunction)(_input)) {
+                clearInput[propName] = this._updateInput(_input);
+            }
+            else {
+                clearInput[propName] = _input;
+            }
+        }
+        // overload the parent method
+        this._createSchema(clearInput);
+    }
+    /** just put the function into the right key */
+    _updateInput(input) {
+        if ((0, is_async_fn_1.isAsyncFn)(input)) {
+            return {
+                [validator_core_1.VALIDATE_ASYNC_KEY]: input
+            };
+        }
+        return {
+            [validator_core_1.VALIDATE_KEY]: input
+        };
     }
     // ----------------- validate ------------------ //
     /**

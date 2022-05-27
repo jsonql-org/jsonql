@@ -23,10 +23,8 @@ import type {
 } from '@jsonql/validator-core/index'
 import type {
   JsonqlValidationPlugin,
-  // JsonqlObjectValidateInput,
   JsonqlPropertyParamMap,
 } from './types'
-
 import {
   ValidatorBase
 } from './validator-base'
