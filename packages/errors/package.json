@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/errors",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Jsonql Errors class",
   "main": "dist/index.js",
   "module": "./src/index",
@@ -12,9 +12,11 @@
   ],
   "scripts": {
     "test:ava": "ava",
-    "test": "nyc ava",
-    "build:ts": "tsc",
-    "build": "pnpm build:ts",
+    "test:nyc": "nyc ava",
+    "test": "pnpm build && pnpm test:nyc",
+    "build:tsc": "tsc -p tsconfig.json",
+    "build": "pnpm clean:dist && pnpm build:tsc",
+    "clean:dist": "rimraf ./dist",
     "updateDeps": "node ../../update-deps.js errors",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm updateDeps",
@@ -30,19 +32,13 @@
   "homepage": "https://jsonql.org",
   "license": "MIT",
   "ava": {
-    "ignoredByWatcher": [
-      "tests/helpers/*.*",
-      "tests/fixtures/*.*"
+    "verbose": true,
+    "files": [
+      "tests/**/*.test.ts"
     ],
-    "extension": [
+    "extensions": [
       "ts"
     ],
-    "cache": true,
-    "concurrency": 5,
-    "failFast": true,
-    "failWithoutAssertions": false,
-    "tap": false,
-    "verbose": true,
     "require": [
       "esbuild-register"
     ]

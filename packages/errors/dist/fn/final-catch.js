@@ -1,6 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const base_1 = require("../base");
+const tslib_1 = require("tslib");
+const _406_error_1 = tslib_1.__importDefault(require("../406-error"));
+const _500_error_1 = tslib_1.__importDefault(require("../500-error"));
+const forbidden_error_1 = tslib_1.__importDefault(require("../forbidden-error"));
+const authorisation_error_1 = tslib_1.__importDefault(require("../authorisation-error"));
+const contract_auth_error_1 = tslib_1.__importDefault(require("../contract-auth-error"));
+const resolver_app_error_1 = tslib_1.__importDefault(require("../resolver-app-error"));
+const resolver_not_found_error_1 = tslib_1.__importDefault(require("../resolver-not-found-error"));
+const enum_error_1 = tslib_1.__importDefault(require("../enum-error"));
+const type_error_1 = tslib_1.__importDefault(require("../type-error"));
+const checker_error_1 = tslib_1.__importDefault(require("../checker-error"));
+const validation_error_1 = tslib_1.__importDefault(require("../validation-error"));
+const error_1 = tslib_1.__importDefault(require("../error"));
+const server_error_1 = tslib_1.__importDefault(require("../server-error"));
+// import GeneralError from '../general-error'
 const constants_1 = require("../constants");
 /**
  * If using the instance of could not find the actual error then
@@ -24,39 +38,39 @@ function finalCatch(e) {
     if (Array.isArray(e)) {
         // if we want the message then I will have to create yet another function
         // to wrap this function to provide the name prop
-        throw new base_1.JsonqlValidationError('', e);
+        throw new validation_error_1.default('', e);
     }
     const msg = e.message || constants_1.NO_ERROR_MSG;
     const detail = e.detail || e;
     // @BUG the instance of not always work for some reason!
     // need to figure out a better way to find out the type of the error
     switch (true) {
-        case e instanceof base_1.Jsonql406Error:
-            throw new base_1.Jsonql406Error(msg, detail);
-        case e instanceof base_1.Jsonql500Error:
-            throw new base_1.Jsonql500Error(msg, detail);
-        case e instanceof base_1.JsonqlForbiddenError:
-            throw new base_1.JsonqlForbiddenError(msg, detail);
-        case e instanceof base_1.JsonqlAuthorisationError:
-            throw new base_1.JsonqlAuthorisationError(msg, detail);
-        case e instanceof base_1.JsonqlContractAuthError:
-            throw new base_1.JsonqlContractAuthError(msg, detail);
-        case e instanceof base_1.JsonqlResolverAppError:
-            throw new base_1.JsonqlResolverAppError(msg, detail);
-        case e instanceof base_1.JsonqlResolverNotFoundError:
-            throw new base_1.JsonqlResolverNotFoundError(msg, detail);
-        case e instanceof base_1.JsonqlEnumError:
-            throw new base_1.JsonqlEnumError(msg, detail);
-        case e instanceof base_1.JsonqlTypeError:
-            throw new base_1.JsonqlTypeError(msg, detail);
-        case e instanceof base_1.JsonqlCheckerError:
-            throw new base_1.JsonqlCheckerError(msg, detail);
-        case e instanceof base_1.JsonqlValidationError:
-            throw new base_1.JsonqlValidationError(msg, detail);
-        case e instanceof base_1.JsonqlServerError:
-            throw new base_1.JsonqlServerError(msg, detail);
+        case e instanceof _406_error_1.default:
+            throw new _406_error_1.default(msg, detail);
+        case e instanceof _500_error_1.default:
+            throw new _500_error_1.default(msg, detail);
+        case e instanceof forbidden_error_1.default:
+            throw new forbidden_error_1.default(msg, detail);
+        case e instanceof authorisation_error_1.default:
+            throw new authorisation_error_1.default(msg, detail);
+        case e instanceof contract_auth_error_1.default:
+            throw new contract_auth_error_1.default(msg, detail);
+        case e instanceof resolver_app_error_1.default:
+            throw new resolver_app_error_1.default(msg, detail);
+        case e instanceof resolver_not_found_error_1.default:
+            throw new resolver_not_found_error_1.default(msg, detail);
+        case e instanceof enum_error_1.default:
+            throw new enum_error_1.default(msg, detail);
+        case e instanceof type_error_1.default:
+            throw new type_error_1.default(msg, detail);
+        case e instanceof checker_error_1.default:
+            throw new checker_error_1.default(msg, detail);
+        case e instanceof validation_error_1.default:
+            throw new validation_error_1.default(msg, detail);
+        case e instanceof server_error_1.default:
+            throw new server_error_1.default(msg, detail);
         default:
-            throw new base_1.JsonqlError(msg, detail);
+            throw new error_1.default(msg, detail);
     }
 }
 exports.default = finalCatch;

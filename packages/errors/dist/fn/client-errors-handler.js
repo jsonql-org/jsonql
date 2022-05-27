@@ -1,7 +1,8 @@
 "use strict";
 // this will add directly to the then call in each http call
 Object.defineProperty(exports, "__esModule", { value: true });
-const base_1 = require("../base");
+const tslib_1 = require("tslib");
+const error_1 = tslib_1.__importDefault(require("../error"));
 // import getErrorByStatus from './get-error-by-status'
 const constants_1 = require("../constants");
 /**
@@ -25,7 +26,7 @@ function clientErrorsHandler(result) {
         if (errorName && error[errorName]) {
             throw new error[className](msg, detail);
         }
-        throw new base_1.JsonqlError(msg, detail);
+        throw new error_1.default(msg, detail);
     }
     // pass through to the next
     return result;

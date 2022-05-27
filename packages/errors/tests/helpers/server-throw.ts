@@ -1,13 +1,13 @@
 // create a basic koa server here for testing purpose
 import Koa from 'koa'
 import bodyparser from 'koa-bodyparser'
-import { JsonqlServerError, getErrorByStatus } from '../../src'
+import { JsonqlServerError } from '../../src'
 // const { JsonqlServerError, getErrorByStatus } = errors
 
 const thrower = function() {
   // basically just throw error here
   return async function(ctx: any, next: Function) {
-    console.log('start running thrower')
+    // console.log('start running thrower')
 
     // throw new errors[getErrorByStatus(500)]('I throw something off');
     ctx.throw(500, 'Throw an error with custom payload', {error: {msg: 'This is custom'}})
@@ -20,17 +20,17 @@ const throwerWithExtra = function() {
   return async function(_: any, next: Function) {
     // ctx.throw(500, 'Throw an error with custom payload', {error: {msg: 'This is custom'}});
     await next()
-    console.log('start running with throwerWithExtra')
+    // console.log('start running with throwerWithExtra')
     throw new JsonqlServerError(500, 'Na na na')
   }
 }
 
 const customHandler = function() {
   return async (ctx: any, next: Function) => {
-    console.info('You should able to see me here')
+    // console.info('You should able to see me here')
     return await next().catch((err: any) => {
 
-      console.error('Catch the error here', err)
+      // console.error('Catch the error here', err)
 
       // ctx.assert(err instanceof JsonqlServerError, 404 , 'Checking of this is what throw earlier');
       const { statusCode, message } = err
@@ -48,7 +48,7 @@ const customHandler = function() {
 
 const middleMiddleware = function(index: string | number) {
   return async (_: any, next: Function) => {
-    console.info(`(${index}) Passing through middleMiddleware`)
+    // console.info(`(${index}) Passing through middleMiddleware`)
     await next()
   }
 }

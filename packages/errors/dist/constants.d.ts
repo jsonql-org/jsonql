@@ -1,4 +1,10 @@
-import { NOT_ACCEPTABLE_STATUS, UNAUTHORIZED_STATUS, FORBIDDEN_STATUS, NOT_FOUND_STATUS, SERVER_INTERNAL_STATUS, NO_STATUS_CODE, NO_ERROR_MSG } from '@jsonql/constants';
-declare const UNKNOWN_ERROR = "unknown_error";
-declare const JSONQL_ERRORS_INFO = "__PLACEHOLDER__";
-export { NOT_ACCEPTABLE_STATUS, UNAUTHORIZED_STATUS, FORBIDDEN_STATUS, NOT_FOUND_STATUS, SERVER_INTERNAL_STATUS, NO_STATUS_CODE, NO_ERROR_MSG, UNKNOWN_ERROR, JSONQL_ERRORS_INFO };
+export declare const NO_ERROR_MSG = "No message";
+export declare const NO_STATUS_CODE = -1;
+export declare const SUCCESS_STATUS = 200;
+export declare const UNAUTHORIZED_STATUS = 401;
+export declare const FORBIDDEN_STATUS = 403;
+export declare const NOT_FOUND_STATUS = 404;
+export declare const NOT_ACCEPTABLE_STATUS = 406;
+export declare const SERVER_INTERNAL_STATUS = 500;
+export declare const UNKNOWN_ERROR = "unknown_error";
+export declare const JSONQL_ERRORS_INFO = "__PLACEHOLDER__";
