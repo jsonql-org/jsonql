@@ -3,7 +3,7 @@ import test from 'ava'
 
 import { join } from 'node:path'
 import { readJsonSync } from 'fs-extra'
-import { ValidatorBase } from '../src/validator-base'
+import { ValidatorBase } from '../base'
 import { JsonqlValidationError } from '@jsonql/errors'
 
 const astFile = join(__dirname, 'fixtures', 'resolver', 'baseline-fn.json')

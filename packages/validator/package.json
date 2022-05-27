@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "@jsonql/validator general purpose validation library that test type and value with a plugin system",
   "main": "dist/index.js",
   "module": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "src",
     "jsonql-validator.min.js",
     "jsonql-validator.min.js.map",
-    "index.d.ts"
+    "index.d.ts",
+    "base.js"
   ],
   "scripts": {
     "test:ava": "ava",
