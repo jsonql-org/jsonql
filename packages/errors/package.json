@@ -29,9 +29,6 @@
   "author": "Joel Chu <joelchu@foxmail.com>",
   "homepage": "https://jsonql.org",
   "license": "MIT",
-  "dependencies": {
-    "@jsonql/constants": "workspace:^0.7.2"
-  },
   "ava": {
     "ignoredByWatcher": [
       "tests/helpers/*.*",
