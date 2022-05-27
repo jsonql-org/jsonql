@@ -9,8 +9,7 @@ const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
-const is_async_fn_1 = require("@jsonql/utils/dist/is-async-fn");
-const common_2 = require("@jsonql/utils/dist/common");
+// import { isFunction } from '@jsonql/utils/dist/common'
 const constants_1 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -47,7 +46,7 @@ class ValidatorBase {
         const clearInput = {};
         for (const propName in input) {
             const _input = input[propName];
-            if ((0, common_2.isFunction)(_input)) {
+            if (typeof _input === 'function') {
                 clearInput[propName] = this._updateInput(_input);
             }
             else {
@@ -59,13 +58,9 @@ class ValidatorBase {
     }
     /** just put the function into the right key */
     _updateInput(input) {
-        if ((0, is_async_fn_1.isAsyncFn)(input)) {
-            return {
-                [validator_core_1.VALIDATE_ASYNC_KEY]: input
-            };
-        }
+        // we just make it an async funtion regardless
         return {
-            [validator_core_1.VALIDATE_KEY]: input
+            [validator_core_1.VALIDATE_ASYNC_KEY]: (0, validator_core_1.promisify)(input)
         };
     }
     // ----------------- validate ------------------ //
@@ -193,10 +188,10 @@ class ValidatorBase {
                     debug(`Should got here ----->`, _input[validator_core_1.PLUGIN_KEY]);
                     return this._lookupPlugin(_input, propName);
                 case _input[validator_core_1.VALIDATE_KEY] !== undefined:
-                    debug(`${validator_core_1.VALIDATE_KEY}`, _input);
+                    debug(`${validator_core_1.VALIDATE_KEY} ----->`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, (0, validator_core_1.promisify)(_input[validator_core_1.VALIDATE_KEY]), pluginName);
                 case _input[validator_core_1.VALIDATE_ASYNC_KEY] !== undefined:
-                    debug(`${validator_core_1.VALIDATE_ASYNC_KEY}`, _input);
+                    debug(`${validator_core_1.VALIDATE_ASYNC_KEY} ---->`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
                     throw new error_1.default(`unable to find rule for ${propName}`);

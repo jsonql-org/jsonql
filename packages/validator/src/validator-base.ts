@@ -11,8 +11,6 @@ import type {
   JsonqlObjectValidateInput,
   FunctionInput,
   MixedValidationInput,
-  CallbackFunction,
-  AsyncCallbackFunction,
 } from './types'
 import type {
   ValidatorPlugins,
@@ -44,10 +42,8 @@ import {
   createAutomaticRules,
   getOptionalValue,
   checkDuplicateRules,
-  isAsyncFn
 } from './fn'
-
-import { isFunction } from '@jsonql/utils/dist/common'
+// import { isFunction } from '@jsonql/utils/dist/common'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
@@ -104,7 +100,7 @@ export class ValidatorBase {
     const clearInput: JsonqlObjectValidateInput = {}
     for (const propName in input) {
       const _input = input[propName]
-      if (isFunction(_input)) {
+      if (typeof _input === 'function') {
         clearInput[propName] = this._updateInput(_input)
       } else {
         clearInput[propName] = _input
@@ -116,14 +112,9 @@ export class ValidatorBase {
 
   /** just put the function into the right key */
   private _updateInput(input: FunctionInput): JsonqlValidationRule {
-    if (isAsyncFn(input)) {
-      debug('isAsyncFn?', input.toString())
-      return {
-        [VALIDATE_ASYNC_KEY]: input as AsyncCallbackFunction<unknown>
-      }
-    }
+    // we just make it an async funtion regardless
     return {
-      [VALIDATE_KEY]: input as CallbackFunction<unknown>
+      [VALIDATE_ASYNC_KEY]: promisify(input)
     }
   }
 

@@ -58,3 +58,26 @@ test('When try to use plugin and it should fail with a NO_PLUGIN_DUMMY_FUNCTION'
       })
 
 })
+
+test(`Testing another situation when we pass a async method as validator method`, async t => {
+  t.plan(1)
+
+  const valFn = async function(value: string) {
+    if (value === 'hello' || value === 'world') {
+      return Promise.reject(false)
+    }
+    return Promise.resolve(true)
+  }
+
+  vb.addValidationRules({
+    value1: valFn
+  })
+  // @NOTE we didn't catch an error but not the valdiation error we want
+  // instead complain about the function pass is not a function but an object
+  return vb.validate(['hello', 100])
+           .catch((error: JsonqlValidationError) => {
+             // console.log(error)
+             t.truthy(error.detail)
+           })
+
+})

@@ -3,7 +3,6 @@ import { paramMatches } from '../src/lib/common'
 import { ValidatorPlugins } from '../src'
 
 
-
 test(`Should able to get an internal plugin`, async t => {
 
   const plugin = new ValidatorPlugins()

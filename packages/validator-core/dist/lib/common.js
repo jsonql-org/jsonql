@@ -52,6 +52,8 @@ this will get re-use in the class to create method for the queue execution
  */
 function constructRuleCb(argName, ruleFn, ruleName) {
     return (value, lastResult, pos) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        // @NOTE keep getting problem with ruleFn is not a async funtion pass here
+        // so we need to first execute it then check if is thenable
         return Reflect.apply(ruleFn, null, [value])
             .then(successThen(argName, value, lastResult, pos))
             .catch((error) => {

@@ -78,16 +78,20 @@ export function constructRuleCb(
     value: unknown,
     lastResult: JsonqlGenericObject,
     pos: number[]
-  ) => Reflect.apply(ruleFn, null, [value])
-                .then(
-                  successThen(argName, value, lastResult, pos)
-                )
-                .catch((error: boolean) => {
-                  debug('failed', argName, value, error, pos)
-                  // the name should be the validator name - not the property name
-                  // because the pos already indicator the property
-                  return Promise.reject(new JsonqlValidationError(ruleName, pos))
-                })
+  ) => {
+    // @NOTE keep getting problem with ruleFn is not a async funtion pass here
+    // so we need to first execute it then check if is thenable
+    return Reflect.apply(ruleFn, null, [value])
+      .then(
+        successThen(argName, value, lastResult, pos)
+      )
+      .catch((error: boolean) => {
+        debug('failed', argName, value, error, pos)
+        // the name should be the validator name - not the property name
+        // because the pos already indicator the property
+        return Promise.reject(new JsonqlValidationError(ruleName, pos))
+      })
+    }
 }
 
 /** This is taken out from the above then call for re-use when we want to fall through a rule */
