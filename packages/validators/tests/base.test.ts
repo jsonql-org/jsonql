@@ -15,7 +15,7 @@ test.before(() => {
 })
 
 
-test(`Should able to get a validator but name and pass the validation`, async t => {
+test(`Should able to get a validator by name and pass the validation`, async t => {
   t.plan(2)
 
   const V = validators.getValidator('archive')

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Validators = void 0;
 const tslib_1 = require("tslib");
 const validator_1 = require("@jsonql/validator");
+const validator_core_1 = require("@jsonql/validator-core");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('velocejs:validator:main');
 /**
@@ -16,7 +17,7 @@ class Validators {
         this._astMap = _astMap;
         this._validationRules = new Map();
         this._validators = new Map();
-        this._plugin = new validator_1.ValidatorPlugins();
+        this._plugin = new validator_core_1.ValidatorPlugins();
         for (const propertyName in this._astMap) {
             this._validators.set(propertyName, new validator_1.Validator(this._astMap[propertyName], this._plugin));
         }
