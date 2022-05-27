@@ -3,7 +3,6 @@ export { chainFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, queuePromisesProcess, } from './chain-promises';
 export { strToNum, strToBool, } from './convert';
 export { dasherize } from './dasherize';
-export { isAsyncFn } from './is-async-fn';
 export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, isFunction, assign, nil, readOnly, showDeep, formatStr, } from './common';
 export { logger, getLogger } from './logger';
 export { objDefineProps, objHasProp, injectToFn, } from './obj-define-props';

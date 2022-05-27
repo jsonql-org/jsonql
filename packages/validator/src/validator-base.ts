@@ -44,8 +44,9 @@ import {
   createAutomaticRules,
   getOptionalValue,
   checkDuplicateRules,
+  isAsyncFn
 } from './fn'
-import { isAsyncFn } from '@jsonql/utils/dist/is-async-fn'
+
 import { isFunction } from '@jsonql/utils/dist/common'
 import {
   ARGS_NOT_ARRAY_ERR,
@@ -56,6 +57,7 @@ import {
 // ---- DEBUG ---- //
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:validator-base')
+
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules

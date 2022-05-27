@@ -180,3 +180,10 @@ export function checkDuplicateRules(rule: JsonqlValidationRule): Array<string> {
     VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY // @TODO should pattern be standalone?
   ].filter((key: string) => rule[key] !== undefined)
 }
+
+/** the stupid ts compiler to crap into this method to cause it stop working */
+export function isAsyncFn(fn: unknown) {
+  const AsyncFunction = (async () => {}).constructor
+
+  return fn instanceof AsyncFunction
+}

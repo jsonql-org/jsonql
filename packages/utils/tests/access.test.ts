@@ -1,8 +1,7 @@
 
 import test from 'ava'
 import { accessByPath } from '../src/access'
-import { isAsyncFn } from '../src/is-async-fn'
-
+// import { isAsyncFn } from '../src/is-async-fn'
 const obj = {
   prop1: {
     params: ['a', 'b', 'c'],
@@ -27,14 +26,20 @@ test(`Testing the accessByPath method`, t => {
 
 })
 
+/*
 test('Test if a function is async or not', t => {
 
-  const asyncFn = async ( value: number ) => value
+  const asyncArrowFn = async ( value: number ) => value
+  const asyncFn = async function() { console.log('die stupid eslint' )}
 
+  t.true(isAsyncFn(asyncArrowFn))
   t.true(isAsyncFn(asyncFn))
 
-  const notAsyncFn = (value: number) => value
+  const notAsyncFn = async function() { console.log('Die stupid typescript compiler') }
+  const notAsyncArrowFn = (value: number) => value
 
+  t.false(isAsyncFn(notAsyncArrowFn))
   t.false(isAsyncFn(notAsyncFn))
 
 })
+*/

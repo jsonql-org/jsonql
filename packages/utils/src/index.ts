@@ -14,9 +14,6 @@ export {
   dasherize
 } from './dasherize'
 export {
-  isAsyncFn
-} from './is-async-fn'
-export {
   inArray,
   toArray,
   isEmptyObj,

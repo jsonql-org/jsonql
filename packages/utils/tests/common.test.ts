@@ -3,18 +3,8 @@ import test from 'ava'
 import {
   isNaN,
   strToNum,
-  strToBool,
-  isAsyncFn
+  strToBool
 } from '../src'
-
-test(`Test the isAsyncFn`, t => {
-
-  t.true(isAsyncFn(async function() { console.log('donothing ')}))
-
-  t.false(isAsyncFn(function() { console.log('dosomething')}))
-
-})
-
 
 test(`Test how the isNaN works first`, t => {
   const input = '100'
