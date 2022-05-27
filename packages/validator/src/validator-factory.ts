@@ -18,10 +18,7 @@
   })
   @TODO how to integrete this into the contract generator
 */
-import {
-  ValidatorBase
-} from './validator-base'
-import {
+import type {
   JsonqlGenericObject,
 } from '@jsonql/validator-core/index'
 import type {
@@ -29,16 +26,21 @@ import type {
   JsonqlObjectValidateInput,
   JsonqlPropertyParamMap,
 } from './types'
+
+import {
+  ValidatorBase
+} from './validator-base'
 import {
   ValidatorPlugins
-} from '@jsonql/validator-core'
+} from '@jsonql/validator-core/dist/validator-plugins'
 import {
   queuePromisesProcess,
-} from '@jsonql/utils'
+} from '@jsonql/utils/dist/chain-promises'
 import {
   processValidateResults,
   unwrapPreparedValidateResult,
 } from './fn'
+
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main

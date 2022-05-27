@@ -7,9 +7,11 @@ import type {
   ValidationRuleRecord,
 } from './types'
 import {
-  ValidatorPlugins,
   Validator
 } from '@jsonql/validator'
+import {
+  ValidatorPlugins
+} from '@jsonql/validator-core'
 
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')

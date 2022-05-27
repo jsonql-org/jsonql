@@ -1,26 +1,6 @@
-/**
-  this is the new class style Validator
-  const validator = new Validator(map)
-  validator.run(propName arguments)
-  This class will support an plugin architecture
-  something like
-  validator.register(typeName: string, rule: any)
-  so it their map they could write
-  validationMap = {
-    someMethod: [{
-      type: 'mySpecialMethod'
-    }]
-  }
-  validator.register('mySpecialMethod', {
-    check(value): boolean {
-      // do your validation here
-    }
-  })
-  @TODO how to integrete this into the contract generator
-*/
-import { ValidatorBase } from './validator-base';
 import type { JsonqlValidationPlugin, JsonqlObjectValidateInput, JsonqlPropertyParamMap } from './types';
-import { ValidatorPlugins } from '@jsonql/validator-core';
+import { ValidatorBase } from './validator-base';
+import { ValidatorPlugins } from '@jsonql/validator-core/dist/validator-plugins';
 export declare class Validator extends ValidatorBase {
     /**
       this is now change to accept an instance of ValidatorPlugins (share)

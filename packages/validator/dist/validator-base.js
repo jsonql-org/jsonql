@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorBase = void 0;
 const tslib_1 = require("tslib");
-const errors_1 = require("@jsonql/errors");
-const utils_1 = require("@jsonql/utils");
-const constants_1 = require("@jsonql/constants");
+const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
+const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
+const common_1 = require("@jsonql/utils/dist/common");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
-const constants_2 = require("./constants");
+const constants_1 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:validator-base');
@@ -48,7 +48,7 @@ class ValidatorBase {
         }
         if (!(0, validator_core_1.checkArray)(values)) {
             debug(values);
-            throw new errors_1.JsonqlValidationError(constants_2.ARGS_NOT_ARRAY_ERR, values);
+            throw new validation_error_1.default(constants_1.ARGS_NOT_ARRAY_ERR, values);
         }
         const vCtn = values.length;
         switch (true) {
@@ -64,7 +64,7 @@ class ValidatorBase {
                 debug('spread params', vCtn, pCtn);
                 return this._processSpreadLikeArg(values, params);
             default: // will not fall through here @TODO
-                throw new errors_1.JsonqlValidationError(constants_2.EXCEPTION_CASE_ERR, [vCtn, pCtn]);
+                throw new validation_error_1.default(constants_1.EXCEPTION_CASE_ERR, [vCtn, pCtn]);
         }
     }
     /** The spread or mix with spread argument is too complicated to process in couple lines */
@@ -74,7 +74,7 @@ class ValidatorBase {
         const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
         // the problem is the type is any after the first param
         return values.map((value, i) => {
-            const param = params[i] || (0, utils_1.assign)(spreadParam, { name: `${constants_2.SPREAD_PREFIX}${i}` });
+            const param = params[i] || (0, common_1.assign)(spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
             const _value = (0, fn_1.getOptionalValue)(value, param);
             debug('spread param', _value, param.name);
             return this._prepareForExecution(_value, param, i);
@@ -115,7 +115,7 @@ class ValidatorBase {
     _createSchema(input) {
         let astWithRules = this._astWithBaseRules;
         // all we need to do is check if its empty input
-        if ((0, utils_1.notEmpty)(input, true)) {
+        if ((0, common_1.notEmpty)(input, true)) {
             astWithRules = this._applyObjectInput(astWithRules, input);
         }
         debug(`_createSchema`, astWithRules);
@@ -128,7 +128,7 @@ class ValidatorBase {
             const propName = ast.name;
             if (input[propName]) {
                 // there might not be a name in there and it's important
-                const _input = (0, utils_1.toArray)(input[propName]).map(input => {
+                const _input = (0, common_1.toArray)(input[propName]).map(input => {
                     input.name = propName;
                     return input;
                 });
@@ -163,7 +163,7 @@ class ValidatorBase {
                     debug(`${validator_core_1.VALIDATE_ASYNC_KEY}`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
-                    throw new errors_1.JsonqlError(`unable to find rule for ${propName}`);
+                    throw new error_1.default(`unable to find rule for ${propName}`);
             }
         });
     }

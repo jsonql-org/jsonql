@@ -10,19 +10,13 @@ import type {
   JsonqlValidateCbFn,
   JsonqlObjectValidateInput,
 } from './types'
-import {
-  JsonqlValidationError,
-  JsonqlError,
-} from '@jsonql/errors'
+import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
+import JsonqlError from '@jsonql/errors/dist/error'
 import {
   notEmpty,
   toArray,
   assign,
-} from '@jsonql/utils'
-import {
-  // DEFAULT_TYPE,
-  SPREAD_ARG_TYPE,
-} from '@jsonql/constants'
+} from '@jsonql/utils/dist/common'
 import {
   ValidatorPlugins,
   checkArray,
@@ -45,6 +39,7 @@ import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
   SPREAD_PREFIX,
+  SPREAD_ARG_TYPE,
 } from './constants'
 // ---- DEBUG ---- //
 import debugFn from 'debug'

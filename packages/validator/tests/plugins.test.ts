@@ -1,8 +1,8 @@
 // this will focus on testing the built in plugin
 // and develop the different features around it
 import test from 'ava'
-
-import { Validator, ValidatorPlugins } from '../src'
+import { ValidatorPlugins } from '@jsonql/validator-core'
+import { Validator } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
 import { JsonqlValidationError } from '@jsonql/errors'

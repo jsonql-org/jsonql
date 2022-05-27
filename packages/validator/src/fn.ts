@@ -22,7 +22,9 @@ import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
   VALUE_KEY,
+
 } from '@jsonql/validator-core'
+
 import {
   TS_TYPE_NAME,
   TS_TYPE_REF,
@@ -30,10 +32,9 @@ import {
   TS_ARRAY_TYPE,
   TS_UNION_TYPE,
   DEFAULT_VALUE,
-  SPREAD_ARG_TYPE,
-} from '@jsonql/constants'
-import {
+
   IS_SPREAD_VALUES_KEY,
+  SPREAD_ARG_TYPE,
 } from './constants'
 import {
   notEmpty,

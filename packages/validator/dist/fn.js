@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
-const constants_1 = require("@jsonql/constants");
-const constants_2 = require("./constants");
+const constants_1 = require("./constants");
 const utils_1 = require("@jsonql/utils");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:fn');
@@ -43,7 +42,7 @@ function processValidateResults(argNames, validateResult) {
                 // @BUG this is still wrong its array wrap in an array
                 // we need to wrap this one more time for the next step
                 return {
-                    [constants_2.IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res) => res[validator_core_1.VALUE_KEY])
+                    [constants_1.IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res) => res[validator_core_1.VALUE_KEY])
                 };
             }
             debug(`Return result when we couldn't find way to destruct: ${argName}`, validateResult[argName]);
@@ -61,14 +60,14 @@ function unwrapPreparedValidateResult(result // can not use unknown here
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         debug('unwrapPreparedValidateResult', result);
         const ctn = result.length;
-        if (ctn === 1 && (0, utils_1.objectHasKey)(result[0], constants_2.IS_SPREAD_VALUES_KEY)) {
-            return result[0][constants_2.IS_SPREAD_VALUES_KEY];
+        if (ctn === 1 && (0, utils_1.objectHasKey)(result[0], constants_1.IS_SPREAD_VALUES_KEY)) {
+            return result[0][constants_1.IS_SPREAD_VALUES_KEY];
         }
-        else if ((0, validator_core_1.isResultPackage)(result, constants_2.IS_SPREAD_VALUES_KEY)) {
+        else if ((0, validator_core_1.isResultPackage)(result, constants_1.IS_SPREAD_VALUES_KEY)) {
             let tmp = [];
             for (let i = 0; i < ctn; ++i) {
-                if (constants_2.IS_SPREAD_VALUES_KEY in result[i]) {
-                    tmp = tmp.concat(result[i][constants_2.IS_SPREAD_VALUES_KEY]);
+                if (constants_1.IS_SPREAD_VALUES_KEY in result[i]) {
+                    tmp = tmp.concat(result[i][constants_1.IS_SPREAD_VALUES_KEY]);
                 }
                 else {
                     tmp.push(result[i]);
