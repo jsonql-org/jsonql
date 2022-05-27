@@ -9,7 +9,7 @@ Please check [jsonql](https://jsonql.js.org) for more information.
 When using purely in browser environment, you should use `@jsonql/utils/browser`
 
 When using it within your JS / TS development, most of the methods can be found in `@jsonql/utils`
-Where the node only methods will be in `@jsonql/utils/node`
+~~Where the node only methods will be in `@jsonql/utils/node`@DREPRECATED~~
 
 ## Complete list of all available functions
 
@@ -24,6 +24,7 @@ Please reference which functions in what file below
 
 - chainPromises
 - chainProcessPromises
+- queuePromisesProcess
 
 #### src/contract.ts
 
@@ -73,54 +74,9 @@ Please reference which functions in what file below
 - objHasProp
 - injectToFn
 
-#### src/params-api.ts
+#### src/is-async-fn
 
-- toPayload
-- formatPayload
-- getNameFromPayload
-- createDeliverable
-- createQuery
-- createQueryStr
-- createMutation
-- createMutationStr
-- getQueryFromArgs
-- processPayload
-- getQueryFromPayload
-- getMutationFromArgs
-- getMutationFromPayload
-
-#### src/results.ts
-
-- getCallMethod
-- packResult
-- isJsonqlErrorObj
-- packError
-- resultHandler
-
-### For node only
-
-### src/jsonql-handler.ts
-
-- isJsonqlPath
-- isJsonqlRequest
-- isJsonqlConsoleUrl
-
-#### src/node/node-error.ts
-
-- replaceErrors
-- printError
-
-#### src/node/node-find-from-contract.ts
-
-- findFromContract
-
-#### src/node/node-middleware.ts
-
-- getDocLen
-- headerParser
-- isHeaderPresent
-- getPathToFn
-
+- isAsyncFn
 
 ---
 
