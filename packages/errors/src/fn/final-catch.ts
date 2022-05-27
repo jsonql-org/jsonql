@@ -1,22 +1,19 @@
-import {
- Jsonql406Error,
- Jsonql500Error,
- JsonqlForbiddenError,
- JsonqlAuthorisationError,
- JsonqlContractAuthError,
- JsonqlResolverAppError,
- JsonqlResolverNotFoundError,
-// check options error
- JsonqlEnumError,
- JsonqlTypeError,
- JsonqlCheckerError,
-// share
- JsonqlValidationError,
- JsonqlError,
- JsonqlServerError,
-} from '../base'
-import { NO_ERROR_MSG } from '../constants'
+import Jsonql406Error from '../406-error'
+import Jsonql500Error from '../500-error'
+import JsonqlForbiddenError from '../forbidden-error'
 
+import JsonqlAuthorisationError from '../authorisation-error'
+import JsonqlContractAuthError from '../contract-auth-error'
+import JsonqlResolverAppError from '../resolver-app-error'
+import JsonqlResolverNotFoundError from '../resolver-not-found-error'
+import JsonqlEnumError from '../enum-error'
+import JsonqlTypeError from '../type-error'
+import JsonqlCheckerError from '../checker-error'
+import JsonqlValidationError from '../validation-error'
+import JsonqlError from '../error'
+import JsonqlServerError from '../server-error'
+// import GeneralError from '../general-error'
+import { NO_ERROR_MSG } from '../constants'
 
 /**
  * If using the instance of could not find the actual error then

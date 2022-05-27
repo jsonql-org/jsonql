@@ -1,4 +1,4 @@
-import { NOT_FOUND_STATUS } from '../constants'
+import { NOT_FOUND_STATUS } from './constants'
 /**
  * This is a custom error to throw when could not find the resolver
  * This help us to capture the right error, due to the call happens in sequence

@@ -1,4 +1,4 @@
-import { UNAUTHORIZED_STATUS } from '../constants'
+import { UNAUTHORIZED_STATUS } from './constants'
 
 /**
  * This is a custom error when not supply the credential and try to get contract

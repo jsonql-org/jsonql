@@ -1,4 +1,4 @@
-import { SERVER_INTERNAL_STATUS } from '../constants'
+import { SERVER_INTERNAL_STATUS } from './constants'
 /**
  * This is a custom error to throw when the resolver throw error and capture inside the middleware
  * This help us to capture the right error, due to the call happens in sequence

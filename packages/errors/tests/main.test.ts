@@ -9,14 +9,14 @@ import {
 
 import resolver from './fixtures/resolver'
 
-import debug from 'debug'
+// import debug from 'debug'
 import justThrow from './helpers/throw-some-error'
 
-const debugFn = debug('jsonql-errors:test:main')
+// const debugFn = debug('jsonql-errors:test:main')
 
 
-const isObjectHasKey = (obj, key) => {
-  const keys = Object.keys(obj);
+const isObjectHasKey = (obj: any, key: string) => {
+  const keys = Object.keys(obj)
   return !!keys.filter(k => key === k).length
 }
 

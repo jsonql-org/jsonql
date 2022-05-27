@@ -2,7 +2,7 @@
 import test from 'ava'
 import superkoa from 'superkoa'
 import server from './helpers/server-throw'
-import { SERVER_INTERNAL_STATUS } from '@jsonql/constants'
+import { SERVER_INTERNAL_STATUS } from '../src'
 
 test.before( t => {
   t.context.app = server(true)

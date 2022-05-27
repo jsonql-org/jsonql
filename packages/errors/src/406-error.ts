@@ -1,4 +1,4 @@
-import { NOT_ACCEPTABLE_STATUS } from '../constants'
+import { NOT_ACCEPTABLE_STATUS } from './constants'
 /**
  * This is a custom error to throw when server throw a 406
  * This help us to capture the right error, due to the call happens in sequence

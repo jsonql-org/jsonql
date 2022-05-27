@@ -8,7 +8,7 @@ import {
 } from '../constants'
 
 /**
- * use the status code to find the right type of error 
+ * use the status code to find the right type of error
  */
 export default function getErrorByStatus(statusCode: string | number, contract = false): string {
   switch (statusCode) {

@@ -1,6 +1,6 @@
 // this will add directly to the then call in each http call
 
-import { JsonqlError } from '../base'
+import JsonqlError from '../error'
 // import getErrorByStatus from './get-error-by-status'
 import { NO_ERROR_MSG } from '../constants'
 

@@ -1,4 +1,4 @@
-import { NO_STATUS_CODE } from '../constants'
+import { NO_STATUS_CODE } from './constants'
 
 /**
  * This is a custom error to throw whenever a error happen inside the jsonql

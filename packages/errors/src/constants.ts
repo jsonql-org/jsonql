@@ -1,26 +1,15 @@
 // group all the constants one place
-import {
-  NOT_ACCEPTABLE_STATUS,
-  UNAUTHORIZED_STATUS,
-  FORBIDDEN_STATUS,
-  NOT_FOUND_STATUS,
-  SERVER_INTERNAL_STATUS,
-  NO_STATUS_CODE,
-  NO_ERROR_MSG
-} from '@jsonql/constants'
 
-const UNKNOWN_ERROR = 'unknown_error'
-const JSONQL_ERRORS_INFO = '__PLACEHOLDER__'
 
-export {
-  NOT_ACCEPTABLE_STATUS,
-  UNAUTHORIZED_STATUS,
-  FORBIDDEN_STATUS,
-  NOT_FOUND_STATUS,
-  SERVER_INTERNAL_STATUS,
-  NO_STATUS_CODE,
-  NO_ERROR_MSG,
-  // ours
-  UNKNOWN_ERROR,
-  JSONQL_ERRORS_INFO
-}
+export const NO_ERROR_MSG = 'No message'
+export const NO_STATUS_CODE = -1
+
+export const SUCCESS_STATUS = 200
+export const UNAUTHORIZED_STATUS = 401
+export const FORBIDDEN_STATUS = 403
+export const NOT_FOUND_STATUS = 404
+export const NOT_ACCEPTABLE_STATUS = 406
+export const SERVER_INTERNAL_STATUS = 500
+
+export const UNKNOWN_ERROR = 'unknown_error'
+export const JSONQL_ERRORS_INFO = '__PLACEHOLDER__'
