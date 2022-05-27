@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.paramMatches = exports.pluginHasFunc = exports.checkPluginArg = void 0;
 const tslib_1 = require("tslib");
-const errors_1 = require("@jsonql/errors");
+const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const constants_1 = require("../constants");
 const common_1 = require("@jsonql/utils/dist/common");
 const regex_1 = require("@jsonql/utils/dist/regex");
@@ -58,7 +58,7 @@ function constructRuleCb(argName, ruleFn, ruleName) {
             debug('failed', argName, value, error, pos);
             // the name should be the validator name - not the property name
             // because the pos already indicator the property
-            return Promise.reject(new errors_1.JsonqlValidationError(ruleName, pos));
+            return Promise.reject(new validation_error_1.default(ruleName, pos));
         });
     });
 }

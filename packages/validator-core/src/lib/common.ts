@@ -3,9 +3,7 @@ import type {
   JsonqlGenericObject,
   JsonqlPluginConfig
 } from '../types'
-import {
-  JsonqlValidationError
-} from '@jsonql/errors'
+import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
 import {
   IDX_KEY,
   VALUE_KEY,

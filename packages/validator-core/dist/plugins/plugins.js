@@ -2,10 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlugin = exports.checkArgKeys = exports.curryPlugin = void 0;
 const tslib_1 = require("tslib");
-// it was in the index and should be on it's own file
-/** just make this clear where the plugins coming from */
 const lodash_1 = require("@jsonql/utils/dist/lodash");
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/base/error"));
+const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
 const constants_1 = require("../constants");
 const index_1 = require("./index");
 /**

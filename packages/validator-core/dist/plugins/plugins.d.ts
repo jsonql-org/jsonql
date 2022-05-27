@@ -1,4 +1,5 @@
-import { JsonqlPluginConfig, JsonqlValidateFn, JsonqlPluginInput } from '../types';
+/** just make this clear where the plugins coming from */
+import type { JsonqlPluginConfig, JsonqlValidateFn, JsonqlPluginInput } from '../types';
 /**
   construct the curry plugin method
   @0.5.0 we make this generic

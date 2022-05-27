@@ -1,12 +1,14 @@
 // it was in the index and should be on it's own file
 /** just make this clear where the plugins coming from */
-import { curry } from '@jsonql/utils/dist/lodash'
-import JsonqlError from '@jsonql/errors/dist/base/error'
-import {
+import type {
   JsonqlPluginConfig,
   JsonqlValidateFn,
   JsonqlPluginInput,
 } from '../types'
+
+import { curry } from '@jsonql/utils/dist/lodash'
+import JsonqlError from '@jsonql/errors/dist/error'
+
 import { PARAMS_KEY } from '../constants'
 import { plugins } from './index'
 /**

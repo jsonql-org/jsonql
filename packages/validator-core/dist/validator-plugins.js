@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorPlugins = void 0;
 const tslib_1 = require("tslib");
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/base/error"));
+const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
 const constants_1 = require("./constants");
 const plugins_1 = require("./plugins/plugins");
 const promisify_1 = require("./lib/promisify");

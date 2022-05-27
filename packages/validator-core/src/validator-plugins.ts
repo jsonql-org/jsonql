@@ -10,7 +10,7 @@ import type {
   JsonqlValidationRule,
   JsonqlValidateFn,
 } from './types'
-import JsonqlError from '@jsonql/errors/dist/base/error'
+import JsonqlError from '@jsonql/errors/dist/error'
 import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,
