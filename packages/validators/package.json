@@ -32,7 +32,7 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/validator": "workspace:^0.7.0",
+    "@jsonql/validator": "workspace:^0.7.1",
     "@jsonql/validator-core": "workspace:^0.9.6"
   },
   "devDependencies": {
