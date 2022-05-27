@@ -6,7 +6,7 @@ const number_1 = require("./number");
 const string_1 = require("./string");
 const boolean_1 = require("./boolean");
 const any_1 = require("./any");
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("../constants");
 /**
  * this is a wrapper method to call different one based on their type
  */

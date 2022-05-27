@@ -20,6 +20,7 @@
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js validator-core",
     "clean:dist": "rimraf ./dist",
+    "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./jsonql-validator-core.test.js",
     "build": "pnpm clean:dist && pnpm build:tsc && pnpm prepare:types",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm update:version",
@@ -31,7 +32,6 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.7.2",
     "@jsonql/errors": "workspace:^0.6.1",
     "@jsonql/utils": "workspace:^0.6.9"
   },

@@ -1,3 +1,12 @@
+export declare const OR_SEPERATOR = "|";
+export declare const BOOLEAN_TYPE = "boolean";
+export declare const STRING_TYPE = "string";
+export declare const NUMBER_TYPE = "number";
+export declare const ARRAY_TYPE = "array";
+export declare const OBJECT_TYPE = "object";
+export declare const ARRAY_TS_TYPE_LFT = "Array<";
+export declare const ARRAY_TYPE_LFT = "array.<";
+export declare const ARRAY_TYPE_RGT = ">";
 export declare const VALIDATE_KEY = "validate";
 export declare const VALIDATE_ASYNC_KEY = "validateAsync";
 export declare const PLUGIN_KEY = "plugin";

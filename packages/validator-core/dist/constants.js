@@ -1,6 +1,17 @@
 "use strict";
+// ported from @jsonql/constants
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KEYWORDS = exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = void 0;
+exports.KEYWORDS = exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.ARRAY_TS_TYPE_LFT = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.OR_SEPERATOR = void 0;
+exports.OR_SEPERATOR = '|';
+exports.BOOLEAN_TYPE = 'boolean';
+exports.STRING_TYPE = 'string';
+exports.NUMBER_TYPE = 'number';
+exports.ARRAY_TYPE = 'array';
+exports.OBJECT_TYPE = 'object';
+exports.ARRAY_TS_TYPE_LFT = 'Array<';
+exports.ARRAY_TYPE_LFT = 'array.<';
+exports.ARRAY_TYPE_RGT = '>';
+// local
 exports.VALIDATE_KEY = 'validate';
 exports.VALIDATE_ASYNC_KEY = 'validateAsync';
 exports.PLUGIN_KEY = 'plugin';

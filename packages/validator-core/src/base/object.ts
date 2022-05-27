@@ -57,15 +57,15 @@ function checkIfNameTypeInObj(
   // please refer to the contract.json for the keys
   return !keys.filter((key: JsonqlCheckObjectKeys) => {
     const _value = value[key.name]
-    return !(key.type.length > key.type.filter((type: any) => {
-      let tmp: any
+    return !(key.type.length > key.type.filter((type: unknown) => {
+      let tmp: unknown
       if (_value !== undefined) {
-        if ((tmp = isArrayLike(type)) !== false) {
-          return !arrayTypeHandler({arg: _value}, tmp)
+        if ((tmp = isArrayLike(type as string)) !== false) {
+          return !arrayTypeHandler({arg: _value}, tmp as any[])
           // return tmp.filter(t => !checkArray(_value, t)).length;
           // @TODO there might be an object within an object with keys as well :S
         }
-        return !combineCheck(type)(_value)
+        return !combineCheck(type as string)(_value)
       }
       return true
     }).length)
@@ -89,7 +89,7 @@ export const objectTypeHandler = function(p: any) {
 export const isEmptyObject = function(value: any) {
   if (isPlainObject(value)) {
     const keys = Object.keys(value)
-    
+
     return !keys.length
   }
   return false

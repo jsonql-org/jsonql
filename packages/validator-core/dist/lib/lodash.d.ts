@@ -1,1 +1,2 @@
-export { isNaN, isString, isPlainObject, isFunction, merge, } from '@jsonql/utils';
+export { isNaN, isString, isPlainObject, } from '@jsonql/utils/dist/lodash';
+export { isFunction, } from '@jsonql/utils/dist/common';

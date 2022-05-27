@@ -29,6 +29,16 @@ export {
 export { ValidatorPlugins } from './validator-plugins'
 // export all constants
 export {
+  BOOLEAN_TYPE,
+  STRING_TYPE,
+  NUMBER_TYPE,
+  ARRAY_TYPE,
+  OBJECT_TYPE,
+  OR_SEPERATOR,
+  ARRAY_TYPE_LFT,
+  ARRAY_TYPE_RGT,
+  ARRAY_TS_TYPE_LFT,
+
   KEYWORDS,
   VALIDATE_KEY,
   VALIDATE_ASYNC_KEY,

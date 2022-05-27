@@ -1,8 +1,10 @@
+
+import { queuePromisesProcess } from '@jsonql/utils/dist/chain-promises'
 import { combineCheck } from './combine'
 import { checkArray } from './array'
 import { checkObject } from './object'
-import { queuePromisesProcess } from '@jsonql/utils'
-import { ARRAY_TYPE, OBJECT_TYPE } from '@jsonql/constants'
+
+import { ARRAY_TYPE, OBJECT_TYPE } from '../constants'
 
 
 /** wrap the or return result together */

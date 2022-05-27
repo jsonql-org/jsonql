@@ -8,7 +8,7 @@ import {
   ARRAY_TYPE,
   OBJECT_TYPE,
   OR_SEPERATOR
-} from '@jsonql/constants'
+} from '../constants'
 const STYLES = {
   ts: ARRAY_TS_TYPE_LFT,
   jsdoc: ARRAY_TYPE_LFT
@@ -18,7 +18,7 @@ const STYLES = {
  * why the type is a not a boolean?
  */
 export function checkArray(
-  value: any,
+  value: unknown,
   type?: string | string[] // @TODO more combination
 ) {
   if (Array.isArray(value)) {
@@ -28,9 +28,9 @@ export function checkArray(
     // we test it in reverse
     // @TODO if the type is an array (OR) then what?
     // we need to take into account this could be an array
-    let c: any[]
+    let c: unknown[]
     if (Array.isArray(type)) { // Union type
-      c = value.filter((v: any) => {
+      c = value.filter((v: unknown) => {
         // only need one is correct
         const ctn = type.length
         for (let i = 0; i < ctn; ++i) {
@@ -38,7 +38,7 @@ export function checkArray(
           if (
             (t === ARRAY_TYPE && Array.isArray(v)) ||
             (t === OBJECT_TYPE && isPlainObject(v)) ||
-            combineCheck(t)(v)
+            combineCheck(t)(v as number)
           ) {
             return false
           }
@@ -97,15 +97,15 @@ export function isArrayLike(type: string): boolean | string[] {
  * we might encounter something like array.<T> then we need to take it apart
  @TODO_deprecated This method is no longer needed here
  */
-export function arrayTypeHandler(p: any, type: any[]): boolean {
+export function arrayTypeHandler(p: any, type: unknown[]): boolean {
   const { arg } = p
   // need a special case to handle the OR type
   // we need to test the args instead of the type(s)
   if (type.length > 1) {
-    return !arg.filter((v: any) => (
-      !(type.length > type.filter((t: any) => !combineCheck(t)(v)).length)
+    return !arg.filter((v: unknown) => (
+      !(type.length > type.filter((t: unknown) => !combineCheck(t as string)(v as number)).length)
     )).length
   }
   // type is array so this will be or!
-  return type.length > type.filter((t: any) => !checkArray(arg, t)).length
+  return type.length > type.filter((t: unknown) => !checkArray(arg, t as string)).length
 }

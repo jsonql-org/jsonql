@@ -1,2 +1,2 @@
 /** validate any thing only check if there is something */
-export declare function checkAny(value: any, checkNull?: boolean): boolean;
+export declare function checkAny(value: unknown, checkNull?: boolean): boolean;

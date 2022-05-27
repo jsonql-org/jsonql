@@ -11,14 +11,14 @@ export function checkNumber(value: number) {
 }
 
 // Add more number type / value checking
-export function checkInteger(value: any) {
+export function checkInteger(value: unknown) {
   console.log(`@TODO checkInteger`, value)
 }
 
-export function checkFloat(value: any) {
+export function checkFloat(value: unknown) {
   console.log(`@TODO checkFloat`, value)
 }
 
-export function checkUnsigned(value: any) {
+export function checkUnsigned(value: unknown) {
   console.log(`@TODO check unsigned`, value)
 }

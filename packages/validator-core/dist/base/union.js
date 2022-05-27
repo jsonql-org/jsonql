@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkUnionSync = exports.checkUnion = exports.generateReversePromisesFn = void 0;
 const tslib_1 = require("tslib");
+const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const combine_1 = require("./combine");
 const array_1 = require("./array");
 const object_1 = require("./object");
-const utils_1 = require("@jsonql/utils");
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("../constants");
 /** wrap the or return result together */
 function typeAsFail(result, type) {
     return result || type;
@@ -59,7 +59,7 @@ function checkUnion(value, types, extended) {
             There is a weird behavior here, if we call the catch first
             the 'then' always get call, it might be a promise A behavior
             */
-            (0, utils_1.queuePromisesProcess)(ps, types[0])
+            (0, chain_promises_1.queuePromisesProcess)(ps, types[0])
                 .then((type) => {
                 // console.log('failed', type)
                 rejecter(type);

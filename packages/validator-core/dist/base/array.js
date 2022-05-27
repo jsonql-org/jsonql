@@ -4,7 +4,7 @@ exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = void 0;
 // validate array type
 const lodash_1 = require("../lib/lodash");
 const combine_1 = require("./combine");
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("../constants");
 const STYLES = {
     ts: constants_1.ARRAY_TS_TYPE_LFT,
     jsdoc: constants_1.ARRAY_TYPE_LFT

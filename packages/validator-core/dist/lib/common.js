@@ -4,17 +4,18 @@ exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = 
 const tslib_1 = require("tslib");
 const errors_1 = require("@jsonql/errors");
 const constants_1 = require("../constants");
-const utils_1 = require("@jsonql/utils");
+const common_1 = require("@jsonql/utils/dist/common");
+const regex_1 = require("@jsonql/utils/dist/regex");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:common');
 /** check plugin argument against keywords list */
 function checkPluginArg(params) {
-    return !(params.filter(param => (0, utils_1.inArray)(constants_1.KEYWORDS, param)).length > 0);
+    return !(params.filter(param => constants_1.KEYWORDS.includes(param)).length > 0);
 }
 exports.checkPluginArg = checkPluginArg;
 /** now simply it with just one prop check main */
 function pluginHasFunc(rule) {
-    return rule[constants_1.PLUGIN_FN_KEY] && (0, utils_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
+    return rule[constants_1.PLUGIN_FN_KEY] && (0, common_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
 }
 exports.pluginHasFunc = pluginHasFunc;
 /** check if the params they provide is matching their main method */
@@ -82,13 +83,13 @@ function successThen(argName, value, lastResult, pos // for internal debug use o
                 }
             }
             else if (lr[constants_1.IDX_KEY] !== idx) {
-                lastResult[argName] = (0, utils_1.toArray)(lastResult[argName]).concat([newResult]);
+                lastResult[argName] = (0, common_1.toArray)(lastResult[argName]).concat([newResult]);
             }
             // if it's the same then do nothing
             return lastResult;
         }
         // return the argument name with the value
-        return (0, utils_1.assign)(lastResult, { [argName]: newResult });
+        return (0, common_1.assign)(lastResult, { [argName]: newResult });
     };
 }
 exports.successThen = successThen;
@@ -107,7 +108,7 @@ function isResultPackage(lastResult, key = constants_1.IDX_KEY) {
 exports.isResultPackage = isResultPackage;
 /** If the plugin provide a pattern and we construct a function out of it */
 function patternPluginFanctory(pattern) {
-    const regex = (0, utils_1.getRegex)(pattern);
+    const regex = (0, regex_1.getRegex)(pattern);
     return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         return regex.test(value) ?
             Promise.resolve(true) :

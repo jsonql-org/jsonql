@@ -3,11 +3,7 @@ export {
   isNaN,
   isString,
   isPlainObject,
+} from '@jsonql/utils/dist/lodash'
+export {
   isFunction,
-  merge,
-  //mapValues,
-  //mapKeys,
-  //omitBy,
-  // isEqual,
-  // findKey,
-} from '@jsonql/utils'
+} from '@jsonql/utils/dist/common'

@@ -1,3 +1,18 @@
+// ported from @jsonql/constants
+
+export const OR_SEPERATOR = '|'
+
+export const BOOLEAN_TYPE = 'boolean'
+export const STRING_TYPE = 'string'
+export const NUMBER_TYPE = 'number'
+export const ARRAY_TYPE = 'array'
+export const OBJECT_TYPE = 'object'
+
+export const ARRAY_TS_TYPE_LFT = 'Array<'
+export const ARRAY_TYPE_LFT = 'array.<'
+export const ARRAY_TYPE_RGT = '>'
+
+// local
 export const VALIDATE_KEY = 'validate'
 export const VALIDATE_ASYNC_KEY = 'validateAsync'
 export const PLUGIN_KEY = 'plugin'

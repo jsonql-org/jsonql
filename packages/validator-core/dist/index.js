@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
+exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ARRAY_TS_TYPE_LFT = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.OR_SEPERATOR = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 var string_1 = require("./base/string");
@@ -50,6 +50,15 @@ var validator_plugins_1 = require("./validator-plugins");
 Object.defineProperty(exports, "ValidatorPlugins", { enumerable: true, get: function () { return validator_plugins_1.ValidatorPlugins; } });
 // export all constants
 var constants_1 = require("./constants");
+Object.defineProperty(exports, "BOOLEAN_TYPE", { enumerable: true, get: function () { return constants_1.BOOLEAN_TYPE; } });
+Object.defineProperty(exports, "STRING_TYPE", { enumerable: true, get: function () { return constants_1.STRING_TYPE; } });
+Object.defineProperty(exports, "NUMBER_TYPE", { enumerable: true, get: function () { return constants_1.NUMBER_TYPE; } });
+Object.defineProperty(exports, "ARRAY_TYPE", { enumerable: true, get: function () { return constants_1.ARRAY_TYPE; } });
+Object.defineProperty(exports, "OBJECT_TYPE", { enumerable: true, get: function () { return constants_1.OBJECT_TYPE; } });
+Object.defineProperty(exports, "OR_SEPERATOR", { enumerable: true, get: function () { return constants_1.OR_SEPERATOR; } });
+Object.defineProperty(exports, "ARRAY_TYPE_LFT", { enumerable: true, get: function () { return constants_1.ARRAY_TYPE_LFT; } });
+Object.defineProperty(exports, "ARRAY_TYPE_RGT", { enumerable: true, get: function () { return constants_1.ARRAY_TYPE_RGT; } });
+Object.defineProperty(exports, "ARRAY_TS_TYPE_LFT", { enumerable: true, get: function () { return constants_1.ARRAY_TS_TYPE_LFT; } });
 Object.defineProperty(exports, "KEYWORDS", { enumerable: true, get: function () { return constants_1.KEYWORDS; } });
 Object.defineProperty(exports, "VALIDATE_KEY", { enumerable: true, get: function () { return constants_1.VALIDATE_KEY; } });
 Object.defineProperty(exports, "VALIDATE_ASYNC_KEY", { enumerable: true, get: function () { return constants_1.VALIDATE_ASYNC_KEY; } });

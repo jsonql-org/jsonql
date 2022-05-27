@@ -14,19 +14,20 @@ import {
   PARAMS_KEY,
 } from '../constants'
 import {
-  inArray,
   toArray,
   assign,
   isFunction,
+} from '@jsonql/utils/dist/common'
+import {
   getRegex,
-} from '@jsonql/utils'
+} from '@jsonql/utils/dist/regex'
 
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator-core:common')
 
 /** check plugin argument against keywords list */
 export function checkPluginArg(params: Array<string>): boolean {
-  return !(params.filter(param => inArray(KEYWORDS, param)).length > 0)
+  return !(params.filter(param => KEYWORDS.includes(param)).length > 0)
 }
 
 /** now simply it with just one prop check main */
