@@ -14,7 +14,6 @@ export declare class ValidatorBase {
     private _astWithBaseRules;
     private _schema;
     protected _arguments: Array<string>;
-    protected _rulesStore: Map<string, any>;
     constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance?: ValidatorPlugins | undefined);
     /** the main method then in it's sub class will get override */
     validate(values: Array<unknown>): any;

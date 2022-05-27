@@ -64,8 +64,6 @@ export class ValidatorBase {
   private _schema!: Array<JsonqlPropertyParamMap>
   // use this list to make callable argument
   protected _arguments!: Array<string>
-  // Use this to store the inline rules then generate file
-  protected _rulesStore = new Map<string, Array<JsonqlValidateCbFn>>()
   // main
   constructor(
     astMap: Array<JsonqlPropertyParamMap>,
@@ -204,11 +202,6 @@ export class ValidatorBase {
     this._schema = astWithRules
   }
 
-  /** store the rules for export later */
-  protected _storeRules(propName: string, rules: Array<JsonqlValidateCbFn>) {
-    debug('@TODO store rule for', propName, rules)
-  }
-  
   /** nomalize the object style rules input */
   private _applyObjectInput(
     astMap: Array<JsonqlPropertyParamMap>,
@@ -228,7 +221,6 @@ export class ValidatorBase {
         if (rules && rules.length) {
           ast[RULES_KEY] = ast[RULES_KEY]?.concat(rules)
         }
-        this._storeRules(propName, ast[RULES_KEY] as  Array<JsonqlValidateCbFn>)
       }
       return ast
     })

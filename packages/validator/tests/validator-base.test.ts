@@ -21,6 +21,7 @@ test(`ValidatorBase should able to validate without the plugin system`, async t 
 
   return vb.validate(['Hello', 123])
             .then((result: {[key:string]: unknown}) => {
+              // console.log(result)
               t.truthy(result)
             })
 

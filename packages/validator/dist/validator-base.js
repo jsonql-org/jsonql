@@ -25,8 +25,6 @@ class ValidatorBase {
     // main
     constructor(astMap, _validatorPluginsInstance) {
         this._validatorPluginsInstance = _validatorPluginsInstance;
-        // Use this to store the inline rules then generate file
-        this._rulesStore = new Map();
         this._astWithBaseRules = (0, fn_1.createAutomaticRules)(astMap);
         // create the argument name list in order
         this._arguments = this._astWithBaseRules.map(rule => rule[validator_core_1.NAME_KEY]);
