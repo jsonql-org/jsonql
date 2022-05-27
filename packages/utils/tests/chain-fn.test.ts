@@ -29,16 +29,16 @@ test(`Test the chainPromises and see if one fail and what happen`, async t => {
     // return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
   const afn2 = async () => {
-    console.log(`Should never see me (but I still run ...)`)
+    // console.log(`Should never see me (but I still run ...)`)
     return Promise.resolve(2)
   }
 
   return chainPromises([afn(1), afn1(1), afn2()])
     .then(result => {
-      console.log(result)
+      // console.log(result)
     })
     .catch(err => {
-      console.log(err)
+      // console.log(err)
     })
     .finally(() => {
       t.pass()
