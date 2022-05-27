@@ -47,7 +47,6 @@ import {
 } from './fn'
 import { isAsyncFn } from '@jsonql/utils/dist/is-async-fn'
 import { isFunction } from '@jsonql/utils/dist/common'
-
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
@@ -116,6 +115,7 @@ export class ValidatorBase {
   /** just put the function into the right key */
   private _updateInput(input: FunctionInput): JsonqlValidationRule {
     if (isAsyncFn(input)) {
+      debug('isAsyncFn?', input.toString())
       return {
         [VALIDATE_ASYNC_KEY]: input as AsyncCallbackFunction<unknown>
       }
@@ -272,14 +272,14 @@ export class ValidatorBase {
           debug(`Should got here ----->`, _input[PLUGIN_KEY])
           return this._lookupPlugin(_input, propName)
         case _input[VALIDATE_KEY] !== undefined:
-          debug(`${VALIDATE_KEY}`, _input)
+          debug(`${VALIDATE_KEY} ----->`, _input)
           return constructRuleCb(
             propName,
             promisify(_input[VALIDATE_KEY]),
             pluginName
           )
         case _input[VALIDATE_ASYNC_KEY] !== undefined:
-          debug(`${VALIDATE_ASYNC_KEY}`, _input)
+          debug(`${VALIDATE_ASYNC_KEY} ---->`, _input)
           return constructRuleCb(
             propName,
             _input[VALIDATE_ASYNC_KEY] as unknown as JsonqlValidateFn,

@@ -36,3 +36,18 @@ test(`This is going to test and fix the duplicate return value due to the spread
                t.deepEqual(result, ['world', 12346, true])
              })
 })
+
+test.only(`Test the new direct method style to add a new validation rule`, t => {
+  t.plan(1)
+
+  valx.addValidationRules({
+    value1: function(value: string) {
+      return value !== 'hello' && value !== 'world'
+    }
+  })
+
+  return valx.validate(['na na na', 123456])
+             .then((result: any) => {
+               t.deepEqual(result, ['na na na', 123456, false])
+             })
+})
