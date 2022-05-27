@@ -1,6 +1,6 @@
 import type { JsonqlGenericObject } from '@jsonql/validator-core/index';
 import type { JsonqlPropertyParamMap, JsonqlObjectValidateInput } from './types';
-import { ValidatorPlugins } from '@jsonql/validator-core';
+import type { ValidatorPlugins } from '@jsonql/validator-core/dist/validator-plugins';
 /**
 The sequence how this should run
 1. init - take the AST map and generate automatic validation rules
@@ -10,13 +10,18 @@ The sequence how this should run
 5. Call the validate method with the data input then the validation will run
 */
 export declare class ValidatorBase {
-    protected _validatorPluginsInstance: ValidatorPlugins;
+    protected _validatorPluginsInstance?: ValidatorPlugins | undefined;
     private _astWithBaseRules;
     private _schema;
     protected _arguments: Array<string>;
-    constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance: ValidatorPlugins);
+    protected _rulesStore: Map<string, any>;
+    constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance?: ValidatorPlugins | undefined);
+    /** the main method then in it's sub class will get override */
+    validate(values: Array<unknown>): any;
     /** just return the internal schema for validation for use, see export */
     get schema(): JsonqlPropertyParamMap[];
+    /** create an alias for createSchema (and replace it later ) because ii make more sense */
+    addValidationRules(validationMap: JsonqlObjectValidateInput): void;
     /**
       when validate happens we check the input value
       correspond to out map, and apply the values

@@ -5,6 +5,7 @@ const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
 const common_1 = require("@jsonql/utils/dist/common");
+const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
@@ -24,13 +25,26 @@ class ValidatorBase {
     // main
     constructor(astMap, _validatorPluginsInstance) {
         this._validatorPluginsInstance = _validatorPluginsInstance;
+        // Use this to store the inline rules then generate file
+        this._rulesStore = new Map();
         this._astWithBaseRules = (0, fn_1.createAutomaticRules)(astMap);
         // create the argument name list in order
         this._arguments = this._astWithBaseRules.map(rule => rule[validator_core_1.NAME_KEY]);
     }
+    /** the main method then in it's sub class will get override */
+    validate(values) {
+        const queues = this._normalizeArgValues(values);
+        return (0, chain_promises_1.queuePromisesProcess)(queues, undefined // the init value will now be undefined to know if its first
+        );
+    }
     /** just return the internal schema for validation for use, see export */
     get schema() {
         return this._schema || this._astWithBaseRules;
+    }
+    /** create an alias for createSchema (and replace it later ) because ii make more sense */
+    addValidationRules(validationMap) {
+        debug('addValidationRules', validationMap);
+        this._createSchema(validationMap);
     }
     // ----------------- validate ------------------ //
     /**
@@ -169,10 +183,13 @@ class ValidatorBase {
     }
     /** wrapper methods for ValidatorPlugins */
     _lookupPlugin(input, propName) {
-        debug('_lookupPlugin --->', input, propName);
         // @TODO we should allow validator to use standalone without the plugin system
         // so when this plugin instance object is undefined we should skip it
-        return this._validatorPluginsInstance.lookupPlugin(input, propName);
+        if (this._validatorPluginsInstance) {
+            debug('_lookupPlugin --->', input, propName);
+            return this._validatorPluginsInstance.lookupPlugin(input, propName);
+        }
+        return (0, validator_core_1.constructRuleCb)(propName, () => tslib_1.__awaiter(this, void 0, void 0, function* () { return Promise.reject(false); }), 'NO_PLUGIN_DUMMY_FUNCTION');
     }
 }
 exports.ValidatorBase = ValidatorBase;

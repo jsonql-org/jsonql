@@ -23,7 +23,7 @@ import type {
 } from '@jsonql/validator-core/index'
 import type {
   JsonqlValidationPlugin,
-  JsonqlObjectValidateInput,
+  // JsonqlObjectValidateInput,
   JsonqlPropertyParamMap,
 } from './types'
 
@@ -33,9 +33,6 @@ import {
 import {
   ValidatorPlugins
 } from '@jsonql/validator-core/dist/validator-plugins'
-import {
-  queuePromisesProcess,
-} from '@jsonql/utils/dist/chain-promises'
 import {
   processValidateResults,
   unwrapPreparedValidateResult,
@@ -61,16 +58,12 @@ export class Validator extends ValidatorBase {
 
   /** this is where validation happens */
   public async validate(values: Array<unknown>, raw = false) {
-    // debug(`raw flag`, raw)
-    // this come out with a queue then we put into the chainProcessPromises
-    const queues = this._normalizeArgValues(values)
-    return queuePromisesProcess(
-      queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
-      undefined // the init value will now be undefined to know if its first
-    )
-    .then((finalResult: unknown) =>
-      raw ? finalResult : this._prepareValidateResult(finalResult as JsonqlGenericObject)
-    )
+    // call the parent validate method
+    return super.validate(values)
+                .then((finalResult: unknown) =>
+                  raw ? finalResult
+                      : this._prepareValidateResult(finalResult as JsonqlGenericObject)
+                )
   }
 
   /** wrapper for the protected register plugin method */
@@ -78,10 +71,10 @@ export class Validator extends ValidatorBase {
     name: string,
     plugin: JsonqlValidationPlugin
   ): void {
-    this._validatorPluginsInstance.registerPlugin(name, plugin)
+    if (this._validatorPluginsInstance) {
+      this._validatorPluginsInstance.registerPlugin(name, plugin)
+    }
   }
-
-
 
   /** After the validation the success will get an object with
   argumentName: value object and we make it to an array matching

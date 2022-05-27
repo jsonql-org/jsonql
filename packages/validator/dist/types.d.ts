@@ -61,7 +61,7 @@ export type JsonqlPropertyParamMap = {
   required: boolean
   type: unknown
   // rules get contractured the moment we init the object
-  rules?: Array<JsonqlValidateCbFn> = []
+  rules?: Array<JsonqlValidateCbFn>
   rulesMeta?: Array<unknown>
   tstype?: string
   types?: unknown

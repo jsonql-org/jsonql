@@ -18,6 +18,7 @@
     "test": "pnpm build && pnpm test:nyc",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
+    "build:base": "tsc ./base.ts",
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",

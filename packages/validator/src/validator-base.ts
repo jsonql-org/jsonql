@@ -10,6 +10,10 @@ import type {
   JsonqlValidateCbFn,
   JsonqlObjectValidateInput,
 } from './types'
+import type {
+  ValidatorPlugins,
+} from '@jsonql/validator-core/dist/validator-plugins'
+
 import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
 import JsonqlError from '@jsonql/errors/dist/error'
 import {
@@ -18,7 +22,9 @@ import {
   assign,
 } from '@jsonql/utils/dist/common'
 import {
-  ValidatorPlugins,
+  queuePromisesProcess,
+} from '@jsonql/utils/dist/chain-promises'
+import {
   checkArray,
   promisify,
   constructRuleCb,
@@ -70,6 +76,15 @@ export class ValidatorBase {
     this._arguments = this._astWithBaseRules.map(rule => rule[NAME_KEY])
   }
 
+  /** the main method then in it's sub class will get override */
+  public validate(values: Array<unknown>) {
+    const queues = this._normalizeArgValues(values)
+    return queuePromisesProcess(
+      queues as unknown as Array<(...args: JsonqlGenericObject[]) => Promise<JsonqlGenericObject>>,
+      undefined // the init value will now be undefined to know if its first
+    )
+  }
+
   /** just return the internal schema for validation for use, see export */
   public get schema() {
     return this._schema || this._astWithBaseRules
@@ -79,6 +94,8 @@ export class ValidatorBase {
   public addValidationRules(
     validationMap: JsonqlObjectValidateInput
   ): void {
+    debug('addValidationRules', validationMap)
+
     this._createSchema(validationMap)
   }
 
@@ -259,10 +276,11 @@ export class ValidatorBase {
       debug('_lookupPlugin --->', input, propName)
       return this._validatorPluginsInstance.lookupPlugin(input, propName)
     }
+
     return constructRuleCb(
       propName,
-      async (value: any) => value,
-      'dummy'
+      async () => Promise.reject(false),
+      'NO_PLUGIN_DUMMY_FUNCTION'
     )
   }
 }
