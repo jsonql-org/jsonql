@@ -7,7 +7,7 @@ export const STRING_TYPE = 'string'
 export const NUMBER_TYPE = 'number'
 export const ARRAY_TYPE = 'array'
 export const OBJECT_TYPE = 'object'
-
+// Legacy 
 export const ARRAY_TS_TYPE_LFT = 'Array<'
 export const ARRAY_TYPE_LFT = 'array.<'
 export const ARRAY_TYPE_RGT = '>'

@@ -107,7 +107,7 @@ export class ValidatorPlugins {
     this._registerPlugin(name, pluginConfig)
   }
 
-  /** export all plugins for generate js file */
+  /** export all external plugins for generate js file */
   public export() {
     const plugins: JsonqlValidationPlugin[] = []
     this._plugins.forEach((p: JsonqlValidationPlugin, n: string) => {
