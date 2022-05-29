@@ -56,6 +56,7 @@ export class Validators {
     name: string,
     pluginConfig: JsonqlValidationPlugin
   ) {
+    this._appendRules(name, pluginConfig)
     this._plugin.registerPlugin(name, pluginConfig)
   }
 

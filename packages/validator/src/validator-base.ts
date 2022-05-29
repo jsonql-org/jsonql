@@ -11,6 +11,7 @@ import type {
   JsonqlObjectValidateInput,
   FunctionInput,
   MixedValidationInput,
+  JsonqlValidationPlugin,
 } from './types'
 import type {
   ValidatorPlugins,
