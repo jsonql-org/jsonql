@@ -19,7 +19,7 @@ test.before(() => {
   val1 = new Validator(ast)
 })
 
-test(`Should able to understand different style or rules input`, t => {
+test(`Should able to understand different style or rules input`, async t => {
 
   val1.addValidationRules({
     arg1: {
@@ -34,11 +34,12 @@ test(`Should able to understand different style or rules input`, t => {
     ]
   })
 
-  val1.validate(['Hola', 51])
+  return val1.validate(['Hole', 51])
       .then(() => {
+        // t.pass()
+        console.log('not here')
+      })
+      .catch(() => {
         t.pass()
       })
-
-
-
 })

@@ -22,5 +22,4 @@ export declare function unwrapPreparedValidateResult(result: Array<any>): Promis
 export declare function getOptionalValue(arg: unknown, param: JsonqlGenericObject): any;
 /** check if the rule contain duplicate rules that can not be resolve */
 export declare function checkDuplicateRules(rule: JsonqlValidationRule): Array<string>;
-/** the stupid ts compiler to crap into this method to cause it stop working */
-export declare function isAsyncFn(fn: unknown): boolean;
+/** the stupid ts compiler put crap into this method to cause it stop working */

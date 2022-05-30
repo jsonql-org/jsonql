@@ -9,7 +9,7 @@ const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
-// import { isFunction } from '@jsonql/utils/dist/common'
+const is_function_1 = require("@jsonql/utils/dist/is-function");
 const constants_1 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -45,13 +45,14 @@ class ValidatorBase {
         debug('addValidationRules', input);
         const clearInput = {};
         for (const propName in input) {
-            const _input = input[propName];
-            if (typeof _input === 'function') {
-                clearInput[propName] = this._updateInput(_input);
-            }
-            else {
-                clearInput[propName] = _input;
-            }
+            // we convert this to array here now
+            clearInput[propName] = (0, common_1.toArray)(input[propName])
+                .map((inp) => {
+                if ((0, is_function_1.isFunction)(inp)) {
+                    return this._updateInput(inp);
+                }
+                return inp;
+            });
         }
         // overload the parent method
         this._createSchema(clearInput);
@@ -159,7 +160,7 @@ class ValidatorBase {
             const propName = ast.name;
             if (input[propName]) {
                 // there might not be a name in there and it's important
-                const _input = (0, common_1.toArray)(input[propName]).map(input => {
+                const _input = input[propName].map((input) => {
                     input.name = propName;
                     return input;
                 });

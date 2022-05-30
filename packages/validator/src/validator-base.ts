@@ -44,7 +44,7 @@ import {
   getOptionalValue,
   checkDuplicateRules,
 } from './fn'
-// import { isFunction } from '@jsonql/utils/dist/common'
+import { isFunction } from '@jsonql/utils/dist/is-function'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
@@ -100,13 +100,14 @@ export class ValidatorBase {
     debug('addValidationRules', input)
     const clearInput: JsonqlObjectValidateInput = {}
     for (const propName in input) {
-      const _input = input[propName]
-
-      if (typeof _input === 'function') {
-        clearInput[propName] = this._updateInput(_input)
-      } else {
-        clearInput[propName] = _input
-      }
+      // we convert this to array here now
+      clearInput[propName] = toArray(input[propName])
+        .map((inp: MixedValidationInput) => {
+          if (isFunction(inp)) {
+            return this._updateInput(inp as FunctionInput)
+          }
+          return inp
+        })
     }
     // overload the parent method
     this._createSchema(clearInput)
@@ -235,10 +236,7 @@ export class ValidatorBase {
       const propName = ast.name
       if (input[propName]) {
         // there might not be a name in there and it's important
-        const _input = toArray(input[propName]).map(input => {
-
-
-
+        const _input = input[propName].map((input: JsonqlValidationRule) => {
           input.name = propName
           return input
         })
