@@ -174,8 +174,7 @@ class ValidatorBase {
         });
     }
     /** this will transform the rules to executable */
-    _transformInput(input, // @TODO this could be just a name (string)
-    propName) {
+    _transformInput(input, propName) {
         debug('_transformInput', input);
         return input.map((_input, i) => {
             const ruleKeys = (0, fn_1.checkDuplicateRules)(_input);
@@ -195,7 +194,7 @@ class ValidatorBase {
                     debug(`${validator_core_1.VALIDATE_ASYNC_KEY} ---->`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
-                    throw new error_1.default(`unable to find rule for ${propName}`);
+                    throw new error_1.default(`unable to find rule for ${propName}, we expect ${validator_core_1.PLUGIN_KEY}, ${validator_core_1.VALIDATE_KEY} or ${validator_core_1.VALIDATE_ASYNC_KEY}`);
             }
         });
     }
