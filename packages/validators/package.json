@@ -33,7 +33,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/validator": "workspace:^0.8.1",
-    "@jsonql/validator-core": "workspace:^0.9.6"
+    "@jsonql/validator-core": "workspace:^0.9.7"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",

@@ -37,7 +37,7 @@ export function pluginHasFunc(rule: Partial<JsonqlPluginConfig>): boolean {
 
 /** check if the params they provide is matching their main method */
 export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
-  const params = splitMethod(rule.main.toString())
+  const params = extractFnArgs(rule.main.toString())
   params.pop()
   const l = params.length
   if (l === 0 && !rule[PARAMS_KEY]) {
@@ -57,7 +57,7 @@ export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
 }
 
 /** take a function string and return its argument names */
-function splitMethod(fnStr: string): Array<string> {
+export function extractFnArgs(fnStr: string): Array<string> {
 
   return fnStr.split('(')[1]
               .split(')')[0]
