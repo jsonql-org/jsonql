@@ -17,6 +17,7 @@ import {
   PLUGIN_FN_KEY,
   NAME_KEY,
   PARAMS_KEY,
+  RESERVED_WORD_ERR,
 } from './constants'
 import {
   curryPlugin,
@@ -28,7 +29,7 @@ import {
   constructRuleCb,
   checkPluginArg,
   pluginHasFunc,
-  // isAsyncFn,
+  searchParamsKey,
   paramMatches,
 } from './lib/common'
 import {
@@ -133,12 +134,15 @@ export class ValidatorPlugins {
       if (!pluginHasFunc(pluginConfig)) {
         throw new JsonqlError(`Can not find 'main' method in your plugin config`)
       }
-      if (!paramMatches(pluginConfig)) {
-        throw new JsonqlError(`Your params doesn't matching your main argument list`)
-      }
-      if (pluginConfig[PARAMS_KEY] !== undefined) {
+      // Here we could extract the params instead of just checking
+      if (pluginConfig[PARAMS_KEY] === undefined) {
+        pluginConfig = searchParamsKey(pluginConfig)
+      } else if (pluginConfig[PARAMS_KEY] !== undefined) { // if they provide the keys then we check
         if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
-          throw new JsonqlError(`Your plugin config argument contains reserved keywords`)
+          throw new JsonqlError(RESERVED_WORD_ERR)
+        }
+        if (!paramMatches(pluginConfig)) {
+          throw new JsonqlError(`Your params doesn't matching your main argument list`)
         }
       }
     }

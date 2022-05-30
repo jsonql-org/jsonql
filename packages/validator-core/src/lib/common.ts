@@ -4,12 +4,14 @@ import type {
   JsonqlPluginConfig
 } from '../types'
 import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
+import JsonqlError from '@jsonql/errors/dist/error'
 import {
   IDX_KEY,
   VALUE_KEY,
   KEYWORDS,
   PLUGIN_FN_KEY,
   PARAMS_KEY,
+  RESERVED_WORD_ERR,
 } from '../constants'
 import {
   toArray,
@@ -35,10 +37,31 @@ export function pluginHasFunc(rule: Partial<JsonqlPluginConfig>): boolean {
   return rule[PLUGIN_FN_KEY] && isFunction(rule[PLUGIN_FN_KEY])
 }
 
-/** check if the params they provide is matching their main method */
-export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
+/** Just take the keys without the value */
+function getArgsKey(rule: Partial<JsonqlPluginConfig>): Array<string> {
   const params = extractFnArgs(rule.main.toString())
   params.pop()
+  return params
+}
+
+/** instead of just checking the user params, we go one step further to extract it for them */
+export function searchParamsKey(rule: Partial<JsonqlPluginConfig>): Partial<JsonqlPluginConfig> {
+  const params = getArgsKey(rule)
+  const l = params.length
+  if (l === 0) {
+    return rule // nothing to do
+  }
+  // now we check if the params has reserved word
+  if (!checkPluginArg(params)) {
+    throw new JsonqlError(RESERVED_WORD_ERR)
+  }
+  rule[PARAMS_KEY] = params
+  return rule
+}
+
+/** check if the params they provide is matching their main method */
+export function paramMatches(rule: Partial<JsonqlPluginConfig>) {
+  const params = getArgsKey(rule)
   const l = params.length
   if (l === 0 && !rule[PARAMS_KEY]) {
     return true // nothing to check

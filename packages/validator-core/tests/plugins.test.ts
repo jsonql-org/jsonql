@@ -4,7 +4,6 @@ import { curry } from '@jsonql/utils'
 import {
   plugins,
   curryPlugin,
-  createCoreCurryPlugin
 } from '../dist'
 
 test(`Test with our custom plugin defintion`, t => {
@@ -45,7 +44,7 @@ test(`Just testing the email plugin`, t => {
 
   const result1 = Reflect.apply(fn, null , [email1])
   const result2 = Reflect.apply(fn, null, [email2])
-  
+
   t.true(result1)
   t.false(result2)
 })
@@ -68,6 +67,7 @@ test(`test the plugins with curry`, t => {
   t.false(lessThanFn(51))
 })
 
+/*
 test(`Test a plugin that can not be curry`, t => {
   const plugin = 'email'
   t.throws(
@@ -86,3 +86,4 @@ test(`Test the curryPlugin`, t => {
   t.false(curryFn(101))
   t.false(curryFn(9))
 })
+*/

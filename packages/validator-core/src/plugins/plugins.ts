@@ -39,7 +39,7 @@ export function curryPlugin(
 }
 
 /** check if the expected key presented in the config */
-export function checkArgKeys(
+function checkArgKeys(
   config: JsonqlPluginInput,
   params: Array<string>
 ): boolean {
