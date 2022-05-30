@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ARRAY_TS_TYPE_LFT = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.OR_SEPERATOR = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.checkUnionSync = exports.generateReversePromisesFn = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
+exports.VALUE_KEY = exports.IDX_KEY = exports.ORG_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.KEYWORDS = exports.ARRAY_TS_TYPE_LFT = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.OR_SEPERATOR = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.ValidatorPlugins = exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.pluginHasFunc = exports.checkPluginArg = exports.curryPlugin = exports.plugins = exports.reversePromisifyResult = exports.promisify = exports.generateReversePromisesFn = exports.checkUnionSync = exports.checkUnion = exports.combineCheck = exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = exports.checkAny = exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.checkNumber = exports.checkBoolean = exports.checkString = void 0;
 // start your project here
 // this contains all the primitive types checking methods
 var string_1 = require("./base/string");
@@ -28,8 +28,8 @@ Object.defineProperty(exports, "combineCheck", { enumerable: true, get: function
 // union type check
 var union_1 = require("./base/union");
 Object.defineProperty(exports, "checkUnion", { enumerable: true, get: function () { return union_1.checkUnion; } });
-Object.defineProperty(exports, "generateReversePromisesFn", { enumerable: true, get: function () { return union_1.generateReversePromisesFn; } });
 Object.defineProperty(exports, "checkUnionSync", { enumerable: true, get: function () { return union_1.checkUnionSync; } });
+Object.defineProperty(exports, "generateReversePromisesFn", { enumerable: true, get: function () { return union_1.generateReversePromisesFn; } });
 var promisify_1 = require("./lib/promisify");
 Object.defineProperty(exports, "promisify", { enumerable: true, get: function () { return promisify_1.promisify; } });
 Object.defineProperty(exports, "reversePromisifyResult", { enumerable: true, get: function () { return promisify_1.reversePromisifyResult; } });

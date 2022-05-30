@@ -5,7 +5,7 @@ export { checkAny } from './base/any';
 export { checkArray, isArrayLike, arrayTypeHandler } from './base/array';
 export { checkObject, objectTypeHandler, isEmptyObject } from './base/object';
 export { combineCheck } from './base/combine';
-export { checkUnion, generateReversePromisesFn, checkUnionSync } from './base/union';
+export { checkUnion, checkUnionSync, generateReversePromisesFn } from './base/union';
 export { promisify, reversePromisifyResult } from './lib/promisify';
 export { plugins } from './plugins';
 export { curryPlugin, } from './plugins/plugins';

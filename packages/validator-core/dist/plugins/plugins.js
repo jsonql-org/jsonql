@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlugin = exports.checkArgKeys = exports.curryPlugin = void 0;
+exports.getPlugin = exports.curryPlugin = void 0;
 const tslib_1 = require("tslib");
 const lodash_1 = require("@jsonql/utils/dist/lodash");
 const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
@@ -34,7 +34,6 @@ exports.curryPlugin = curryPlugin;
 function checkArgKeys(config, params) {
     return params.filter(key => config[key]).length === params.length;
 }
-exports.checkArgKeys = checkArgKeys;
 /** @TODO it needs to be a js file then it must be after compile */
 function getPlugin(pluginName) {
     let p = index_1.plugins[pluginName];

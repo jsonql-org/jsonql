@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.paramMatches = exports.pluginHasFunc = exports.checkPluginArg = void 0;
+exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.extractFnArgs = exports.paramMatches = exports.searchParamsKey = exports.pluginHasFunc = exports.checkPluginArg = void 0;
 const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
+const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
 const constants_1 = require("../constants");
 const common_1 = require("@jsonql/utils/dist/common");
 const is_function_1 = require("@jsonql/utils/dist/is-function");
@@ -19,10 +20,30 @@ function pluginHasFunc(rule) {
     return rule[constants_1.PLUGIN_FN_KEY] && (0, is_function_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
 }
 exports.pluginHasFunc = pluginHasFunc;
+/** Just take the keys without the value */
+function getArgsKey(rule) {
+    const params = extractFnArgs(rule.main.toString());
+    params.pop();
+    return params;
+}
+/** instead of just checking the user params, we go one step further to extract it for them */
+function searchParamsKey(rule) {
+    const params = getArgsKey(rule);
+    const l = params.length;
+    if (l === 0) {
+        return rule; // nothing to do
+    }
+    // now we check if the params has reserved word
+    if (!checkPluginArg(params)) {
+        throw new error_1.default(constants_1.RESERVED_WORD_ERR);
+    }
+    rule[constants_1.PARAMS_KEY] = params;
+    return rule;
+}
+exports.searchParamsKey = searchParamsKey;
 /** check if the params they provide is matching their main method */
 function paramMatches(rule) {
-    const params = splitMethod(rule.main.toString());
-    params.pop();
+    const params = getArgsKey(rule);
     const l = params.length;
     if (l === 0 && !rule[constants_1.PARAMS_KEY]) {
         return true; // nothing to check
@@ -41,13 +62,14 @@ function paramMatches(rule) {
 }
 exports.paramMatches = paramMatches;
 /** take a function string and return its argument names */
-function splitMethod(fnStr) {
+function extractFnArgs(fnStr) {
     return fnStr.split('(')[1]
         .split(')')[0]
         .split(',')
         .map(t => t.trim())
         .filter(t => t !== '');
 }
+exports.extractFnArgs = extractFnArgs;
 /**
 this will get re-use in the class to create method for the queue execution
  */

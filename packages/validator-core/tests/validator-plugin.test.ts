@@ -24,6 +24,21 @@ test(`Should able to use the ValidatorPlugin class to perform the same task`, t 
 
 })
 
+test('registerPlugin should able to auto create the params', async t => {
+
+  plugin.registerPlugin('myCoolPlugin', {
+    main(x: number, y: number, v: number) {
+      return (x + y) > v
+    }
+  })
+
+  const validateFn = plugin.lookupPlugin({ plugin: 'myCoolPlugin', x: 10, y: 20}, 'someInput')
+
+  const result = await validateFn(5, undefined, [0,2])
+
+  t.truthy(result)
+})
+
 
 test(`Test the load external methods`, async t => {
   t.plan(1)

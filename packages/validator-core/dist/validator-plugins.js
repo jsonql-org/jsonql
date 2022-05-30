@@ -80,12 +80,17 @@ class ValidatorPlugins {
             if (!(0, common_1.pluginHasFunc)(pluginConfig)) {
                 throw new error_1.default(`Can not find 'main' method in your plugin config`);
             }
-            if (!(0, common_1.paramMatches)(pluginConfig)) {
-                throw new error_1.default(`Your params doesn't matching your main argument list`);
+            // Here we could extract the params instead of just checking
+            if (pluginConfig[constants_1.PARAMS_KEY] === undefined) {
+                pluginConfig = (0, common_1.searchParamsKey)(pluginConfig);
+                debug('auto generate params for plugin', pluginConfig);
             }
-            if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) {
+            else if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) { // if they provide the keys then we check
                 if (!(0, common_1.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
-                    throw new error_1.default(`Your plugin config argument contains reserved keywords`);
+                    throw new error_1.default(constants_1.RESERVED_WORD_ERR);
+                }
+                if (!(0, common_1.paramMatches)(pluginConfig)) {
+                    throw new error_1.default(`Your params doesn't matching your main argument list`);
                 }
             }
         }

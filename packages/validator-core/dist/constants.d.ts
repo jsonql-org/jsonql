@@ -18,4 +18,5 @@ export declare const PARAMS_KEY = "params";
 export declare const ORG_KEY = "org";
 export declare const IDX_KEY = "$$idx";
 export declare const VALUE_KEY = "$$value";
+export declare const RESERVED_WORD_ERR = "Your plugin config argument contains reserved keywords";
 export declare const KEYWORDS: string[];

@@ -137,6 +137,7 @@ export class ValidatorPlugins {
       // Here we could extract the params instead of just checking
       if (pluginConfig[PARAMS_KEY] === undefined) {
         pluginConfig = searchParamsKey(pluginConfig)
+        debug('auto generate params for plugin', pluginConfig)
       } else if (pluginConfig[PARAMS_KEY] !== undefined) { // if they provide the keys then we check
         if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
           throw new JsonqlError(RESERVED_WORD_ERR)

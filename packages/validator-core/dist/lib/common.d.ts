@@ -3,8 +3,12 @@ import type { JsonqlValidateFn, JsonqlGenericObject, JsonqlPluginConfig } from '
 export declare function checkPluginArg(params: Array<string>): boolean;
 /** now simply it with just one prop check main */
 export declare function pluginHasFunc(rule: Partial<JsonqlPluginConfig>): boolean;
+/** instead of just checking the user params, we go one step further to extract it for them */
+export declare function searchParamsKey(rule: Partial<JsonqlPluginConfig>): Partial<JsonqlPluginConfig>;
 /** check if the params they provide is matching their main method */
 export declare function paramMatches(rule: Partial<JsonqlPluginConfig>): boolean;
+/** take a function string and return its argument names */
+export declare function extractFnArgs(fnStr: string): Array<string>;
 /**
 this will get re-use in the class to create method for the queue execution
  */
