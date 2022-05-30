@@ -14,8 +14,10 @@ import {
 import {
   toArray,
   assign,
-  isFunction,
 } from '@jsonql/utils/dist/common'
+import {
+  isFunction
+} from '@jsonql/utils/dist/is-function'
 import {
   getRegex,
 } from '@jsonql/utils/dist/regex'

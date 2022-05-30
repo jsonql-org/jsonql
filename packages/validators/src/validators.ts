@@ -56,19 +56,22 @@ export class Validators {
     name: string,
     pluginConfig: JsonqlValidationPlugin
   ) {
-    this._appendRules(name, pluginConfig)
+    // this._appendRules(name, pluginConfig)
     this._plugin.registerPlugin(name, pluginConfig)
   }
 
   /** export for contract */
   public export() {
-    const result = {}
+    const schema= {}
     this._validationRules.forEach((value: ValidationRuleRecord, propName: string) => {
       const obj = this._validators.get(propName) as Validator
-      result[propName] = { rule: value, schema: obj.schema }
+      schema[propName] = { rule: value, schema: obj.schema }
     })
-    debug('export schema', result)
-    return result
+    debug('export schema', schema)
+    const plugins = this._plugin.export()
+    debug('plugin configs', plugins)
+
+    return { schema, plugins }
   }
   /*
   @TODO

@@ -8,6 +8,7 @@ exports.STRING_TYPE = 'string';
 exports.NUMBER_TYPE = 'number';
 exports.ARRAY_TYPE = 'array';
 exports.OBJECT_TYPE = 'object';
+// Legacy 
 exports.ARRAY_TS_TYPE_LFT = 'Array<';
 exports.ARRAY_TYPE_LFT = 'array.<';
 exports.ARRAY_TYPE_RGT = '>';

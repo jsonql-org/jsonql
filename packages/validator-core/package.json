@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator-core",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "@jsonql/validator-core provide all core functions for @jsonql/validator and config-validator",
   "main": "dist/index.js",
   "module": "dist/index.d.ts",

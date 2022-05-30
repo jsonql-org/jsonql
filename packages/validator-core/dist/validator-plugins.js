@@ -59,7 +59,7 @@ class ValidatorPlugins {
     registerPlugin(name, pluginConfig) {
         this._registerPlugin(name, pluginConfig);
     }
-    /** export all plugins for generate js file */
+    /** export all external plugins for generate js file */
     export() {
         const plugins = [];
         this._plugins.forEach((p, n) => {

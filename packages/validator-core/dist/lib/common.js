@@ -5,6 +5,7 @@ const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const constants_1 = require("../constants");
 const common_1 = require("@jsonql/utils/dist/common");
+const is_function_1 = require("@jsonql/utils/dist/is-function");
 const regex_1 = require("@jsonql/utils/dist/regex");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator-core:common');
@@ -15,7 +16,7 @@ function checkPluginArg(params) {
 exports.checkPluginArg = checkPluginArg;
 /** now simply it with just one prop check main */
 function pluginHasFunc(rule) {
-    return rule[constants_1.PLUGIN_FN_KEY] && (0, common_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
+    return rule[constants_1.PLUGIN_FN_KEY] && (0, is_function_1.isFunction)(rule[constants_1.PLUGIN_FN_KEY]);
 }
 exports.pluginHasFunc = pluginHasFunc;
 /** check if the params they provide is matching their main method */

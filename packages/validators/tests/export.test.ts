@@ -14,8 +14,16 @@ test.before(() => {
 
 test(`Test out the export method and develop the file export`, async t => {
 
+  // register plugins
+  validators.registerPlugin('MyTestPlugin', {
+    main(key: string, value: string) {
+      return value !== key
+    },
+    params: ['key']
+  })
+  
   const validator = validators.getValidator('posts')
-
+  // add rules
   validator.addValidationRules({
     arg1: [
       {
