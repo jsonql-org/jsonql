@@ -21,21 +21,18 @@ test(`Test out the export method and develop the file export`, async t => {
     },
     params: ['key']
   })
-  
+
   const validator = validators.getValidator('posts')
   // add rules
   validator.addValidationRules({
     arg1: [
-      {
-        main: function(value: string) {
-          return value.indexOf('Hola') > -1
-        }
+      function HolaTest(value: string) {
+        return value.indexOf('Hola') > -1
       },
       {
-        main: function(s: string, e: string, v: string) {
-          return v.substring(0,1) === s && v.substring(-1) === e
+        validate: function(v: string) {
+          return v.substring(0,1) === 'a'
         },
-        params: ['s', 'e']
       }
     ],
     // try different style

@@ -252,9 +252,9 @@ export class ValidatorBase {
 
   /** this will transform the rules to executable */
   private _transformInput(
-    input: Array<JsonqlValidationRule>, // @TODO this could be just a name (string)
+    input: Array<JsonqlValidationRule>,
     propName: string
-  ): Array<JsonqlValidateCbFn> { // @NOTE add the undefined to get around the TS moronic check
+  ): Array<JsonqlValidateCbFn> {
     debug('_transformInput', input)
     return input.map((_input: JsonqlValidationRule, i: number) => {
       const ruleKeys = checkDuplicateRules(_input)
@@ -282,7 +282,7 @@ export class ValidatorBase {
             pluginName
           )
         default:
-          throw new JsonqlError(`unable to find rule for ${propName}`)
+          throw new JsonqlError(`unable to find rule for ${propName}, we expect ${PLUGIN_KEY}, ${VALIDATE_KEY} or ${VALIDATE_ASYNC_KEY}`)
       }
     })
   }
