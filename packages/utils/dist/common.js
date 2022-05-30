@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatStr = exports.showDeep = exports.readOnly = exports.nil = exports.assign = exports.isFunction = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
+exports.formatStr = exports.showDeep = exports.readOnly = exports.nil = exports.assign = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.getConfigValue = exports.createEvtName = exports.objectHasKey = exports.parseJson = exports.isEmptyObj = exports.toArray = exports.inArray = void 0;
 // bunch of generic helpers
 // import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
@@ -84,17 +84,6 @@ exports.notEmpty = notEmpty;
 // just not to make my head hurt
 const isEmpty = (value, valueCheck) => !notEmpty(value, valueCheck);
 exports.isEmpty = isEmpty;
-/**
- * Simple check if the prop is function
- */
-const isFunction = (prop) => {
-    if (typeof prop === 'function') {
-        return true;
-    }
-    console.error(`Expect to be Function type! Got ${typeof prop}`);
-    return false;
-};
-exports.isFunction = isFunction;
 /**
  * Shorthand method for Object.assign
  */

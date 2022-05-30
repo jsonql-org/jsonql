@@ -88,16 +88,7 @@ export function notEmpty(a: any, valueCheck = false): boolean {
 // just not to make my head hurt
 export const isEmpty = (value: any, valueCheck?: boolean) => !notEmpty(value, valueCheck)
 
-/**
- * Simple check if the prop is function
- */
-export const isFunction = (prop: any) => {
-  if (typeof prop === 'function') {
-    return true
-  }
-  console.error(`Expect to be Function type! Got ${typeof prop}`)
-  return false
-}
+
 
 /**
  * Shorthand method for Object.assign

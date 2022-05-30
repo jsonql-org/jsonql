@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/utils",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "@jsonql/utils utilities library for general purpose",
   "main": "dist/index.js",
   "module": "dist/index.ts",

@@ -11,7 +11,7 @@ import type {
   JsonqlObjectValidateInput,
   FunctionInput,
   MixedValidationInput,
-  JsonqlValidationPlugin,
+  // JsonqlValidationPlugin,
 } from './types'
 import type {
   ValidatorPlugins,
@@ -101,6 +101,7 @@ export class ValidatorBase {
     const clearInput: JsonqlObjectValidateInput = {}
     for (const propName in input) {
       const _input = input[propName]
+
       if (typeof _input === 'function') {
         clearInput[propName] = this._updateInput(_input)
       } else {
@@ -235,6 +236,9 @@ export class ValidatorBase {
       if (input[propName]) {
         // there might not be a name in there and it's important
         const _input = toArray(input[propName]).map(input => {
+
+
+
           input.name = propName
           return input
         })

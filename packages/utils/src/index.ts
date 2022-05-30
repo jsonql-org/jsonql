@@ -24,13 +24,13 @@ export {
   isNotEmpty,
   notEmpty,
   isEmpty,
-  isFunction,
   assign,
   nil,
   readOnly,
   showDeep,
   formatStr,
 } from './common'
+export { isFunction } from './is-function'
 export {
   logger,
   getLogger

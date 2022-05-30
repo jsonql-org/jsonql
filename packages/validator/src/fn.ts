@@ -181,9 +181,11 @@ export function checkDuplicateRules(rule: JsonqlValidationRule): Array<string> {
   ].filter((key: string) => rule[key] !== undefined)
 }
 
-/** the stupid ts compiler to crap into this method to cause it stop working */
+/** the stupid ts compiler put crap into this method to cause it stop working */
+/*
 export function isAsyncFn(fn: unknown) {
   const AsyncFunction = (async () => {}).constructor
 
   return fn instanceof AsyncFunction
 }
+*/

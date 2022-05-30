@@ -33,10 +33,6 @@ export declare const isNotEmpty: (param: any) => boolean;
 export declare function notEmpty(a: any, valueCheck?: boolean): boolean;
 export declare const isEmpty: (value: any, valueCheck?: boolean | undefined) => boolean;
 /**
- * Simple check if the prop is function
- */
-export declare const isFunction: (prop: any) => boolean;
-/**
  * Shorthand method for Object.assign
  */
 export declare const assign: (...args: any[]) => any;
