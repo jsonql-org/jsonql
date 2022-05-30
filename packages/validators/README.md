@@ -1,9 +1,14 @@
-# @velocejs/validator
+# @jsonql/validators
 
-This validator is extended from [@jsonql/validator]() with additional features to work with our contract system.
+This validators is extended from [@jsonql/validator]() with additional features.
 
+Instead of one validator per method, this will take a whole list of methods (usually a class)
+and generate all the validator for each method
 
+## Documentation
 
-TBC
+Coming soon
 
 ---
+
+TO1SOURCE 
