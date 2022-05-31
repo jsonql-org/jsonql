@@ -4,7 +4,6 @@ import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
 import { Validators } from '../src'
 
-
 let validators: Validators
 test.before(() => {
   const astMap = readJsonSync(join(__dirname, 'fixtures', 'multi-api-map.json'))
@@ -43,8 +42,6 @@ test(`Test out the export method and develop the file export`, async t => {
 
   const schema = validators.export()
 
-  console.dir(schema, { depth: null })
-
-  t.truthy(schema)
+  t.truthy(schema.plugins)
 
 })
