@@ -23,6 +23,7 @@ const debug = debugFn('velocejs:validator:main')
    then get it back via the propertyName
 **/
 export class Validators {
+  
   private _validationRules = new Map<string, ValidationRuleRecord>()
   private _validators = new Map<string, Validator>()
   private _plugin = new ValidatorPlugins()
