@@ -12,6 +12,7 @@ import {
 import {
   ValidatorPlugins
 } from '@jsonql/validator-core'
+import { toArray } from '@jsonql/utils/dist/common'
 
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')
@@ -86,11 +87,24 @@ export class Validators {
   /** store the rules for later export */
   private _appendRules(propertyName: string, input: ValidationRuleRecord) {
     if (this._validationRules.has(propertyName)) {
-      const existingRules = this._validationRules.get(propertyName) as ValidationRuleRecord[]
-      this._validationRules.set(propertyName, existingRules.concat([input]))
+      const existingRules = this._validationRules.get(propertyName) as ValidationRuleRecord
+      for (const propName in existingRules) {
+        if (input[propName]) {
+          if (Array.isArray(input[propName])) {
+            existingRules[propName] = existingRules[propName].concat(input[propName])
+          } else {
+            existingRules[propName].push(input[propName])
+          }
+        }
+      }
+      this._validationRules.set(propertyName, existingRules)
     } else {
-      debug('adding new rule', input)
-      this._validationRules.set(propertyName, [input])
+      const cleanInput = {}
+      for (const argName in input) {
+        cleanInput[argName] = toArray(input[argName])
+      }
+      debug('adding new rule', input, cleanInput)
+      this._validationRules.set(propertyName, cleanInput)
     }
   }
 

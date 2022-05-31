@@ -4,6 +4,7 @@ exports.Validators = void 0;
 const tslib_1 = require("tslib");
 const validator_1 = require("@jsonql/validator");
 const validator_core_1 = require("@jsonql/validator-core");
+const common_1 = require("@jsonql/utils/dist/common");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('velocejs:validator:main');
 /**
@@ -66,11 +67,25 @@ class Validators {
     _appendRules(propertyName, input) {
         if (this._validationRules.has(propertyName)) {
             const existingRules = this._validationRules.get(propertyName);
-            this._validationRules.set(propertyName, existingRules.concat([input]));
+            for (const propName in existingRules) {
+                if (input[propName]) {
+                    if (Array.isArray(input[propName])) {
+                        existingRules[propName] = existingRules[propName].concat(input[propName]);
+                    }
+                    else {
+                        existingRules[propName].push(input[propName]);
+                    }
+                }
+            }
+            this._validationRules.set(propertyName, existingRules);
         }
         else {
-            debug('adding new rule', input);
-            this._validationRules.set(propertyName, [input]);
+            const cleanInput = {};
+            for (const argName in input) {
+                cleanInput[argName] = (0, common_1.toArray)(input[argName]);
+            }
+            debug('adding new rule', input, cleanInput);
+            this._validationRules.set(propertyName, cleanInput);
         }
     }
     /** overload the Validator addValidationRules */
