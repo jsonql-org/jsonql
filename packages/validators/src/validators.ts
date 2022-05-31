@@ -62,7 +62,7 @@ export class Validators {
 
   /** export for contract */
   public export() {
-    const schema= {}
+    const schema = {}
     this._validationRules.forEach((value: ValidationRuleRecord, propName: string) => {
       const obj = this._validators.get(propName) as Validator
       schema[propName] = { rule: value, schema: obj.schema }
