@@ -40,6 +40,7 @@ import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
 // main
 export class Validator extends ValidatorBase {
+
   /**
     this is now change to accept an instance of ValidatorPlugins (share)
     if only call it with the astMap then it init it as a standalone like before

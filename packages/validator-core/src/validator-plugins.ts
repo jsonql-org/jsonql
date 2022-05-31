@@ -146,7 +146,6 @@ export class ValidatorPlugins {
       }
     }
     pluginConfig.name = name
-
     /**
     At this point it should only contain a main (or plus params) so we
     do nothing and just store it, we convert it only when they call it
