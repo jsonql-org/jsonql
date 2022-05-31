@@ -15,7 +15,6 @@ export declare const PATTERN_KEY = "pattern";
 export declare const RULES_KEY = "rules";
 export declare const NAME_KEY = "name";
 export declare const PARAMS_KEY = "params";
-export declare const ORG_KEY = "org";
 export declare const IDX_KEY = "$$idx";
 export declare const VALUE_KEY = "$$value";
 export declare const RESERVED_WORD_ERR = "Your plugin config argument contains reserved keywords";

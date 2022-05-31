@@ -36,10 +36,8 @@ class ValidatorPlugins {
             const pluginConfig = this._plugins.get(pluginName);
             // unconverted
             if (pluginConfig[constants_1.PLUGIN_FN_KEY] && !pluginConfig[constants_1.PARAMS_KEY]) {
-                const mainFn = (0, promisify_1.promisify)(pluginConfig[constants_1.PLUGIN_FN_KEY]);
-                // mainFn = isAsyncFn(mainFn) ? mainFn : promisify(mainFn)
-                this._plugins.set(pluginName, { [constants_1.VALIDATE_ASYNC_KEY]: mainFn, name: pluginName }); // override
-                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = mainFn; // let it fall to the next
+                // let it fall to the next
+                pluginConfig[constants_1.VALIDATE_ASYNC_KEY] = (0, promisify_1.promisify)(pluginConfig[constants_1.PLUGIN_FN_KEY]);
             }
             // already converted
             if (pluginConfig && pluginConfig[constants_1.VALIDATE_ASYNC_KEY] && !pluginConfig[constants_1.PARAMS_KEY]) {

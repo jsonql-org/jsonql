@@ -45,7 +45,9 @@ function getArgsKey(rule: Partial<JsonqlPluginConfig>): Array<string> {
 }
 
 /** instead of just checking the user params, we go one step further to extract it for them */
-export function searchParamsKey(rule: Partial<JsonqlPluginConfig>): Partial<JsonqlPluginConfig> {
+export function searchParamsKey(
+  rule: Partial<JsonqlPluginConfig>
+): Partial<JsonqlPluginConfig> {
   const params = getArgsKey(rule)
   const l = params.length
   if (l === 0) {
