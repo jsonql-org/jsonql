@@ -10,3 +10,5 @@ tslib_1.__exportStar(require("./lib/common"), exports);
 // try export all the types and see what happen
 // export * from './types' // <-- when include this ts compiler throw error
 tslib_1.__exportStar(require("./js-main"), exports);
+// also export all the constants they only available here now
+tslib_1.__exportStar(require("./lib/constants"), exports);

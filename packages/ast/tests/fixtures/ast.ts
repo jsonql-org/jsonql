@@ -1,5 +1,5 @@
 
-import { initParser } from '../../src/swc-parser'
+import { initParser } from '../../src/lib/swc-parser-base'
 import { join } from 'path'
 
 const files = [

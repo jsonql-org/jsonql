@@ -7,7 +7,7 @@ const swc_parser_base_1 = require("./lib/swc-parser-base");
 const processors_1 = require("./lib/processors");
 const common_1 = require("./lib/common");
 const constants_1 = require("./lib/constants");
-const utils_1 = require("@jsonql/utils");
+// import { chainFns } from '@jsonql/utils'
 /** just the core parser sync version */
 function tsBasicParserSync(filePath) {
     const options = (0, common_1.getOptions)('ts');
@@ -17,14 +17,22 @@ exports.tsBasicParserSync = tsBasicParserSync;
 /** parse ts file sync */
 // @TODO change this to chainFn should fix the type problem
 function tsClassParserSync(infile) {
-    return (0, utils_1.chainFns)(tsBasicParserSync, processors_1.processClassModuleBody, processors_1.normalize, processors_1.processArgs)(infile);
     /*
-    const step1 = tsBasicParserSync(infile)
-    const step2 = processClassModuleBody(step1)
-    const step3 = normalize(step2)
-    const step4 = processArgs(step3)
-    return step4
+    return chainFns(
+      tsBasicParserSync,
+      processClassModuleBody,
+      normalize,
+      processArgs
+    )(infile)
     */
+    // @2022-06-01 Just don't want to touch it for now
+    const step1 = tsBasicParserSync(infile);
+    // @ts-ignore
+    const step2 = (0, processors_1.processClassModuleBody)(step1);
+    // console.dir(step2, { depth: null })
+    const step3 = (0, processors_1.normalize)(step2);
+    const step4 = (0, processors_1.processArgs)(step3);
+    return step4;
 }
 exports.tsClassParserSync = tsClassParserSync;
 /** This will pass the code directly for parsing */

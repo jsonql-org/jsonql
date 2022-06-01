@@ -7,3 +7,5 @@ export * from './lib/common'
 // try export all the types and see what happen
 // export * from './types' // <-- when include this ts compiler throw error
 export * from './js-main'
+// also export all the constants they only available here now
+export * from './lib/constants'

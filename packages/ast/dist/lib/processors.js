@@ -4,6 +4,8 @@ exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furthe
 // collection of processors
 const constants_1 = require("./constants");
 const common_1 = require("./common");
+// import debugFn from 'debug'
+// const debug = debugFn('jsonql:ast:processor')
 /** the first one to get call to take the body out from Class module */
 function processClassModuleBody(module, withClass = false) {
     return module
@@ -145,6 +147,7 @@ function normalize(body) {
         })[0];
     }
     else {
+        // debug output
         console.dir(body, { depth: null });
     }
     // console.dir(body, { depth: null })

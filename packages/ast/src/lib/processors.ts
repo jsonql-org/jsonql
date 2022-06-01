@@ -47,6 +47,8 @@ import {
   SwcParameterEntry,
   SwcPatEntry,
 }  from '../types'
+// import debugFn from 'debug'
+// const debug = debugFn('jsonql:ast:processor')
 
 /** the first one to get call to take the body out from Class module */
 export function processClassModuleBody(
@@ -209,6 +211,7 @@ export function normalize(body: Array<any>) {
       }
     })[0]
   } else {
+    // debug output
     console.dir(body, { depth: null })
   }
   // console.dir(body, { depth: null })

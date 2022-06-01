@@ -1,5 +1,5 @@
 import test from 'ava'
-import { tsClassParserSync, tsClassParser } from '../src'
+import { tsClassParserSync /*, tsClassParser*/ } from '../src'
 import { join } from 'node:path'
 
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')

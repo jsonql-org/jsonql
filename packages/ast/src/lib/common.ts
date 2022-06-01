@@ -1,6 +1,5 @@
 // take out some of the common methods to keep the processor files size down
-import { TYPE_PARAMS } from '@jsonql/constants'
-import { SYNTAXS } from './constants'
+import { SYNTAXS, TYPE_PARAMS } from './constants'
 import { JsonqlProcessedEntry } from '../types'
 /** remove all the span props they are no use to us */
 export function stripSpan(obj: any) {

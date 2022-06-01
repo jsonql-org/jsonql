@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/ast",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Generate AST Map using SWC",
   "main": "dist/index.js",
   "module": "src/index.ts",
@@ -33,12 +33,13 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/constants": "workspace:^0.7.2",
     "@jsonql/utils": "workspace:^0.7.3",
+    "debug": "^4.3.4",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
+    "@types/debug": "^4.1.7",
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",

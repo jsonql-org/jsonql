@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOptions = exports.pickInputFile = exports.stripAllTypeParams = exports.stripTypeParams = exports.stripSpan = void 0;
 // take out some of the common methods to keep the processor files size down
-const constants_1 = require("@jsonql/constants");
-const constants_2 = require("./constants");
+const constants_1 = require("./constants");
 /** remove all the span props they are no use to us */
 function stripSpan(obj) {
     const tmp = {};
@@ -57,11 +56,11 @@ function pickInputFile(e, pattern = '__decorateClass') {
 exports.pickInputFile = pickInputFile;
 /** wrapper to get the options  */
 function getOptions(syntax) {
-    if (!constants_2.SYNTAXS[syntax]) {
+    if (!constants_1.SYNTAXS[syntax]) {
         throw new Error(`Unsupported syntax! Only allow ts or js`);
     }
     return {
-        syntax: constants_2.SYNTAXS[syntax],
+        syntax: constants_1.SYNTAXS[syntax],
         comments: false,
         script: true,
         target: "es5",

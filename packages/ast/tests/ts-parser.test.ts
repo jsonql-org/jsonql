@@ -16,7 +16,7 @@ import {
 import {
   SPREAD_ARG_TYPE,
   TS_TYPE_NAME
-} from '@jsonql/constants'
+} from '../src/lib/constants'
 
 const show = (s: any) => console.dir(s, { depth: null })
 const fixture = join(__dirname, 'fixtures')
