@@ -9,6 +9,7 @@ export type JsonqlContractEntry = {
   route?: string
   method?: string
   file?: string
+  validation?: any // @TODO fix this 
   [key: string]: any
 }
 

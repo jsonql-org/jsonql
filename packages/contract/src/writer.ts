@@ -78,13 +78,13 @@ export class JsonqlContractWriter {
   }
 
   /** insert extra data into node by name */
-  public data(name: string, value: JsonqlContractEntry): void {
+  public data(propertyName: string, value: JsonqlContractEntry): void {
     const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
     // first to see if the name actually exist, we might want to add new entry
-    const existed = contractData.filter((c: JsonqlContractEntry) => c.name === name)
+    const existed = contractData.filter((c: JsonqlContractEntry) => c.name === propertyName)
     if (existed.length) {
       this._contract[DATA_KEY] = contractData.map((c: JsonqlContractEntry) => (
-        c.name === name ? assign(c, value) : c
+        c.name === propertyName ? assign(c, value) : c
       ))
     } else { // add new entry
       this._contract[DATA_KEY].push(value as JsonqlContractEntry)

@@ -2,6 +2,8 @@
 export const DATA_KEY = 'data'
 export const ERROR_KEY = 'error'
 export const META_KEY = 'meta'
+// new key to insert valdiation data
+export const VALIDATION_KEY = 'validation'
 
 export const JSONQL_NAME = 'jsonql'
 export const REST_NAME = 'rest'
