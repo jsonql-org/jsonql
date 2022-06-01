@@ -31,6 +31,7 @@ export {
   formatStr,
 } from './common'
 export { isFunction } from './is-function'
+export { cloneDeep } from './clone-deep'
 export {
   logger,
   getLogger

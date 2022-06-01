@@ -15,6 +15,9 @@ import {
   assign,
 } from '@jsonql/utils'
 import {
+  cloneDeep
+} from './common'
+import {
   JsonqlError,
 } from '@jsonql/errors'
 import {
@@ -44,13 +47,17 @@ export class JsonqlContractWriter {
 
   /** instead of run the parser again we just load the ast map */
   constructor(astMap: JsonqlAstMap, type: string = REST_NAME) {
-    debug('astMap', astMap)
+    // first we make a clone of the map because when we pass
+    // it to more than one object it mutatated
+    const clone = cloneDeep(astMap)
+    debug('astMap', clone)
+
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
     switch (type) {
       case REST_NAME:
-        this._contract[DATA_KEY] = this._prepareData(astMap)
+        this._contract[DATA_KEY] = this._prepareData(clone)
         break
       default:
         // @TODO
@@ -69,7 +76,7 @@ export class JsonqlContractWriter {
       if (Array.isArray(params)) {
         entry.params = params
       } else if (typeof params === 'object') {
-        entry = assign(entry, params)
+        entry = assign({}, entry, params)
       }
       l.push(entry)
     }
@@ -96,14 +103,16 @@ export class JsonqlContractWriter {
     this._contract[ERROR_KEY] = error
   }
 
-  /** always make sure it's immutable */
+  /** make a shallow copy might not be enough */
   public meta(entry: JsonqlContractMetaEntry): void {
-    this._contract[META_KEY] = assign({}, this._contract[META_KEY], entry)
+    this._contract[META_KEY] = assign({}, cloneDeep(this._contract[META_KEY]), entry)
   }
 
   /** generate the contract pub false then just the raw output for server use */
   public output(pub = true): JsonqlContractTemplate {
     const contract = this._contract
+    //
+
     if (pub) {
       // @TODO what info we need to strip out
     }

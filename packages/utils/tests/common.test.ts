@@ -4,8 +4,27 @@ import {
   isNaN,
   strToNum,
   strToBool,
-  isFunction
+  isFunction,
+  cloneDeep,
 } from '../src'
+
+test(`Test the clone object which should detach from the original`, t => {
+  const obj = {a: 1, b: { c: 2} }
+
+  const clone = cloneDeep(obj)
+
+  const obj1 = Object.assign({}, obj)
+
+  obj1.b.c = 3
+  obj1.a = 4
+
+  t.is(obj.b.c, 3)
+  t.is(obj.a, 1)
+  // console.log('a', obj.a)
+  t.is(clone.b.c, 2)
+})
+
+
 
 test("testing the problem with isFunction sometime report a [Function name] as object", t => {
   const fn1 = () => true
