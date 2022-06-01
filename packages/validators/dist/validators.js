@@ -6,6 +6,7 @@ const validator_1 = require("@jsonql/validator");
 const validator_core_1 = require("@jsonql/validator-core");
 const common_1 = require("@jsonql/utils/dist/common");
 const clone_deep_1 = require("@jsonql/utils/dist/clone-deep");
+const constants_1 = require("@jsonql/validator-core/dist/constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('velocejs:validator:main');
 /**
@@ -47,7 +48,7 @@ class Validators {
         const schema = {};
         this._validationRules.forEach((value, propName) => {
             const obj = this._validators.get(propName);
-            schema[propName] = { rule: value, schema: obj.schema };
+            schema[propName] = { [constants_1.RULES_KEY]: value, schema: obj.schema };
         });
         debug('export schema', schema);
         const plugins = this._plugin.export();
