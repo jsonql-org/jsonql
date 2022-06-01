@@ -11,4 +11,4 @@ export { objDefineProps, objHasProp, injectToFn, } from './obj-define-props';
 export { isRegExp, getRegex } from './regex';
 export { timestamp } from './timestamp';
 export { urlParams, cacheBurstUrl, cacheBurst } from './urls';
-export { isNaN, isString, isPlainObject, merge, curry, flatMap, } from './lodash';
+export { isNaN, isString, isPlainObject, merge, curry, flatMap, isEqual, } from './lodash';
