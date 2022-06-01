@@ -3,11 +3,6 @@ import test from 'ava'
 import { join } from 'node:path'
 import { tsClassParserSync } from '@jsonql/ast'
 // import * as fs from 'fs-extra'
-import {
-  VALIDATION_KEY
-  // DEFAULT_CONTRACT_FILE_NAME,
-  // PUBLIC_CONTRACT_FILE_NAME,
-} from '../src/constants'
 /*
 import {
   JsonqlContractEntry
@@ -15,7 +10,7 @@ import {
 */
 import { Validators } from '@jsonql/validators'
 
-import { JsonqlContractWriter } from '../dist'
+import { JsonqlContractWriter } from '../src'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 // const dest = join(__dirname, 'fixtures', 'tmp')
 
@@ -53,7 +48,7 @@ test.before(() => {
     password: { plugin: 'checkPassword' }
   })
   val2.addValidationRules({
-    password: { plugin: 'moreThan', num: 8 }
+    name: 'password', plugin: 'moreThan', num: 8
   })
 })
 /*
@@ -64,11 +59,9 @@ test.after(() => {
 */
 test(`Should able to have a contract with validation info`, t => {
   const { schema } = validators.export()
-
-  // contractInstance.data(VALIDATION_KEY, schema )
-
   console.dir( schema, { depth: null })
 
+  contractInstance.appendValidations( schema )
   const contract = contractInstance.output()
 
   console.dir(contract, { depth: null })

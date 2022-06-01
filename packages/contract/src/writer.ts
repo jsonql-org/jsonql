@@ -13,10 +13,8 @@ import {
 import {
   chainPromises,
   assign,
+  cloneDeep,
 } from '@jsonql/utils'
-import {
-  cloneDeep
-} from './common'
 import {
   JsonqlError,
 } from '@jsonql/errors'
@@ -87,6 +85,7 @@ export class JsonqlContractWriter {
   /** insert extra data into node by name */
   public data(propertyName: string, value: JsonqlContractEntry): void {
     const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
+
     // first to see if the name actually exist, we might want to add new entry
     const existed = contractData.filter((c: JsonqlContractEntry) => c.name === propertyName)
     if (existed.length) {
@@ -143,5 +142,13 @@ export class JsonqlContractWriter {
       return outputJson(dest, contract, { spaces: 2})
                 .then(() => dest)
     }))
+  }
+
+  /** adding validation data need special care */
+  public appendValidations(schema: any) {
+    debug('@TODO', schema)
+    for (const propName in schema) {
+      
+    }
   }
 }

@@ -14,7 +14,7 @@ import {
 } from '@jsonql/validator-core'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
-
+import { RULES_KEY } from '@jsonql/validator-core/dist/constants'
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')
 
@@ -70,7 +70,7 @@ export class Validators {
     const schema = {}
     this._validationRules.forEach((value: ValidationRuleRecord, propName: string) => {
       const obj = this._validators.get(propName) as Validator
-      schema[propName] = { rule: value, schema: obj.schema }
+      schema[propName] = { [RULES_KEY]: value, schema: obj.schema }
     })
     debug('export schema', schema)
     const plugins = this._plugin.export()
@@ -134,7 +134,7 @@ export class Validators {
     if (name) {
       const _input = cloneDeep(input)
       delete _input.name
-      
+
       return { [name as string]: _input }
     }
     return input

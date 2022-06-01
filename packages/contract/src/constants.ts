@@ -8,6 +8,8 @@ export const VALIDATION_KEY = 'validation'
 export const JSONQL_NAME = 'jsonql'
 export const REST_NAME = 'rest'
 
+export const RULE_KEY = 'rule'
+
 export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
 
 // contract file names
