@@ -7,7 +7,7 @@ Object.defineProperty(exports, "JsonqlContractWriter", { enumerable: true, get: 
 var reader_1 = require("./reader");
 Object.defineProperty(exports, "JsonqlContractReader", { enumerable: true, get: function () { return reader_1.JsonqlContractReader; } });
 // exporting couple constants here that is related to contract
-var constants_1 = require("@jsonql/constants");
+var constants_1 = require("./constants");
 Object.defineProperty(exports, "DATA_KEY", { enumerable: true, get: function () { return constants_1.DATA_KEY; } });
 Object.defineProperty(exports, "ERROR_KEY", { enumerable: true, get: function () { return constants_1.ERROR_KEY; } });
 Object.defineProperty(exports, "META_KEY", { enumerable: true, get: function () { return constants_1.META_KEY; } });

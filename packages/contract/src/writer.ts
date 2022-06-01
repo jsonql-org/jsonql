@@ -24,7 +24,7 @@ import {
   ERROR_KEY,
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
-} from '@jsonql/constants'
+} from './constants'
 import {
   JsonqlContractEntry,
   JsonqlContractTemplate,

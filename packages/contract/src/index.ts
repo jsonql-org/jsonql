@@ -14,4 +14,4 @@ export {
   CONTENT_TYPE,
   DEFAULT_HEADER,
   CONTRACT_REQUEST_METHODS,
-} from '@jsonql/constants'
+} from './constants'

@@ -5,7 +5,7 @@ import * as fs from 'fs-extra'
 import {
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
-} from '@jsonql/constants'
+} from '../src/constants'
 import {
   JsonqlContractEntry
 } from '../src/types'

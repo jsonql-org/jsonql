@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsonqlContractReader = void 0;
 // This class received the contract then allow you to query it
 const utils_1 = require("@jsonql/utils");
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("./constants");
+// @TODO add protobuf
 class JsonqlContractReader {
     constructor(contract) {
         this._contract = (0, utils_1.readOnly)(contract);

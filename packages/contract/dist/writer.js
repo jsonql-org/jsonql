@@ -4,10 +4,11 @@ exports.JsonqlContractWriter = void 0;
 const tslib_1 = require("tslib");
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
+// @TODO add protobuf
 const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
 const utils_1 = require("@jsonql/utils");
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("./constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)(`jsonql:contract:class`);
 // main
