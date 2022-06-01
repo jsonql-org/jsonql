@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extractTypeAnnotation = exports.furtherProcessUnionType = exports.furtherProcessReferenceType = exports.extractArrayTypes = exports.translateType = exports.extractValue = exports.normalize = exports.processArgParams = exports.processFunctionModuleBody = exports.extractIdentifier = exports.extractSpread = exports.extractAssignmentPattern = exports.processArgs = exports.processClassModuleBody = void 0;
 // collection of processors
-const constants_1 = require("@jsonql/constants");
+const constants_1 = require("./constants");
 const common_1 = require("./common");
 /** the first one to get call to take the body out from Class module */
 function processClassModuleBody(module, withClass = false) {

@@ -10,35 +10,48 @@ export declare function extractAssignmentPattern(pat: SwcPatEntry): {
     defaultvalue: any;
 };
 /** when the argument is a spread style */
-export declare function extractSpread(pat: SwcPatEntry): never;
-/** The most common situation where it id as identifier  */
-export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
-    tstype: "TsUnionType";
+export declare function extractSpread(pat: SwcPatEntry): (JsonqlParamInfo & {
+    tstype: string;
 } & {
     type: any;
-}) | ({
-    tstype: "TsTypeReference";
 } & {
-    type: "array";
+    tstype: string;
+}) | (JsonqlParamInfo & {
+    tstype: string;
+    type: string;
     types: any;
-    typeParams?: undefined;
-}) | ({
-    tstype: "TsTypeReference";
-} & {
-    type: "any";
     typeParams: {
-        typeName: any;
-        typeParams: any;
+        elemType: any;
+        kind: any;
+        memebers?: undefined;
+    };
+} & {
+    tstype: string;
+}) | (JsonqlParamInfo & {
+    type: string;
+    tstype: string;
+    typeParams: {
+        memebers: any;
+        elemType?: undefined;
+        kind?: undefined;
     };
     types?: undefined;
+} & {
+    tstype: string;
+});
+/** The most common situation where it id as identifier  */
+export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
+    tstype: string;
+} & {
+    type: any;
 }) | {
     type: any;
     tstype?: undefined;
     types?: undefined;
     typeParams?: undefined;
 } | {
-    tstype: "TsArrayType";
-    type: "array";
+    tstype: string;
+    type: string;
     types: any;
     typeParams: {
         elemType: any;
@@ -46,8 +59,8 @@ export declare function extractIdentifier(pat: any): JsonqlParamInfo & (({
         memebers?: undefined;
     };
 } | {
-    type: "any";
-    tstype: "TsTypeLiteral";
+    type: string;
+    tstype: string;
     typeParams: {
         memebers: any;
         elemType?: undefined;
@@ -70,47 +83,14 @@ export declare function processArgParams(body: SwcProcessedBody): {
         type: string;
         defaultvalue: any;
     } | (JsonqlParamInfo & {
-        tstype: "TsUnionType";
+        tstype: string;
     } & {
         type: any;
-    }) | (JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "array";
-        types: any;
-        typeParams?: undefined;
-    }) | (JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "any";
-        typeParams: {
-            typeName: any;
-            typeParams: any;
-        };
-        types?: undefined;
     }) | (JsonqlParamInfo & {
         type: any;
         tstype?: undefined;
         types?: undefined;
         typeParams?: undefined;
-    }) | (JsonqlParamInfo & {
-        tstype: "TsArrayType";
-        type: "array";
-        types: any;
-        typeParams: {
-            elemType: any;
-            kind: any;
-            memebers?: undefined;
-        };
-    }) | (JsonqlParamInfo & {
-        type: "any";
-        tstype: "TsTypeLiteral";
-        typeParams: {
-            memebers: any;
-            elemType?: undefined;
-            kind?: undefined;
-        };
-        types?: undefined;
     }) | (JsonqlParamInfo & {
         type?: undefined;
         tstype?: undefined;
@@ -129,11 +109,11 @@ The tstype: TsTypeReference is a very problematic one,
 we need to further process it
 */
 export declare function furtherProcessReferenceType(annotation: any): {
-    type: "array";
+    type: string;
     types: any;
     typeParams?: undefined;
 } | {
-    type: "any";
+    type: string;
     typeParams: {
         typeName: any;
         typeParams: any;
@@ -147,32 +127,17 @@ export declare function furtherProcessUnionType(annotation: any): {
     type: any;
 };
 export declare function extractTypeAnnotation(pat: SwcPatEntry, base: JsonqlParamInfo): JsonqlParamInfo & (({
-    tstype: "TsUnionType";
+    tstype: string;
 } & {
     type: any;
-}) | ({
-    tstype: "TsTypeReference";
-} & {
-    type: "array";
-    types: any;
-    typeParams?: undefined;
-}) | ({
-    tstype: "TsTypeReference";
-} & {
-    type: "any";
-    typeParams: {
-        typeName: any;
-        typeParams: any;
-    };
-    types?: undefined;
 }) | {
     type: any;
     tstype?: undefined;
     types?: undefined;
     typeParams?: undefined;
 } | {
-    tstype: "TsArrayType";
-    type: "array";
+    tstype: string;
+    type: string;
     types: any;
     typeParams: {
         elemType: any;
@@ -180,8 +145,8 @@ export declare function extractTypeAnnotation(pat: SwcPatEntry, base: JsonqlPara
         memebers?: undefined;
     };
 } | {
-    type: "any";
-    tstype: "TsTypeLiteral";
+    type: string;
+    tstype: string;
     typeParams: {
         memebers: any;
         elemType?: undefined;

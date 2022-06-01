@@ -16,6 +16,7 @@ import {
   getOptions
 } from './lib/common'
 import { IS_DEBUG } from './lib/constants'
+import { chainFns } from '@jsonql/utils'
 
 /** just the core parser sync version */
 export function tsBasicParserSync(filePath: string) {
@@ -27,13 +28,20 @@ export function tsBasicParserSync(filePath: string) {
 /** parse ts file sync */
 // @TODO change this to chainFn should fix the type problem
 export function tsClassParserSync(infile: string) {
+
+  return chainFns(
+    tsBasicParserSync,
+    processClassModuleBody,
+    normalize,
+    processArgs
+  )(infile)
+  /*
   const step1 = tsBasicParserSync(infile)
-  // @ts-ignore another non-sense from Typscript - it runs but won't compiled
-  const step2 = processClassModuleBody(step1, false)
+  const step2 = processClassModuleBody(step1)
   const step3 = normalize(step2)
   const step4 = processArgs(step3)
-
   return step4
+  */
 }
 
 /** This will pass the code directly for parsing */

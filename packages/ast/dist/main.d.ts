@@ -10,47 +10,14 @@ export declare function tsFileParser(code: string): Promise<{
         type: string;
         defaultvalue: any;
     } | (import("./types").JsonqlParamInfo & {
-        tstype: "TsUnionType";
+        tstype: string;
     } & {
         type: any;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "array";
-        types: any;
-        typeParams?: undefined;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "any";
-        typeParams: {
-            typeName: any;
-            typeParams: any;
-        };
-        types?: undefined;
     }) | (import("./types").JsonqlParamInfo & {
         type: any;
         tstype?: undefined;
         types?: undefined;
         typeParams?: undefined;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsArrayType";
-        type: "array";
-        types: any;
-        typeParams: {
-            elemType: any;
-            kind: any;
-            memebers?: undefined;
-        };
-    }) | (import("./types").JsonqlParamInfo & {
-        type: "any";
-        tstype: "TsTypeLiteral";
-        typeParams: {
-            memebers: any;
-            elemType?: undefined;
-            kind?: undefined;
-        };
-        types?: undefined;
     }) | (import("./types").JsonqlParamInfo & {
         type?: undefined;
         tstype?: undefined;
@@ -68,47 +35,14 @@ export declare function tsFunctionParser(infile: string): Promise<{
         type: string;
         defaultvalue: any;
     } | (import("./types").JsonqlParamInfo & {
-        tstype: "TsUnionType";
+        tstype: string;
     } & {
         type: any;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "array";
-        types: any;
-        typeParams?: undefined;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsTypeReference";
-    } & {
-        type: "any";
-        typeParams: {
-            typeName: any;
-            typeParams: any;
-        };
-        types?: undefined;
     }) | (import("./types").JsonqlParamInfo & {
         type: any;
         tstype?: undefined;
         types?: undefined;
         typeParams?: undefined;
-    }) | (import("./types").JsonqlParamInfo & {
-        tstype: "TsArrayType";
-        type: "array";
-        types: any;
-        typeParams: {
-            elemType: any;
-            kind: any;
-            memebers?: undefined;
-        };
-    }) | (import("./types").JsonqlParamInfo & {
-        type: "any";
-        tstype: "TsTypeLiteral";
-        typeParams: {
-            memebers: any;
-            elemType?: undefined;
-            kind?: undefined;
-        };
-        types?: undefined;
     }) | (import("./types").JsonqlParamInfo & {
         type?: undefined;
         tstype?: undefined;

@@ -37,7 +37,7 @@ import {
   DEFAULT_VALUE,
   SPREAD_ARG_TYPE,
   PARAMETER_NAME
-} from '@jsonql/constants'
+} from './constants'
 import { stripSpan } from './common'
 import {
   SwcProcessedModule,
