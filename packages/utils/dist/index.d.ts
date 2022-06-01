@@ -5,6 +5,7 @@ export { strToNum, strToBool, } from './convert';
 export { dasherize } from './dasherize';
 export { inArray, toArray, isEmptyObj, parseJson, objectHasKey, createEvtName, getConfigValue, isNotEmpty, notEmpty, isEmpty, assign, nil, readOnly, showDeep, formatStr, } from './common';
 export { isFunction } from './is-function';
+export { cloneDeep } from './clone-deep';
 export { logger, getLogger } from './logger';
 export { objDefineProps, objHasProp, injectToFn, } from './obj-define-props';
 export { isRegExp, getRegex } from './regex';
