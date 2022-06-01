@@ -4,4 +4,5 @@ import isPlainObject from 'lodash-es/isPlainObject';
 import merge from 'lodash-es/merge';
 import curry from 'lodash-es/curry';
 import flatMap from 'lodash-es/flatMap';
-export { isNaN, isString, isPlainObject, merge, curry, flatMap, };
+import isEqual from 'lodash-es/isEqual';
+export { isNaN, isString, isPlainObject, merge, curry, flatMap, isEqual };

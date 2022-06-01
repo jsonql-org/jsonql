@@ -61,4 +61,5 @@ export {
   merge,
   curry,
   flatMap,
+  isEqual,
 } from './lodash'

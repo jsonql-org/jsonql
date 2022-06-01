@@ -12,6 +12,7 @@ import merge from 'lodash-es/merge'
 // import findKey from 'lodash-es/findKey'
 import curry from 'lodash-es/curry'
 import flatMap from 'lodash-es/flatMap'
+import isEqual from 'lodash-es/isEqual'
 // export
 export {
   isNaN,
@@ -25,4 +26,5 @@ export {
   // isEqual
   curry,
   flatMap,
+  isEqual
 }
