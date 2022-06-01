@@ -2,7 +2,7 @@
 import test from 'ava'
 import { join } from 'node:path'
 import { tsClassParserSync } from '@jsonql/ast'
-import * as fs from 'fs-extra'
+// import * as fs from 'fs-extra'
 import {
   VALIDATION_KEY
   // DEFAULT_CONTRACT_FILE_NAME,
@@ -17,7 +17,7 @@ import { Validators } from '@jsonql/validators'
 
 import { JsonqlContractWriter } from '../dist'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
-const dest = join(__dirname, 'fixtures', 'tmp')
+// const dest = join(__dirname, 'fixtures', 'tmp')
 
 let astMap: any
 let contractInstance: JsonqlContractWriter
@@ -51,15 +51,20 @@ test.before(() => {
   })
 
 })
-
+/*
 test.after(() => {
   // @TODO remove the test files
   fs.removeSync(dest)
 })
-
+*/
 test(`Should able to have a contract with validation info`, t => {
-  const schema = validators.export()
+  const { schema } = validators.export()
 
-  contractInstance.data(VALIDATION_KEY, rules)
+  contractInstance.data(VALIDATION_KEY, schema )
 
+  const contract = contractInstance.output()
+
+  console.dir(contract, { depth: null })
+
+  t.truthy(contract)
 })
