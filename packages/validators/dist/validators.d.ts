@@ -28,4 +28,6 @@ export declare class Validators {
     private _appendRules;
     /** overload the Validator addValidationRules */
     private _addValidationRules;
+    /** just to make sure the ValidationRuleRecord is correct */
+    private _checkInput;
 }
