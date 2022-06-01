@@ -2,7 +2,6 @@
 import test from 'ava'
 import { join } from 'node:path'
 import { tsClassParserSync } from '@jsonql/ast'
-import { cloneDeep } from '../src/common'
 // import * as fs from 'fs-extra'
 import {
   VALIDATION_KEY
@@ -28,8 +27,8 @@ test.before(() => {
 
   contractInstance = new JsonqlContractWriter(astMap)
 
-  validators = new Validators(cloneDeep(astMap))
-  
+  validators = new Validators(astMap)
+
   validators.registerPlugin('YearCompare', {
     main(x: number, v: string) {
       return parseInt(v) > x
@@ -48,11 +47,14 @@ test.before(() => {
   val1.addValidationRules({
     name: 'year', plugin: 'YearCompare', x: 2000
   })
+
   const val2 = validators.getValidator('login')
   val2.addValidationRules({
     name: 'password', plugin: 'checkPassword'
   })
-
+  val2.addValidationRules({
+    name: 'password', plugin: 'moreThan', num: 8
+  })
 })
 /*
 test.after(() => {
@@ -61,11 +63,11 @@ test.after(() => {
 })
 */
 test(`Should able to have a contract with validation info`, t => {
-  // const { schema } = validators.export()
+  const { schema } = validators.export()
 
   // contractInstance.data(VALIDATION_KEY, schema )
 
-  // console.dir( schema, { depth: null })
+  console.dir( schema, { depth: null })
 
   const contract = contractInstance.output()
 
