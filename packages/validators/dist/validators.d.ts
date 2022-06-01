@@ -6,12 +6,12 @@ import type { VeloceAstMap, ValidationRuleRecord } from './types';
    then get it back via the propertyName
 **/
 export declare class Validators {
-    private _astMap;
     private _validationRules;
     private _validators;
     private _plugin;
+    private _astMap;
     /** main */
-    constructor(_astMap: VeloceAstMap);
+    constructor(astMap: VeloceAstMap);
     /** get the validator */
     getValidator(propertyName: string): {
         addValidationRules: (input: ValidationRuleRecord) => any;

@@ -13,6 +13,7 @@ import {
   ValidatorPlugins
 } from '@jsonql/validator-core'
 import { toArray } from '@jsonql/utils/dist/common'
+import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
 
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')
@@ -23,13 +24,15 @@ const debug = debugFn('velocejs:validator:main')
    then get it back via the propertyName
 **/
 export class Validators {
-  
+
   private _validationRules = new Map<string, ValidationRuleRecord>()
   private _validators = new Map<string, Validator>()
   private _plugin = new ValidatorPlugins()
+  private _astMap: VeloceAstMap
 
   /** main */
-  constructor(private _astMap: VeloceAstMap) {
+  constructor(astMap: VeloceAstMap) {
+    this._astMap = cloneDeep(astMap)
     for (const propertyName in this._astMap) {
       this._validators.set(
         propertyName,
