@@ -45,15 +45,15 @@ test.before(() => {
   })
   const val1 = validators.getValidator('post')
   val1.addValidationRules({
-    name: 'year', plugin: 'YearCompare', x: 2000
+    year: { plugin: 'YearCompare', x: 2000 }
   })
 
   const val2 = validators.getValidator('login')
   val2.addValidationRules({
-    name: 'password', plugin: 'checkPassword'
+    password: { plugin: 'checkPassword' }
   })
   val2.addValidationRules({
-    name: 'password', plugin: 'moreThan', num: 8
+    password: { plugin: 'moreThan', num: 8 }
   })
 })
 /*

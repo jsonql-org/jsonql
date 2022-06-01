@@ -117,9 +117,26 @@ export class Validators {
     propertyName: string,
     obj: Validator
   ) {
+    // @NOTE found a problem here, if we put in the wrong format { name, plugin }
+    // instead of { argName: {plugin}} the editor won't warn this error
+    // and it cause all kinds of problem
     return (input: ValidationRuleRecord) => {
-      this._appendRules(propertyName, input)
-      return Reflect.apply(obj.addValidationRules, obj, [input])
+      const _input = this._checkInput(input)
+      this._appendRules(propertyName, _input)
+
+      return Reflect.apply(obj.addValidationRules, obj, [_input])
     }
+  }
+
+  /** just to make sure the ValidationRuleRecord is correct */
+  private _checkInput(input: ValidationRuleRecord) {
+    const { name } = input
+    if (name) {
+      const _input = cloneDeep(input)
+      delete _input.name
+      
+      return { [name as string]: _input }
+    }
+    return input
   }
 }

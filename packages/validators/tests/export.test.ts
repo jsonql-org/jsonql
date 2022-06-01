@@ -40,7 +40,12 @@ test(`Test out the export method and develop the file export`, async t => {
     }
   })
 
+  validator.addValidationRules({ name: 'arg2', plugin: 'lessThan', num: 10 })
+  validator.addValidationRules({ arg2: { plugin: 'between', max: 6, min: 9 }})
+
   const schema = validators.export()
+
+  // console.dir(schema, {depth: null})
 
   t.truthy(schema.plugins)
 
