@@ -20,6 +20,7 @@ import {
   chainPromises,
   assign,
   cloneDeep,
+  isFunction,
 } from '@jsonql/utils'
 import {
   JsonqlError,
@@ -34,6 +35,7 @@ import {
   RULES_KEY,
   NAME_KEY,
   PARAMS_KEY,
+  SERVER_KEY,
 } from './constants'
 
 import debugFn from 'debug'
@@ -112,13 +114,30 @@ export class JsonqlContractWriter {
     this._contract[META_KEY] = assign({}, cloneDeep(this._contract[META_KEY]), entry)
   }
 
-  /** generate the contract pub false then just the raw output for server use */
+  /**
+    generate the contract pub false then just the raw output for server use
+    in this version we might not even need a private contract anymore
+    but we keep the public option just in case
+  */
   public output(pub = true): JsonqlContractTemplate {
     const contract = this._contract
-    //
-
     if (pub) {
-      // @TODO what info we need to strip out
+      // we are taking out all the server: true or pure function rules
+      return {
+        [DATA_KEY]: contract[DATA_KEY].map((data: any) => {
+          data[PARAMS_KEY] = data[PARAMS_KEY].map((params: any) => {
+            if (params[RULES_KEY]) {
+              params[RULES_KEY] = params[RULES_KEY].filter((rule: any) => {
+                return !isFunction(rule) && rule[SERVER_KEY] !== true
+              })
+            }
+            return params
+          })
+          return data
+        }),
+        [META_KEY]: contract[META_KEY]
+      }
+
     }
     return contract
   }

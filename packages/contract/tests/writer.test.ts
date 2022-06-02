@@ -56,7 +56,6 @@ test.before(() => {
       return !(value.indexOf('whatever') > -1)
     }
   })
-
 })
 /*
 test.after(() => {
