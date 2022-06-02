@@ -149,7 +149,7 @@ export class JsonqlContractWriter {
     }))
   }
 
-  /** adding validation data need special care */
+  /** adding validation rules to the argument */
   public appendValidations(schema: any) {
     this._contract[DATA_KEY] = this._contract[DATA_KEY]
       .map((data: JsonqlContractEntry) => {
