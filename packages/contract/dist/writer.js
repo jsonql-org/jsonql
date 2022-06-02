@@ -73,12 +73,29 @@ class JsonqlContractWriter {
     meta(entry) {
         this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, (0, utils_1.cloneDeep)(this._contract[constants_1.META_KEY]), entry);
     }
-    /** generate the contract pub false then just the raw output for server use */
+    /**
+      generate the contract pub false then just the raw output for server use
+      in this version we might not even need a private contract anymore
+      but we keep the public option just in case
+    */
     output(pub = true) {
         const contract = this._contract;
-        //
         if (pub) {
-            // @TODO what info we need to strip out
+            // we are taking out all the server: true or pure function rules
+            return {
+                [constants_1.DATA_KEY]: contract[constants_1.DATA_KEY].map((data) => {
+                    data[constants_1.PARAMS_KEY] = data[constants_1.PARAMS_KEY].map((params) => {
+                        if (params[constants_1.RULES_KEY]) {
+                            params[constants_1.RULES_KEY] = params[constants_1.RULES_KEY].filter((rule) => {
+                                return !(0, utils_1.isFunction)(rule) && rule[constants_1.SERVER_KEY] !== true;
+                            });
+                        }
+                        return params;
+                    });
+                    return data;
+                }),
+                [constants_1.META_KEY]: contract[constants_1.META_KEY]
+            };
         }
         return contract;
     }

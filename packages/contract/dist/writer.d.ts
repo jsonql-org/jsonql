@@ -15,7 +15,11 @@ export declare class JsonqlContractWriter {
     error(error: JsonqlError): void;
     /** make a shallow copy might not be enough */
     meta(entry: JsonqlContractMetaEntry): void;
-    /** generate the contract pub false then just the raw output for server use */
+    /**
+      generate the contract pub false then just the raw output for server use
+      in this version we might not even need a private contract anymore
+      but we keep the public option just in case
+    */
     output(pub?: boolean): JsonqlContractTemplate;
     /** serving up the public contract */
     serve(cacheDir: string): Promise<any>;

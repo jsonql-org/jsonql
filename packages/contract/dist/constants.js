@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CHARSET = exports.CONTENT_TYPE = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.VALIDATION_KEY = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = void 0;
+exports.SERVER_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CHARSET = exports.CONTENT_TYPE = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.VALIDATION_KEY = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = void 0;
 // the core stuff to id if it's calling with jsonql
 exports.DATA_KEY = 'data';
 exports.ERROR_KEY = 'error';
@@ -24,3 +24,4 @@ exports.CONTRACT_REQUEST_METHODS = 'GET';
 exports.RULES_KEY = 'rules';
 exports.NAME_KEY = 'name';
 exports.PARAMS_KEY = 'params';
+exports.SERVER_KEY = 'server';
