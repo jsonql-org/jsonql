@@ -107,7 +107,7 @@ class JsonqlContractWriter {
             })));
         });
     }
-    /** adding validation data need special care */
+    /** adding validation rules to the argument */
     appendValidations(schema) {
         this._contract[constants_1.DATA_KEY] = this._contract[constants_1.DATA_KEY]
             .map((data) => {

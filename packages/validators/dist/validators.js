@@ -71,12 +71,8 @@ class Validators {
             const existingRules = this._validationRules.get(propertyName);
             for (const propName in existingRules) {
                 if (input[propName]) {
-                    if (Array.isArray(input[propName])) {
-                        existingRules[propName] = existingRules[propName].concat(input[propName]);
-                    }
-                    else {
-                        existingRules[propName].push(input[propName]);
-                    }
+                    // we are going to just store everything and let the contract decided what to pick
+                    existingRules[propName] = existingRules[propName].concat((0, common_1.toArray)(input[propName]));
                 }
             }
             this._validationRules.set(propertyName, existingRules);

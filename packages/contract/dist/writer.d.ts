@@ -22,6 +22,6 @@ export declare class JsonqlContractWriter {
     /** serve up the dynamic generated contract during transport */
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;
-    /** adding validation data need special care */
+    /** adding validation rules to the argument */
     appendValidations(schema: any): JsonqlContractTemplate;
 }

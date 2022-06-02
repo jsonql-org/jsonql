@@ -50,6 +50,13 @@ test.before(() => {
   val2.addValidationRules({
     name: 'password', plugin: 'moreThan', num: 8
   })
+  // add inline validation rule
+  val2.addValidationRules({
+    password: function(value: string) {
+      return !(value.indexOf('whatever') > -1)
+    }
+  })
+
 })
 /*
 test.after(() => {
@@ -66,7 +73,7 @@ test(`Should able to have a contract with validation info`, t => {
 
   // console.log('-----------------------------------------------------')
 
-  // console.dir(contract, { depth: null })
+  console.dir(contract, { depth: null })
 
   t.truthy(contract)
 })
