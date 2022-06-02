@@ -59,12 +59,14 @@ test.after(() => {
 */
 test(`Should able to have a contract with validation info`, t => {
   const { schema } = validators.export()
-  console.dir( schema, { depth: null })
+  // console.dir( schema, { depth: null })
 
   contractInstance.appendValidations( schema )
   const contract = contractInstance.output()
 
-  console.dir(contract, { depth: null })
+  // console.log('-----------------------------------------------------')
+
+  // console.dir(contract, { depth: null })
 
   t.truthy(contract)
 })

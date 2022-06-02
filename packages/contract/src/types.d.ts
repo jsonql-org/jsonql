@@ -9,7 +9,6 @@ export type JsonqlContractEntry = {
   route?: string
   method?: string
   file?: string
-  validation?: any // @TODO fix this 
   [key: string]: any
 }
 
@@ -19,7 +18,7 @@ export type JsonqlContractMetaEntry = {
 }
 
 export type JsonqlContractTemplate = {
-  data: Array<JsonqlContractEntry | null>
+  data: Array<JsonqlContractEntry>
   meta: JsonqlContractMetaEntry
   error?: JsonqlError | null // the public contract dont need the error field
 }

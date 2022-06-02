@@ -8,8 +8,6 @@ export const VALIDATION_KEY = 'validation'
 export const JSONQL_NAME = 'jsonql'
 export const REST_NAME = 'rest'
 
-export const RULE_KEY = 'rule'
-
 export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
 
 // contract file names
@@ -24,3 +22,8 @@ export const DEFAULT_HEADER = {
 }
 
 export const CONTRACT_REQUEST_METHODS = 'GET'
+
+// @TODO this should be import but write this inline for now
+export const RULES_KEY = 'rules'
+export const NAME_KEY = 'name'
+export const PARAMS_KEY = 'params'

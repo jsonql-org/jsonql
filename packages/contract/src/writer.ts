@@ -1,6 +1,12 @@
 // We now use an object style to generate contract
 // this is for the Velocejs FastApi
 // @TODO add protobuf
+import type {
+  JsonqlContractEntry,
+  JsonqlContractTemplate,
+  JsonqlContractMetaEntry,
+} from './types'
+
 import { join } from 'node:path'
 import {
   outputJson,
@@ -25,12 +31,11 @@ import {
   ERROR_KEY,
   DEFAULT_CONTRACT_FILE_NAME,
   PUBLIC_CONTRACT_FILE_NAME,
+  RULES_KEY,
+  NAME_KEY,
+  PARAMS_KEY,
 } from './constants'
-import {
-  JsonqlContractEntry,
-  JsonqlContractTemplate,
-  JsonqlContractMetaEntry,
-} from './types'
+
 import debugFn from 'debug'
 const debug = debugFn(`jsonql:contract:class`)
 
@@ -146,9 +151,24 @@ export class JsonqlContractWriter {
 
   /** adding validation data need special care */
   public appendValidations(schema: any) {
-    debug('@TODO', schema)
-    for (const propName in schema) {
-      
-    }
+    this._contract[DATA_KEY] = this._contract[DATA_KEY]
+      .map((data: JsonqlContractEntry) => {
+        const propName = data[NAME_KEY]
+        if (propName && schema[propName]) {
+          const rules = schema[propName][RULES_KEY]
+          if (rules && data[PARAMS_KEY]) {
+            data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: any) => {
+              const argName = params[NAME_KEY]
+              if (rules[argName]) {
+                params[RULES_KEY] = rules[argName]
+              }
+              return params
+            })
+          }
+        }
+        return data
+    })
+
+    return this._contract
   }
 }

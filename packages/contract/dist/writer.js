@@ -2,9 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsonqlContractWriter = void 0;
 const tslib_1 = require("tslib");
-// We now use an object style to generate contract
-// this is for the Velocejs FastApi
-// @TODO add protobuf
 const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
 const utils_1 = require("@jsonql/utils");
@@ -21,13 +18,16 @@ class JsonqlContractWriter {
             [constants_1.META_KEY]: { type: '' },
             // [ERROR_KEY]: null // templateErrorObject
         };
-        debug('astMap', astMap);
+        // first we make a clone of the map because when we pass
+        // it to more than one object it mutatated
+        const clone = (0, utils_1.cloneDeep)(astMap);
+        debug('astMap', clone);
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
         switch (type) {
             case constants_1.REST_NAME:
-                this._contract[constants_1.DATA_KEY] = this._prepareData(astMap);
+                this._contract[constants_1.DATA_KEY] = this._prepareData(clone);
                 break;
             default:
             // @TODO
@@ -46,7 +46,7 @@ class JsonqlContractWriter {
                 entry.params = params;
             }
             else if (typeof params === 'object') {
-                entry = (0, utils_1.assign)(entry, params);
+                entry = (0, utils_1.assign)({}, entry, params);
             }
             l.push(entry);
         }
@@ -54,12 +54,12 @@ class JsonqlContractWriter {
         return l;
     }
     /** insert extra data into node by name */
-    data(name, value) {
+    data(propertyName, value) {
         const contractData = this._contract[constants_1.DATA_KEY];
         // first to see if the name actually exist, we might want to add new entry
-        const existed = contractData.filter((c) => c.name === name);
+        const existed = contractData.filter((c) => c.name === propertyName);
         if (existed.length) {
-            this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === name ? (0, utils_1.assign)(c, value) : c));
+            this._contract[constants_1.DATA_KEY] = contractData.map((c) => (c.name === propertyName ? (0, utils_1.assign)(c, value) : c));
         }
         else { // add new entry
             this._contract[constants_1.DATA_KEY].push(value);
@@ -69,13 +69,14 @@ class JsonqlContractWriter {
     error(error) {
         this._contract[constants_1.ERROR_KEY] = error;
     }
-    /** always make sure it's immutable */
+    /** make a shallow copy might not be enough */
     meta(entry) {
-        this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, this._contract[constants_1.META_KEY], entry);
+        this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, (0, utils_1.cloneDeep)(this._contract[constants_1.META_KEY]), entry);
     }
     /** generate the contract pub false then just the raw output for server use */
     output(pub = true) {
         const contract = this._contract;
+        //
         if (pub) {
             // @TODO what info we need to strip out
         }
@@ -105,6 +106,28 @@ class JsonqlContractWriter {
                     .then(() => dest);
             })));
         });
+    }
+    /** adding validation data need special care */
+    appendValidations(schema) {
+        this._contract[constants_1.DATA_KEY] = this._contract[constants_1.DATA_KEY]
+            .map((data) => {
+            var _a;
+            const propName = data[constants_1.NAME_KEY];
+            if (propName && schema[propName]) {
+                const rules = schema[propName][constants_1.RULES_KEY];
+                if (rules && data[constants_1.PARAMS_KEY]) {
+                    data[constants_1.PARAMS_KEY] = (_a = data[constants_1.PARAMS_KEY]) === null || _a === void 0 ? void 0 : _a.map((params) => {
+                        const argName = params[constants_1.NAME_KEY];
+                        if (rules[argName]) {
+                            params[constants_1.RULES_KEY] = rules[argName];
+                        }
+                        return params;
+                    });
+                }
+            }
+            return data;
+        });
+        return this._contract;
     }
 }
 exports.JsonqlContractWriter = JsonqlContractWriter;

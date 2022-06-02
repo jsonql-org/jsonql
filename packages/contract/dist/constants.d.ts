@@ -1,6 +1,7 @@
 export declare const DATA_KEY = "data";
 export declare const ERROR_KEY = "error";
 export declare const META_KEY = "meta";
+export declare const VALIDATION_KEY = "validation";
 export declare const JSONQL_NAME = "jsonql";
 export declare const REST_NAME = "rest";
 export declare const AVAILABLE_FORMATS: string[];
@@ -13,3 +14,6 @@ export declare const DEFAULT_HEADER: {
     'Content-Type': string;
 };
 export declare const CONTRACT_REQUEST_METHODS = "GET";
+export declare const RULES_KEY = "rules";
+export declare const NAME_KEY = "name";
+export declare const PARAMS_KEY = "params";
