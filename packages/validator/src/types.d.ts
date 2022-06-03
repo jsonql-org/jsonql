@@ -15,24 +15,6 @@ export type DescriptorMeta = {
   configurable?: boolean
 }
 
-// @TODO this should move to the validator-config package
-export declare type JsonqlConfigParams = {
-  enumv?: unknown[]
-  required?: boolean
-  optional?: boolean // opposite alias of required
-  checker?: CallbackFunction<T>
-  alias?: string
-}
-
-export declare type JsonqlConfigBase = {
-  [key: string]: JsonqlConfigParams
-}
-
-export type JsonqlAppProps = JsonqlConfigBase
-export type JsonqlConstantProps = JsonqlConfigBase
-
-// validation
-// duplicated
 export declare type JsonqlValidationPlugin = {
   name?: string
   main?: CallbackFunction<T> // after transform the plugin we remove it from the object

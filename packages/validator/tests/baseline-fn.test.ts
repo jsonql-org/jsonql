@@ -37,7 +37,7 @@ test(`This is going to test and fix the duplicate return value due to the spread
              })
 })
 
-test.only(`Test the new direct method style to add a new validation rule`, t => {
+test(`Test the new direct method style to add a new validation rule`, t => {
   t.plan(1)
 
   valx.addValidationRules({

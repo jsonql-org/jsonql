@@ -44,23 +44,20 @@ test('Testing the JsonqlObjectValidateInput with built-in plugins', async t => {
 })
 
 test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-config`,async t => {
-  t.plan(1)
-  // when using throwsAsync it won't work
-  /// @TODO need to test it without the t.throws and see if the catch actually catch the error
-  t.throws(() => {
-    const validateObj1 = new Validator(context.funcAstInput.resolver, pluginInstance)
-    validateObj1.addValidationRules({
-      email: { plugin: 'email' },
-      age: { plugin: 'moreThan', min: 50}
-    })
-    return validateObj1.validate(['some@email.com', 65])
-              .then(result => {
-                console.log(result)
-              })
+
+  const validateObj1 = new Validator(context.funcAstInput.resolver, pluginInstance)
+  validateObj1.addValidationRules({
+    email: { plugin: 'email' },
+    age: { plugin: 'moreThan', min: 50}
   })
+  return validateObj1.validate(['some@email.com', 65])
+          .catch((error: JsonqlValidationError) => {
+            t.is(error.message, 'NO_PLUGIN_DUMMY_FUNCTION')
+          })
+
 })
 
-test.only(`Testing the JsonqlArrayValidateInput with built-in plugins` , async t => {
+test(`Testing the JsonqlArrayValidateInput with built-in plugins` , async t => {
   t.plan(1)
   const validateObj2 = new Validator(context.funcAstInput.resolver, pluginInstance)
   validateObj2.addValidationRules({
@@ -77,7 +74,7 @@ test.only(`Testing the JsonqlArrayValidateInput with built-in plugins` , async t
                 })
 })
 
-test.skip(`Test again with the automatic rule generated return result`, async t => {
+test(`Test again with the automatic rule generated return result`, async t => {
   t.plan(1)
   const validateObj4 = new Validator(context.funcAInput.login, pluginInstance)
 
@@ -87,7 +84,7 @@ test.skip(`Test again with the automatic rule generated return result`, async t 
                     })
 })
 
-test.skip(`Testing the plugin with a test case from the velocejs which causing problem (Array input)`, async t => {
+test(`Testing the plugin with a test case from the velocejs which causing problem (Array input)`, async t => {
   t.plan(1)
   const validateObj3 = new Validator(context.funcAInput.login, pluginInstance)
   validateObj3.addValidationRules({

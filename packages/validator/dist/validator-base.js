@@ -194,7 +194,8 @@ class ValidatorBase {
                     debug(`${validator_core_1.VALIDATE_ASYNC_KEY} ---->`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
-                    throw new error_1.default(`unable to find rule for ${propName}, we expect ${validator_core_1.PLUGIN_KEY}, ${validator_core_1.VALIDATE_KEY} or ${validator_core_1.VALIDATE_ASYNC_KEY}`);
+                    throw new error_1.default(`unable to find rule for ${propName},
+            we expect ${validator_core_1.PLUGIN_KEY}, ${validator_core_1.VALIDATE_KEY} or ${validator_core_1.VALIDATE_ASYNC_KEY}`);
             }
         });
     }
@@ -202,9 +203,16 @@ class ValidatorBase {
     _lookupPlugin(input, propName) {
         // @TODO we should allow validator to use standalone without the plugin system
         // so when this plugin instance object is undefined we should skip it
-        if (this._validatorPluginsInstance) {
-            debug('_lookupPlugin --->', input, propName);
-            return this._validatorPluginsInstance.lookupPlugin(input, propName);
+        try {
+            if (this._validatorPluginsInstance) {
+                debug('_lookupPlugin --->', input, propName);
+                return this._validatorPluginsInstance.lookupPlugin(input, propName);
+            }
+        }
+        catch (e) {
+            // @NOTE because the lookupPlugin method actually throw errors but we don't want
+            // to crash it 
+            debug('catch _lookupPlugin error', e);
         }
         return (0, validator_core_1.constructRuleCb)(propName, () => tslib_1.__awaiter(this, void 0, void 0, function* () { return Promise.reject(false); }), 'NO_PLUGIN_DUMMY_FUNCTION');
     }

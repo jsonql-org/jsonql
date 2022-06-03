@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "@jsonql/validator general purpose validation library that test type and value with a plugin system",
   "main": "dist/index.js",
   "module": "dist/index.d.ts",
@@ -67,7 +67,7 @@
   "dependencies": {
     "@jsonql/errors": "workspace:^0.7.0",
     "@jsonql/utils": "workspace:^0.7.5",
-    "@jsonql/validator-core": "workspace:^0.9.9",
+    "@jsonql/validator-core": "workspace:^0.9.10",
     "debug": "^4.3.4"
   }
 }

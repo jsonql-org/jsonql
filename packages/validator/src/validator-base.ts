@@ -282,7 +282,10 @@ export class ValidatorBase {
             pluginName
           )
         default:
-          throw new JsonqlError(`unable to find rule for ${propName}, we expect ${PLUGIN_KEY}, ${VALIDATE_KEY} or ${VALIDATE_ASYNC_KEY}`)
+          throw new JsonqlError(
+            `unable to find rule for ${propName},
+            we expect ${PLUGIN_KEY}, ${VALIDATE_KEY} or ${VALIDATE_ASYNC_KEY}`
+          )
       }
     })
   }
@@ -294,11 +297,16 @@ export class ValidatorBase {
   ) {
     // @TODO we should allow validator to use standalone without the plugin system
     // so when this plugin instance object is undefined we should skip it
-    if (this._validatorPluginsInstance) {
-      debug('_lookupPlugin --->', input, propName)
-      return this._validatorPluginsInstance.lookupPlugin(input, propName)
+    try {
+      if (this._validatorPluginsInstance) {
+        debug('_lookupPlugin --->', input, propName)
+        return this._validatorPluginsInstance.lookupPlugin(input, propName)
+      }
+    } catch(e) {
+      // @NOTE because the lookupPlugin method actually throw errors but we don't want
+      // to crash it 
+      debug('catch _lookupPlugin error', e)
     }
-
     return constructRuleCb(
       propName,
       async () => Promise.reject(false),
