@@ -51,6 +51,7 @@ class ValidatorPlugins {
                 return (0, common_1.constructRuleCb)(argName, (0, promisify_1.promisify)((0, plugins_1.curryPlugin)(_input, pluginConfig)), pluginName);
             }
         }
+        debug('lookupPlugin', 'unable to find', pluginName);
         throw new error_1.default(`Unable to find plugin: ${pluginName}`);
     }
     /** The public api to register a plugin */
@@ -76,7 +77,8 @@ class ValidatorPlugins {
                 throw new error_1.default(`plugin ${name} already existed!`);
             }
             if (!(0, common_1.pluginHasFunc)(pluginConfig)) {
-                throw new error_1.default(`Can not find 'main' method in your plugin config`);
+                debug('registerPlugin', constants_1.MAIN_NOT_FOUND_ERR);
+                throw new error_1.default(constants_1.MAIN_NOT_FOUND_ERR);
             }
             // Here we could extract the params instead of just checking
             if (pluginConfig[constants_1.PARAMS_KEY] === undefined) {
@@ -85,10 +87,12 @@ class ValidatorPlugins {
             }
             else if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) { // if they provide the keys then we check
                 if (!(0, common_1.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
+                    debug('registerPlugin', constants_1.RESERVED_WORD_ERR);
                     throw new error_1.default(constants_1.RESERVED_WORD_ERR);
                 }
                 if (!(0, common_1.paramMatches)(pluginConfig)) {
-                    throw new error_1.default(`Your params doesn't matching your main argument list`);
+                    debug('registerPlugin', constants_1.ARG_NOT_MATCH_ERR);
+                    throw new error_1.default(constants_1.ARG_NOT_MATCH_ERR);
                 }
             }
         }

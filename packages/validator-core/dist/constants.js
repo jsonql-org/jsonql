@@ -1,7 +1,7 @@
 "use strict";
 // ported from @jsonql/constants
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KEYWORDS = exports.RESERVED_WORD_ERR = exports.VALUE_KEY = exports.IDX_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.ARRAY_TS_TYPE_LFT = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.OR_SEPERATOR = void 0;
+exports.KEYWORDS = exports.MAIN_NOT_FOUND_ERR = exports.ARG_NOT_MATCH_ERR = exports.RESERVED_WORD_ERR = exports.VALUE_KEY = exports.IDX_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.PATTERN_KEY = exports.PLUGIN_FN_KEY = exports.PLUGIN_KEY = exports.VALIDATE_ASYNC_KEY = exports.VALIDATE_KEY = exports.ARRAY_TYPE_RGT = exports.ARRAY_TYPE_LFT = exports.ARRAY_TS_TYPE_LFT = exports.OBJECT_TYPE = exports.ARRAY_TYPE = exports.NUMBER_TYPE = exports.STRING_TYPE = exports.BOOLEAN_TYPE = exports.OR_SEPERATOR = void 0;
 exports.OR_SEPERATOR = '|';
 exports.BOOLEAN_TYPE = 'boolean';
 exports.STRING_TYPE = 'string';
@@ -24,6 +24,8 @@ exports.PARAMS_KEY = 'params';
 exports.IDX_KEY = '$$idx';
 exports.VALUE_KEY = '$$value';
 exports.RESERVED_WORD_ERR = 'Your plugin config argument contains reserved keywords';
+exports.ARG_NOT_MATCH_ERR = "Your params doesn't matching your main argument list";
+exports.MAIN_NOT_FOUND_ERR = "Can not find 'main' method in your plugin config";
 exports.KEYWORDS = [
     exports.PARAMS_KEY,
     exports.PATTERN_KEY,

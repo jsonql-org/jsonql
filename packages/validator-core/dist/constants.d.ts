@@ -18,4 +18,6 @@ export declare const PARAMS_KEY = "params";
 export declare const IDX_KEY = "$$idx";
 export declare const VALUE_KEY = "$$value";
 export declare const RESERVED_WORD_ERR = "Your plugin config argument contains reserved keywords";
+export declare const ARG_NOT_MATCH_ERR = "Your params doesn't matching your main argument list";
+export declare const MAIN_NOT_FOUND_ERR = "Can not find 'main' method in your plugin config";
 export declare const KEYWORDS: string[];

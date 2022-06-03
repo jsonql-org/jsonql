@@ -30,7 +30,7 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/ast": "workspace:^0.8.5",
+    "@jsonql/ast": "workspace:^0.8.6",
     "@jsonql/errors": "workspace:^0.7.0",
     "@jsonql/utils": "workspace:^0.7.5",
     "debug": "^4.3.4",

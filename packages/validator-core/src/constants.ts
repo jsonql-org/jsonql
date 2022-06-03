@@ -26,6 +26,8 @@ export const IDX_KEY = '$$idx'
 export const VALUE_KEY = '$$value'
 
 export const RESERVED_WORD_ERR = 'Your plugin config argument contains reserved keywords'
+export const ARG_NOT_MATCH_ERR = "Your params doesn't matching your main argument list"
+export const MAIN_NOT_FOUND_ERR = "Can not find 'main' method in your plugin config"
 
 export const KEYWORDS = [
   PARAMS_KEY,

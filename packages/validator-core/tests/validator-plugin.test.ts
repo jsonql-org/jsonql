@@ -39,6 +39,14 @@ test('registerPlugin should able to auto create the params', async t => {
   t.truthy(result)
 })
 
+test(`Search for non-existing plugin should throw error`, t => {
+
+  t.throws(() => {
+    return plugin.lookupPlugin({ plugin: 'nonExistPlugin', x: 10, y: 20}, 'someInput')
+  })
+
+})
+
 
 test(`Test the load external methods`, async t => {
   t.plan(1)

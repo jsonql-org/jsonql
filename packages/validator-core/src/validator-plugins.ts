@@ -18,6 +18,8 @@ import {
   NAME_KEY,
   PARAMS_KEY,
   RESERVED_WORD_ERR,
+  ARG_NOT_MATCH_ERR,
+  MAIN_NOT_FOUND_ERR,
 } from './constants'
 import {
   curryPlugin,
@@ -95,6 +97,7 @@ export class ValidatorPlugins {
         )
       }
     }
+    debug('lookupPlugin', 'unable to find', pluginName)
     throw new JsonqlError(`Unable to find plugin: ${pluginName}`)
   }
 
@@ -130,7 +133,8 @@ export class ValidatorPlugins {
         throw new JsonqlError(`plugin ${name} already existed!`)
       }
       if (!pluginHasFunc(pluginConfig)) {
-        throw new JsonqlError(`Can not find 'main' method in your plugin config`)
+        debug('registerPlugin', MAIN_NOT_FOUND_ERR)
+        throw new JsonqlError(MAIN_NOT_FOUND_ERR)
       }
       // Here we could extract the params instead of just checking
       if (pluginConfig[PARAMS_KEY] === undefined) {
@@ -138,10 +142,12 @@ export class ValidatorPlugins {
         debug('auto generate params for plugin', pluginConfig)
       } else if (pluginConfig[PARAMS_KEY] !== undefined) { // if they provide the keys then we check
         if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
+          debug('registerPlugin', RESERVED_WORD_ERR)
           throw new JsonqlError(RESERVED_WORD_ERR)
         }
         if (!paramMatches(pluginConfig)) {
-          throw new JsonqlError(`Your params doesn't matching your main argument list`)
+          debug('registerPlugin', ARG_NOT_MATCH_ERR)
+          throw new JsonqlError(ARG_NOT_MATCH_ERR)
         }
       }
     }
