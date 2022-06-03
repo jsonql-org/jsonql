@@ -5,8 +5,8 @@ import type {
   JsonqlContractEntry,
   JsonqlContractTemplate,
   JsonqlContractMetaEntry,
+  JsonqlProcessedEntry,
 } from './types'
-
 import { join } from 'node:path'
 import {
   outputJson,
@@ -14,7 +14,7 @@ import {
   existsSync,
 } from 'fs-extra'
 import {
-  JsonqlAstMap
+  JsonqlAstMap,
 } from '@jsonql/ast/index'
 import {
   chainPromises,
@@ -124,10 +124,10 @@ export class JsonqlContractWriter {
     if (pub) {
       // we are taking out all the server: true or pure function rules
       return {
-        [DATA_KEY]: contract[DATA_KEY].map((data: any) => {
-          data[PARAMS_KEY] = data[PARAMS_KEY].map((params: any) => {
+        [DATA_KEY]: contract[DATA_KEY].map((data: JsonqlContractEntry) => {
+          data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: JsonqlProcessedEntry) => {
             if (params[RULES_KEY]) {
-              params[RULES_KEY] = params[RULES_KEY].filter((rule: any) => {
+              params[RULES_KEY] = params[RULES_KEY].filter((rule: object) => {
                 return !isFunction(rule) && rule[SERVER_KEY] !== true
               })
             }
@@ -169,14 +169,14 @@ export class JsonqlContractWriter {
   }
 
   /** adding validation rules to the argument */
-  public appendValidations(schema: any) {
+  public appendValidations(schema: JsonqlAstMap) {
     this._contract[DATA_KEY] = this._contract[DATA_KEY]
       .map((data: JsonqlContractEntry) => {
         const propName = data[NAME_KEY]
         if (propName && schema[propName]) {
           const rules = schema[propName][RULES_KEY]
           if (rules && data[PARAMS_KEY]) {
-            data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: any) => {
+            data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: JsonqlProcessedEntry) => {
               const argName = params[NAME_KEY]
               if (rules[argName]) {
                 params[RULES_KEY] = rules[argName]

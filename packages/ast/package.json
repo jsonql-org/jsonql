@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/ast",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "Generate AST Map using SWC",
   "main": "dist/index.js",
   "module": "src/index.ts",

@@ -22,3 +22,5 @@ export type JsonqlContractTemplate = {
   meta: JsonqlContractMetaEntry
   error?: JsonqlError | null // the public contract dont need the error field
 }
+
+export { JsonqlProcessedEntry, JsonqlError }
