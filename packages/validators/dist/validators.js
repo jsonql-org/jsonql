@@ -4,6 +4,7 @@ exports.Validators = void 0;
 const tslib_1 = require("tslib");
 const validator_1 = require("@jsonql/validator");
 const validator_core_1 = require("@jsonql/validator-core");
+const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const common_1 = require("@jsonql/utils/dist/common");
 const clone_deep_1 = require("@jsonql/utils/dist/clone-deep");
 const constants_1 = require("@jsonql/validator-core/dist/constants");
@@ -35,7 +36,7 @@ class Validators {
                 validate: obj.validate.bind(obj)
             };
         }
-        throw new Error(`${propertyName} validator is not registered!`);
+        throw new validation_error_1.default(`${propertyName} validator is not registered!`);
     }
     // ------------------- OVERLOAD ----------------------//
     /** overload the ValidatorPlugin registerPlugin method */

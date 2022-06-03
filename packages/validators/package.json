@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validators",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "@velocejs/validators based off @jsonql/validator and @jsonql/validator-core",
   "main": "dist/index.js",
   "module": "dist/index.ts",
@@ -32,8 +32,9 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
+    "@jsonql/errors": "workspace:^0.7.0",
     "@jsonql/utils": "workspace:^0.7.5",
-    "@jsonql/validator": "workspace:^0.8.3",
+    "@jsonql/validator": "workspace:^0.8.4",
     "@jsonql/validator-core": "workspace:^0.9.10"
   },
   "devDependencies": {

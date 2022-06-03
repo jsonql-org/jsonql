@@ -6,12 +6,9 @@ import type {
   VeloceAstMap,
   ValidationRuleRecord,
 } from './types'
-import {
-  Validator
-} from '@jsonql/validator'
-import {
-  ValidatorPlugins
-} from '@jsonql/validator-core'
+import { Validator } from '@jsonql/validator'
+import { ValidatorPlugins } from '@jsonql/validator-core'
+import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
 import { RULES_KEY } from '@jsonql/validator-core/dist/constants'
@@ -51,7 +48,7 @@ export class Validators {
         validate: obj.validate.bind(obj)
       }
     }
-    throw new Error(`${propertyName} validator is not registered!`)
+    throw new JsonqlValidationError(`${propertyName} validator is not registered!`)
   }
 
   // ------------------- OVERLOAD ----------------------//
