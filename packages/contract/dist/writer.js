@@ -21,13 +21,12 @@ class JsonqlContractWriter {
         // first we make a clone of the map because when we pass
         // it to more than one object it mutatated
         const clone = (0, utils_1.cloneDeep)(routeForContract);
-        debug('astMap', clone);
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
         switch (type) {
             case constants_1.REST_NAME:
-                this._contract[constants_1.DATA_KEY] = routeForContract;
+                this._contract[constants_1.DATA_KEY] = clone;
                 break;
             default:
             // @TODO
