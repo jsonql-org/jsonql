@@ -6,6 +6,7 @@ import type {
   JsonqlContractTemplate,
   JsonqlContractMetaEntry,
   JsonqlProcessedEntry,
+  JsonqlRouteForContract,
 } from './types'
 import { join } from 'node:path'
 import {
@@ -51,17 +52,19 @@ export class JsonqlContractWriter {
   }
 
   /** instead of run the parser again we just load the ast map */
-  constructor(astMap: JsonqlAstMap, type: string = REST_NAME) {
+  constructor(
+    routeForContract: JsonqlRouteForContract,
+    type: string = REST_NAME
+  ) {
     // first we make a clone of the map because when we pass
     // it to more than one object it mutatated
-    const clone = cloneDeep(astMap)
-    debug('astMap', clone)
+    const clone = cloneDeep(routeForContract)
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
     switch (type) {
       case REST_NAME:
-        this._contract[DATA_KEY] = this._prepareData(clone)
+        this._contract[DATA_KEY] = clone
         break
       default:
         // @TODO
@@ -69,9 +72,9 @@ export class JsonqlContractWriter {
   }
 
   /**
-   * need to change the format for our use
+   This will get call externally to prepare the map before init this object
    */
-  private _prepareData(astMap: JsonqlAstMap) {
+  static prepare(astMap: JsonqlAstMap) {
     // const c = stripAllTypeParams(astMap)
     const l: Array<JsonqlContractEntry> = []
     for (const methodName in astMap) {

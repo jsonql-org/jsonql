@@ -21,7 +21,9 @@ let contractInstance: JsonqlContractWriter
 
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
-  contractInstance = new JsonqlContractWriter(astMap)
+  contractInstance = new JsonqlContractWriter(
+    JsonqlContractWriter.prepare(astMap)
+  )
 })
 
 test.after(() => {

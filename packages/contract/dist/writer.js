@@ -11,7 +11,7 @@ const debug = (0, debug_1.default)(`jsonql:contract:class`);
 // main
 class JsonqlContractWriter {
     /** instead of run the parser again we just load the ast map */
-    constructor(astMap, type = constants_1.REST_NAME) {
+    constructor(routeForContract, type = constants_1.REST_NAME) {
         // form the basic structure
         this._contract = {
             [constants_1.DATA_KEY]: [],
@@ -20,23 +20,23 @@ class JsonqlContractWriter {
         };
         // first we make a clone of the map because when we pass
         // it to more than one object it mutatated
-        const clone = (0, utils_1.cloneDeep)(astMap);
+        const clone = (0, utils_1.cloneDeep)(routeForContract);
         debug('astMap', clone);
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
         switch (type) {
             case constants_1.REST_NAME:
-                this._contract[constants_1.DATA_KEY] = this._prepareData(clone);
+                this._contract[constants_1.DATA_KEY] = routeForContract;
                 break;
             default:
             // @TODO
         }
     }
     /**
-     * need to change the format for our use
+     This will get call externally to prepare the map before init this object
      */
-    _prepareData(astMap) {
+    static prepare(astMap) {
         // const c = stripAllTypeParams(astMap)
         const l = [];
         for (const methodName in astMap) {

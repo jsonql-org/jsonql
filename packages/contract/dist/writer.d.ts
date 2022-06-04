@@ -1,14 +1,14 @@
-import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry } from './types';
+import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import { JsonqlError } from '@jsonql/errors';
 export declare class JsonqlContractWriter {
     private _contract;
     /** instead of run the parser again we just load the ast map */
-    constructor(astMap: JsonqlAstMap, type?: string);
+    constructor(routeForContract: JsonqlRouteForContract, type?: string);
     /**
-     * need to change the format for our use
+     This will get call externally to prepare the map before init this object
      */
-    private _prepareData;
+    static prepare(astMap: JsonqlAstMap): JsonqlContractEntry[];
     /** insert extra data into node by name */
     data(propertyName: string, value: JsonqlContractEntry): void;
     /** this will always overwrite the last one */

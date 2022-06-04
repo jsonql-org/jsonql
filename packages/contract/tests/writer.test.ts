@@ -21,7 +21,9 @@ let validators: Validators
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
 
-  contractInstance = new JsonqlContractWriter(astMap)
+  contractInstance = new JsonqlContractWriter(
+    JsonqlContractWriter.prepare(astMap)
+  )
 
   validators = new Validators(astMap)
 
