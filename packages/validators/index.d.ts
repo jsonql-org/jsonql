@@ -7,12 +7,11 @@ import {
 import type {
   JsonqlValidationPlugin
 } from '@jsonql/validator-core/index'
-
-
-export declare type VeloceAstMap = {
+// for init the entire class with propertyNames
+export declare type JsonqlAstFullMap = {
   [propertyName: string]: Array<JsonqlPropertyParamMap>
 }
-
-// export declare type AddValidationRuleFn = (validationMap: JsonqlObjectValidateInput | JsonqlArrayValidateInput) => void
-
+// just an alias for use in downstream packages
+export type VeloceAstMap = JsonqlAstFullMap
+// can be raw input or plugin statement
 export declare type ValidationRuleRecord = JsonqlObjectValidateInput | JsonqlValidationPlugin

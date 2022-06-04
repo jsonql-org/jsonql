@@ -3,7 +3,7 @@ import type {
   JsonqlValidationPlugin,
 } from '@jsonql/validator-core/index'
 import type {
-  VeloceAstMap,
+  JsonqlAstFullMap,
   ValidationRuleRecord,
 } from './types'
 import { Validator } from '@jsonql/validator'
@@ -25,10 +25,10 @@ export class Validators {
   private _validationRules = new Map<string, ValidationRuleRecord>()
   private _validators = new Map<string, Validator>()
   private _plugin = new ValidatorPlugins()
-  private _astMap: VeloceAstMap
+  private _astMap: JsonqlAstFullMap
 
   /** main */
-  constructor(astMap: VeloceAstMap) {
+  constructor(astMap: JsonqlAstFullMap) {
     this._astMap = cloneDeep(astMap)
     for (const propertyName in this._astMap) {
       this._validators.set(
