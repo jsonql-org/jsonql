@@ -56,7 +56,6 @@ export class JsonqlContractWriter {
     // it to more than one object it mutatated
     const clone = cloneDeep(astMap)
     debug('astMap', clone)
-
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
@@ -163,6 +162,7 @@ export class JsonqlContractWriter {
       [PUBLIC_CONTRACT_FILE_NAME, this.output()] // public contract
     ].map(async ([file, contract]) => {
       const dest = join(outDir, file as unknown as string)
+
       return outputJson(dest, contract, { spaces: 2})
                 .then(() => dest)
     }))
@@ -187,7 +187,6 @@ export class JsonqlContractWriter {
         }
         return data
     })
-
     return this._contract
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SERVER_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CHARSET = exports.CONTENT_TYPE = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.VALIDATION_KEY = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = void 0;
+exports.SERVER_KEY = exports.PARAMS_KEY = exports.NAME_KEY = exports.RULES_KEY = exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CHARSET = exports.CONTENT_TYPE = exports.DEFAULT_PLUGIN_FILE_NAME = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.VALIDATION_KEY = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = void 0;
 // the core stuff to id if it's calling with jsonql
 exports.DATA_KEY = 'data';
 exports.ERROR_KEY = 'error';
@@ -13,6 +13,7 @@ exports.AVAILABLE_FORMATS = [exports.JSONQL_NAME, exports.REST_NAME];
 // contract file names
 exports.DEFAULT_CONTRACT_FILE_NAME = 'contract.json';
 exports.PUBLIC_CONTRACT_FILE_NAME = 'public-contract.json';
+exports.DEFAULT_PLUGIN_FILE_NAME = 'plugins.js';
 exports.CONTENT_TYPE = 'application/vnd.api+json';
 exports.CHARSET = 'charset=utf-8';
 exports.DEFAULT_HEADER = {

@@ -14,6 +14,8 @@ export const AVAILABLE_FORMATS = [JSONQL_NAME, REST_NAME]
 export const DEFAULT_CONTRACT_FILE_NAME = 'contract.json'
 export const PUBLIC_CONTRACT_FILE_NAME = 'public-contract.json'
 
+export const DEFAULT_PLUGIN_FILE_NAME = 'plugins.js'
+
 export const CONTENT_TYPE = 'application/vnd.api+json'
 export const CHARSET = 'charset=utf-8'
 export const DEFAULT_HEADER = {

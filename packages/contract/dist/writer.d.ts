@@ -27,5 +27,5 @@ export declare class JsonqlContractWriter {
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;
     /** adding validation rules to the argument */
-    appendValidations(schema: any): JsonqlContractTemplate;
+    appendValidations(schema: JsonqlAstMap): JsonqlContractTemplate;
 }

@@ -7,6 +7,7 @@ export declare const REST_NAME = "rest";
 export declare const AVAILABLE_FORMATS: string[];
 export declare const DEFAULT_CONTRACT_FILE_NAME = "contract.json";
 export declare const PUBLIC_CONTRACT_FILE_NAME = "public-contract.json";
+export declare const DEFAULT_PLUGIN_FILE_NAME = "plugins.js";
 export declare const CONTENT_TYPE = "application/vnd.api+json";
 export declare const CHARSET = "charset=utf-8";
 export declare const DEFAULT_HEADER: {

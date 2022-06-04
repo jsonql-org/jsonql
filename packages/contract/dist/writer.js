@@ -84,7 +84,8 @@ class JsonqlContractWriter {
             // we are taking out all the server: true or pure function rules
             return {
                 [constants_1.DATA_KEY]: contract[constants_1.DATA_KEY].map((data) => {
-                    data[constants_1.PARAMS_KEY] = data[constants_1.PARAMS_KEY].map((params) => {
+                    var _a;
+                    data[constants_1.PARAMS_KEY] = (_a = data[constants_1.PARAMS_KEY]) === null || _a === void 0 ? void 0 : _a.map((params) => {
                         if (params[constants_1.RULES_KEY]) {
                             params[constants_1.RULES_KEY] = params[constants_1.RULES_KEY].filter((rule) => {
                                 return !(0, utils_1.isFunction)(rule) && rule[constants_1.SERVER_KEY] !== true;
