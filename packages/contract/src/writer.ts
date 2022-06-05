@@ -94,7 +94,6 @@ export class JsonqlContractWriter {
   /** insert extra data into node by name */
   public data(propertyName: string, value: JsonqlContractEntry): void {
     const contractData = this._contract[DATA_KEY] as Array<JsonqlContractEntry>
-
     // first to see if the name actually exist, we might want to add new entry
     const existed = contractData.filter((c: JsonqlContractEntry) => c.name === propertyName)
     if (existed.length) {
@@ -139,7 +138,6 @@ export class JsonqlContractWriter {
         }),
         [META_KEY]: contract[META_KEY]
       }
-
     }
     return contract
   }

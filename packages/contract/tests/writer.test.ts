@@ -72,6 +72,6 @@ test(`Should able to have a contract with validation info`, t => {
   contractInstance.appendValidations( schema )
   const contract = contractInstance.output()
   // console.log('-----------------------------------------------------')
-  // console.dir(contract, { depth: null })
+  console.dir(contract, { depth: null })
   t.truthy(contract)
 })

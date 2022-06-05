@@ -20,6 +20,7 @@ export type JsonqlValidateFn = AsyncCallbackFunction<unknown>
 export type JsonqlPluginConfig = {
   name: string
   main: JsonqlValidateFn | CallbackFunction
+  external: boolean 
   params?: string[]
 }
 

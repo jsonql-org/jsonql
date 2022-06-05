@@ -58,6 +58,10 @@ class ValidatorPlugins {
     registerPlugin(name, pluginConfig) {
         this._registerPlugin(name, pluginConfig);
     }
+    /** call this when loading external plugin, not allow to use directly */
+    _registerExternalPlugin(name, pluginConfig) {
+        this._registerPlugin(name, pluginConfig, false, true);
+    }
     /** export all external plugins for generate js file */
     export() {
         const plugins = [];
@@ -70,7 +74,8 @@ class ValidatorPlugins {
     }
     // ------------------------- PRIVATE --------------------------//
     /** register plugins */
-    _registerPlugin(name, pluginConfig, skipCheck = false // when register internal plugin then skip it
+    _registerPlugin(name, pluginConfig, skipCheck = false, // when register internal plugin then skip it
+    external = false // new in 0.9.11
     ) {
         if (!skipCheck) {
             if (this._plugins.has(name)) {
@@ -97,6 +102,7 @@ class ValidatorPlugins {
             }
         }
         pluginConfig.name = name;
+        pluginConfig.external = external;
         /**
         At this point it should only contain a main (or plus params) so we
         do nothing and just store it, we convert it only when they call it

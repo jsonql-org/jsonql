@@ -109,6 +109,14 @@ export class ValidatorPlugins {
     this._registerPlugin(name, pluginConfig)
   }
 
+  /** call this when loading external plugin, not allow to use directly */
+  protected _registerExternalPlugin(
+    name: string,
+    pluginConfig: JsonqlValidationPlugin
+  ): void {
+    this._registerPlugin(name, pluginConfig, false, true)
+  }
+
   /** export all external plugins for generate js file */
   public export() {
     const plugins: JsonqlValidationPlugin[] = []
@@ -126,7 +134,8 @@ export class ValidatorPlugins {
   protected _registerPlugin(
     name: string,
     pluginConfig: Partial<JsonqlPluginConfig>,
-    skipCheck = false // when register internal plugin then skip it
+    skipCheck = false, // when register internal plugin then skip it
+    external = false // new in 0.9.11
   ): void {
     if (!skipCheck) {
       if (this._plugins.has(name)) {
@@ -152,6 +161,7 @@ export class ValidatorPlugins {
       }
     }
     pluginConfig.name = name
+    pluginConfig.external = external
     /**
     At this point it should only contain a main (or plus params) so we
     do nothing and just store it, we convert it only when they call it

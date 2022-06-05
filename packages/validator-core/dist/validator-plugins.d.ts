@@ -17,8 +17,11 @@ export declare class ValidatorPlugins {
     lookupPlugin(input: JsonqlValidationRule, argName: string): (value: unknown, lastResult: import("./types").JsonqlGenericObject, pos: number[]) => Promise<any>;
     /** The public api to register a plugin */
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
+    /** call this when loading external plugin, not allow to use directly */
+    protected _registerExternalPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** export all external plugins for generate js file */
     export(): JsonqlValidationPlugin[];
     /** register plugins */
-    protected _registerPlugin(name: string, pluginConfig: Partial<JsonqlPluginConfig>, skipCheck?: boolean): void;
+    protected _registerPlugin(name: string, pluginConfig: Partial<JsonqlPluginConfig>, skipCheck?: boolean, // when register internal plugin then skip it
+    external?: boolean): void;
 }
