@@ -20,8 +20,8 @@ export type JsonqlValidateFn = AsyncCallbackFunction<unknown>
 export type JsonqlPluginConfig = {
   name: string
   main: JsonqlValidateFn | CallbackFunction
-  external: boolean 
   params?: string[]
+  external?: boolean 
 }
 
 // this is the internal stucture of plugin stored in Map store

@@ -5,9 +5,6 @@ exports.ExternalPluginLoader = void 0;
 const validator_plugins_1 = require("./validator-plugins");
 // main
 class ExternalPluginLoader extends validator_plugins_1.ValidatorPlugins {
-    constructor() {
-        super();
-    }
     /** main method */
     registerExternalPlugin(name, pluginConfig) {
         this._registerExternalPlugin(name, pluginConfig);
