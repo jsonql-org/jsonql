@@ -3,6 +3,11 @@
 import { JsonqlProcessedEntry } from '@jsonql/ast/index'
 import { JsonqlError } from '@jsonql/errors'
 
+export {
+  JsonqlValidationPlugin,
+  JsonqlPluginConfig
+} from '@jsonql/validators/index'
+
 export type JsonqlContractEntry = {
   name?: string,
   params?: Array<JsonqlProcessedEntry>
@@ -15,6 +20,7 @@ export type JsonqlContractEntry = {
 export type JsonqlContractMetaEntry = {
   type?: string
   timestamp?: Array<number>
+  [key: string]: any
 }
 
 export type JsonqlContractTemplate = {
@@ -22,8 +28,6 @@ export type JsonqlContractTemplate = {
   meta: JsonqlContractMetaEntry
   error?: JsonqlError | null // the public contract dont need the error field
 }
-// just stub it with a phony one
-export type JsonqlPluginConfig = {[key: string]: any}
 
 export type JsonqlRouteForContract = Array<JsonqlContractEntry>
 

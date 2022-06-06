@@ -1,5 +1,5 @@
 import type { JsonqlValidationPlugin } from '@jsonql/validator-core/index';
-import type { JsonqlAstFullMap, ValidationRuleRecord } from './types';
+import type { JsonqlAstFullMap } from './types';
 import { ExternalPluginLoader as ValidatorPlugins } from '@jsonql/validator-core/dist/external-plugin-loader';
 /**
   Instead of one ast per init
@@ -15,7 +15,7 @@ export declare class Validators {
     constructor(astMap: JsonqlAstFullMap);
     /** get the validator */
     getValidator(propertyName: string): {
-        addValidationRules: (input: ValidationRuleRecord) => any;
+        addValidationRules: (input: any) => any;
         validate: (values: unknown[], raw?: boolean | undefined) => Promise<any>;
     };
     /** overload the ValidatorPlugin registerPlugin method */
