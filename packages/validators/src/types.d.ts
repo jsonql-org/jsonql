@@ -4,9 +4,9 @@ import {
   JsonqlObjectValidateInput,
   // JsonqlArrayValidateInput,
 } from '@jsonql/validator/index'
-import type {
+export type {
   JsonqlValidationPlugin,
-  // JsonqlPluginConfig
+  JsonqlPluginConfig
 } from '@jsonql/validator-core/index'
 
 // for init the entire class with propertyNames
