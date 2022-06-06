@@ -4,8 +4,9 @@ import type {
   JsonqlAstFullMap,
   Resolver,
   Rejecter,
+  ImportedPlugin,
 } from './types'
-import type { JsonqlPluginConfig } from '@jsonql/validator-core/index'
+
 import { join } from 'node:path'
 import glob from 'glob'
 import { Validators } from './validators'
@@ -17,14 +18,17 @@ export class ValidatorsServer extends Validators {
     super(astMap)
   }
 
+  /** loading and register external plugins */
   public async loadExternalPlugins(path: string) {
     const plugins = await this._importExternalPlugins(path)
 
-    return plugins.map((plugin: JsonqlPluginConfig) => {
-      console.log(plugin)
+    return plugins.map((plugin: ImportedPlugin) => {
+      const config = plugin.default.default
+      this._plugin.registerExternalPlugin(config.name as string, config)
+
+      return config
     })
   }
-
 
   /**
     pass a path and we search for plugins and load it
@@ -32,7 +36,7 @@ export class ValidatorsServer extends Validators {
   */
   private async _importExternalPlugins(
     path: string
-  ): Promise<JsonqlPluginConfig[]> {
+  ): Promise<ImportedPlugin[]> {
     return new Promise((resolver: Resolver, rejecter: Rejecter) => {
       glob(join(path, '*.js'), (err: unknown, files: string[]) => {
         if (err) {
@@ -42,8 +46,8 @@ export class ValidatorsServer extends Validators {
           return rejecter(`No plugin file found, we only support js files at the moment!`)
         }
         Promise.all(
-          files.map((file: string) => import(join(path, file)))
-        ).then((results: JsonqlPluginConfig[]) => {
+          files.map((file: string) => import(file))
+        ).then((results: ImportedPlugin[]) => {
           resolver(results)
         })
       })

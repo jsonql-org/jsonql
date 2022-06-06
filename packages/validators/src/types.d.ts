@@ -5,8 +5,10 @@ import {
   // JsonqlArrayValidateInput,
 } from '@jsonql/validator/index'
 import type {
-  JsonqlValidationPlugin
+  JsonqlValidationPlugin,
+  // JsonqlPluginConfig
 } from '@jsonql/validator-core/index'
+
 // for init the entire class with propertyNames
 export declare type JsonqlAstFullMap = {
   [propertyName: string]: Array<JsonqlPropertyParamMap>
@@ -20,9 +22,13 @@ export type Resolver = (value?: T | PromiseLike<T>) => void
 
 export type Rejecter = (reason?: any) => void
 
-declare type PromiseConstructorLike =
+export declare type PromiseConstructorLike =
     new <T>(executor:
               (
                 resolve: Resolver,
                 reject: Rejecter
               ) => void) => PromiseLike<T>;
+
+export type ImportedPlugin = {
+  default: { default: JsonqlValidationPlugin}
+}

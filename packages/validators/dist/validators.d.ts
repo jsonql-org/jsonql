@@ -1,5 +1,6 @@
 import type { JsonqlValidationPlugin } from '@jsonql/validator-core/index';
 import type { JsonqlAstFullMap, ValidationRuleRecord } from './types';
+import { ExternalPluginLoader as ValidatorPlugins } from '@jsonql/validator-core/dist/external-plugin-loader';
 /**
   Instead of one ast per init
    we now pass the entire ast here
@@ -8,8 +9,8 @@ import type { JsonqlAstFullMap, ValidationRuleRecord } from './types';
 export declare class Validators {
     private _validationRules;
     private _validators;
-    private _plugin;
     private _astMap;
+    protected _plugin: ValidatorPlugins;
     /** main */
     constructor(astMap: JsonqlAstFullMap);
     /** get the validator */

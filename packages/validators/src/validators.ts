@@ -26,8 +26,9 @@ export class Validators {
 
   private _validationRules = new Map<string, ValidationRuleRecord>()
   private _validators = new Map<string, Validator>()
-  private _plugin = new ValidatorPlugins()
   private _astMap: JsonqlAstFullMap
+
+  protected _plugin = new ValidatorPlugins()
 
   /** main */
   constructor(astMap: JsonqlAstFullMap) {
