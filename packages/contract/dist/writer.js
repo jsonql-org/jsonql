@@ -129,6 +129,7 @@ class JsonqlContractWriter {
         // add plugins config to filter out the non-external load plugins
         const externals = plugins.filter((plugin) => plugin.external)
             .map((plugin) => plugin.name);
+        debug('appendValidations', this._contract[constants_1.DATA_KEY]);
         this._contract[constants_1.DATA_KEY] = this._contract[constants_1.DATA_KEY]
             .map((data) => {
             var _a;
