@@ -7,7 +7,8 @@ import type {
   JsonqlContractMetaEntry,
   JsonqlProcessedEntry,
   JsonqlRouteForContract,
-  JsonqlPluginConfig,
+  JsonqlValidationPlugin,
+  JsonqlValidationRule,
 } from './types'
 import { join } from 'node:path'
 import {
@@ -171,10 +172,11 @@ export class JsonqlContractWriter {
   }
 
   /** adding validation rules to the argument */
-  public appendValidations(schema: JsonqlAstMap, plugins: JsonqlPluginConfig[]) {
+  public appendValidations(schema: JsonqlAstMap, plugins: JsonqlValidationPlugin[]) {
     // add plugins config to filter out the non-external load plugins
-    const externals: string[] = plugins.filter((plugin: JsonqlPluginConfig) => plugin.external)
-                                       .map((plugin: JsonqlPluginConfig) => plugin.name)
+    const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
+                                       .map((plugin: JsonqlValidationPlugin) => plugin.name)
+    debug('appendValidations', this._contract[DATA_KEY])
     this._contract[DATA_KEY] = this._contract[DATA_KEY]
       .map((data: JsonqlContractEntry) => {
         const propName = data[NAME_KEY]
@@ -185,7 +187,7 @@ export class JsonqlContractWriter {
               const argName = params[NAME_KEY]
               if (rules[argName]) {
                 const _rules = rules[argName]
-                  .filter((rule: JsonqlPluginConfig) => externals.includes(rule.plugin))
+                  .filter((rule: JsonqlValidationRule) => externals.includes(rule.plugin))
                 if (_rules.length) {
                   params[RULES_KEY] = _rules
                 }

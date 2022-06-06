@@ -1,11 +1,12 @@
 // define your types here
 // @TODO need to fix this from @jsonql/ast firs
-import { JsonqlProcessedEntry } from '@jsonql/ast/index'
-import { JsonqlError } from '@jsonql/errors'
+import type { JsonqlProcessedEntry } from '@jsonql/ast/index'
+import type { JsonqlError } from '@jsonql/errors'
 
-export {
+export type {
   JsonqlValidationPlugin,
-  JsonqlPluginConfig
+  JsonqlPluginConfig,
+  JsonqlValidationRule
 } from '@jsonql/validators/index'
 
 export type JsonqlContractEntry = {
@@ -31,4 +32,4 @@ export type JsonqlContractTemplate = {
 
 export type JsonqlRouteForContract = Array<JsonqlContractEntry>
 
-export { JsonqlProcessedEntry, JsonqlError }
+export type { JsonqlProcessedEntry, JsonqlError }

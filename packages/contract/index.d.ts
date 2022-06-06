@@ -1,7 +1,13 @@
 // define your types here
 // @TODO need to fix this from @jsonql/ast firs
-import { JsonqlProcessedEntry } from '@jsonql/ast/index'
-import { JsonqlError } from '@jsonql/errors'
+import type { JsonqlProcessedEntry } from '@jsonql/ast/index'
+import type { JsonqlError } from '@jsonql/errors'
+
+export type {
+  JsonqlValidationPlugin,
+  JsonqlPluginConfig,
+  JsonqlValidationRule
+} from '@jsonql/validators/index'
 
 export type JsonqlContractEntry = {
   name?: string,
@@ -15,6 +21,7 @@ export type JsonqlContractEntry = {
 export type JsonqlContractMetaEntry = {
   type?: string
   timestamp?: Array<number>
+  [key: string]: any
 }
 
 export type JsonqlContractTemplate = {
@@ -22,9 +29,7 @@ export type JsonqlContractTemplate = {
   meta: JsonqlContractMetaEntry
   error?: JsonqlError | null // the public contract dont need the error field
 }
-// just stub it with a phony one
-export type JsonqlPluginConfig = {[key: string]: any}
 
 export type JsonqlRouteForContract = Array<JsonqlContractEntry>
 
-export { JsonqlProcessedEntry, JsonqlError }
+export type { JsonqlProcessedEntry, JsonqlError }

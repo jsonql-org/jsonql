@@ -125,7 +125,10 @@ class JsonqlContractWriter {
         });
     }
     /** adding validation rules to the argument */
-    appendValidations(schema) {
+    appendValidations(schema, plugins) {
+        // add plugins config to filter out the non-external load plugins
+        const externals = plugins.filter((plugin) => plugin.external)
+            .map((plugin) => plugin.name);
         this._contract[constants_1.DATA_KEY] = this._contract[constants_1.DATA_KEY]
             .map((data) => {
             var _a;
@@ -136,7 +139,11 @@ class JsonqlContractWriter {
                     data[constants_1.PARAMS_KEY] = (_a = data[constants_1.PARAMS_KEY]) === null || _a === void 0 ? void 0 : _a.map((params) => {
                         const argName = params[constants_1.NAME_KEY];
                         if (rules[argName]) {
-                            params[constants_1.RULES_KEY] = rules[argName];
+                            const _rules = rules[argName]
+                                .filter((rule) => externals.includes(rule.plugin));
+                            if (_rules.length) {
+                                params[constants_1.RULES_KEY] = _rules;
+                            }
                         }
                         return params;
                     });

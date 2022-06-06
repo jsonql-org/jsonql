@@ -6,7 +6,8 @@ import {
 } from '@jsonql/validator/index'
 export type {
   JsonqlValidationPlugin,
-  JsonqlPluginConfig
+  JsonqlPluginConfig,
+  JsonqlValidationRule
 } from '@jsonql/validator-core/index'
 
 // for init the entire class with propertyNames
