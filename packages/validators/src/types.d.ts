@@ -15,3 +15,14 @@ export declare type JsonqlAstFullMap = {
 export type VeloceAstMap = JsonqlAstFullMap
 // can be raw input or plugin statement
 export declare type ValidationRuleRecord = JsonqlObjectValidateInput | JsonqlValidationPlugin
+
+export type Resolver = (value?: T | PromiseLike<T>) => void
+
+export type Rejecter = (reason?: any) => void
+
+declare type PromiseConstructorLike =
+    new <T>(executor:
+              (
+                resolve: Resolver,
+                reject: Rejecter
+              ) => void) => PromiseLike<T>;

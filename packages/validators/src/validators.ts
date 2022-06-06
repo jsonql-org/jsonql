@@ -7,7 +7,9 @@ import type {
   ValidationRuleRecord,
 } from './types'
 import { Validator } from '@jsonql/validator'
-import { ValidatorPlugins } from '@jsonql/validator-core'
+import {
+  ExternalPluginLoader as ValidatorPlugins
+} from '@jsonql/validator-core/dist/external-plugin-loader'
 import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
@@ -61,6 +63,7 @@ export class Validators {
     // this._appendRules(name, pluginConfig)
     this._plugin.registerPlugin(name, pluginConfig)
   }
+
 
   /** export for contract */
   public export() {
