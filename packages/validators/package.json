@@ -15,6 +15,7 @@
     "test": "pnpm build && pnpm test:ava",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
+    "build:plugin": "esbuild",
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
