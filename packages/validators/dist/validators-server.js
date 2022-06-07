@@ -15,7 +15,7 @@ class ValidatorsServer extends validators_1.Validators {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const plugins = yield this._importExternalPlugins(path);
             return plugins.map((plugin) => {
-                const config = plugin.default.default;
+                const config = plugin.default.default; // TBC if this has changed 
                 this._plugin.registerExternalPlugin(config.name, config);
                 return config;
             });
