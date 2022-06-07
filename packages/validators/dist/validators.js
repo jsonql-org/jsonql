@@ -60,6 +60,7 @@ class Validators {
     checkRuleCanExport(plugins) {
         const externals = plugins.filter((plugin) => plugin.external)
             .map((plugin) => plugin.name);
+        debug('available externals', externals);
         // return a method for checking
         return (rule) => {
             const { plugin } = rule;

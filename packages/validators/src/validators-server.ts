@@ -11,6 +11,9 @@ import { join } from 'node:path'
 import glob from 'glob'
 import { Validators } from './validators'
 
+import debugFn from 'debug'
+const debug = debugFn('jsonql:valdiators-server')
+
 // main
 export class ValidatorsServer extends Validators {
 
@@ -23,11 +26,21 @@ export class ValidatorsServer extends Validators {
     const plugins = await this._importExternalPlugins(path)
 
     return plugins.map((plugin: ImportedPlugin) => {
-      const config = plugin.default.default // TBC if this has changed 
+      debug('loaded plugin', plugin)
+      const config = this._getPluginValue(plugin)
       this._plugin.registerExternalPlugin(config.name as string, config)
 
       return config
     })
+  }
+
+  /** esbuild some shit code */
+  private _getPluginValue(plugin: any) {
+    const value = plugin.default
+    if (value.default) {
+      return value.default
+    }
+    return value
   }
 
   /**

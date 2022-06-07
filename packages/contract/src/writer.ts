@@ -7,7 +7,7 @@ import type {
   JsonqlContractMetaEntry,
   JsonqlProcessedEntry,
   JsonqlRouteForContract,
-  JsonqlValidationPlugin,
+  // JsonqlValidationPlugin,
   JsonqlValidationRule,
 } from './types'
 import { join } from 'node:path'
@@ -190,7 +190,11 @@ export class JsonqlContractWriter {
                 // also check if this is built-in plugin
                 const _rules = rules[argName]
                   .filter(
-                    (rule: JsonqlValidationRule) => checkFn(rule)
+                    (rule: JsonqlValidationRule) => {
+                      const result = checkFn(rule)
+                      debug('checkFn', rule, result)
+                      return result
+                    }
                   )
                 if (_rules.length) {
                   params[RULES_KEY] = _rules

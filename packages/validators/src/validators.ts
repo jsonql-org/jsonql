@@ -86,6 +86,7 @@ export class Validators {
   ) {
     const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
                              .map((plugin: JsonqlValidationPlugin) => plugin.name)
+    debug('available externals', externals)
     // return a method for checking
     return (rule: JsonqlValidationRule) => {
       const { plugin } = rule

@@ -13,6 +13,7 @@
     "test": "pnpm build && nyc ava",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
+    "build:plugin": "esbuild ./tests/fixtures/plugins/year-compare.ts --outfile=./tests/fixtures/plugins/year-compare.js --format=cjs",
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
