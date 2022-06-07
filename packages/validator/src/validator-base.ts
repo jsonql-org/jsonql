@@ -208,6 +208,7 @@ export class ValidatorBase {
       })
     }
     // stuff it with a placeholder fuction?
+    debug('No rules to run')
     return async () => true
   }
 
@@ -304,7 +305,7 @@ export class ValidatorBase {
       }
     } catch(e) {
       // @NOTE because the lookupPlugin method actually throw errors but we don't want
-      // to crash it 
+      // to crash it
       debug('catch _lookupPlugin error', e)
     }
     return constructRuleCb(
