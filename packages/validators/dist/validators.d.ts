@@ -26,7 +26,7 @@ export declare class Validators {
         plugins: import("@jsonql/validator-core/dist/types").JsonqlValidationPlugin[];
     };
     /** check if this rule (plugin) can export to the public */
-    checkRuleCanExport(plugins: JsonqlValidationPlugin[]): (rule: JsonqlValidationRule) => any;
+    checkRuleCanExport(plugins: JsonqlValidationPlugin[]): (rule: JsonqlValidationRule) => boolean;
     /** store the rules for later export */
     private _appendRules;
     /** overload the Validator addValidationRules */

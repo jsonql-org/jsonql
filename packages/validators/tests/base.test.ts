@@ -46,7 +46,7 @@ test(`Should able to use addAdditonalRules`, async t => {
 
   t.truthy(schema)
 
-  console.dir(schema, {depth: null})
+  // console.dir(schema, {depth: null})
 
   return V1.validate(['A', 100])
             .then((result: Array<string | number>) => {
