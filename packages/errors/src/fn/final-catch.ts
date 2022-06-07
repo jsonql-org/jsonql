@@ -10,7 +10,7 @@ import JsonqlEnumError from '../enum-error'
 import JsonqlTypeError from '../type-error'
 import JsonqlCheckerError from '../checker-error'
 import ValidationError from '../validation-error'
-import JsonqlError from '../error'
+import GeneralException from '../error'
 import JsonqlServerError from '../server-error'
 // import GeneralException from '../general-exception'
 import { NO_ERROR_MSG } from '../constants'
@@ -70,6 +70,6 @@ export default function finalCatch(e: any) {
     case e instanceof JsonqlServerError:
       throw new JsonqlServerError(msg, detail)
     default:
-      throw new JsonqlError(msg, detail)
+      throw new GeneralException(msg, detail)
   }
 }

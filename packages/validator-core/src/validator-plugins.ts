@@ -10,7 +10,7 @@ import type {
   JsonqlValidationRule,
   JsonqlValidateFn,
 } from './types'
-import JsonqlError from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/error'
 import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,
@@ -98,7 +98,7 @@ export class ValidatorPlugins {
       }
     }
     debug('lookupPlugin', 'unable to find', pluginName)
-    throw new JsonqlError(`Unable to find plugin: ${pluginName}`)
+    throw new GeneralException(`Unable to find plugin: ${pluginName}`)
   }
 
   /** The public api to register a plugin */
@@ -144,11 +144,11 @@ export class ValidatorPlugins {
   ): void {
     if (!skipCheck) {
       if (this._plugins.has(name)) {
-        throw new JsonqlError(`plugin ${name} already existed!`)
+        throw new GeneralException(`plugin ${name} already existed!`)
       }
       if (!pluginHasFunc(pluginConfig)) {
         debug('registerPlugin', MAIN_NOT_FOUND_ERR)
-        throw new JsonqlError(MAIN_NOT_FOUND_ERR)
+        throw new GeneralException(MAIN_NOT_FOUND_ERR)
       }
       // Here we could extract the params instead of just checking
       if (pluginConfig[PARAMS_KEY] === undefined) {
@@ -157,11 +157,11 @@ export class ValidatorPlugins {
       } else if (pluginConfig[PARAMS_KEY] !== undefined) { // if they provide the keys then we check
         if (!checkPluginArg(pluginConfig[PARAMS_KEY] as string[])) {
           debug('registerPlugin', RESERVED_WORD_ERR)
-          throw new JsonqlError(RESERVED_WORD_ERR)
+          throw new GeneralException(RESERVED_WORD_ERR)
         }
         if (!paramMatches(pluginConfig)) {
           debug('registerPlugin', ARG_NOT_MATCH_ERR)
-          throw new JsonqlError(ARG_NOT_MATCH_ERR)
+          throw new GeneralException(ARG_NOT_MATCH_ERR)
         }
       }
     }

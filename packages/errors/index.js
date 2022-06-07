@@ -23,7 +23,7 @@ import {
   JsonqlTypeError,
   JsonqlCheckerError,
   ValidationError,
-  JsonqlError,
+  GeneralException,
   JsonqlServerError
 } from './src'
 // export
@@ -50,7 +50,7 @@ export {
   JsonqlCheckerError,
 
   ValidationError,
-  JsonqlError,
+  GeneralException,
 
   JsonqlServerError
 }

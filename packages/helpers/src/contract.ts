@@ -10,7 +10,7 @@ import {
   CONDITION_PARAM_NAME
 } from '@jsonql/constants'
 import {
-  JsonqlError,
+  GeneralException,
   JsonqlResolverNotFoundError
 } from '@jsonql/errors'
 import { JsonqlContract } from './types'
@@ -59,7 +59,7 @@ export function extractArgsFromPayload(payload: any, type: string): Array<any> {
         payload[CONDITION_PARAM_NAME]
       ]
     default:
-      throw new JsonqlError(`Unknown ${type} to extract argument from!`)
+      throw new GeneralException(`Unknown ${type} to extract argument from!`)
   }
 }
 

@@ -4,7 +4,7 @@
  * @param {string} message to tell what happen
  * @param {mixed} extra things we want to add, 500?
  */
-export default class JsonqlError extends Error {
+export default class GeneralException extends Error {
     detail: any;
     className: string;
     constructor(...args: any[]);

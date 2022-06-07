@@ -3,7 +3,7 @@ import test from 'ava'
 import {
   JsonqlResolverAppError,
   JsonqlResolverNotFoundError,
-  JsonqlError,
+  GeneralException,
   finalCatch
 } from '../src'
 
@@ -63,10 +63,10 @@ test('It should throw a JsonqlResolverNotFoundError with the wrong name', t => {
 
 test("Very dummy test to test the test Error instance", async t => {
 
-  let error: JsonqlError = await t.throwsAsync(async () => {
+  let error: GeneralException = await t.throwsAsync(async () => {
     return await justThrow().catch(finalCatch)
-  }, undefined , 'just throw a JsonqlError')
+  }, undefined , 'just throw a GeneralException')
 
-  t.is('JsonqlError', error.className)
+  t.is('GeneralException', error.className)
 
 })

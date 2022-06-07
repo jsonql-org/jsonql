@@ -78,7 +78,7 @@ export {
 export {
   getCallMethod,
   packResult,
-  isJsonqlErrorObj,
+  isGeneralExceptionObj,
   packError,
   resultHandler,
 } from './results'

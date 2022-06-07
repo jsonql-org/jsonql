@@ -1,6 +1,6 @@
 // this will add directly to the then call in each http call
 
-import JsonqlError from '../error'
+import GeneralException from '../error'
 // import getErrorByStatus from './get-error-by-status'
 import { NO_ERROR_MSG } from '../constants'
 
@@ -26,7 +26,7 @@ export default function clientErrorsHandler(result: any) {
     if (errorName && error[errorName]) {
       throw new error[className](msg, detail)
     }
-    throw new JsonqlError(msg, detail)
+    throw new GeneralException(msg, detail)
   }
   // pass through to the next
   return result

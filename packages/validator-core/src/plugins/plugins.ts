@@ -7,7 +7,7 @@ import type {
 } from '../types'
 
 import { curry } from '@jsonql/utils/dist/lodash'
-import JsonqlError from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/error'
 
 import { PARAMS_KEY } from '../constants'
 import { plugins } from './index'
@@ -26,16 +26,16 @@ export function curryPlugin(
       // @BUG if the input missing the key then it wont throw for example
       // we expect `arg` but pass the `min` then it will run but just failed
       if (!checkArgKeys(input, params)) {
-        throw new JsonqlError(`Expected params: ${params.join(',')} not found!`)
+        throw new GeneralException(`Expected params: ${params.join(',')} not found!`)
       }
       const args = params.map((param: string) => input[param])
 
       return Reflect.apply(curry(pluginConfig.main), null, args)
     } else {
-      throw new JsonqlError(`This plugin ${pluginConfig.name} can not be curry`)
+      throw new GeneralException(`This plugin ${pluginConfig.name} can not be curry`)
     }
   }
-  throw new JsonqlError(`Unable to find plugin in config`)
+  throw new GeneralException(`Unable to find plugin in config`)
 }
 
 /** check if the expected key presented in the config */

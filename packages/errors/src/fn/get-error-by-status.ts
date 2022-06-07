@@ -23,6 +23,6 @@ export default function getErrorByStatus(statusCode: string | number, contract =
     case SERVER_INTERNAL_STATUS:
       return 'Jsonql500Error'
     default:
-      return 'JsonqlError'
+      return 'GeneralException'
   }
 }

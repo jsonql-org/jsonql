@@ -45,7 +45,7 @@ export const packResult = function(result: any, ts = false): string {
 /**
  * Check if the error object contain our custom key
  */
-export const isJsonqlErrorObj = (e: Error) => {
+export const isGeneralExceptionObj = (e: Error) => {
   const searchFields = ['detail', 'className']
   const test = !!searchFields.filter(field => objectHasKey(e, field)).length
   if (test) {
@@ -68,7 +68,7 @@ export const isJsonqlErrorObj = (e: Error) => {
  */
 export const packError = function(
   detail: any,
-  className = 'JsonqlError',
+  className = 'GeneralException',
   statusCode = 0,
   message = ''
 ): string {
@@ -76,7 +76,7 @@ export const packError = function(
   // we need to check the detail object to see if it has detail, className and message
   // if it has then we should merge the object instead
   return JSON.stringify({
-    [ERROR_KEY]: isJsonqlErrorObj(detail) || errorObj,
+    [ERROR_KEY]: isGeneralExceptionObj(detail) || errorObj,
     [TIMESTAMP_PARAM_NAME]: [ timestamp() ]
   })
 }

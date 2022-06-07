@@ -1,5 +1,5 @@
-// JsonqlError types
-export declare type JsonqlErrorType = {
+// GeneralException types
+export declare type GeneralExceptionType = {
   detail: any
   className: string
   name: string

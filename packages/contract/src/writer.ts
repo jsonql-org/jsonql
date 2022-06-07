@@ -26,7 +26,7 @@ import {
   isFunction,
 } from '@jsonql/utils'
 import {
-  JsonqlError,
+  GeneralException,
 } from '@jsonql/errors'
 import {
   REST_NAME,
@@ -108,7 +108,7 @@ export class JsonqlContractWriter {
   }
 
   /** this will always overwrite the last one */
-  public error(error: JsonqlError): void {
+  public error(error: GeneralException): void {
     this._contract[ERROR_KEY] = error
   }
 

@@ -18,7 +18,7 @@ import type {
 } from '@jsonql/validator-core/dist/validator-plugins'
 
 import ValidationError from '@jsonql/errors/dist/validation-error'
-import JsonqlError from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/error'
 import {
   notEmpty,
   toArray,
@@ -283,7 +283,7 @@ export class ValidatorBase {
             pluginName
           )
         default:
-          throw new JsonqlError(
+          throw new GeneralException(
             `unable to find rule for ${propName},
             we expect ${PLUGIN_KEY}, ${VALIDATE_KEY} or ${VALIDATE_ASYNC_KEY}`
           )

@@ -18,7 +18,7 @@ import {
 } from '../lib/constants'
 import {
   ValidationError,
-  JsonqlError
+  GeneralException
 } from '@jsonql/errors'
 import { notEmpty } from '@jsonql/utils'
 import { debug } from '../base'
@@ -160,7 +160,7 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
       // debugFn('args', args)
       // debugFn('params', params)
       // this is unknown therefore we just throw it!
-      throw new JsonqlError(EXCEPTION_CASE_ERR, { argValues, paramNames })
+      throw new GeneralException(EXCEPTION_CASE_ERR, { argValues, paramNames })
   }
 }
 

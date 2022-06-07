@@ -11,7 +11,7 @@ import {
   ACKNOWLEDGE_REPLY_TYPE
 } from '@jsonql/constants'
 import {
-  JsonqlError,
+  GeneralException,
   ValidationError
 } from '@jsonql/errors'
 import { isString } from './lodash'
@@ -142,7 +142,7 @@ export const extractWsPayload = (payload: any, cb = nil) => {
         type: _data[WS_REPLY_TYPE]
       }
     }
-    throw new JsonqlError(PAYLOAD_NOT_DECODED_ERR, payload)
+    throw new GeneralException(PAYLOAD_NOT_DECODED_ERR, payload)
   } catch(e) {
 
     return Reflect.apply(cb, null, [ERROR_KEY, e])

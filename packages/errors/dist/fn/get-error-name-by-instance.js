@@ -22,10 +22,10 @@ function getErrorNameByInstance(errs, e) {
 }
 exports.getErrorNameByInstance = getErrorNameByInstance;
 /**
- * the same as above with a default JsonqlError as default
+ * the same as above with a default GeneralException as default
  */
 function getErrorNameByInstanceWithDefault(errs, e) {
     let name = getErrorNameByInstance(errs, e);
-    return name === constants_1.UNKNOWN_ERROR ? 'JsonqlError' : name;
+    return name === constants_1.UNKNOWN_ERROR ? 'GeneralException' : name;
 }
 exports.getErrorNameByInstanceWithDefault = getErrorNameByInstanceWithDefault;

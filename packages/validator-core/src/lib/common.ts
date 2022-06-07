@@ -4,7 +4,7 @@ import type {
   JsonqlPluginConfig
 } from '../types'
 import ValidationError from '@jsonql/errors/dist/validation-error'
-import JsonqlError from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/error'
 import {
   IDX_KEY,
   VALUE_KEY,
@@ -55,7 +55,7 @@ export function searchParamsKey(
   }
   // now we check if the params has reserved word
   if (!checkPluginArg(params)) {
-    throw new JsonqlError(RESERVED_WORD_ERR)
+    throw new GeneralException(RESERVED_WORD_ERR)
   }
   rule[PARAMS_KEY] = params
   return rule

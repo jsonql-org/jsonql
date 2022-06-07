@@ -23,10 +23,10 @@ export function getErrorNameByInstance(errs: any[], e: any) {
 }
 
 /**
- * the same as above with a default JsonqlError as default
+ * the same as above with a default GeneralException as default
  */
 export function getErrorNameByInstanceWithDefault(errs: any[], e: any): string {
   let name = getErrorNameByInstance(errs, e)
 
-  return name === UNKNOWN_ERROR ? 'JsonqlError' : name
+  return name === UNKNOWN_ERROR ? 'GeneralException' : name
 }

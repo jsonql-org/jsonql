@@ -18,7 +18,7 @@ function getErrorByStatus(statusCode, contract = false) {
         case constants_1.SERVER_INTERNAL_STATUS:
             return 'Jsonql500Error';
         default:
-            return 'JsonqlError';
+            return 'GeneralException';
     }
 }
 exports.default = getErrorByStatus;

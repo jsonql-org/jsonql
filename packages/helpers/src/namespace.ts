@@ -5,7 +5,7 @@ import {
   NSP_GROUP,
   PUBLIC_NAMESPACE
 } from '@jsonql/constants'
-import { JsonqlError } from '@jsonql/errors'
+import { GeneralException } from '@jsonql/errors'
 import { extractSocketPart } from './contract'
 import { JsonqlContract } from './types'
 // should this move to constants
@@ -35,7 +35,7 @@ function groupPublicNamespace(socket: any, publicNamespace: string) {
 export function groupByNamespace(contract: JsonqlContract) {
   const socket = extractSocketPart(contract)
   if (socket === false) {
-    throw new JsonqlError('groupByNamespace', SOCKET_NOT_FOUND_ERR)
+    throw new GeneralException('groupByNamespace', SOCKET_NOT_FOUND_ERR)
   }
   const prop = {
     [NSP_GROUP]: {},

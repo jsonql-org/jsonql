@@ -11,7 +11,7 @@ import JsonqlEnumError from './enum-error'
 import JsonqlTypeError from './type-error'
 import JsonqlCheckerError from './checker-error'
 import ValidationError from './validation-error'
-import JsonqlError from './error'
+import GeneralException from './error'
 import JsonqlServerError from './server-error'
 import GeneralException from './general-exception'
 
@@ -27,7 +27,7 @@ export {
   JsonqlTypeError,
   JsonqlCheckerError,
   ValidationError,
-  JsonqlError,
+  GeneralException,
   JsonqlServerError,
   GeneralException,
 }

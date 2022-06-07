@@ -50,7 +50,7 @@ client.query.getSomething(1)
 ### Share errors
 
 - ValidationError
-- JsonqlError
+- GeneralException
 - JsonqlServerError
 
 ### general error

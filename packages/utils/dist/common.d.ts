@@ -31,7 +31,7 @@ export declare const isNotEmpty: (param: any) => boolean;
  if it's object then if its empty object
  */
 export declare function notEmpty(a: any, valueCheck?: boolean): boolean;
-export declare const isEmpty: (value: any, valueCheck?: boolean | undefined) => boolean;
+export declare const isEmpty: (value: any, valueCheck?: boolean) => boolean;
 /**
  * Shorthand method for Object.assign
  */

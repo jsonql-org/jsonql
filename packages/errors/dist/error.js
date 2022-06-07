@@ -7,14 +7,14 @@ const constants_1 = require("./constants");
  * @param {string} message to tell what happen
  * @param {mixed} extra things we want to add, 500?
  */
-class JsonqlError extends Error {
+class GeneralException extends Error {
     constructor(...args) {
         super(...args);
         this.message = args[0];
         this.detail = args[1];
-        this.className = JsonqlError.name;
+        this.className = GeneralException.name;
         if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, JsonqlError);
+            Error.captureStackTrace(this, GeneralException);
             // this.detail = this.stack;
         }
     }
@@ -22,4 +22,4 @@ class JsonqlError extends Error {
         return constants_1.NO_STATUS_CODE;
     }
 }
-exports.default = JsonqlError;
+exports.default = GeneralException;

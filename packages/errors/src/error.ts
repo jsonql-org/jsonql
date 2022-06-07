@@ -6,7 +6,7 @@ import { NO_STATUS_CODE } from './constants'
  * @param {string} message to tell what happen
  * @param {mixed} extra things we want to add, 500?
  */
-export default class JsonqlError extends Error {
+export default class GeneralException extends Error {
   detail: any
   className: string
 
@@ -16,10 +16,10 @@ export default class JsonqlError extends Error {
     this.message = args[0]
     this.detail = args[1]
 
-    this.className = JsonqlError.name
+    this.className = GeneralException.name
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, JsonqlError)
+      Error.captureStackTrace(this, GeneralException)
       // this.detail = this.stack;
     }
   }

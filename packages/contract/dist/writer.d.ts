@@ -1,6 +1,6 @@
 import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
-import { JsonqlError } from '@jsonql/errors';
+import { GeneralException } from '@jsonql/errors';
 export declare class JsonqlContractWriter {
     private _contract;
     /** instead of run the parser again we just load the ast map */
@@ -12,7 +12,7 @@ export declare class JsonqlContractWriter {
     /** insert extra data into node by name */
     data(propertyName: string, value: JsonqlContractEntry): void;
     /** this will always overwrite the last one */
-    error(error: JsonqlError): void;
+    error(error: GeneralException): void;
     /** make a shallow copy might not be enough */
     meta(entry: JsonqlContractMetaEntry): void;
     /**
