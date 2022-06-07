@@ -66,7 +66,6 @@ export class Validators {
     this._plugin.registerPlugin(name, pluginConfig)
   }
 
-
   /** export for contract */
   public export() {
     const schema = {}
@@ -81,8 +80,8 @@ export class Validators {
     return { schema, plugins }
   }
 
-  /** check if this plugin can export to the public */
-  public checkPluginCanExport(
+  /** check if this rule (plugin) can export to the public */
+  public checkRuleCanExport(
     plugins: JsonqlValidationPlugin[]
   ) {
     const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
@@ -91,6 +90,7 @@ export class Validators {
     return (rule: JsonqlValidationRule) => {
       const { plugin } = rule
       if (plugin) {
+        debug('check plugin can export', plugin)
         return this._plugin.isBuildIn(plugin) || externals.includes(plugin)
       }
       return false
