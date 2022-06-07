@@ -175,11 +175,10 @@ export class JsonqlContractWriter {
   public appendValidations(schema: JsonqlAstMap, plugins: JsonqlValidationPlugin[]) {
     // add plugins config to filter out the non-external load plugins
     const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
-                                       .map((plugin: JsonqlValidationPlugin) => plugin.name)
+                             .map((plugin: JsonqlValidationPlugin) => plugin.name)
     // also we need to check if the plugins is built-in one so they will be here
-    
+    debug('appendValidations', this._contract[DATA_KEY], schema, plugins)
 
-    debug('appendValidations', this._contract[DATA_KEY])
     this._contract[DATA_KEY] = this._contract[DATA_KEY]
       .map((data: JsonqlContractEntry) => {
         const propName = data[NAME_KEY]
@@ -189,8 +188,12 @@ export class JsonqlContractWriter {
             data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: JsonqlProcessedEntry) => {
               const argName = params[NAME_KEY]
               if (rules[argName]) {
+                // also check if this is built-in plugin
                 const _rules = rules[argName]
-                  .filter((rule: JsonqlValidationRule) => externals.includes(rule.plugin))
+                  .filter(
+                    (rule: JsonqlValidationRule) =>
+                      externals.includes(rule.plugin)
+                    )
                 if (_rules.length) {
                   params[RULES_KEY] = _rules
                 }

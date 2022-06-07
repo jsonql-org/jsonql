@@ -1,6 +1,7 @@
 // main class
 import type {
   JsonqlValidationPlugin,
+  JsonqlValidationRule,
 } from '@jsonql/validator-core/index'
 import type {
   JsonqlAstFullMap,
@@ -79,6 +80,23 @@ export class Validators {
 
     return { schema, plugins }
   }
+
+  /** check if this plugin can export to the public */
+  public checkPluginCanExport(
+    plugins: JsonqlValidationPlugin[]
+  ) {
+    const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
+                             .map((plugin: JsonqlValidationPlugin) => plugin.name)
+    // return a method for checking
+    return (rule: JsonqlValidationRule) => {
+      const { plugin } = rule
+      if (plugin) {
+        return this._plugin.isBuildIn(plugin) || externals.includes(plugin)
+      }
+      return false
+    }
+  }
+
   /*
   @TODO
   When to add
