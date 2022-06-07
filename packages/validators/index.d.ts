@@ -33,3 +33,7 @@ export declare type PromiseConstructorLike =
 export type ImportedPlugin = {
   default: { default: JsonqlValidationPlugin}
 }
+
+export type ClientPluginConfigs = {
+  [pluginName: string]: JsonqlValidationPlugin
+}

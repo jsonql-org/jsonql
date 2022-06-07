@@ -3,7 +3,7 @@ import MultiApi from './fixtures/multi-api'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
 import { Validators } from '../src'
-import { ValidationError } from '@jsonql/errrors'
+import ValidationError from '@jsonql/errors/dist/validation-error'
 
 let api: MultiApi
 let validators: Validators

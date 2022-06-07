@@ -15,6 +15,7 @@ import ValidationError from '@jsonql/errors/dist/validation-error'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
 import { RULES_KEY } from '@jsonql/validator-core/dist/constants'
+
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')
 
