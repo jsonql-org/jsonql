@@ -56,6 +56,20 @@ class Validators {
         debug('plugin configs', plugins);
         return { schema, plugins };
     }
+    /** check if this rule (plugin) can export to the public */
+    checkRuleCanExport(plugins) {
+        const externals = plugins.filter((plugin) => plugin.external)
+            .map((plugin) => plugin.name);
+        // return a method for checking
+        return (rule) => {
+            const { plugin } = rule;
+            if (plugin) {
+                debug('check plugin can export', plugin);
+                return this._plugin.isBuildIn(plugin) || externals.includes(plugin);
+            }
+            return false;
+        };
+    }
     /*
     @TODO
     When to add

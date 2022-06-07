@@ -1,4 +1,4 @@
-import type { JsonqlValidationPlugin } from '@jsonql/validator-core/index';
+import type { JsonqlValidationPlugin, JsonqlValidationRule } from '@jsonql/validator-core/index';
 import type { JsonqlAstFullMap } from './types';
 import { ExternalPluginLoader as ValidatorPlugins } from '@jsonql/validator-core/dist/external-plugin-loader';
 /**
@@ -25,6 +25,8 @@ export declare class Validators {
         schema: {};
         plugins: import("@jsonql/validator-core/dist/types").JsonqlValidationPlugin[];
     };
+    /** check if this rule (plugin) can export to the public */
+    checkRuleCanExport(plugins: JsonqlValidationPlugin[]): (rule: JsonqlValidationRule) => any;
     /** store the rules for later export */
     private _appendRules;
     /** overload the Validator addValidationRules */

@@ -91,7 +91,7 @@ export class Validators {
       const { plugin } = rule
       if (plugin) {
         debug('check plugin can export', plugin)
-        return this._plugin.isBuildIn(plugin) || externals.includes(plugin)
+        return this._plugin.isBuiltIn(plugin) || externals.includes(plugin)
       }
       return false
     }
