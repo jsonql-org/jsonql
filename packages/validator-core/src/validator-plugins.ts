@@ -116,16 +116,21 @@ export class ValidatorPlugins {
   ): void {
     this._registerPlugin(name, pluginConfig, false, true)
   }
-
-  /** export all external plugins for generate js file */
-  public export() {
+  
+  /** this is no longer in use and we change the usage to export list of names that can be add to contract */
+  public export(external = true) {
     const plugins: JsonqlValidationPlugin[] = []
     this._plugins.forEach((p: JsonqlValidationPlugin, n: string) => {
-      if (!this._internalPluginNames.includes(n)) {
+      if (!this.isBuiltIn(n) && p.external === external) {
         plugins.push(p)
       }
     })
     return plugins
+  }
+
+  /** just check if this plugin is built-in */
+  public isBuiltIn(pluginName: string) {
+    return this._internalPluginNames.includes(pluginName)
   }
 
   // ------------------------- PRIVATE --------------------------//

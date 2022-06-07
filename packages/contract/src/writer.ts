@@ -176,6 +176,9 @@ export class JsonqlContractWriter {
     // add plugins config to filter out the non-external load plugins
     const externals = plugins.filter((plugin: JsonqlValidationPlugin) => plugin.external)
                                        .map((plugin: JsonqlValidationPlugin) => plugin.name)
+    // also we need to check if the plugins is built-in one so they will be here
+    
+
     debug('appendValidations', this._contract[DATA_KEY])
     this._contract[DATA_KEY] = this._contract[DATA_KEY]
       .map((data: JsonqlContractEntry) => {
