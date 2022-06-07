@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JsonqlContractWriter = void 0;
+exports.ContractWriter = void 0;
 const tslib_1 = require("tslib");
 const node_path_1 = require("node:path");
 const fs_extra_1 = require("fs-extra");
@@ -9,7 +9,7 @@ const constants_1 = require("./constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)(`jsonql:contract:class`);
 // main
-class JsonqlContractWriter {
+class ContractWriter {
     /** instead of run the parser again we just load the ast map */
     constructor(routeForContract, type = constants_1.REST_NAME) {
         // form the basic structure
@@ -156,5 +156,20 @@ class JsonqlContractWriter {
         });
         return this._contract;
     }
+    /** combine together to output the final public contract */
+    outputPublic(validators) {
+        const { schema, plugins } = validators.export();
+        if (process.env.DEBUG) {
+            console.log('------------------------ schema -------------------------------');
+            console.dir(schema, { depth: null });
+            console.log('------------------------ plugins -------------------------------');
+            console.dir(plugins, { depth: null });
+        }
+        const checkFn = validators.checkRuleCanExport(plugins);
+        this.appendValidations(schema, checkFn);
+        // at this point should be the final call
+        const contract = this.output();
+        return contract;
+    }
 }
-exports.JsonqlContractWriter = JsonqlContractWriter;
+exports.ContractWriter = ContractWriter;

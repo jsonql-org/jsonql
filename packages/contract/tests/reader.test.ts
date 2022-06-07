@@ -2,15 +2,15 @@ import test from 'ava'
 import { join } from 'node:path'
 import { readJsonSync } from 'fs-extra'
 import {
-  JsonqlContractReader,
+  ContractReader,
   DEFAULT_CONTRACT_FILE_NAME
 } from '../dist'
 const contractFile = join(__dirname, 'fixtures', 'contracts', DEFAULT_CONTRACT_FILE_NAME)
-let reader: JsonqlContractReader
+let reader: ContractReader
 
 test.before(() => {
   const json = readJsonSync(contractFile)
-  reader = new JsonqlContractReader(json)
+  reader = new ContractReader(json)
 })
 
 test(`Testing the JsonqlContractReader`, t => {

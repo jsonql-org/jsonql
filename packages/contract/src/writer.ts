@@ -9,6 +9,7 @@ import type {
   JsonqlRouteForContract,
   // JsonqlValidationPlugin,
   JsonqlValidationRule,
+  Validators,
 } from './types'
 import { join } from 'node:path'
 import {
@@ -25,9 +26,7 @@ import {
   cloneDeep,
   isFunction,
 } from '@jsonql/utils'
-import {
-  GeneralException,
-} from '@jsonql/errors'
+import GeneralException from '@jsonql/errors/dist/general-exception'
 import {
   REST_NAME,
   DATA_KEY,
@@ -45,7 +44,7 @@ import debugFn from 'debug'
 const debug = debugFn(`jsonql:contract:class`)
 
 // main
-export class JsonqlContractWriter {
+export class ContractWriter {
   // form the basic structure
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
@@ -208,4 +207,25 @@ export class JsonqlContractWriter {
     })
     return this._contract
   }
+
+  /** combine together to output the final public contract */
+  public outputPublic(validators: Validators) {
+    const { schema, plugins } = validators.export()
+
+    if (process.env.DEBUG) {
+      console.log('------------------------ schema -------------------------------')
+      console.dir( schema, { depth: null })
+      console.log('------------------------ plugins -------------------------------')
+      console.dir( plugins, { depth: null })
+    }
+
+    const checkFn = validators.checkRuleCanExport(plugins)
+
+    this.appendValidations( schema, checkFn )
+    // at this point should be the final call
+    const contract = this.output()
+
+    return contract
+  }
+
 }

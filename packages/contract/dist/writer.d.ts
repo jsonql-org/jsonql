@@ -1,7 +1,7 @@
-import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule } from './types';
+import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule, Validators } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
-import { GeneralException } from '@jsonql/errors';
-export declare class JsonqlContractWriter {
+import GeneralException from '@jsonql/errors/dist/general-exception';
+export declare class ContractWriter {
     private _contract;
     /** instead of run the parser again we just load the ast map */
     constructor(routeForContract: JsonqlRouteForContract, type?: string);
@@ -28,4 +28,6 @@ export declare class JsonqlContractWriter {
     write(outDir: string): Promise<string>;
     /** adding validation rules to the argument */
     appendValidations(schema: JsonqlAstMap, checkFn: (rule: JsonqlValidationRule) => boolean): JsonqlContractTemplate;
+    /** combine together to output the final public contract */
+    outputPublic(validators: Validators): JsonqlContractTemplate;
 }

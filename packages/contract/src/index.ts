@@ -1,6 +1,6 @@
 // main export
-export { JsonqlContractWriter } from './writer'
-export { JsonqlContractReader } from './reader'
+export { ContractWriter } from './writer'
+export { ContractReader } from './reader'
 // exporting couple constants here that is related to contract
 export {
   DATA_KEY,

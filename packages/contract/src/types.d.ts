@@ -33,3 +33,8 @@ export type JsonqlContractTemplate = {
 export type JsonqlRouteForContract = Array<JsonqlContractEntry>
 
 export type { JsonqlProcessedEntry, GeneralException }
+
+// just fake one here
+export type Validators = {
+  [key: string]: any
+}

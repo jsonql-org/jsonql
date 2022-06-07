@@ -11,18 +11,18 @@ import {
 */
 import { Validators } from '@jsonql/validators'
 
-import { JsonqlContractWriter } from '../src'
+import { ContractWriter } from '../src'
 const targetFile = join(__dirname, 'fixtures', 'velocejs', 'test-class.ts')
 // const dest = join(__dirname, 'fixtures', 'tmp')
 
 let astMap: JsonqlAstMap
-let contractInstance: JsonqlContractWriter
+let contractInstance: ContractWriter
 let validators: Validators
 test.before(() => {
   astMap = tsClassParserSync(targetFile)
 
-  contractInstance = new JsonqlContractWriter(
-    JsonqlContractWriter.prepare(astMap)
+  contractInstance = new ContractWriter(
+    ContractWriter.prepare(astMap)
   )
 
   validators = new Validators(astMap)
@@ -60,22 +60,12 @@ test.before(() => {
     }
   })
 })
-/*
-test.after(() => {
-  // @TODO remove the test files
-  fs.removeSync(dest)
-})
-*/
+
 test(`Should able to have a contract with validation info`, t => {
-  const all = validators.export()
-  const { schema, plugins } = all
-  console.dir(all, { depth: null })
 
-  const checkFn = validators.checkRuleCanExport(plugins)
-
-  contractInstance.appendValidations( schema, checkFn )
-  const contract = contractInstance.output()
+  const contract = contractInstance.outputPublic(validators)
   // console.log('-----------------------------------------------------')
   // console.dir(contract, { depth: null })
+
   t.truthy(contract)
 })

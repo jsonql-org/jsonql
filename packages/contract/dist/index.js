@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CONTENT_TYPE = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = exports.JsonqlContractReader = exports.JsonqlContractWriter = void 0;
+exports.CONTRACT_REQUEST_METHODS = exports.DEFAULT_HEADER = exports.CONTENT_TYPE = exports.PUBLIC_CONTRACT_FILE_NAME = exports.DEFAULT_CONTRACT_FILE_NAME = exports.AVAILABLE_FORMATS = exports.REST_NAME = exports.JSONQL_NAME = exports.META_KEY = exports.ERROR_KEY = exports.DATA_KEY = exports.ContractReader = exports.ContractWriter = void 0;
 // main export
 var writer_1 = require("./writer");
-Object.defineProperty(exports, "JsonqlContractWriter", { enumerable: true, get: function () { return writer_1.JsonqlContractWriter; } });
+Object.defineProperty(exports, "ContractWriter", { enumerable: true, get: function () { return writer_1.ContractWriter; } });
 var reader_1 = require("./reader");
-Object.defineProperty(exports, "JsonqlContractReader", { enumerable: true, get: function () { return reader_1.JsonqlContractReader; } });
+Object.defineProperty(exports, "ContractReader", { enumerable: true, get: function () { return reader_1.ContractReader; } });
 // exporting couple constants here that is related to contract
 var constants_1 = require("./constants");
 Object.defineProperty(exports, "DATA_KEY", { enumerable: true, get: function () { return constants_1.DATA_KEY; } });

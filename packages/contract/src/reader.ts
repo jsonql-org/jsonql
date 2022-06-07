@@ -1,10 +1,11 @@
 // This class received the contract then allow you to query it
+import type { JsonqlContractTemplate } from './types'
+
 import { readOnly, accessByPath } from '@jsonql/utils'
-import { JsonqlContractTemplate } from './types'
 import { DATA_KEY, META_KEY, ERROR_KEY } from './constants'
 // @TODO add protobuf
 
-export class JsonqlContractReader {
+export class ContractReader {
   private _contract: JsonqlContractTemplate
 
   constructor(contract: JsonqlContractTemplate) {

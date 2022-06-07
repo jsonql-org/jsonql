@@ -1,5 +1,5 @@
-import { JsonqlContractTemplate } from './types';
-export declare class JsonqlContractReader {
+import type { JsonqlContractTemplate } from './types';
+export declare class ContractReader {
     private _contract;
     constructor(contract: JsonqlContractTemplate);
     private _access;
