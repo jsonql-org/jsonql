@@ -23,7 +23,7 @@ export class ValidatorsServer extends Validators {
     const plugins = await this._importExternalPlugins(path)
 
     return plugins.map((plugin: ImportedPlugin) => {
-      const config = plugin.default.default
+      const config = plugin.default.default // TBC if this has changed 
       this._plugin.registerExternalPlugin(config.name as string, config)
 
       return config

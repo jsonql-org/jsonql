@@ -33,7 +33,7 @@ test(`Should able to add multiple validator and retrieve them later`, async t =>
   t.truthy(fn2)
 })
 
-test('Export should export list of external register plugins', t => {
+test('Export should export list of plugins when pass false to export', t => {
   t.plan(4)
   // add one more with async method
   plugin.registerPlugin('MyCustomPlugin3', {
@@ -43,7 +43,7 @@ test('Export should export list of external register plugins', t => {
     params: ['c']
   })
 
-  const plugins = plugin.export()
+  const plugins = plugin.export(false)
   const names = ['MyCustomPlugin1', 'MyCustomPlugin2', 'MyCustomPlugin3']
 
   t.is(plugins.length, 3)

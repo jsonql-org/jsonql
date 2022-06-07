@@ -19,8 +19,10 @@ export declare class ValidatorPlugins {
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** call this when loading external plugin, not allow to use directly */
     protected _registerExternalPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
-    /** export all external plugins for generate js file */
-    export(): JsonqlValidationPlugin[];
+    /** this is no longer in use and we change the usage to export list of names that can be add to contract */
+    export(external?: boolean): JsonqlValidationPlugin[];
+    /** just check if this plugin is built-in */
+    isBuiltIn(pluginName: string): boolean;
     /** register plugins */
     protected _registerPlugin(name: string, pluginConfig: Partial<JsonqlPluginConfig>, skipCheck?: boolean, // when register internal plugin then skip it
     external?: boolean): void;

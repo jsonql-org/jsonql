@@ -62,15 +62,19 @@ class ValidatorPlugins {
     _registerExternalPlugin(name, pluginConfig) {
         this._registerPlugin(name, pluginConfig, false, true);
     }
-    /** export all external plugins for generate js file */
-    export() {
+    /** this is no longer in use and we change the usage to export list of names that can be add to contract */
+    export(external = true) {
         const plugins = [];
         this._plugins.forEach((p, n) => {
-            if (!this._internalPluginNames.includes(n)) {
+            if (!this.isBuiltIn(n) && p.external === external) {
                 plugins.push(p);
             }
         });
         return plugins;
+    }
+    /** just check if this plugin is built-in */
+    isBuiltIn(pluginName) {
+        return this._internalPluginNames.includes(pluginName);
     }
     // ------------------------- PRIVATE --------------------------//
     /** register plugins */
