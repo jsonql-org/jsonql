@@ -1,6 +1,6 @@
 // create options
 import { createConfig, checkConfigAsync, isContract, isNotEmpty } from '../../main'
-import { JsonqlValidationError, JsonqlCheckerError } from 'jsonql-errors'
+import { ValidationError, JsonqlCheckerError } from 'jsonql-errors'
 import {
   STRING_TYPE,
   BOOLEAN_TYPE,

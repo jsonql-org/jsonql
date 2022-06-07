@@ -9,7 +9,7 @@ import JsonqlResolverNotFoundError from '../resolver-not-found-error'
 import JsonqlEnumError from '../enum-error'
 import JsonqlTypeError from '../type-error'
 import JsonqlCheckerError from '../checker-error'
-import JsonqlValidationError from '../validation-error'
+import ValidationError from '../validation-error'
 import JsonqlError from '../error'
 import JsonqlServerError from '../server-error'
 // import GeneralError from '../general-error'
@@ -38,7 +38,7 @@ export default function finalCatch(e: any) {
   if (Array.isArray(e)) {
     // if we want the message then I will have to create yet another function
     // to wrap this function to provide the name prop
-    throw new JsonqlValidationError('', e)
+    throw new ValidationError('', e)
   }
   const msg = e.message || NO_ERROR_MSG
   const detail = e.detail || e
@@ -65,8 +65,8 @@ export default function finalCatch(e: any) {
       throw new JsonqlTypeError(msg, detail)
     case e instanceof JsonqlCheckerError:
       throw new JsonqlCheckerError(msg, detail)
-    case e instanceof JsonqlValidationError:
-      throw new JsonqlValidationError(msg, detail)
+    case e instanceof ValidationError:
+      throw new ValidationError(msg, detail)
     case e instanceof JsonqlServerError:
       throw new JsonqlServerError(msg, detail)
     default:

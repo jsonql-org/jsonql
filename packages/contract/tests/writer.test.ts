@@ -67,7 +67,9 @@ test.after(() => {
 })
 */
 test(`Should able to have a contract with validation info`, t => {
-  const { schema, plugins } = validators.export()
+  const all = validators.export()
+  const { schema, plugins } = all
+  console.dir(all, { depth: null })
 
   const checkFn = validators.checkRuleCanExport(plugins)
 

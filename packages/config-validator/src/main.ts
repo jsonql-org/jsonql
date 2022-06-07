@@ -17,7 +17,7 @@ import {
   ERROR_KEY
 } from '../lib/constants'
 import {
-  JsonqlValidationError,
+  ValidationError,
   JsonqlError
 } from '@jsonql/errors'
 import { notEmpty } from '@jsonql/utils'
@@ -93,14 +93,14 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
   // there will be situation where the function doesn't need args and params
   if (!checkArray(paramNames)) {
     // debugFn('params value', params)
-    throw new JsonqlValidationError(PARAMS_NOT_ARRAY_ERR)
+    throw new ValidationError(PARAMS_NOT_ARRAY_ERR)
   }
   if (paramNames.length === 0) {
     return []
   }
   if (!checkArray(argValues)) {
     debugFn(argValues)
-    throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR)
+    throw new ValidationError(ARGS_NOT_ARRAY_ERR)
   }
   // debugFn(args, params);
   // fall through switch

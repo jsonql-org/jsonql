@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.templateErrorObject = exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.NOT_ACCEPTABLE_STATUS = exports.NOT_FOUND_STATUS = exports.FORBIDDEN_STATUS = exports.UNAUTHORIZED_STATUS = exports.SUCCESS_STATUS = exports.NO_STATUS_CODE = exports.NO_ERROR_MSG = exports.SERVER_INTERNAL_STATUS = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralError = exports.JsonqlServerError = exports.JsonqlError = exports.JsonqlValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
+exports.templateErrorObject = exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.NOT_ACCEPTABLE_STATUS = exports.NOT_FOUND_STATUS = exports.FORBIDDEN_STATUS = exports.UNAUTHORIZED_STATUS = exports.SUCCESS_STATUS = exports.NO_STATUS_CODE = exports.NO_ERROR_MSG = exports.SERVER_INTERNAL_STATUS = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralError = exports.JsonqlServerError = exports.JsonqlError = exports.ValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
 const tslib_1 = require("tslib");
 const _406_error_1 = tslib_1.__importDefault(require("./406-error"));
 exports.Jsonql406Error = _406_error_1.default;
@@ -23,7 +23,7 @@ exports.JsonqlTypeError = type_error_1.default;
 const checker_error_1 = tslib_1.__importDefault(require("./checker-error"));
 exports.JsonqlCheckerError = checker_error_1.default;
 const validation_error_1 = tslib_1.__importDefault(require("./validation-error"));
-exports.JsonqlValidationError = validation_error_1.default;
+exports.ValidationError = validation_error_1.default;
 const error_1 = tslib_1.__importDefault(require("./error"));
 exports.JsonqlError = error_1.default;
 const server_error_1 = tslib_1.__importDefault(require("./server-error"));

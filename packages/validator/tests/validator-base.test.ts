@@ -4,7 +4,7 @@ import test from 'ava'
 import { join } from 'node:path'
 import { readJsonSync } from 'fs-extra'
 import { ValidatorBase } from '../base'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 const astFile = join(__dirname, 'fixtures', 'resolver', 'baseline-fn.json')
 let json: any
@@ -52,7 +52,7 @@ test('When try to use plugin and it should fail with a NO_PLUGIN_DUMMY_FUNCTION'
   })
 
   return vb.validate(['Again', 201])
-      .catch((error: JsonqlValidationError) => {
+      .catch((error: ValidationError) => {
 
         t.deepEqual(error.message, 'NO_PLUGIN_DUMMY_FUNCTION')
       })
@@ -75,7 +75,7 @@ test(`Testing another situation when we pass a async method as validator method`
   // @NOTE we didn't catch an error but not the valdiation error we want
   // instead complain about the function pass is not a function but an object
   return vb.validate(['hello', 100])
-           .catch((error: JsonqlValidationError) => {
+           .catch((error: ValidationError) => {
              // console.log(error)
              t.truthy(error.detail)
            })

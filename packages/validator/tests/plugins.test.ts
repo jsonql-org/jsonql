@@ -5,7 +5,7 @@ import { ValidatorPlugins } from '@jsonql/validator-core'
 import { Validator } from '../src'
 import { context } from './fixtures/resolver/export-ast'
 
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 const pluginInstance = new ValidatorPlugins(1)
 const expectedLoginResult = {username: 'John', password: '123456'}
@@ -51,7 +51,7 @@ test(`Testing the JsonqlObjectValidateInput with built-in plugins that is mis-co
     age: { plugin: 'moreThan', min: 50}
   })
   return validateObj1.validate(['some@email.com', 65])
-          .catch((error: JsonqlValidationError) => {
+          .catch((error: ValidationError) => {
             t.is(error.message, 'NO_PLUGIN_DUMMY_FUNCTION')
           })
 
@@ -97,7 +97,7 @@ test(`Testing the plugin with a test case from the velocejs which causing proble
                   .then(result => {
                     t.deepEqual(result, loginValues)
                   })
-                  .catch((error: JsonqlValidationError) => {
+                  .catch((error: ValidationError) => {
                     t.deepEqual(error.detail, [0,2])
                   })
 })

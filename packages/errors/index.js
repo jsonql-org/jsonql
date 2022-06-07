@@ -22,7 +22,7 @@ import {
   JsonqlEnumError,
   JsonqlTypeError,
   JsonqlCheckerError,
-  JsonqlValidationError,
+  ValidationError,
   JsonqlError,
   JsonqlServerError
 } from './src'
@@ -49,7 +49,7 @@ export {
   JsonqlTypeError,
   JsonqlCheckerError,
 
-  JsonqlValidationError,
+  ValidationError,
   JsonqlError,
 
   JsonqlServerError

@@ -1,6 +1,6 @@
 // validate the return result using the contract defintion
 import { validateSync, validateAsync } from './main'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 import {
   RETURNS_NAME,
   DATA_KEY,
@@ -72,7 +72,7 @@ export function checkResolverReturns(
     // format the value
     return checkReturns(value, def[RETURNS_NAME])
   }
-  throw new JsonqlValidationError(
+  throw new ValidationError(
     'checkResolverReturns',
     `${resolverType}.${resolverName} ${RETURNS_NAME} not found`
   )
@@ -93,7 +93,7 @@ export function checkResolverReturnsAsync(
     return checkReturns(value, def[RETURNS_NAME], true)
   }
   return Promise.reject(
-    new JsonqlValidationError(
+    new ValidationError(
       'checkResolverReturnsAsync',
       `${resolverType}.${resolverName} ${RETURNS_NAME} not found`
     )

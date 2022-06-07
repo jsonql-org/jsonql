@@ -18,7 +18,7 @@ import {
 import debugFn from 'debug'
 const debug = debugFn('jsonql:params-api')
 
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 
 test('It should able to construct correct query argument and extract from the other side', t => {
@@ -59,12 +59,12 @@ test('Pass wrong param should throw error', t => {
   // @ts-ignore
   let fn = () => createQueryStr('whatever', 'xyz')
 
-  let error: JsonqlValidationError = t.throws( () => {
+  let error: ValidationError = t.throws( () => {
     return fn()
   } , undefined, 'expect the args to be an array')
 
-  t.is(error.className, 'JsonqlValidationError')
-  t.true(error instanceof JsonqlValidationError)
+  t.is(error.className, 'ValidationError')
+  t.true(error instanceof ValidationError)
 })
 
 test('It should able to use the jsonp option', t => {

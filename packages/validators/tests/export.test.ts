@@ -45,7 +45,7 @@ test(`Test out the export method and develop the file export`, async t => {
 
   const schema = validators.export()
 
-  // console.dir(schema, {depth: null})
+  console.dir(schema, {depth: null})
 
   t.truthy(schema.plugins)
 

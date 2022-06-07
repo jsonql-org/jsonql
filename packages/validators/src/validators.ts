@@ -11,7 +11,7 @@ import { Validator } from '@jsonql/validator'
 import {
   ExternalPluginLoader as ValidatorPlugins
 } from '@jsonql/validator-core/dist/external-plugin-loader'
-import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
+import ValidationError from '@jsonql/errors/dist/validation-error'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
 import { RULES_KEY } from '@jsonql/validator-core/dist/constants'
@@ -52,7 +52,7 @@ export class Validators {
         validate: obj.validate.bind(obj)
       }
     }
-    throw new JsonqlValidationError(`${propertyName} validator is not registered!`)
+    throw new ValidationError(`${propertyName} validator is not registered!`)
   }
 
   // ------------------- OVERLOAD ----------------------//

@@ -4,7 +4,7 @@ import { Validators } from '../src'
 // import MultiApi from './fixtures/multi-api'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 // let api: MultiApi
 let validators: Validators
@@ -26,7 +26,7 @@ test(`Try to call a non-exist plugin and it should not throw error`, async t => 
   })
 
   return validator.validate([101])
-                  .catch((error: JsonqlValidationError) => {
+                  .catch((error: ValidationError) => {
                     
                     t.is(error.message, 'NO_PLUGIN_DUMMY_FUNCTION')
                   })

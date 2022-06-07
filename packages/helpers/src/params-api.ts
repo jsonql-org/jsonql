@@ -8,7 +8,7 @@ import {
   QUERY_ARG_NAME,
   TIMESTAMP_PARAM_NAME
 } from '@jsonql/constants'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 import { isPlainObject, isString } from './lodash'
 import { timestamp } from './timestamp'
 import { parseJson } from './common'
@@ -74,7 +74,7 @@ export function createQuery(resolverName: string, args = [], jsonp = false) {
     return createDeliverable(resolverName, payload)
   }
 
-  throw new JsonqlValidationError('utils:params-api:createQuery', {
+  throw new ValidationError('utils:params-api:createQuery', {
     message: `expect resolverName to be string and args to be array!`,
     resolverName,
     args
@@ -109,7 +109,7 @@ export function createMutation(
 
     return createDeliverable(resolverName, _payload)
   }
-  throw new JsonqlValidationError(
+  throw new ValidationError(
     `[createMutation] expect resolverName to be string!`,
     {
       resolverName, payload, condition
@@ -168,7 +168,7 @@ export function getQueryFromPayload(payload: any) {
     return result
   }
 
-  throw new JsonqlValidationError(
+  throw new ValidationError(
     '[getQueryArgs] Payload is malformed!',
     payload
   )
@@ -204,7 +204,7 @@ export function getMutationFromPayload(payload: any) {
     return result
   }
 
-  throw new JsonqlValidationError(
+  throw new ValidationError(
     '[getMutationArgs] Payload is malformed!',
     payload
   )

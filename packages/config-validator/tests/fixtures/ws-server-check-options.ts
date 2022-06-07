@@ -34,7 +34,7 @@ const SECRET_MISSING_ERR = 'secret is not provided!';
 const HANDSHAKE_TYPE = 'handshake';
 const ROUNDTRIP_TYPE = 'roundtrip';
 
-const { JsonqlValidationError } = require('jsonql-errors')
+const { ValidationError } = require('jsonql-errors')
 
 // base options
 const defaultOptions = {
@@ -88,7 +88,7 @@ module.exports = function(config) {
           opts.publicKey = fsx.readFileSync(join(opts.keysDir, [PUBLIC_KEY_NAME, PEM_EXT].join('.')))
           opts.privateKey = fsx.readFileSync(join(opts.keysDir, [PRIVATE_KEY_NAME, PEM_EXT].join('.')))
         } else {
-          throw new JsonqlValidationError(SECRET_MISSING_ERR)
+          throw new ValidationError(SECRET_MISSING_ERR)
         }
       }
       return opts;

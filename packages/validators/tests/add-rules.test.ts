@@ -4,7 +4,7 @@ import { Validators } from '../src'
 // import MultiApi from './fixtures/multi-api'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 // let api: MultiApi
 let validators: Validators
@@ -55,7 +55,7 @@ test(`Super simple plugin to see if it working correct`, async t => {
                   .then((result: Array<string|number>) => {
                     t.deepEqual(result, value)
                   })
-                  .catch((error: JsonqlValidationError) => {
+                  .catch((error: ValidationError) => {
                     t.deepEqual(error.detail, [0,1])
                   })
 })
@@ -81,7 +81,7 @@ test(`Should able to register a plugin and call it`, async t => {
                   .then((result: Array<string|number>) => {
                     t.deepEqual(result, value)
                   })
-                  .catch((error: JsonqlValidationError) => {
+                  .catch((error: ValidationError) => {
 
                     t.deepEqual(error.detail, [0,1])
                   })

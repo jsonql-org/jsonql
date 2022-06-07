@@ -21,7 +21,7 @@ test.before(async () => {
 
   validators = new ValidatorsServer(astMap)
 
-  const configs = await validators.loadExternalPlugins(join(__dirname, 'fixtures', 'plugins'))
+  await validators.loadExternalPlugins(join(__dirname, 'fixtures', 'plugins'))
 
   // console.dir(configs, { depth: null })
 
@@ -64,6 +64,6 @@ test(`test the validators with extenal plugin to see if the rules get add to the
   contractInstance.appendValidations( schema, checkFn )
   const contract = contractInstance.output()
   // console.log('-----------------------------------------------------')
-  // console.dir(contract, { depth: null })
+  console.dir(contract, { depth: null })
   t.truthy(contract)
 })

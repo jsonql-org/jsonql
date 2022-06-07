@@ -3,7 +3,7 @@ import MultiApi from './fixtures/multi-api'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'node:path'
 import { Validators } from '../src'
-import { JsonqlValidationError } from '@jsonql/errrors'
+import { ValidationError } from '@jsonql/errrors'
 
 let api: MultiApi
 let validators: Validators
@@ -52,7 +52,7 @@ test(`Should able to use addAdditonalRules`, async t => {
             .then((result: Array<string | number>) => {
                 t.deepEqual(result, ['A', 100])
             })
-            .catch((error: JsonqlValidationError) => {
+            .catch((error: ValidationError) => {
 
               t.deepEqual(error.detail, [1,1], 'Catch error in the added rule')
             })

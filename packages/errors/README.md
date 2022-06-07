@@ -49,7 +49,7 @@ client.query.getSomething(1)
 
 ### Share errors
 
-- JsonqlValidationError
+- ValidationError
 - JsonqlError
 - JsonqlServerError
 

@@ -3,7 +3,7 @@ import type {
   JsonqlGenericObject,
   JsonqlPluginConfig
 } from '../types'
-import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
+import ValidationError from '@jsonql/errors/dist/validation-error'
 import JsonqlError from '@jsonql/errors/dist/error'
 import {
   IDX_KEY,
@@ -116,7 +116,7 @@ export function constructRuleCb(
         debug('failed', argName, value, error, pos)
         // the name should be the validator name - not the property name
         // because the pos already indicator the property
-        return Promise.reject(new JsonqlValidationError(ruleName, pos))
+        return Promise.reject(new ValidationError(ruleName, pos))
       })
     }
 }

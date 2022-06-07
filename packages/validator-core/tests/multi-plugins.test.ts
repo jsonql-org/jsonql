@@ -1,7 +1,7 @@
 import test from 'ava'
 import { ValidatorPlugins } from '../src'
 import { JsonqlValidationPlugin } from '../src/types'
-import { JsonqlValidationError } from '@jsonql/errors'
+import { ValidationError } from '@jsonql/errors'
 
 let plugin: ValidatorPlugins
 test.before(()=> {
@@ -58,7 +58,7 @@ test(`Should able to handle async main function`, async t => {
   t.plan(1)
 
   return fn3(1000, {}, [1,2])
-          .catch((error: JsonqlValidationError) => {
+          .catch((error: ValidationError) => {
             t.deepEqual(error.detail, [1,2])
           })
 })

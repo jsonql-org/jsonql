@@ -17,7 +17,7 @@ import type {
   ValidatorPlugins,
 } from '@jsonql/validator-core/dist/validator-plugins'
 
-import JsonqlValidationError from '@jsonql/errors/dist/validation-error'
+import ValidationError from '@jsonql/errors/dist/validation-error'
 import JsonqlError from '@jsonql/errors/dist/error'
 import {
   notEmpty,
@@ -138,7 +138,7 @@ export class ValidatorBase {
     }
     if (!checkArray(values)) {
       debug(values)
-      throw new JsonqlValidationError(ARGS_NOT_ARRAY_ERR, values)
+      throw new ValidationError(ARGS_NOT_ARRAY_ERR, values)
     }
     const vCtn = values.length
     switch (true) {
@@ -156,7 +156,7 @@ export class ValidatorBase {
         debug('spread params', vCtn, pCtn)
         return this._processSpreadLikeArg(values, params)
       default: // will not fall through here @TODO
-        throw new JsonqlValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
+        throw new ValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
     }
   }
 

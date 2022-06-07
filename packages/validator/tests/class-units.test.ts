@@ -13,7 +13,7 @@ import {
   queuePromisesProcess
 } from '@jsonql/utils'
 import {
-  JsonqlValidationError
+  ValidationError
 } from '@jsonql/errors'
 
 const fixtures = join(__dirname, 'fixtures', 'resolver')
@@ -33,7 +33,7 @@ const falsy: CBFunc = async () => false
 const wrapper = async (fn: CBFunc, i: number) => {
   return fn().then((result: boolean) => {
     if (!result) {
-      throw new JsonqlValidationError('Here!', i)
+      throw new ValidationError('Here!', i)
     }
     return result
   })

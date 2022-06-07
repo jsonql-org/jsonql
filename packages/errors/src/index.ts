@@ -10,7 +10,7 @@ import JsonqlResolverNotFoundError from './resolver-not-found-error'
 import JsonqlEnumError from './enum-error'
 import JsonqlTypeError from './type-error'
 import JsonqlCheckerError from './checker-error'
-import JsonqlValidationError from './validation-error'
+import ValidationError from './validation-error'
 import JsonqlError from './error'
 import JsonqlServerError from './server-error'
 import GeneralError from './general-error'
@@ -26,7 +26,7 @@ export {
   JsonqlEnumError,
   JsonqlTypeError,
   JsonqlCheckerError,
-  JsonqlValidationError,
+  ValidationError,
   JsonqlError,
   JsonqlServerError,
   GeneralError,

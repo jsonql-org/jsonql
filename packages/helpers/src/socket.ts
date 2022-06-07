@@ -12,7 +12,7 @@ import {
 } from '@jsonql/constants'
 import {
   JsonqlError,
-  JsonqlValidationError
+  ValidationError
 } from '@jsonql/errors'
 import { isString } from './lodash'
 import { createDeliverable, formatPayload } from './params-api'
@@ -47,7 +47,7 @@ export const createSendPayload = (
     return str ? JSON.stringify(result) : result
   }
 
-  throw new JsonqlValidationError(`utils:socket:createSendMsg`, {
+  throw new ValidationError(`utils:socket:createSendMsg`, {
     resolverName,
     args,
     message: 'expect resolverName to be string and args to be array!'

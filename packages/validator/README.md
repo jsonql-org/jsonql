@@ -145,7 +145,7 @@ validator.validate([101])
             // result will be an object
             // {arg: 101}
           })
-          .catch((err: JsonqlValidationError) => {
+          .catch((err: ValidationError) => {
             // look for err.detail
 
             // if this fail you will get an array contain two number
@@ -248,7 +248,7 @@ const vb = new ValidatorBase(astMap)
 
 This module will only validate against the type you define plus the `validate` or `validateAsync` method you add via
 the `addValidationRules` method. If you try to use the plugin then it will throw in that particular rule you add with
-`JsonqlValidationError` object, and the `JsonqlValidationError.message` will be `NO_PLUGIN_DUMMY_FUNCTION`.
+`ValidationError` object, and the `ValidationError.message` will be `NO_PLUGIN_DUMMY_FUNCTION`.
 
 We add this mainly for us to create a more modular system, in our `@jsonql/validators` (@NOTE with an `s`)
 it will create one plugin system and share among all the API interfaces.
