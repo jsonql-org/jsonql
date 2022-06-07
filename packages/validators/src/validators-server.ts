@@ -6,6 +6,13 @@ import type {
   Rejecter,
   ImportedPlugin,
 } from './types'
+import type {
+  Validator
+} from '@jsonql/validator'
+import type {
+  MixedValidationInput,
+  JsonqlValidationPlugin,
+} from '@jsonql/validator/index'
 
 import { join } from 'node:path'
 import glob from 'glob'
@@ -31,6 +38,26 @@ export class ValidatorsServer extends Validators {
       this._plugin.registerExternalPlugin(config.name as string, config)
 
       return config
+    })
+  }
+
+  /** directly call the addValidationRules with the propertyName */
+  public addRules(
+    propertyName: string,
+    rules: MixedValidationInput
+  ): Validator {
+    const val = this.getValidator(propertyName)
+    val.addValidationRules(rules)
+
+    return val as Validator // we return the validator to use
+  }
+
+  /** This is created for FastApi to dump a whole set of plugins registration from a Map */
+  public registerPlugins(
+    pluginConfigs: Map<string, JsonqlValidationPlugin>
+  ) {
+    pluginConfigs.forEach((config: JsonqlValidationPlugin, name: string) => {
+      this.registerPlugin(name, config)
     })
   }
 
