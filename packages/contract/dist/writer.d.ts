@@ -1,4 +1,4 @@
-import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationPlugin } from './types';
+import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import { JsonqlError } from '@jsonql/errors';
 export declare class JsonqlContractWriter {
@@ -27,5 +27,5 @@ export declare class JsonqlContractWriter {
     /** we output several different contracts all at once */
     write(outDir: string): Promise<string>;
     /** adding validation rules to the argument */
-    appendValidations(schema: JsonqlAstMap, plugins: JsonqlValidationPlugin[]): JsonqlContractTemplate;
+    appendValidations(schema: JsonqlAstMap, checkFn: (rule: JsonqlValidationRule) => boolean): JsonqlContractTemplate;
 }

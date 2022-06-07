@@ -23,7 +23,7 @@ test.before(async () => {
 
   const configs = await validators.loadExternalPlugins(join(__dirname, 'fixtures', 'plugins'))
 
-  console.dir(configs, { depth: null })
+  // console.dir(configs, { depth: null })
 
   validators.registerPlugin('checkPassword', {
     main(v: string) {
@@ -57,13 +57,13 @@ test.before(async () => {
 test(`test the validators with extenal plugin to see if the rules get add to the final output`, t => {
   const { schema, plugins } = validators.export()
 
-  console.dir(plugins, { depth: null })
+  // console.dir(plugins, { depth: null })
 
   const checkFn = validators.checkRuleCanExport(plugins)
 
   contractInstance.appendValidations( schema, checkFn )
   const contract = contractInstance.output()
   // console.log('-----------------------------------------------------')
-  console.dir(contract, { depth: null })
+  // console.dir(contract, { depth: null })
   t.truthy(contract)
 })
