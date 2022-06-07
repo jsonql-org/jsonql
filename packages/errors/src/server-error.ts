@@ -15,7 +15,7 @@ export default class ServerError extends Error {
   constructor(statusCode: string | number, message?: string) {
     super(message)
     this.statusCode = statusCode
-    this.className = JsonqlServerError.name
+    this.className = ServerError.name
   }
 
   static get statusCode() {

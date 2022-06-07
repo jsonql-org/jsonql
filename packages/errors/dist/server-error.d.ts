@@ -1,4 +1,4 @@
-export default class JsonqlServerError extends Error {
+export default class ServerError extends Error {
     statusCode: string | number;
     className: string;
     constructor(statusCode: string | number, message?: string);
