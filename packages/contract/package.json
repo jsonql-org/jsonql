@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/contract",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "@jsonql/contract for reading/writing contract for jsonql system",
   "main": "dist/index.js",
   "module": "src/index.d.ts",
