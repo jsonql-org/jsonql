@@ -7,7 +7,7 @@ import type {
 } from '../types'
 
 import { curry } from '@jsonql/utils/dist/lodash'
-import GeneralException from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/general-exception'
 
 import { PARAMS_KEY } from '../constants'
 import { plugins } from './index'

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorBase = void 0;
 const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
+const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const common_1 = require("@jsonql/utils/dist/common");
 const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");

@@ -4,7 +4,7 @@ import type {
   JsonqlPluginConfig
 } from '../types'
 import ValidationError from '@jsonql/errors/dist/validation-error'
-import GeneralException from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/general-exception'
 import {
   IDX_KEY,
   VALUE_KEY,

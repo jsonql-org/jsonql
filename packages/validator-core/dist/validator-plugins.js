@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorPlugins = void 0;
 const tslib_1 = require("tslib");
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
+const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const constants_1 = require("./constants");
 const plugins_1 = require("./plugins/plugins");
 const promisify_1 = require("./lib/promisify");
@@ -52,7 +52,7 @@ class ValidatorPlugins {
             }
         }
         debug('lookupPlugin', 'unable to find', pluginName);
-        throw new error_1.default(`Unable to find plugin: ${pluginName}`);
+        throw new general_exception_1.default(`Unable to find plugin: ${pluginName}`);
     }
     /** The public api to register a plugin */
     registerPlugin(name, pluginConfig) {
@@ -83,11 +83,11 @@ class ValidatorPlugins {
     ) {
         if (!skipCheck) {
             if (this._plugins.has(name)) {
-                throw new error_1.default(`plugin ${name} already existed!`);
+                throw new general_exception_1.default(`plugin ${name} already existed!`);
             }
             if (!(0, common_1.pluginHasFunc)(pluginConfig)) {
                 debug('registerPlugin', constants_1.MAIN_NOT_FOUND_ERR);
-                throw new error_1.default(constants_1.MAIN_NOT_FOUND_ERR);
+                throw new general_exception_1.default(constants_1.MAIN_NOT_FOUND_ERR);
             }
             // Here we could extract the params instead of just checking
             if (pluginConfig[constants_1.PARAMS_KEY] === undefined) {
@@ -97,11 +97,11 @@ class ValidatorPlugins {
             else if (pluginConfig[constants_1.PARAMS_KEY] !== undefined) { // if they provide the keys then we check
                 if (!(0, common_1.checkPluginArg)(pluginConfig[constants_1.PARAMS_KEY])) {
                     debug('registerPlugin', constants_1.RESERVED_WORD_ERR);
-                    throw new error_1.default(constants_1.RESERVED_WORD_ERR);
+                    throw new general_exception_1.default(constants_1.RESERVED_WORD_ERR);
                 }
                 if (!(0, common_1.paramMatches)(pluginConfig)) {
                     debug('registerPlugin', constants_1.ARG_NOT_MATCH_ERR);
-                    throw new error_1.default(constants_1.ARG_NOT_MATCH_ERR);
+                    throw new general_exception_1.default(constants_1.ARG_NOT_MATCH_ERR);
                 }
             }
         }

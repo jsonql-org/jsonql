@@ -34,7 +34,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^0.7.5",
+    "@jsonql/utils": "workspace:^0.7.6",
     "@jsonql/validator": "workspace:^0.8.5",
     "@jsonql/validator-core": "workspace:^0.10.0",
     "fs-extra": "^10.1.0",

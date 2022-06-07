@@ -18,7 +18,7 @@ import type {
 } from '@jsonql/validator-core/dist/validator-plugins'
 
 import ValidationError from '@jsonql/errors/dist/validation-error'
-import GeneralException from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/general-exception'
 import {
   notEmpty,
   toArray,

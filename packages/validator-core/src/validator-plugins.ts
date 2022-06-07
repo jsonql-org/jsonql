@@ -10,7 +10,7 @@ import type {
   JsonqlValidationRule,
   JsonqlValidateFn,
 } from './types'
-import GeneralException from '@jsonql/errors/dist/error'
+import GeneralException from '@jsonql/errors/dist/general-exception'
 import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_KEY,
@@ -116,7 +116,7 @@ export class ValidatorPlugins {
   ): void {
     this._registerPlugin(name, pluginConfig, false, true)
   }
-  
+
   /** this is no longer in use and we change the usage to export list of names that can be add to contract */
   public export(external = true) {
     const plugins: JsonqlValidationPlugin[] = []

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlugin = exports.curryPlugin = void 0;
 const tslib_1 = require("tslib");
 const lodash_1 = require("@jsonql/utils/dist/lodash");
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
+const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const constants_1 = require("../constants");
 const index_1 = require("./index");
 /**
@@ -18,16 +18,16 @@ function curryPlugin(input, pluginConfig) {
             // @BUG if the input missing the key then it wont throw for example
             // we expect `arg` but pass the `min` then it will run but just failed
             if (!checkArgKeys(input, params)) {
-                throw new error_1.default(`Expected params: ${params.join(',')} not found!`);
+                throw new general_exception_1.default(`Expected params: ${params.join(',')} not found!`);
             }
             const args = params.map((param) => input[param]);
             return Reflect.apply((0, lodash_1.curry)(pluginConfig.main), null, args);
         }
         else {
-            throw new error_1.default(`This plugin ${pluginConfig.name} can not be curry`);
+            throw new general_exception_1.default(`This plugin ${pluginConfig.name} can not be curry`);
         }
     }
-    throw new error_1.default(`Unable to find plugin in config`);
+    throw new general_exception_1.default(`Unable to find plugin in config`);
 }
 exports.curryPlugin = curryPlugin;
 /** check if the expected key presented in the config */

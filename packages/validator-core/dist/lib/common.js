@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.patternPluginFanctory = exports.isResultPackage = exports.successThen = exports.constructRuleCb = exports.extractFnArgs = exports.paramMatches = exports.searchParamsKey = exports.pluginHasFunc = exports.checkPluginArg = void 0;
 const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/error"));
+const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const constants_1 = require("../constants");
 const common_1 = require("@jsonql/utils/dist/common");
 const is_function_1 = require("@jsonql/utils/dist/is-function");
@@ -35,7 +35,7 @@ function searchParamsKey(rule) {
     }
     // now we check if the params has reserved word
     if (!checkPluginArg(params)) {
-        throw new error_1.default(constants_1.RESERVED_WORD_ERR);
+        throw new general_exception_1.default(constants_1.RESERVED_WORD_ERR);
     }
     rule[constants_1.PARAMS_KEY] = params;
     return rule;
