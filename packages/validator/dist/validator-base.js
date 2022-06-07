@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorBase = void 0;
 const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
-const error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
+const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const common_1 = require("@jsonql/utils/dist/common");
 const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
@@ -195,7 +195,7 @@ class ValidatorBase {
                     debug(`${validator_core_1.VALIDATE_ASYNC_KEY} ---->`, _input);
                     return (0, validator_core_1.constructRuleCb)(propName, _input[validator_core_1.VALIDATE_ASYNC_KEY], pluginName);
                 default:
-                    throw new error_1.default(`unable to find rule for ${propName},
+                    throw new general_exception_1.default(`unable to find rule for ${propName},
             we expect ${validator_core_1.PLUGIN_KEY}, ${validator_core_1.VALIDATE_KEY} or ${validator_core_1.VALIDATE_ASYNC_KEY}`);
             }
         });

@@ -39,7 +39,8 @@ import {
 import {
   notEmpty,
   objectHasKey,
-} from '@jsonql/utils'
+} from '@jsonql/utils/dist/common'
+
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')
 /**
@@ -180,12 +181,3 @@ export function checkDuplicateRules(rule: JsonqlValidationRule): Array<string> {
     VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY // @TODO should pattern be standalone?
   ].filter((key: string) => rule[key] !== undefined)
 }
-
-/** the stupid ts compiler put crap into this method to cause it stop working */
-/*
-export function isAsyncFn(fn: unknown) {
-  const AsyncFunction = (async () => {}).constructor
-
-  return fn instanceof AsyncFunction
-}
-*/

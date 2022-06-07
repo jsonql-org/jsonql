@@ -4,7 +4,7 @@ exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedV
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("./constants");
-const utils_1 = require("@jsonql/utils");
+const common_1 = require("@jsonql/utils/dist/common");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:fn');
 /**
@@ -60,7 +60,7 @@ function unwrapPreparedValidateResult(result // can not use unknown here
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         debug('unwrapPreparedValidateResult', result);
         const ctn = result.length;
-        if (ctn === 1 && (0, utils_1.objectHasKey)(result[0], constants_1.IS_SPREAD_VALUES_KEY)) {
+        if (ctn === 1 && (0, common_1.objectHasKey)(result[0], constants_1.IS_SPREAD_VALUES_KEY)) {
             return result[0][constants_1.IS_SPREAD_VALUES_KEY];
         }
         else if ((0, validator_core_1.isResultPackage)(result, constants_1.IS_SPREAD_VALUES_KEY)) {
@@ -124,7 +124,7 @@ function getValidateRules(ast) {
             debug(`getValidateRules`, ast);
             return function emptyFn(value) {
                 return tslib_1.__awaiter(this, void 0, void 0, function* () {
-                    return (0, validator_core_1.promisify)(utils_1.notEmpty)(value, true);
+                    return (0, validator_core_1.promisify)(common_1.notEmpty)(value, true);
                 });
             };
     }
@@ -147,11 +147,3 @@ function checkDuplicateRules(rule) {
     ].filter((key) => rule[key] !== undefined);
 }
 exports.checkDuplicateRules = checkDuplicateRules;
-/** the stupid ts compiler put crap into this method to cause it stop working */
-/*
-export function isAsyncFn(fn: unknown) {
-  const AsyncFunction = (async () => {}).constructor
-
-  return fn instanceof AsyncFunction
-}
-*/
