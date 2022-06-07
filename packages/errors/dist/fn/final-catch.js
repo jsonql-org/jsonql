@@ -14,7 +14,7 @@ const checker_error_1 = tslib_1.__importDefault(require("../checker-error"));
 const validation_error_1 = tslib_1.__importDefault(require("../validation-error"));
 const error_1 = tslib_1.__importDefault(require("../error"));
 const server_error_1 = tslib_1.__importDefault(require("../server-error"));
-// import GeneralError from '../general-error'
+// import GeneralException from '../general-exception'
 const constants_1 = require("../constants");
 /**
  * If using the instance of could not find the actual error then

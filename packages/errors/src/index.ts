@@ -13,7 +13,7 @@ import JsonqlCheckerError from './checker-error'
 import ValidationError from './validation-error'
 import JsonqlError from './error'
 import JsonqlServerError from './server-error'
-import GeneralError from './general-error'
+import GeneralException from './general-exception'
 
 export {
   Jsonql406Error,
@@ -29,7 +29,7 @@ export {
   ValidationError,
   JsonqlError,
   JsonqlServerError,
-  GeneralError,
+  GeneralException,
 }
 
 export {

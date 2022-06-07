@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.templateErrorObject = exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.NOT_ACCEPTABLE_STATUS = exports.NOT_FOUND_STATUS = exports.FORBIDDEN_STATUS = exports.UNAUTHORIZED_STATUS = exports.SUCCESS_STATUS = exports.NO_STATUS_CODE = exports.NO_ERROR_MSG = exports.SERVER_INTERNAL_STATUS = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralError = exports.JsonqlServerError = exports.JsonqlError = exports.ValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
+exports.templateErrorObject = exports.getErrorNameByInstance = exports.getErrorNameByInstanceWithDefault = exports.getErrorByStatus = exports.finalCatch = exports.NOT_ACCEPTABLE_STATUS = exports.NOT_FOUND_STATUS = exports.FORBIDDEN_STATUS = exports.UNAUTHORIZED_STATUS = exports.SUCCESS_STATUS = exports.NO_STATUS_CODE = exports.NO_ERROR_MSG = exports.SERVER_INTERNAL_STATUS = exports.JSONQL_ERRORS_INFO = exports.UNKNOWN_ERROR = exports.GeneralException = exports.JsonqlServerError = exports.JsonqlError = exports.ValidationError = exports.JsonqlCheckerError = exports.JsonqlTypeError = exports.JsonqlEnumError = exports.JsonqlResolverNotFoundError = exports.JsonqlResolverAppError = exports.JsonqlContractAuthError = exports.JsonqlAuthorisationError = exports.JsonqlForbiddenError = exports.Jsonql500Error = exports.Jsonql406Error = void 0;
 const tslib_1 = require("tslib");
 const _406_error_1 = tslib_1.__importDefault(require("./406-error"));
 exports.Jsonql406Error = _406_error_1.default;
@@ -28,8 +28,8 @@ const error_1 = tslib_1.__importDefault(require("./error"));
 exports.JsonqlError = error_1.default;
 const server_error_1 = tslib_1.__importDefault(require("./server-error"));
 exports.JsonqlServerError = server_error_1.default;
-const general_error_1 = tslib_1.__importDefault(require("./general-error"));
-exports.GeneralError = general_error_1.default;
+const general_error_1 = tslib_1.__importDefault(require("./general-exception"));
+exports.GeneralException = general_error_1.default;
 var constants_1 = require("./constants");
 Object.defineProperty(exports, "UNKNOWN_ERROR", { enumerable: true, get: function () { return constants_1.UNKNOWN_ERROR; } });
 Object.defineProperty(exports, "JSONQL_ERRORS_INFO", { enumerable: true, get: function () { return constants_1.JSONQL_ERRORS_INFO; } });

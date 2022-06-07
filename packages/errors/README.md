@@ -57,7 +57,7 @@ client.query.getSomething(1)
 
 This is a standalone error type for use in a different type of module.
 
-- GeneralError
+- GeneralException
 
 ## Functions
 
