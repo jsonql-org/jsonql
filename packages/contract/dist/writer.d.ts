@@ -29,5 +29,5 @@ export declare class ContractWriter {
     /** adding validation rules to the argument */
     appendValidations(schema: JsonqlAstMap, checkFn: (rule: JsonqlValidationRule) => boolean): JsonqlContractTemplate;
     /** combine together to output the final public contract */
-    outputPublic(validators: Validators): JsonqlContractTemplate;
+    outputPublic(validators?: Validators): JsonqlContractTemplate;
 }
