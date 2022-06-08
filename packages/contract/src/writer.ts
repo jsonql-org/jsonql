@@ -209,22 +209,22 @@ export class ContractWriter {
   }
 
   /** combine together to output the final public contract */
-  public outputPublic(validators: Validators) {
-    const { schema, plugins } = validators.export()
-
-    if (process.env.DEBUG) {
-      console.log('------------------------ schema -------------------------------')
-      console.dir( schema, { depth: null })
-      console.log('------------------------ plugins -------------------------------')
-      console.dir( plugins, { depth: null })
+  public outputPublic(validators?: Validators) {
+    // there is a possiblity that the validators it no available
+    if (validators) {
+      const { schema, plugins } = validators.export()
+      if (process.env.DEBUG) {
+        console.log('------------------------ schema -------------------------------')
+        console.dir( schema, { depth: null })
+        console.log('------------------------ plugins -------------------------------')
+        console.dir( plugins, { depth: null })
+      }
+      const checkFn = validators.checkRuleCanExport(plugins)
+      this.appendValidations( schema, checkFn )
     }
-
-    const checkFn = validators.checkRuleCanExport(plugins)
-
-    this.appendValidations( schema, checkFn )
     // at this point should be the final call
-    const contract = this.output()
-
+    const contract = this.output(true)    
+    // what else to do here?
     return contract
   }
 
