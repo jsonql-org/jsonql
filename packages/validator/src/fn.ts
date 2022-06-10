@@ -22,9 +22,7 @@ import {
   VALIDATE_ASYNC_KEY,
   PLUGIN_FN_KEY,
   VALUE_KEY,
-
 } from '@jsonql/validator-core'
-
 import {
   TS_TYPE_NAME,
   TS_TYPE_REF,
@@ -36,10 +34,8 @@ import {
   IS_SPREAD_VALUES_KEY,
   SPREAD_ARG_TYPE,
 } from './constants'
-import {
-  notEmpty,
-  objectHasKey,
-} from '@jsonql/utils/dist/common'
+import { notEmpty } from '@jsonql/utils/dist/empty'
+import { objectHasKey } from '@jsonql/utils/dist/object'
 
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')

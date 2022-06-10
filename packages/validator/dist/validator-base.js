@@ -4,12 +4,14 @@ exports.ValidatorBase = void 0;
 const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
+const empty_1 = require("@jsonql/utils/dist/empty");
 const common_1 = require("@jsonql/utils/dist/common");
+const object_1 = require("@jsonql/utils/dist/object");
+const is_function_1 = require("@jsonql/utils/dist/is-function");
 const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
 const validator_core_1 = require("@jsonql/validator-core");
 // ----- LOCAL ---- //
 const fn_1 = require("./fn");
-const is_function_1 = require("@jsonql/utils/dist/is-function");
 const constants_1 = require("./constants");
 // ---- DEBUG ---- //
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -106,7 +108,7 @@ class ValidatorBase {
         const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
         // the problem is the type is any after the first param
         return values.map((value, i) => {
-            const param = params[i] || (0, common_1.assign)(spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
+            const param = params[i] || (0, object_1.assign)(spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
             const _value = (0, fn_1.getOptionalValue)(value, param);
             debug('spread param', _value, param.name);
             return this._prepareForExecution(_value, param, i);
@@ -148,7 +150,7 @@ class ValidatorBase {
     _createSchema(input) {
         let astWithRules = this._astWithBaseRules;
         // all we need to do is check if its empty input
-        if ((0, common_1.notEmpty)(input, true)) {
+        if ((0, empty_1.notEmpty)(input, true)) {
             astWithRules = this._applyObjectInput(astWithRules, input);
         }
         debug(`_createSchema`, astWithRules);

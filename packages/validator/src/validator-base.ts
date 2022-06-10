@@ -16,14 +16,12 @@ import type {
 import type {
   ValidatorPlugins,
 } from '@jsonql/validator-core/dist/validator-plugins'
-
 import ValidationError from '@jsonql/errors/dist/validation-error'
 import GeneralException from '@jsonql/errors/dist/general-exception'
-import {
-  notEmpty,
-  toArray,
-  assign,
-} from '@jsonql/utils/dist/common'
+import { notEmpty } from '@jsonql/utils/dist/empty'
+import { toArray } from '@jsonql/utils/dist/common'
+import { assign } from '@jsonql/utils/dist/object'
+import { isFunction } from '@jsonql/utils/dist/is-function'
 import {
   queuePromisesProcess,
 } from '@jsonql/utils/dist/chain-promises'
@@ -44,7 +42,6 @@ import {
   getOptionalValue,
   checkDuplicateRules,
 } from './fn'
-import { isFunction } from '@jsonql/utils/dist/is-function'
 import {
   ARGS_NOT_ARRAY_ERR,
   EXCEPTION_CASE_ERR,
