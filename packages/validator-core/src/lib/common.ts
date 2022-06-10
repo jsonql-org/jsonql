@@ -15,8 +15,10 @@ import {
 } from '../constants'
 import {
   toArray,
-  assign,
 } from '@jsonql/utils/dist/common'
+import {
+  assign,
+} from '@jsonql/utils/dist/object'
 import {
   isFunction
 } from '@jsonql/utils/dist/is-function'
