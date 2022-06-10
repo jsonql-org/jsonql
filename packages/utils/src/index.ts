@@ -16,20 +16,25 @@ export {
 export {
   inArray,
   toArray,
-  isEmptyObj,
   parseJson,
-  objectHasKey,
-  createEvtName,
-  getConfigValue,
-  isNotEmpty,
-  notEmpty,
-  isEmpty,
-  assign,
   nil,
-  readOnly,
+  createEvtName,
   showDeep,
   formatStr,
 } from './common'
+export {
+  isEmptyObj,
+  isNotEmpty,
+  notEmpty,
+  isEmpty,
+} from './empty'
+export {
+  objectHasKey,
+  getConfigValue,
+  assign,
+  readOnly,
+  arrToObj,
+} from './object'
 export { isFunction } from './is-function'
 export { cloneDeep } from './clone-deep'
 export {
