@@ -223,7 +223,7 @@ export class ContractWriter {
       this.appendValidations( schema, checkFn )
     }
     // at this point should be the final call
-    const contract = this.output(true)    
+    const contract = this.output(true)
     // what else to do here?
     return contract
   }
