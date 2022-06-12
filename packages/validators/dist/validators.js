@@ -33,10 +33,18 @@ class Validators {
             // overload the method here
             return {
                 addValidationRules: this._addValidationRules(propertyName, obj),
-                validate: obj.validate.bind(obj)
+                validate: obj.validate.bind(obj),
+                // for skipping the validation and just prepare the values
+                prepareArgValues: obj.prepareArgValues.bind(obj)
             };
         }
         throw new validation_error_1.default(`${propertyName} validator is not registered!`);
+    }
+    /** directly call the addValidationRules with the propertyName */
+    addRules(propertyName, rules) {
+        const val = this.getValidator(propertyName);
+        val.addValidationRules(rules);
+        return val; // we return the validator to use
     }
     /** wrapper for ValidatorPlugin registerPlugin method */
     registerPlugin(name, pluginConfig) {

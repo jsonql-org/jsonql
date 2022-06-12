@@ -6,6 +6,7 @@ import type {
 import type {
   JsonqlAstFullMap,
   ValidationRuleRecord,
+  MixedValidationInput,
 } from './types'
 import { Validator } from '@jsonql/validator'
 import {
@@ -50,10 +51,23 @@ export class Validators {
       // overload the method here
       return {
         addValidationRules: this._addValidationRules(propertyName, obj),
-        validate: obj.validate.bind(obj)
+        validate: obj.validate.bind(obj),
+        // for skipping the validation and just prepare the values
+        prepareArgValues: obj.prepareArgValues.bind(obj)
       }
     }
     throw new ValidationError(`${propertyName} validator is not registered!`)
+  }
+
+  /** directly call the addValidationRules with the propertyName */
+  public addRules(
+    propertyName: string,
+    rules: MixedValidationInput
+  ): Validator {
+    const val = this.getValidator(propertyName)
+    val.addValidationRules(rules)
+
+    return val as Validator // we return the validator to use
   }
 
   /** wrapper for ValidatorPlugin registerPlugin method */

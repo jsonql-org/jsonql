@@ -24,12 +24,6 @@ class ValidatorsServer extends validators_1.Validators {
             });
         });
     }
-    /** directly call the addValidationRules with the propertyName */
-    addRules(propertyName, rules) {
-        const val = this.getValidator(propertyName);
-        val.addValidationRules(rules);
-        return val; // we return the validator to use
-    }
     /** This is created for FastApi to dump a whole set of plugins registration from a Map */
     registerPlugins(pluginConfigs) {
         pluginConfigs.forEach((config, name) => {

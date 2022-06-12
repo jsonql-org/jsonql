@@ -123,6 +123,7 @@ class ValidatorBase {
         const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
         // if this is just grabbing the values then it should be name: Array<values>
         if (execute === false) {
+            // @TODO there is couple more scenario that might break this fix as we go along 
             return values.map((value, i) => {
                 if (!params[i]) {
                     return { [spreadParam.name]: [value] };

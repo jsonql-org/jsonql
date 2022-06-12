@@ -1,5 +1,6 @@
 import type { JsonqlValidationPlugin, JsonqlValidationRule } from '@jsonql/validator-core/index';
-import type { JsonqlAstFullMap } from './types';
+import type { JsonqlAstFullMap, MixedValidationInput } from './types';
+import { Validator } from '@jsonql/validator';
 import { ExternalPluginLoader as ValidatorPlugins } from '@jsonql/validator-core/dist/external-plugin-loader';
 /**
   Instead of one ast per init
@@ -17,7 +18,10 @@ export declare class Validators {
     getValidator(propertyName: string): {
         addValidationRules: (input: any) => any;
         validate: (values: unknown[], raw?: boolean | undefined) => Promise<any>;
+        prepareArgValues: (values: unknown[]) => any;
     };
+    /** directly call the addValidationRules with the propertyName */
+    addRules(propertyName: string, rules: MixedValidationInput): Validator;
     /** wrapper for ValidatorPlugin registerPlugin method */
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** export for contract */

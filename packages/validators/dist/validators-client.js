@@ -11,15 +11,6 @@ class ValidatorsClient extends validators_1.Validators {
     constructor(astMap) {
         super(astMap);
     }
-    /**
-      directly call the addValidationRules with the propertyName
-      on the client side this get call after the contract loaded
-    */
-    addRules(propertyName, rules) {
-        const val = this.getValidator(propertyName);
-        val.addValidationRules(rules);
-        return val; // we return the validator to use
-    }
     /** On the client side we don't need a map */
     registerPlugins(pluginConfigs) {
         for (const name in pluginConfigs) {

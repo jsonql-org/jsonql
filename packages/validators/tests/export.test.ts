@@ -11,6 +11,15 @@ test.before(() => {
   validators = new Validators(astMap)
 })
 
+test(`test the prepareArgValues`, t => {
+  const validator = validators.getValidator('someThingRandom')
+
+  const result = validator.prepareArgValues([1,2,3,4,5])
+
+  t.deepEqual(result, {args: [1,2,3,4,5]})
+})
+
+
 test(`Test out the export method and develop the file export`, async t => {
 
   // register plugins
