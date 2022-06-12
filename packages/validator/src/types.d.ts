@@ -47,6 +47,8 @@ export type JsonqlPropertyParamMap = {
   rulesMeta?: Array<unknown>
   tstype?: string
   types?: unknown
+  excluded?: boolean // this is for the contract and api that can not be validate
+  server?: boolean // reserved for future use
 }
 
 export type JsonqlClassValidationMap = {

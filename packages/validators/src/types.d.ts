@@ -38,4 +38,4 @@ export type ClientPluginConfigs = {
   [pluginName: string]: JsonqlValidationPlugin
 }
 
-export type { MixedValidationInput }
+export type { MixedValidationInput, JsonqlPropertyParamMap }
