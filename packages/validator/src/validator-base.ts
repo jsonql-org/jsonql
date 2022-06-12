@@ -20,7 +20,7 @@ import ValidationError from '@jsonql/errors/dist/validation-error'
 import GeneralException from '@jsonql/errors/dist/general-exception'
 import { notEmpty } from '@jsonql/utils/dist/empty'
 import { toArray } from '@jsonql/utils/dist/common'
-import { assign } from '@jsonql/utils/dist/object'
+import { assign, arrToObj } from '@jsonql/utils/dist/object'
 import { isFunction } from '@jsonql/utils/dist/is-function'
 import {
   queuePromisesProcess,
@@ -85,6 +85,14 @@ export class ValidatorBase {
     )
   }
 
+  /**
+    on the client side even if its not require validation but we still need to prepare
+    the argument for transport so we need the _normalizeArgValues without _prepareForExecution
+  */
+  public prepareArgValues(values: Array<unknown>) {
+    return this._normalizeArgValues(values, false)
+  }
+
   /** just return the internal schema for validation for use, see export */
   public get schema() {
     return this._schema || this._astWithBaseRules
@@ -125,7 +133,7 @@ export class ValidatorBase {
     correspond to out map, and apply the values
     argument values turn into an executable queue
   */
-  protected _normalizeArgValues(values: unknown[]) {
+  protected _normalizeArgValues(values: unknown[], execute = true) {
     debug('_normalizeArgValues', values)
     // there might not be a dev provided schema
     const params = this.schema
@@ -140,18 +148,33 @@ export class ValidatorBase {
     const vCtn = values.length
     switch (true) {
       case vCtn === pCtn:
+        if (execute === false) {
+          return arrToObj(
+            values,
+            (value: unknown, i: number) => ({ [params[i].name]: value })
+          )
+        }
         return values.map((value, i) => (
-          this._prepareForExecution(value, params[i], i)
+            this._prepareForExecution(value, params[i], i)
         ))
       case vCtn < pCtn:
         debug(`Values pass less than params`)
+        if (execute === false) {
+          return arrToObj(
+            params,
+            (param: JsonqlPropertyParamMap, i: number) => {
+              const _value = getOptionalValue(values[i], param)
+              return { [param.name]: _value }
+            }
+          )
+        }
         return params.map((param, i) => {
           const _value = getOptionalValue(values[i], param)
           return this._prepareForExecution(_value, param, i)
         })
       case vCtn > pCtn: // this is the spread style argument
         debug('spread params', vCtn, pCtn)
-        return this._processSpreadLikeArg(values, params)
+        return this._processSpreadLikeArg(values, params, execute)
       default: // will not fall through here @TODO
         throw new ValidationError(EXCEPTION_CASE_ERR, [vCtn, pCtn])
     }
@@ -160,17 +183,23 @@ export class ValidatorBase {
   /** The spread or mix with spread argument is too complicated to process in couple lines */
   private _processSpreadLikeArg(
     values: unknown[],
-    params: Array<JsonqlPropertyParamMap>
+    params: Array<JsonqlPropertyParamMap>,
+    execute: boolean
   ) {
+    // if this is just grabbing the values then it should be name: Array<values>
+    if (execute === false) {
+      return { [params[0].name]: values } // @TODO need testing to verify 
+    }
     // if it's spread only then there should be just one param
     // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
     const spreadParam = params.filter(p => p.tstype === SPREAD_ARG_TYPE)[0]
     // the problem is the type is any after the first param
     return values.map((value, i) => {
       const param = params[i] || assign(spreadParam, { name: `${SPREAD_PREFIX}${i}`})
-      const _value = getOptionalValue(value, param)
-      debug('spread param', _value, param.name)
-      return this._prepareForExecution(_value, param, i)
+      // this getOptionalValue is pointless
+      // const _value = getOptionalValue(value, param)
+      debug('spread param', value, param.name)
+      return this._prepareForExecution(value, param, i)
     })
   }
 
