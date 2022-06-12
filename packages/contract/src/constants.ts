@@ -30,3 +30,5 @@ export const RULES_KEY = 'rules'
 export const NAME_KEY = 'name'
 export const PARAMS_KEY = 'params'
 export const SERVER_KEY = 'server'
+export const EXCLUDED_KEY = 'excluded' // reserved for future dev
+export const VALIDATE_KEY = 'validate' // this makes more sense on a contract entry 

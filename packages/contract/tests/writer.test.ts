@@ -61,11 +61,21 @@ test.before(() => {
   })
 })
 
-test(`Should able to have a contract with validation info`, t => {
+test(`Should able to have a contract with validation info and auto insert validate key`, t => {
 
   const contract = contractInstance.outputPublic(validators)
-  // console.log('-----------------------------------------------------')
-  // console.dir(contract, { depth: null })
+  const someEndpoint = contract.data.filter((entry) => entry.name === 'someEndpoint')[0]
 
-  t.truthy(contract)
+  t.false(someEndpoint.validate)
+  // t.truthy(contract)
+})
+
+test(`Should able to excluded some of the api from validation`, t => {
+
+  contractInstance.$excludeValidation.add('login')
+  const contract = contractInstance.outputPublic(validators)
+  // console.dir(contract, { depth: null })
+  const login = contract.data.filter((entry) => entry.name === 'login')[0]
+
+  t.false(login.validate)
 })

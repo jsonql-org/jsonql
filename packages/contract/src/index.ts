@@ -14,4 +14,10 @@ export {
   CONTENT_TYPE,
   DEFAULT_HEADER,
   CONTRACT_REQUEST_METHODS,
+  // for operating on the contract
+  RULES_KEY,
+  NAME_KEY,
+  PARAMS_KEY,
+  SERVER_KEY,
+  EXCLUDED_KEY, 
 } from './constants'

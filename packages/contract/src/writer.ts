@@ -38,6 +38,7 @@ import {
   NAME_KEY,
   PARAMS_KEY,
   SERVER_KEY,
+  VALIDATE_KEY,
 } from './constants'
 
 import debugFn from 'debug'
@@ -49,8 +50,10 @@ export class ContractWriter {
   private _contract: JsonqlContractTemplate = {
     [DATA_KEY]: [],
     [META_KEY]: { type: ''},
-    // [ERROR_KEY]: null // templateErrorObject
+    [ERROR_KEY]: null // @TODO
   }
+  // save a method just call it
+  public $excludeValidation = new Set()
 
   /** instead of run the parser again we just load the ast map */
   constructor(
@@ -108,7 +111,7 @@ export class ContractWriter {
 
   /** this will always overwrite the last one */
   public error(error: GeneralException): void {
-    this._contract[ERROR_KEY] = error
+    this._contract[ERROR_KEY] = error // @TODO need to transform to json for transport
   }
 
   /** make a shallow copy might not be enough */
@@ -127,6 +130,12 @@ export class ContractWriter {
       // we are taking out all the server: true or pure function rules
       return {
         [DATA_KEY]: contract[DATA_KEY].map((data: JsonqlContractEntry) => {
+          // if this api has no params then just excluded it by default
+          if (!data[PARAMS_KEY] || data[PARAMS_KEY].length === 0) {
+            data[VALIDATE_KEY] = false
+            return data
+          }
+          // next processing the rules
           data[PARAMS_KEY] = data[PARAMS_KEY]?.map((params: JsonqlProcessedEntry) => {
             if (params[RULES_KEY]) {
               params[RULES_KEY] = params[RULES_KEY].filter((rule: object) => {
@@ -224,7 +233,15 @@ export class ContractWriter {
     }
     // at this point should be the final call
     const contract = this.output(true)
-    // what else to do here?
+    // add excluded validation info if any
+    if (this.$excludeValidation.size) {
+      contract[DATA_KEY] = contract[DATA_KEY].map((entry: JsonqlContractEntry) => {
+        if (this.$excludeValidation.has(entry.name)) {
+          entry[VALIDATE_KEY] = false
+        }
+        return entry
+      })
+    }
     return contract
   }
 

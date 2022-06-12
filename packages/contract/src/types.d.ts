@@ -9,14 +9,14 @@ export type {
   JsonqlValidationRule
 } from '@jsonql/validators/index'
 
-export type JsonqlContractEntry = {
-  name?: string,
-  params?: Array<JsonqlProcessedEntry>
-  route?: string
-  method?: string
-  file?: string
+export type JsonqlContractEntry = Partial<{
+  name: string
+  params: Array<JsonqlProcessedEntry>
+  route: string
+  method: string
+  file: string
   [key: string]: any
-}
+}>
 
 export type JsonqlContractMetaEntry = {
   type?: string

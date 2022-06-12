@@ -1,14 +1,22 @@
-import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule, Validators } from './types';
+import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlProcessedEntry, JsonqlRouteForContract, JsonqlValidationRule, Validators } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import GeneralException from '@jsonql/errors/dist/general-exception';
 export declare class ContractWriter {
     private _contract;
+    $excludeValidation: Set<unknown>;
     /** instead of run the parser again we just load the ast map */
     constructor(routeForContract: JsonqlRouteForContract, type?: string);
     /**
      This will get call externally to prepare the map before init this object
      */
-    static prepare(astMap: JsonqlAstMap): JsonqlContractEntry[];
+    static prepare(astMap: JsonqlAstMap): Partial<{
+        [key: string]: any;
+        name: string;
+        params: JsonqlProcessedEntry[];
+        route: string;
+        method: string;
+        file: string;
+    }>[];
     /** insert extra data into node by name */
     data(propertyName: string, value: JsonqlContractEntry): void;
     /** this will always overwrite the last one */

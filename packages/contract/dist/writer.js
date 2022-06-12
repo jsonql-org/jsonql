@@ -16,8 +16,10 @@ class ContractWriter {
         this._contract = {
             [constants_1.DATA_KEY]: [],
             [constants_1.META_KEY]: { type: '' },
-            // [ERROR_KEY]: null // templateErrorObject
+            [constants_1.ERROR_KEY]: null // @TODO
         };
+        // save a method just call it
+        this.$excludeValidation = new Set();
         // first we make a clone of the map because when we pass
         // it to more than one object it mutatated
         const clone = (0, utils_1.cloneDeep)(routeForContract);
@@ -66,7 +68,7 @@ class ContractWriter {
     }
     /** this will always overwrite the last one */
     error(error) {
-        this._contract[constants_1.ERROR_KEY] = error;
+        this._contract[constants_1.ERROR_KEY] = error; // @TODO need to transform to json for transport
     }
     /** make a shallow copy might not be enough */
     meta(entry) {
@@ -84,6 +86,12 @@ class ContractWriter {
             return {
                 [constants_1.DATA_KEY]: contract[constants_1.DATA_KEY].map((data) => {
                     var _a;
+                    // if this api has no params then just excluded it by default
+                    if (!data[constants_1.PARAMS_KEY] || data[constants_1.PARAMS_KEY].length === 0) {
+                        data[constants_1.VALIDATE_KEY] = false;
+                        return data;
+                    }
+                    // next processing the rules
                     data[constants_1.PARAMS_KEY] = (_a = data[constants_1.PARAMS_KEY]) === null || _a === void 0 ? void 0 : _a.map((params) => {
                         if (params[constants_1.RULES_KEY]) {
                             params[constants_1.RULES_KEY] = params[constants_1.RULES_KEY].filter((rule) => {
@@ -172,7 +180,15 @@ class ContractWriter {
         }
         // at this point should be the final call
         const contract = this.output(true);
-        // what else to do here?
+        // add excluded validation info if any
+        if (this.$excludeValidation.size) {
+            contract[constants_1.DATA_KEY] = contract[constants_1.DATA_KEY].map((entry) => {
+                if (this.$excludeValidation.has(entry.name)) {
+                    entry[constants_1.VALIDATE_KEY] = false;
+                }
+                return entry;
+            });
+        }
         return contract;
     }
 }

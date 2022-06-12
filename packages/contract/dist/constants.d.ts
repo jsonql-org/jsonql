@@ -19,3 +19,5 @@ export declare const RULES_KEY = "rules";
 export declare const NAME_KEY = "name";
 export declare const PARAMS_KEY = "params";
 export declare const SERVER_KEY = "server";
+export declare const EXCLUDED_KEY = "excluded";
+export declare const VALIDATE_KEY = "validate";
