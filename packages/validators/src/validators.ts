@@ -14,7 +14,7 @@ import {
 import ValidationError from '@jsonql/errors/dist/validation-error'
 import { toArray } from '@jsonql/utils/dist/common'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
-import { RULES_KEY } from '@jsonql/validator-core/dist/constants'
+import { RULES_KEY, SCHEMA_KEY } from './constants'
 
 import debugFn from 'debug'
 const debug = debugFn('velocejs:validator:main')
@@ -56,9 +56,7 @@ export class Validators {
     throw new ValidationError(`${propertyName} validator is not registered!`)
   }
 
-  // ------------------- OVERLOAD ----------------------//
-
-  /** overload the ValidatorPlugin registerPlugin method */
+  /** wrapper for ValidatorPlugin registerPlugin method */
   public registerPlugin(
     name: string,
     pluginConfig: JsonqlValidationPlugin
@@ -72,7 +70,7 @@ export class Validators {
     const schema = {}
     this._validationRules.forEach((value: ValidationRuleRecord, propName: string) => {
       const obj = this._validators.get(propName) as Validator
-      schema[propName] = { [RULES_KEY]: value, schema: obj.schema }
+      schema[propName] = { [RULES_KEY]: value,  [SCHEMA_KEY]: obj[SCHEMA_KEY] }
     })
     debug('export schema', schema)
     const plugins = this._plugin.export()

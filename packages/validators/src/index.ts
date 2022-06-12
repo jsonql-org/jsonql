@@ -11,3 +11,6 @@ export {
   NAME_KEY,
   PARAMS_KEY,
 } from '@jsonql/validator-core/dist/constants'
+export {
+  SCHEMA_KEY
+} from './constants'
