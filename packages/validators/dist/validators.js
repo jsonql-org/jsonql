@@ -7,7 +7,7 @@ const external_plugin_loader_1 = require("@jsonql/validator-core/dist/external-p
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const common_1 = require("@jsonql/utils/dist/common");
 const clone_deep_1 = require("@jsonql/utils/dist/clone-deep");
-const constants_1 = require("@jsonql/validator-core/dist/constants");
+const constants_1 = require("./constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('velocejs:validator:main');
 /**
@@ -38,8 +38,7 @@ class Validators {
         }
         throw new validation_error_1.default(`${propertyName} validator is not registered!`);
     }
-    // ------------------- OVERLOAD ----------------------//
-    /** overload the ValidatorPlugin registerPlugin method */
+    /** wrapper for ValidatorPlugin registerPlugin method */
     registerPlugin(name, pluginConfig) {
         // this._appendRules(name, pluginConfig)
         this._plugin.registerPlugin(name, pluginConfig);
@@ -49,7 +48,7 @@ class Validators {
         const schema = {};
         this._validationRules.forEach((value, propName) => {
             const obj = this._validators.get(propName);
-            schema[propName] = { [constants_1.RULES_KEY]: value, schema: obj.schema };
+            schema[propName] = { [constants_1.RULES_KEY]: value, [constants_1.SCHEMA_KEY]: obj[constants_1.SCHEMA_KEY] };
         });
         debug('export schema', schema);
         const plugins = this._plugin.export();

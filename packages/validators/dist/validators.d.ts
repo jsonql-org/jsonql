@@ -18,7 +18,7 @@ export declare class Validators {
         addValidationRules: (input: any) => any;
         validate: (values: unknown[], raw?: boolean | undefined) => Promise<any>;
     };
-    /** overload the ValidatorPlugin registerPlugin method */
+    /** wrapper for ValidatorPlugin registerPlugin method */
     registerPlugin(name: string, pluginConfig: JsonqlValidationPlugin): void;
     /** export for contract */
     export(): {
