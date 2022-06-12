@@ -22,3 +22,5 @@ export declare function unwrapPreparedValidateResult(result: Array<any>): Promis
 export declare function getOptionalValue(arg: unknown, param: JsonqlGenericObject): any;
 /** check if the rule contain duplicate rules that can not be resolve */
 export declare function checkDuplicateRules(rule: JsonqlValidationRule): Array<string>;
+/** take the key part from a one level object */
+export declare function getKey(obj: JsonqlGenericObject): string | undefined;

@@ -177,3 +177,9 @@ export function checkDuplicateRules(rule: JsonqlValidationRule): Array<string> {
     VALIDATE_KEY, VALIDATE_ASYNC_KEY, PLUGIN_FN_KEY // @TODO should pattern be standalone?
   ].filter((key: string) => rule[key] !== undefined)
 }
+
+/** take the key part from a one level object */
+export function getKey(obj: JsonqlGenericObject) {
+  const keys = Object.keys(obj)
+  return keys.length ? keys[0] : undefined
+}

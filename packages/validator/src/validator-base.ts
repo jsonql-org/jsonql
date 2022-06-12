@@ -41,6 +41,7 @@ import {
   createAutomaticRules,
   getOptionalValue,
   checkDuplicateRules,
+  getKey,
 } from './fn'
 import {
   ARGS_NOT_ARRAY_ERR,
@@ -186,16 +187,36 @@ export class ValidatorBase {
     params: Array<JsonqlPropertyParamMap>,
     execute: boolean
   ) {
+    // if it's spread only then there should be just one param
+    const spreadParam = params.filter(p => p.tstype === SPREAD_ARG_TYPE)[0]
     // if this is just grabbing the values then it should be name: Array<values>
     if (execute === false) {
-      return { [params[0].name]: values } // @TODO need testing to verify 
+      // @TODO there is couple more scenario that might break this fix as we go along 
+      return values.map((value, i) => {
+        if (!params[i]) {
+          return { [spreadParam.name]: [value] }
+        }
+        return params[i].name !== spreadParam.name
+                              ? { [params[i].name]: value }
+                              : { [spreadParam.name]: [value] }
+      }).reduce((a: JsonqlGenericObject, b: JsonqlGenericObject) => {
+        const k = getKey(a)
+        if (!k) { // init
+          return b
+        }
+        const k2 = getKey(b) as string
+        if (!a[k2]) {
+          return assign({}, a, b)
+        }
+        a[k2] = a[k2].concat(b[k2])
+        return a
+      }, {})
     }
-    // if it's spread only then there should be just one param
     // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
-    const spreadParam = params.filter(p => p.tstype === SPREAD_ARG_TYPE)[0]
     // the problem is the type is any after the first param
     return values.map((value, i) => {
-      const param = params[i] || assign(spreadParam, { name: `${SPREAD_PREFIX}${i}`})
+      // @NOTE the assign need to create new object otherwise we will polluate the params
+      const param = params[i] || assign({}, spreadParam, { name: `${SPREAD_PREFIX}${i}`})
       // this getOptionalValue is pointless
       // const _value = getOptionalValue(value, param)
       debug('spread param', value, param.name)

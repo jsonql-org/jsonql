@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.createAutomaticRules = void 0;
+exports.getKey = exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("./constants");
@@ -148,3 +148,9 @@ function checkDuplicateRules(rule) {
     ].filter((key) => rule[key] !== undefined);
 }
 exports.checkDuplicateRules = checkDuplicateRules;
+/** take the key part from a one level object */
+function getKey(obj) {
+    const keys = Object.keys(obj);
+    return keys.length ? keys[0] : undefined;
+}
+exports.getKey = getKey;

@@ -1,4 +1,3 @@
-import type { JsonqlGenericObject } from '@jsonql/validator-core/index';
 import type { JsonqlPropertyParamMap, JsonqlObjectValidateInput, MixedValidationInput } from './types';
 import type { ValidatorPlugins } from '@jsonql/validator-core/dist/validator-plugins';
 /**
@@ -17,6 +16,11 @@ export declare class ValidatorBase {
     constructor(astMap: Array<JsonqlPropertyParamMap>, _validatorPluginsInstance?: ValidatorPlugins | undefined);
     /** the main method then in it's sub class will get override */
     validate(values: Array<unknown>): any;
+    /**
+      on the client side even if its not require validation but we still need to prepare
+      the argument for transport so we need the _normalizeArgValues without _prepareForExecution
+    */
+    prepareArgValues(values: Array<unknown>): any;
     /** just return the internal schema for validation for use, see export */
     get schema(): JsonqlPropertyParamMap[];
     /** overload the addValidationRules method that allow to pass a function or async function */
@@ -28,7 +32,7 @@ export declare class ValidatorBase {
       correspond to out map, and apply the values
       argument values turn into an executable queue
     */
-    protected _normalizeArgValues(values: unknown[]): (((lastResult: JsonqlGenericObject) => Promise<any>)[] | (() => Promise<boolean>))[];
+    protected _normalizeArgValues(values: unknown[], execute?: boolean): any;
     /** The spread or mix with spread argument is too complicated to process in couple lines */
     private _processSpreadLikeArg;
     /**

@@ -38,6 +38,13 @@ class ValidatorBase {
         return (0, chain_promises_1.queuePromisesProcess)(queues, undefined // the init value will now be undefined to know if its first
         );
     }
+    /**
+      on the client side even if its not require validation but we still need to prepare
+      the argument for transport so we need the _normalizeArgValues without _prepareForExecution
+    */
+    prepareArgValues(values) {
+        return this._normalizeArgValues(values, false);
+    }
     /** just return the internal schema for validation for use, see export */
     get schema() {
         return this._schema || this._astWithBaseRules;
@@ -72,7 +79,7 @@ class ValidatorBase {
       correspond to out map, and apply the values
       argument values turn into an executable queue
     */
-    _normalizeArgValues(values) {
+    _normalizeArgValues(values, execute = true) {
         debug('_normalizeArgValues', values);
         // there might not be a dev provided schema
         const params = this.schema;
@@ -87,31 +94,64 @@ class ValidatorBase {
         const vCtn = values.length;
         switch (true) {
             case vCtn === pCtn:
+                if (execute === false) {
+                    return (0, object_1.arrToObj)(values, (value, i) => ({ [params[i].name]: value }));
+                }
                 return values.map((value, i) => (this._prepareForExecution(value, params[i], i)));
             case vCtn < pCtn:
                 debug(`Values pass less than params`);
+                if (execute === false) {
+                    return (0, object_1.arrToObj)(params, (param, i) => {
+                        const _value = (0, fn_1.getOptionalValue)(values[i], param);
+                        return { [param.name]: _value };
+                    });
+                }
                 return params.map((param, i) => {
                     const _value = (0, fn_1.getOptionalValue)(values[i], param);
                     return this._prepareForExecution(_value, param, i);
                 });
             case vCtn > pCtn: // this is the spread style argument
                 debug('spread params', vCtn, pCtn);
-                return this._processSpreadLikeArg(values, params);
+                return this._processSpreadLikeArg(values, params, execute);
             default: // will not fall through here @TODO
                 throw new validation_error_1.default(constants_1.EXCEPTION_CASE_ERR, [vCtn, pCtn]);
         }
     }
     /** The spread or mix with spread argument is too complicated to process in couple lines */
-    _processSpreadLikeArg(values, params) {
+    _processSpreadLikeArg(values, params, execute) {
         // if it's spread only then there should be just one param
-        // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
         const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
+        // if this is just grabbing the values then it should be name: Array<values>
+        if (execute === false) {
+            return values.map((value, i) => {
+                if (!params[i]) {
+                    return { [spreadParam.name]: [value] };
+                }
+                return params[i].name !== spreadParam.name
+                    ? { [params[i].name]: value }
+                    : { [spreadParam.name]: [value] };
+            }).reduce((a, b) => {
+                const k = (0, fn_1.getKey)(a);
+                if (!k) { // init
+                    return b;
+                }
+                const k2 = (0, fn_1.getKey)(b);
+                if (!a[k2]) {
+                    return (0, object_1.assign)({}, a, b);
+                }
+                a[k2] = a[k2].concat(b[k2]);
+                return a;
+            }, {});
+        }
+        // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
         // the problem is the type is any after the first param
         return values.map((value, i) => {
-            const param = params[i] || (0, object_1.assign)(spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
-            const _value = (0, fn_1.getOptionalValue)(value, param);
-            debug('spread param', _value, param.name);
-            return this._prepareForExecution(_value, param, i);
+            // @NOTE the assign need to create new object otherwise we will polluate the params
+            const param = params[i] || (0, object_1.assign)({}, spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
+            // this getOptionalValue is pointless
+            // const _value = getOptionalValue(value, param)
+            debug('spread param', value, param.name);
+            return this._prepareForExecution(value, param, i);
         });
     }
     /**
