@@ -71,6 +71,22 @@ export function createAutomaticRules(
   })
 }
 
+/** wrapper method to wrap two steps together to make the class call easier to understand */
+export async function processValidateResultsAsArr(
+  argNames: Array<string>,
+  validateResult: JsonqlGenericObject
+) {
+  return processValidateResults(argNames, validateResult)
+            .then(unwrapPreparedValidateResult)
+}
+
+/** step to process the return result as object */
+export function processValidateResultsAsObj(
+  argNames: Array<string>,
+  validateResult: JsonqlGenericObject
+) {
+  return processValidateResultsAsArrOfObj(argNames, validateResult)
+}
 
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 export async function processValidateResults(
@@ -81,16 +97,36 @@ export async function processValidateResults(
     if (VALUE_KEY in validateResult[argName]) {
       return validateResult[argName][VALUE_KEY]
     } else if (isResultPackage(validateResult[argName])) {
-      // @BUG this is still wrong its array wrap in an array
+      // @BUG this is still wrong its an array wrap in an array
       // we need to wrap this one more time for the next step
       return {
-        [IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res: {[key: string]: unknown}) => res[VALUE_KEY])
+        [IS_SPREAD_VALUES_KEY]: validateResult[argName].map(
+          (res: {[key: string]: unknown}) => res[VALUE_KEY]
+        )
       }
     }
     debug(`Return result when we couldn't find way to destruct: ${argName}`, validateResult[argName])
     return validateResult[argName]
   })
 }
+
+/** step to process the return result as object */
+export function processValidateResultsAsArrOfObj(
+  argNames: Array<string>,
+  validateResult: JsonqlGenericObject
+) {
+  return argNames.map((argName: string) => {
+    switch (true) {
+      case VALUE_KEY in validateResult[argName]:
+        return {[argName]: validateResult[argName][VALUE_KEY]}
+      case isResultPackage(validateResult[argName]):
+        return validateResult[argName]
+      default:
+        return {[argName]: validateResult[argName]}
+    }
+  })
+}
+
 
 /** final step to unwarp the pack result for spread arguments */
 // @NOTE there is a potential bug here when the spread type is Array<Array<any>>

@@ -14,8 +14,8 @@ import {
   ValidatorPlugins
 } from '@jsonql/validator-core/dist/validator-plugins'
 import {
-  processValidateResults,
-  unwrapPreparedValidateResult,
+  processValidateResultsAsArr,
+  processValidateResultsAsObj,
 } from './fn'
 import {
   RETURN_AS_ARR,
@@ -79,17 +79,17 @@ export class Validator extends ValidatorBase {
   private async _prepareValidateResultForFuncCall(
     validateResult: JsonqlGenericObject
   ): Promise<unknown[]> {
-    debug('validateResult', this._arguments, validateResult)
+    debug('validateResult return as array', this._arguments, validateResult)
     // @TODO need to fix the spread input type return result
-    return processValidateResults(this._arguments, validateResult)
-            .then(unwrapPreparedValidateResult)
+    return processValidateResultsAsArr(this._arguments, validateResult)
   }
 
   /** prepare the validation result as key value pair */
   private async _prepareValidateResultAsObject(
     validateResult: JsonqlGenericObject
   ) {
-    console.log(this._arguments, validateResult)
-    return validateResult
+    debug('validateResult return as object', this._arguments, validateResult)
+    
+    return processValidateResultsAsObj(this._arguments, validateResult)
   }
 }
