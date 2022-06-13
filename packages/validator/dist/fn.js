@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getKey = exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResults = exports.createAutomaticRules = void 0;
+exports.getKey = exports.checkDuplicateRules = exports.getOptionalValue = exports.unwrapPreparedValidateResult = exports.processValidateResultsAsArrOfObj = exports.processValidateResults = exports.processValidateResultsAsObj = exports.processValidateResultsAsArr = exports.createAutomaticRules = void 0;
 const tslib_1 = require("tslib");
 const validator_core_1 = require("@jsonql/validator-core");
 const constants_1 = require("./constants");
@@ -32,6 +32,20 @@ function createAutomaticRules(astMap) {
     });
 }
 exports.createAutomaticRules = createAutomaticRules;
+/** wrapper method to wrap two steps together to make the class call easier to understand */
+function processValidateResultsAsArr(argNames, validateResult) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return processValidateResults(argNames, validateResult)
+            .then(unwrapPreparedValidateResult);
+    });
+}
+exports.processValidateResultsAsArr = processValidateResultsAsArr;
+/** step to process the return result as object */
+function processValidateResultsAsObj(argNames, validateResult) {
+    return processValidateResultsAsArrOfObj(argNames, validateResult)
+        .reduce((a, b) => (0, object_1.assign)(a, b), {});
+}
+exports.processValidateResultsAsObj = processValidateResultsAsObj;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 function processValidateResults(argNames, validateResult) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -40,7 +54,7 @@ function processValidateResults(argNames, validateResult) {
                 return validateResult[argName][validator_core_1.VALUE_KEY];
             }
             else if ((0, validator_core_1.isResultPackage)(validateResult[argName])) {
-                // @BUG this is still wrong its array wrap in an array
+                // @BUG this is still wrong its an array wrap in an array
                 // we need to wrap this one more time for the next step
                 return {
                     [constants_1.IS_SPREAD_VALUES_KEY]: validateResult[argName].map((res) => res[validator_core_1.VALUE_KEY])
@@ -52,6 +66,20 @@ function processValidateResults(argNames, validateResult) {
     });
 }
 exports.processValidateResults = processValidateResults;
+/** step to process the return result as object */
+function processValidateResultsAsArrOfObj(argNames, validateResult) {
+    return argNames.map((argName) => {
+        switch (true) {
+            case validator_core_1.VALUE_KEY in validateResult[argName]:
+                return { [argName]: validateResult[argName][validator_core_1.VALUE_KEY] };
+            case (0, validator_core_1.isResultPackage)(validateResult[argName]):
+                return { [argName]: validateResult[argName].map((res) => res[validator_core_1.VALUE_KEY]) };
+            default:
+                return { [argName]: validateResult[argName] };
+        }
+    });
+}
+exports.processValidateResultsAsArrOfObj = processValidateResultsAsArrOfObj;
 /** final step to unwarp the pack result for spread arguments */
 // @NOTE there is a potential bug here when the spread type is Array<Array<any>>
 // then when we use in the velocejs we flatMap and all the Array inside get flattern

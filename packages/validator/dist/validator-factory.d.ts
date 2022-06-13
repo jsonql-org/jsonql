@@ -7,8 +7,8 @@ export declare class Validator extends ValidatorBase {
       if only call it with the astMap then it init it as a standalone like before
     */
     constructor(astMap: Array<JsonqlPropertyParamMap>, vp?: ValidatorPlugins);
-    /** this is where validation happens */
-    validate(values: Array<unknown>, style?: ValidateResultReturn): Promise<any>;
+    /** this is override the parent validate method with addtitional process for result */
+    validate(values: Array<unknown>, returnAs?: ValidateResultReturn): Promise<any>;
     /** wrapper for the plugin instance register plugin method */
     registerPlugin(name: string, plugin: JsonqlValidationPlugin): void;
     /** After the validation the success will get an object with

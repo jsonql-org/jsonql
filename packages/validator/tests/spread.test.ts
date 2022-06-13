@@ -44,6 +44,14 @@ test(`Test a function with normal argument with spread argument`, async t => {
             })
 })
 
+test(`Test a function with spread argument and return as object result`, async t => {
+  t.plan(1)
+  return obj2.validate([100, 'a', 'b', 'c'], 'object')
+            .then(result => {
+              t.truthy(result)
+            })
+})
+
 test(`Should able to get values back with mix spread style function with prepareArgValues`, t => {
 
   const result2 = obj2.prepareArgValues([200, 'd', 'e', 'f'])

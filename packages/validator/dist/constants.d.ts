@@ -10,3 +10,6 @@ export declare const DEFAULT_VALUE = "defaultvalue";
 export declare const TS_TYPE_LIT = "TsTypeLiteral";
 export declare const TS_TYPE_REF = "TsTypeReference";
 export declare const TS_TYPE_NAME = "tstype";
+export declare const RETURN_AS_OBJ = "object";
+export declare const RETURN_AS_ARR = "array";
+export declare const RETURN_AS_RAW = "raw";

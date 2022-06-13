@@ -35,7 +35,7 @@ import {
   SPREAD_ARG_TYPE,
 } from './constants'
 import { notEmpty } from '@jsonql/utils/dist/empty'
-import { objectHasKey } from '@jsonql/utils/dist/object'
+import { assign, objectHasKey } from '@jsonql/utils/dist/object'
 
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:fn')
@@ -86,6 +86,7 @@ export function processValidateResultsAsObj(
   validateResult: JsonqlGenericObject
 ) {
   return processValidateResultsAsArrOfObj(argNames, validateResult)
+            .reduce((a, b) => assign(a, b), {})
 }
 
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
@@ -114,13 +115,15 @@ export async function processValidateResults(
 export function processValidateResultsAsArrOfObj(
   argNames: Array<string>,
   validateResult: JsonqlGenericObject
-) {
+): Array<JsonqlGenericObject> {
   return argNames.map((argName: string) => {
     switch (true) {
       case VALUE_KEY in validateResult[argName]:
         return {[argName]: validateResult[argName][VALUE_KEY]}
       case isResultPackage(validateResult[argName]):
-        return validateResult[argName]
+        return {[argName]: validateResult[argName].map(
+          (res: {[key: string]: unknown}) => res[VALUE_KEY]
+        )}
       default:
         return {[argName]: validateResult[argName]}
     }

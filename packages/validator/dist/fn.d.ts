@@ -14,8 +14,14 @@ because the plugins are apply there
   generate valdiation rules
 */
 export declare function createAutomaticRules(astMap: Array<JsonqlPropertyParamMap>): Array<JsonqlPropertyParamMap>;
+/** wrapper method to wrap two steps together to make the class call easier to understand */
+export declare function processValidateResultsAsArr(argNames: Array<string>, validateResult: JsonqlGenericObject): Promise<any>;
+/** step to process the return result as object */
+export declare function processValidateResultsAsObj(argNames: Array<string>, validateResult: JsonqlGenericObject): JsonqlGenericObject;
 /** need to do this in two steps, first package it again and unwrap it, then next step flatten it */
 export declare function processValidateResults(argNames: Array<string>, validateResult: JsonqlGenericObject): Promise<any[]>;
+/** step to process the return result as object */
+export declare function processValidateResultsAsArrOfObj(argNames: Array<string>, validateResult: JsonqlGenericObject): Array<JsonqlGenericObject>;
 /** final step to unwarp the pack result for spread arguments */
 export declare function unwrapPreparedValidateResult(result: Array<any>): Promise<any>;
 /** extract the default value if there is none */

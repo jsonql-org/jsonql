@@ -5,6 +5,7 @@ const tslib_1 = require("tslib");
 const validator_base_1 = require("./validator-base");
 const validator_plugins_1 = require("@jsonql/validator-core/dist/validator-plugins");
 const fn_1 = require("./fn");
+const constants_1 = require("./constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
 const debug = (0, debug_1.default)('jsonql:validator:class:index');
 // main
@@ -16,8 +17,8 @@ class Validator extends validator_base_1.ValidatorBase {
     constructor(astMap, vp) {
         super(astMap, vp && vp instanceof validator_plugins_1.ValidatorPlugins ? vp : new validator_plugins_1.ValidatorPlugins(-1));
     }
-    /** this is where validation happens */
-    validate(values, style = 'array') {
+    /** this is override the parent validate method with addtitional process for result */
+    validate(values, returnAs = constants_1.RETURN_AS_ARR) {
         const _super = Object.create(null, {
             validate: { get: () => super.validate }
         });
@@ -25,12 +26,12 @@ class Validator extends validator_base_1.ValidatorBase {
             // call the parent validate method
             return _super.validate.call(this, values)
                 .then((result) => {
-                switch (style) {
-                    case 'raw':
+                switch (returnAs) {
+                    case constants_1.RETURN_AS_RAW:
                         return result;
-                    case 'array':
+                    case constants_1.RETURN_AS_ARR:
                         return this._prepareValidateResultForFuncCall(result);
-                    case 'object':
+                    case constants_1.RETURN_AS_OBJ:
                     default:
                         return this._prepareValidateResultAsObject(result);
                 }
@@ -49,17 +50,16 @@ class Validator extends validator_base_1.ValidatorBase {
     get validated */
     _prepareValidateResultForFuncCall(validateResult) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            debug('validateResult', this._arguments, validateResult);
+            debug('validateResult return as array', this._arguments, validateResult);
             // @TODO need to fix the spread input type return result
-            return (0, fn_1.processValidateResults)(this._arguments, validateResult)
-                .then(fn_1.unwrapPreparedValidateResult);
+            return (0, fn_1.processValidateResultsAsArr)(this._arguments, validateResult);
         });
     }
     /** prepare the validation result as key value pair */
     _prepareValidateResultAsObject(validateResult) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            console.log(this._arguments, validateResult);
-            return validateResult;
+            debug('validateResult return as object', this._arguments, validateResult);
+            return (0, fn_1.processValidateResultsAsObj)(this._arguments, validateResult);
         });
     }
 }
