@@ -3,6 +3,7 @@ import {
   JsonqlPropertyParamMap,
   JsonqlObjectValidateInput,
   MixedValidationInput,
+  JsonqlGenericObject,
 } from '@jsonql/validator/index'
 export type {
   JsonqlValidationPlugin,
@@ -38,4 +39,4 @@ export type ClientPluginConfigs = {
   [pluginName: string]: JsonqlValidationPlugin
 }
 
-export type { MixedValidationInput, JsonqlPropertyParamMap }
+export type { MixedValidationInput, JsonqlPropertyParamMap, JsonqlGenericObject }

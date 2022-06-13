@@ -16,7 +16,7 @@ export {
   RETURN_AS_OBJ,
   RETURN_AS_ARR,
   RETURN_AS_RAW,
-}_from '@jsonql/validator/dist/constants'
+} from '@jsonql/validator/dist/constants'
 export {
   SCHEMA_KEY
 } from './constants'
