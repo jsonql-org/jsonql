@@ -1,23 +1,4 @@
-/**
-  this is the new class style Validator
-  const validator = new Validator(map)
-  validator.run(propName arguments)
-  This class will support an plugin architecture
-  something like
-  validator.register(typeName: string, rule: any)
-  so it their map they could write
-  validationMap = {
-    someMethod: [{
-      type: 'mySpecialMethod'
-    }]
-  }
-  validator.register('mySpecialMethod', {
-    check(value): boolean {
-      // do your validation here
-    }
-  })
-  @TODO how to integrete this into the contract generator
-*/
+/** class style Validator, one instance per function */
 import type {
   JsonqlGenericObject,
 } from '@jsonql/validator-core/index'
@@ -36,6 +17,11 @@ import {
   processValidateResults,
   unwrapPreparedValidateResult,
 } from './fn'
+import {
+  RETURN_AS_ARR,
+  RETURN_AS_OBJ,
+  RETURN_AS_RAW,
+} from './constants'
 
 import debugFn from 'debug'
 const debug = debugFn('jsonql:validator:class:index')
@@ -56,17 +42,20 @@ export class Validator extends ValidatorBase {
     )
   }
 
-  /** this is where validation happens */
-  public async validate(values: Array<unknown>, style: ValidateResultReturn = 'array' ) {
+  /** this is override the parent validate method with addtitional process for result */
+  public async validate(
+    values: Array<unknown>, 
+    returnAs: ValidateResultReturn = RETURN_AS_ARR
+  ) {
     // call the parent validate method
     return super.validate(values)
                 .then((result: JsonqlGenericObject) => {
-                  switch (style) {
-                    case 'raw':
+                  switch (returnAs) {
+                    case RETURN_AS_RAW:
                       return result 
-                    case 'array':
+                    case RETURN_AS_ARR:
                       return this._prepareValidateResultForFuncCall(result)
-                    case 'object':
+                    case RETURN_AS_OBJ:
                     default:
                       return this._prepareValidateResultAsObject(result)
                   }

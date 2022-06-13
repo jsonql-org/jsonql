@@ -51,3 +51,16 @@ test(`Test the new direct method style to add a new validation rule`, t => {
                t.deepEqual(result, ['na na na', 123456, false])
              })
 })
+
+
+test.only(`Test the different return result use the second parameter`, async t => {
+  t.plan(1)
+
+  return valx.validate(['Not-gonna-fail', 132479], 'object')
+            .then((result: any) => {
+              console.log(result)
+
+              t.pass()
+            })
+})
+

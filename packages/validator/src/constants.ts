@@ -17,3 +17,7 @@ export const TS_TYPE_LIT = 'TsTypeLiteral'
 export const TS_TYPE_REF = 'TsTypeReference'
 // this is for us to id what that is
 export const TS_TYPE_NAME = 'tstype'
+// return result as - default array 
+export const RETURN_AS_OBJ = 'object'
+export const RETURN_AS_ARR = 'array'
+export const RETURN_AS_RAW = 'raw'
