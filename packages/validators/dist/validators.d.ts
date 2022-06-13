@@ -17,7 +17,7 @@ export declare class Validators {
     /** get the validator */
     getValidator(propertyName: string): {
         addValidationRules: (input: any) => any;
-        validate: (values: unknown[], raw?: boolean | undefined) => Promise<any>;
+        validate: (values: unknown[], returnAs?: import("@jsonql/validator/dist/types").ValidateResultReturn | undefined) => Promise<any>;
         prepareArgValues: (values: unknown[]) => any;
     };
     /** directly call the addValidationRules with the propertyName */

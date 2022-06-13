@@ -14,7 +14,6 @@ test.before(() => {
   validators = new Validators(astMap)
 })
 
-
 test(`Should able to get a validator by name and pass the validation`, async t => {
   t.plan(2)
 

@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "@jsonql/validator general purpose validation library that test type and value with a plugin system",
   "main": "dist/index.js",
   "module": "dist/index.d.ts",
