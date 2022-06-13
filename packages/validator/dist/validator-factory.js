@@ -17,18 +17,27 @@ class Validator extends validator_base_1.ValidatorBase {
         super(astMap, vp && vp instanceof validator_plugins_1.ValidatorPlugins ? vp : new validator_plugins_1.ValidatorPlugins(-1));
     }
     /** this is where validation happens */
-    validate(values, raw = false) {
+    validate(values, style = 'array') {
         const _super = Object.create(null, {
             validate: { get: () => super.validate }
         });
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             // call the parent validate method
             return _super.validate.call(this, values)
-                .then((finalResult) => raw ? finalResult
-                : this._prepareValidateResult(finalResult));
+                .then((result) => {
+                switch (style) {
+                    case 'raw':
+                        return result;
+                    case 'array':
+                        return this._prepareValidateResultForFuncCall(result);
+                    case 'object':
+                    default:
+                        return this._prepareValidateResultAsObject(result);
+                }
+            });
         });
     }
-    /** wrapper for the protected register plugin method */
+    /** wrapper for the plugin instance register plugin method */
     registerPlugin(name, plugin) {
         if (this._validatorPluginsInstance) {
             this._validatorPluginsInstance.registerPlugin(name, plugin);
@@ -38,12 +47,19 @@ class Validator extends validator_base_1.ValidatorBase {
     argumentName: value object and we make it to an array matching
     the order of the call, then we can pass it directly to method that
     get validated */
-    _prepareValidateResult(validateResult) {
+    _prepareValidateResultForFuncCall(validateResult) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             debug('validateResult', this._arguments, validateResult);
             // @TODO need to fix the spread input type return result
             return (0, fn_1.processValidateResults)(this._arguments, validateResult)
                 .then(fn_1.unwrapPreparedValidateResult);
+        });
+    }
+    /** prepare the validation result as key value pair */
+    _prepareValidateResultAsObject(validateResult) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            console.log(this._arguments, validateResult);
+            return validateResult;
         });
     }
 }

@@ -24,6 +24,7 @@ import type {
 import type {
   JsonqlValidationPlugin,
   JsonqlPropertyParamMap,
+  ValidateResultReturn,
 } from './types'
 import {
   ValidatorBase
@@ -56,16 +57,23 @@ export class Validator extends ValidatorBase {
   }
 
   /** this is where validation happens */
-  public async validate(values: Array<unknown>, raw = false) {
+  public async validate(values: Array<unknown>, style: ValidateResultReturn = 'array' ) {
     // call the parent validate method
     return super.validate(values)
-                .then((finalResult: unknown) =>
-                  raw ? finalResult
-                      : this._prepareValidateResult(finalResult as JsonqlGenericObject)
-                )
+                .then((result: JsonqlGenericObject) => {
+                  switch (style) {
+                    case 'raw':
+                      return result 
+                    case 'array':
+                      return this._prepareValidateResultForFuncCall(result)
+                    case 'object':
+                    default:
+                      return this._prepareValidateResultAsObject(result)
+                  }
+                })
   }
 
-  /** wrapper for the protected register plugin method */
+  /** wrapper for the plugin instance register plugin method */
   public registerPlugin(
     name: string,
     plugin: JsonqlValidationPlugin
@@ -79,12 +87,20 @@ export class Validator extends ValidatorBase {
   argumentName: value object and we make it to an array matching
   the order of the call, then we can pass it directly to method that
   get validated */
-  private async _prepareValidateResult(
+  private async _prepareValidateResultForFuncCall(
     validateResult: JsonqlGenericObject
   ): Promise<unknown[]> {
     debug('validateResult', this._arguments, validateResult)
     // @TODO need to fix the spread input type return result
     return processValidateResults(this._arguments, validateResult)
             .then(unwrapPreparedValidateResult)
+  }
+
+  /** prepare the validation result as key value pair */
+  private async _prepareValidateResultAsObject(
+    validateResult: JsonqlGenericObject
+  ) {
+    console.log(this._arguments, validateResult)
+    return validateResult
   }
 }

@@ -70,6 +70,8 @@ export type FunctionInput = CallbackFunction<unknown> | AsyncCallbackFunction<un
 
 export type MixedValidationInput = JsonqlObjectValidateInput | FunctionInput
 
+export type ValidateResultReturn = 'raw' | 'array' | 'object'
+
 export {
   JsonqlGenericObject,
   JsonqlValidationRule,
