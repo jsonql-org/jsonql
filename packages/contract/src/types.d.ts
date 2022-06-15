@@ -9,32 +9,34 @@ export type {
   JsonqlValidationRule
 } from '@jsonql/validators/index'
 
+export type GenericKeyValue = {
+  [key: string]: any
+}
+
 export type JsonqlContractEntry = Partial<{
   name: string
   params: Array<JsonqlProcessedEntry>
   route: string
   method: string
   file: string
-  [key: string]: any
-}>
+}> & GenericKeyValue
 
 export type JsonqlContractMetaEntry = {
   type?: string
   timestamp?: Array<number>
-  [key: string]: any
-}
+} & GenericKeyValue
 
 export type JsonqlContractTemplate = {
-  data: Array<JsonqlContractEntry>
-  meta: JsonqlContractMetaEntry
+  data: Array<JsonqlContractEntry> | GenericKeyValue | string
+  meta: JsonqlContractMetaEntry | null
   error?: GeneralException | null // the public contract dont need the error field
 }
 
 export type JsonqlRouteForContract = Array<JsonqlContractEntry>
 
+// just fake one here
+export type Validators = GenericKeyValue
+
 export type { JsonqlProcessedEntry, GeneralException }
 
-// just fake one here
-export type Validators = {
-  [key: string]: any
-}
+
