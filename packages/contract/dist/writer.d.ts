@@ -1,4 +1,4 @@
-import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlProcessedEntry, JsonqlRouteForContract, JsonqlValidationRule, Validators } from './types';
+import type { JsonqlContractEntry, JsonqlContractTemplate, JsonqlContractMetaEntry, JsonqlRouteForContract, JsonqlValidationRule, Validators } from './types';
 import { JsonqlAstMap } from '@jsonql/ast/index';
 import GeneralException from '@jsonql/errors/dist/general-exception';
 export declare class ContractWriter {
@@ -9,14 +9,7 @@ export declare class ContractWriter {
     /**
      This will get call externally to prepare the map before init this object
      */
-    static prepare(astMap: JsonqlAstMap): Partial<{
-        [key: string]: any;
-        name: string;
-        params: JsonqlProcessedEntry[];
-        route: string;
-        method: string;
-        file: string;
-    }>[];
+    static prepare(astMap: JsonqlAstMap): JsonqlContractEntry[];
     /** insert extra data into node by name */
     data(propertyName: string, value: JsonqlContractEntry): void;
     /** this will always overwrite the last one */

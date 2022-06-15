@@ -27,7 +27,7 @@ export type JsonqlContractMetaEntry = {
 } & GenericKeyValue
 
 export type JsonqlContractTemplate = {
-  data: Array<JsonqlContractEntry> | GenericKeyValue | string
+  data: Array<JsonqlContractEntry> // | GenericKeyValue | string
   meta: JsonqlContractMetaEntry | null
   error?: GeneralException | null // the public contract dont need the error field
 }
