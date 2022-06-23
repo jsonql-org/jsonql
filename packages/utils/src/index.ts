@@ -58,7 +58,7 @@ export {
   cacheBurstUrl,
   cacheBurst
 } from './urls'
-// also re-expor this for other project to use
+// also re-export this for other project to use
 export {
   isPlainObject,
   merge,
@@ -66,4 +66,7 @@ export {
   flatMap,
   isEqual,
   isObject,
+  isString,
+  trueTypeOf,
+  parseJWT
 } from './lodash'

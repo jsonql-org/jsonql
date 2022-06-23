@@ -8,7 +8,26 @@ import {
   flatMap,
   merge,
   curry,
+  isEqual,
+  trueTypeOf
 } from '../src'
+
+test('test the trueTypeOf method', t => {
+  const a1 = trueTypeOf(true)
+  t.is(a1, 'boolean')
+  const a2 = trueTypeOf('a')
+  t.is(a2, 'string')
+  const a3 = trueTypeOf(100)
+  t.is(a3, 'number')
+  const a4 = trueTypeOf(100.02)
+  t.is(a4, 'number')
+  const a5 = trueTypeOf({a: 1})
+  t.is(a5, 'object')
+  const a6 = trueTypeOf([1,2])
+  t.is(a6, 'array')
+  const a7 = trueTypeOf(undefined)
+  t.is(a7, 'undefined')
+})
 
 test('Test our DIY curry method', t => {
   const fn = (a: number, b: number, c: number) => a + b + c
@@ -18,21 +37,21 @@ test('Test our DIY curry method', t => {
   t.is(result, 6)
 })
 
-test('testing our DIY merge method', t => {
+test('testing our DIY merge method, also test the isEqual with object value', t => {
   const a = {a: 1, b: {c: 2}}
   const b = {x: {y: 10, z: [1,2,3]}}
 
   const c = merge(a, b)
 
-  t.deepEqual({a: 1, b: {c: 2}, x: {y: 10, z: [1,2,3]}}, c)
+  t.true(isEqual({a: 1, b: {c: 2}, x: {y: 10, z: [1,2,3]}}, c))
 })
 
 
-test('Testing the DIY flatMap method', t => {
+test('Testing the DIY flatMap method also test isEqual with array value', t => {
   const arr = [[1,2], [3, 4]]
   const newArr = flatMap(arr)
 
-  t.deepEqual(newArr, [1,2,3,4])
+  t.true(isEqual(newArr, [1,2,3,4]))
 })
 
 test(`Test the clone object which should detach from the original`, t => {
@@ -45,7 +64,7 @@ test(`Test the clone object which should detach from the original`, t => {
 
   t.is(obj.b.c, 3)
   t.is(obj.a, 1)
-  // console.log('a', obj.a)
+  
   t.is(clone.b.c, 2)
 })
 
