@@ -65,4 +65,5 @@ export {
   curry,
   flatMap,
   isEqual,
+  isObject,
 } from './lodash'

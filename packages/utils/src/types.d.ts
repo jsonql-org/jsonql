@@ -8,3 +8,5 @@ export interface JsonqlContract {
 
 export declare type JsonqlResolver = (...args: any[]) => any
 export declare type JsonqlAsyncResolver = (...args: any[]) => Promise<any>
+
+export declare type FlatMapCallback = (n: any, i: number, arr: any[]) => any

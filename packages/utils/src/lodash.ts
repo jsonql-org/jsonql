@@ -1,13 +1,41 @@
 // group all the lodash import export in one place
-import merge from 'lodash.merge'
-import curry from 'lodash.curry'
+// import curry from 'lodash.curry'
 // import mapValues from 'lodash-es/mapValues'
-type FlatMapCallback = (n: any, i: number, arr: any[]) => any
+import type { FlatMapCallback } from './types'
+// DIY curry method
+export const curry = (fn: any, ...args: any[]) =>
+  (fn.length <= args.length) ?
+    fn(...args) :
+    (...more: any[]) => curry(fn, ...args, ...more)
+
 // import mapKeys from 'lodash-es/mapKeys'
 // import omitBy from 'lodash-es/omitBy'
-/// import isEqual from 'lodash-es/isEqual'
 // import findKey from 'lodash-es/findKey'
-// import flatMap from 'lodash-es/flatMap'
+export const merge = (target: any, ...sources: any[]) => {
+  if (!sources.length) return target
+  const source = sources.shift()
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) {
+          Object.assign(target, {
+            [key]: {}
+          })
+        }
+        merge(target[key], source[key])
+      } else {
+        Object.assign(target, {
+          [key]: source[key]
+        })
+      }
+    }
+  }
+  return merge(target, ...sources)
+}
+
+export const isObject = (item: unknown) => {
+  return (item && typeof item === 'object' && !Array.isArray(item))
+}
 
 export function flatMap(arr: any[], callback?: FlatMapCallback) {
   if (!callback) {
@@ -32,15 +60,4 @@ export function isEqual(obj1: unknown, obj2: unknown): boolean {
   } catch(e) {
     return false
   }
-}
-
-// export
-export {
-  merge,
-  curry
-  // mapValues,
-// mapKeys,
-  // omitBy,
-  // findKey,
-  // isEqual
 }

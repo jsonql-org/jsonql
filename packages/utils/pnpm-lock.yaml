@@ -12,17 +12,9 @@ specifiers:
   esbuild: ^0.14.43
   esbuild-register: ^3.3.3
   eslint: ^8.17.0
-  lodash-es: ^4.17.21
-  lodash.curry: ^4.1.1
-  lodash.merge: ^4.6.2
   nyc: ^15.1.0
   rimraf: ^3.0.2
   typescript: ^4.7.3
-
-dependencies:
-  lodash-es: 4.17.21
-  lodash.curry: 4.1.1
-  lodash.merge: 4.6.2
 
 devDependencies:
   '@ava/typescript': 3.0.1
@@ -1966,20 +1958,13 @@ packages:
       p-locate: 6.0.0
     dev: true
 
-  /lodash-es/4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
-
-  /lodash.curry/4.1.1:
-    resolution: {integrity: sha512-/u14pXGviLaweY5JI0IUzgzF2J6Ne8INyzAZjImcryjgkZ+ebruBxy2/JaOOkTqScddcYtakjhSaeemV8lR0tA==}
-    dev: false
-
   /lodash.flattendeep/4.4.0:
     resolution: {integrity: sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=}
     dev: true
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: true
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}

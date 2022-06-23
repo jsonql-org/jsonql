@@ -1,8 +1,8 @@
-import isNaN from 'lodash-es/isNaN';
-import isString from 'lodash-es/isString';
-import isPlainObject from 'lodash-es/isPlainObject';
-import merge from 'lodash-es/merge';
-import curry from 'lodash-es/curry';
-import flatMap from 'lodash-es/flatMap';
-import isEqual from 'lodash-es/isEqual';
-export { isNaN, isString, isPlainObject, merge, curry, flatMap, isEqual };
+import merge from 'lodash.merge';
+import curry from 'lodash.curry';
+declare type FlatMapCallback = (n: any, i: number, arr: any[]) => any;
+export declare function flatMap(arr: any[], callback?: FlatMapCallback): any[];
+export declare function isPlainObject(obj: unknown): boolean;
+export declare function isString(value: unknown): boolean;
+export declare function isEqual(obj1: unknown, obj2: unknown): boolean;
+export { merge, curry };

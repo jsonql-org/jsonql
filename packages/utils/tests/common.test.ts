@@ -5,8 +5,28 @@ import {
   strToBool,
   isFunction,
   cloneDeep,
-  flatMap
+  flatMap,
+  merge,
+  curry,
 } from '../src'
+
+test('Test our DIY curry method', t => {
+  const fn = (a: number, b: number, c: number) => a + b + c
+  const cFn = curry(fn, 1)
+  t.true(typeof cFn === 'function')
+  const result = cFn(2, 3)
+  t.is(result, 6)
+})
+
+test('testing our DIY merge method', t => {
+  const a = {a: 1, b: {c: 2}}
+  const b = {x: {y: 10, z: [1,2,3]}}
+
+  const c = merge(a, b)
+
+  t.deepEqual({a: 1, b: {c: 2}, x: {y: 10, z: [1,2,3]}}, c)
+})
+
 
 test('Testing the DIY flatMap method', t => {
   const arr = [[1,2], [3, 4]]
