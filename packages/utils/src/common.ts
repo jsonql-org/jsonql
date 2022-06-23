@@ -1,18 +1,18 @@
 // bunch of generic helpers
-// import isArray from 'lodash-es/isArray'
+import type { AnyType, AnyTypeArr } from './types'
 import { isString } from './lodash'
 /**
  * DIY in Array
  */
-export const inArray = (arr: any[], value: any) => !!arr.filter(a => a === value).length
+export const inArray = (arr: AnyTypeArr, value: AnyType) => !!arr.filter(a => a === value).length
 
 // quick and dirty to turn non array to array
-export const toArray = (arg: any) => Array.isArray(arg) ? arg : [arg]
+export const toArray = (arg: AnyType) => Array.isArray(arg) ? arg : [arg]
 
 /**
  * parse string to json or just return the original value if error happened
  */
-export const parseJson = (n: any, t=true) => {
+export const parseJson = (n: AnyType, t = true) => {
   try {
     return isString(n) ?
       JSON.parse(n) :
@@ -41,9 +41,9 @@ export const showDeep = (code: unknown): void => {
 }
 
 /** from https://www.tutorialstonight.com/javascript-string-format.php
-  change to a normal function
+  change to a standard function instead of prototype pollution
 */
-export function formatStr(str: string, ...args: any[]) {
+export function formatStr(str: string, ...args: AnyTypeArr) {
   return str.replace(/{([0-9]+)}/g, (match: string, index: number) => (
     typeof args[index] === 'undefined' ? match : args[index]
   ))

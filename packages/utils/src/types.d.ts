@@ -1,12 +1,21 @@
 // specify your types here
-// @TODO define different parts futher
+// cheating
+export declare type AnyType = any
+
+export declare type AnyTypeArr = Array<AnyType>
+export declare type AnyFunc = (...args: AnyTypeArr) => AnyType
+export declare type AnyAsyncFunc = (...args: AnyTypeArr) => Promise<AnyType>
+
 export interface JsonqlContract {
-  query?: any
-  mutation?: any
-  socket?: any
+  query?: AnyType
+  mutation?: AnyType
+  socket?: AnyType
 }
 
-export declare type JsonqlResolver = (...args: any[]) => any
-export declare type JsonqlAsyncResolver = (...args: any[]) => Promise<any>
+export declare type JsonqlResolver = (...args: AnyType[]) => AnyType
+export declare type JsonqlAsyncResolver = (...args: AnyType[]) => Promise<AnyType>
 
-export declare type FlatMapCallback = (n: any, i: number, arr: any[]) => any
+export declare type FlatMapCallback = (n: AnyType, i: number, arr: AnyType[]) => AnyType
+export declare type MapCallback = (n: AnyType, i?: number) => AnyType
+
+export declare type JsonqlPromiseChainFn = (...args: AnyTypeArr[]) => Promise<AnyType>

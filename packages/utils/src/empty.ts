@@ -1,8 +1,9 @@
 // a bunch of check if something is empty that was in the common.ts
 // check if an obj is empty, ported from Velocejs
+import type { AnyType } from './types'
 import { isPlainObject } from './lodash'
 
-export const isEmptyObj = (obj: any): boolean => (
+export const isEmptyObj = (obj: AnyType): boolean => (
   obj && obj.constructor === Object && Object.keys(obj).length === 0
 )
 

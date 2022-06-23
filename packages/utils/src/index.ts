@@ -31,7 +31,7 @@ export {
   arrToObj
 } from './object'
 export { isFunction, isAsyncFunction } from './is-function'
-export { cloneDeep } from './clone-deep'
+export { cloneDeep, cloneDeepCheap } from './clone-deep'
 export { logger, getLogger } from './logger'
 export {
   objDefineProps,
@@ -52,6 +52,7 @@ export {
   curry,
   flatMap,
   isEqual,
+  isEqualCheap,
   isObject,
   isString
 } from './lodash'

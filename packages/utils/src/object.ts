@@ -1,4 +1,5 @@
 // bunch of object related methods
+import type { AnyType, MapCallback } from './types'
 import { inArray } from './common'
 import { isPlainObject } from './lodash'
 /**
@@ -14,13 +15,13 @@ export const getConfigValue = (name: string, obj: object) => (
 export const assign = (...args: unknown[]) => Reflect.apply(Object.assign, Object, args)
 
 /**
-Array to object
+  Array to object
 */
 export const arrToObj = (
   args: unknown[],
-  processor: any,
+  processor: MapCallback,
   initValue = {}
-): any => args.map(processor).reduce((a, b) => assign(a,b), initValue)
+): AnyType => args.map(processor).reduce((a, b) => assign(a,b), initValue)
 
 /**
  * check if the key existing in an object
@@ -28,7 +29,6 @@ export const arrToObj = (
 export const objectHasKey = (obj: object, key: string): boolean => {
   try {
     const keys = Object.keys(obj)
-
     return inArray(keys, key)
   } catch(e) {
     // @_BUG when the obj is not an OBJECT we got some weird output
@@ -40,4 +40,4 @@ export const objectHasKey = (obj: object, key: string): boolean => {
  * Shorthand method to turn config into immutatble (readonly)
  * was call freeze
  */
-export const readOnly = (config: object): any => Object.freeze(config)
+export const readOnly = (config: object): AnyType => Object.freeze(config)

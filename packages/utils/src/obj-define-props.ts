@@ -1,4 +1,5 @@
-import {
+import type {
+  AnyType,
   JsonqlResolver,
   JsonqlAsyncResolver
 } from './types'
@@ -7,21 +8,25 @@ import {
  * this is essentially the same as the injectToFn
  * but this will not allow overwrite and set the setter and getter
  */
-export function objDefineProps(obj: any, name: string, setter: any, getter = null) {
+export function objDefineProps(
+  obj: AnyType,
+  name: string,
+  setter: AnyType,
+  getter = null
+) {
   if (Object.getOwnPropertyDescriptor(obj, name) === undefined) {
     Object.defineProperty(obj, name, {
       set: setter,
       get: getter === null ? function() { return null; } : getter
     })
   }
-
   return obj
 }
 
 /**
  * check if the object has name property
  */
-export function objHasProp(obj: any, name: string) {
+export function objHasProp(obj: AnyType, name: string) {
   const prop = Object.getOwnPropertyDescriptor(obj, name)
 
   return prop !== undefined && prop.value ? prop.value : prop
@@ -32,9 +37,9 @@ export function objHasProp(obj: any, name: string) {
  * to the resolver with the decoded user data
  */
 export function injectToFn(
-  resolver: JsonqlResolver | JsonqlAsyncResolver, 
+  resolver: JsonqlResolver | JsonqlAsyncResolver,
   name: string,
-  data: any,
+  data: AnyType,
   overwrite = false
 ) {
   const check = objHasProp(resolver, name)
@@ -43,6 +48,7 @@ export function injectToFn(
     return resolver
   }
   /* this will throw error! @TODO how to remove props?
+  @NOTE 2022 perhaps we could just overwrite this prop with undefined
   if (overwrite === true && check !== undefined) {
     delete resolver[name] // delete this property
   }

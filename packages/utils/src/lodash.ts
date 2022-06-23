@@ -1,18 +1,18 @@
 // group all the lodash import export in one place
 // import curry from 'lodash.curry'
 // import mapValues from 'lodash-es/mapValues'
-import type { FlatMapCallback } from './types'
+import type { AnyType, FlatMapCallback } from './types'
 import { trueTypeOf } from './truetypeof'
 // DIY curry method
-export const curry = (fn: any, ...args: any[]) =>
+export const curry = (fn: AnyType, ...args: AnyType[]) =>
   (fn.length <= args.length) ?
     fn(...args) :
-    (...more: any[]) => curry(fn, ...args, ...more)
+    (...more: AnyType[]) => curry(fn, ...args, ...more)
 
 // import mapKeys from 'lodash-es/mapKeys'
 // import omitBy from 'lodash-es/omitBy'
 // import findKey from 'lodash-es/findKey'
-export const merge = (target: any, ...sources: any[]) => {
+export const merge = (target: AnyType, ...sources: AnyType[]) => {
   if (!sources.length) return target
   const source = sources.shift()
   if (isObject(target) && isObject(source)) {
@@ -38,7 +38,7 @@ export const isObject = (item: unknown): boolean => {
   return (trueTypeOf(item) === 'object' && !Array.isArray(item))
 }
 
-export function flatMap(arr: any[], callback?: FlatMapCallback) {
+export function flatMap(arr: AnyType[], callback?: FlatMapCallback) {
   if (!callback) {
     callback = n => n
   }
@@ -55,21 +55,18 @@ export function isString(value: unknown): boolean {
   return trueTypeOf(value) === 'string'
 }
 // Poorman way ...
-/*
-export function isEqual(obj1: unknown, obj2: unknown): boolean {
+export function isEqualCheap(obj1: unknown, obj2: unknown): boolean {
   try {
     return JSON.stringify(obj1) === JSON.stringify(obj2)
   } catch(e) {
     return false
   }
 }
-*/
-/*!
+
+/*
  * Check if two objects or arrays are equal
  * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- * @param  {*}       obj1 The first item
- * @param  {*}       obj2 The second item
- * @return {Boolean}       Returns true if they're equal in value
+ * (c) 2022 Joel Chu rewrite in Typescript and fix styling issues
  */
 export function isEqual (obj1: unknown, obj2: unknown) {
 	function getType (obj: unknown): string {

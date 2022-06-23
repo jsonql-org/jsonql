@@ -1,3 +1,4 @@
+import type { AnyType, AnyTypeArr } from './types'
 import { toArray } from './common'
 /**
  * using just the map reduce to chain multiple functions together
@@ -6,10 +7,10 @@ import { toArray } from './common'
  * @_return {function} accept value for the mainFn
  */
 export const chainFns = (
-  mainFn: any,
-  ...moreFns: Array<any>
-): ((...args: any[]) => any) => (
-  (...args: any[]) => (
+  mainFn: AnyType,
+  ...moreFns: AnyTypeArr
+): ((...args: AnyTypeArr) => AnyType) => (
+  (...args: AnyTypeArr) => (
     moreFns.reduce((value, nextFn) => (
       // change here to check if the return value is array then we spread it
       Reflect.apply(nextFn, null, toArray(value))
