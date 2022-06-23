@@ -13,13 +13,3 @@ export declare function isString(value: unknown): boolean;
  * @return {Boolean}       Returns true if they're equal in value
  */
 export declare function isEqual(obj1: unknown, obj2: unknown): boolean;
-/*!
- * More accurately check the type of a JavaScript object
- * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- */
-export declare function trueTypeOf(obj: any): string;
-/**
- * Decode a JWT payload
- * https://stackoverflow.com/a/38552302
- */
-export declare function parseJWT(token: string): JSON;

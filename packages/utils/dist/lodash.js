@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseJWT = exports.trueTypeOf = exports.isEqual = exports.isString = exports.isPlainObject = exports.flatMap = exports.isObject = exports.merge = exports.curry = void 0;
+exports.isEqual = exports.isString = exports.isPlainObject = exports.flatMap = exports.isObject = exports.merge = exports.curry = void 0;
+const truetypeof_1 = require("./truetypeof");
 // DIY curry method
 const curry = (fn, ...args) => (fn.length <= args.length) ?
     fn(...args) :
@@ -34,7 +35,7 @@ const merge = (target, ...sources) => {
 };
 exports.merge = merge;
 const isObject = (item) => {
-    return (trueTypeOf(item) === 'object' && !Array.isArray(item));
+    return ((0, truetypeof_1.trueTypeOf)(item) === 'object' && !Array.isArray(item));
 };
 exports.isObject = isObject;
 function flatMap(arr, callback) {
@@ -51,7 +52,7 @@ exports.isPlainObject = isPlainObject;
 // the lodash-es ESM module can not import from commonjs etc etc etc bug
 // so we get rip of most of them
 function isString(value) {
-    return trueTypeOf(value) === 'string';
+    return (0, truetypeof_1.trueTypeOf)(value) === 'string';
 }
 exports.isString = isString;
 // Poorman way ...
@@ -127,24 +128,3 @@ function isEqual(obj1, obj2) {
     }
 }
 exports.isEqual = isEqual;
-/*!
- * More accurately check the type of a JavaScript object
- * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- */
-function trueTypeOf(obj) {
-    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-}
-exports.trueTypeOf = trueTypeOf;
-/**
- * Decode a JWT payload
- * https://stackoverflow.com/a/38552302
- */
-function parseJWT(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-}
-exports.parseJWT = parseJWT;
