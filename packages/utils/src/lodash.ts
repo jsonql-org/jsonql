@@ -2,6 +2,7 @@
 // import curry from 'lodash.curry'
 // import mapValues from 'lodash-es/mapValues'
 import type { FlatMapCallback } from './types'
+import { trueTypeOf } from './truetypeof'
 // DIY curry method
 export const curry = (fn: any, ...args: any[]) =>
   (fn.length <= args.length) ?
@@ -124,25 +125,4 @@ export function isEqual (obj1: unknown, obj2: unknown) {
       }
       return arePrimativesEqual()
   }
-}
-
-/*!
- * More accurately check the type of a JavaScript object
- * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- */
-export function trueTypeOf (obj: any): string {
-	return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
-}
-
-/**
- * Decode a JWT payload
- * https://stackoverflow.com/a/38552302
- */
-export function parseJWT (token: string): JSON {
-	const base64Url = token.split('.')[1]
-	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-	const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-	}).join(''))
-	return JSON.parse(jsonPayload)
 }

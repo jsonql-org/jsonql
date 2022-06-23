@@ -4,15 +4,10 @@ export { chainFns } from './chain-fns'
 export {
   chainPromises,
   chainProcessPromises,
-  queuePromisesProcess,
+  queuePromisesProcess
 } from './chain-promises'
-export {
-  strToNum,
-  strToBool,
-} from './convert'
-export {
-  dasherize
-} from './dasherize'
+export { strToNum, strToBool } from './convert'
+export { dasherize } from './dasherize'
 export {
   inArray,
   toArray,
@@ -20,39 +15,31 @@ export {
   nil,
   createEvtName,
   showDeep,
-  formatStr,
+  formatStr
 } from './common'
 export {
   isEmptyObj,
   isNotEmpty,
   notEmpty,
-  isEmpty,
+  isEmpty
 } from './empty'
 export {
   objectHasKey,
   getConfigValue,
   assign,
   readOnly,
-  arrToObj,
+  arrToObj
 } from './object'
-export { isFunction } from './is-function'
+export { isFunction, isAsyncFunction } from './is-function'
 export { cloneDeep } from './clone-deep'
-export {
-  logger,
-  getLogger
-} from './logger'
+export { logger, getLogger } from './logger'
 export {
   objDefineProps,
   objHasProp,
-  injectToFn,
+  injectToFn
 } from './obj-define-props'
-export {
-  isRegExp,
-  getRegex
-} from './regex'
-export {
-  timestamp
-} from './timestamp'
+export { isRegExp, getRegex } from './regex'
+export { timestamp } from './timestamp'
 export {
   urlParams,
   cacheBurstUrl,
@@ -66,7 +53,7 @@ export {
   flatMap,
   isEqual,
   isObject,
-  isString,
-  trueTypeOf,
-  parseJWT
+  isString
 } from './lodash'
+export { trueTypeOf } from './truetypeof'
+export { parseJWT } from './jwt'

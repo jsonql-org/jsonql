@@ -29,6 +29,10 @@ test('test the trueTypeOf method', t => {
   t.is(a7, 'undefined')
   const a8 = trueTypeOf(null)
   t.is(a8, 'null')
+  const a9 = trueTypeOf(() => true)
+  t.is(a9, 'function')
+  const a10 = trueTypeOf(async () => false)
+  t.is(a10, 'asyncfunction')
 })
 
 test('Test our DIY curry method', t => {

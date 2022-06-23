@@ -1,11 +1,12 @@
 // validator numbers
 // import { NUMBER_TYPES } from './constants';
+import { trueTypeOf } from '@jsonql/utils/dist/common'
 /**
  * @2015-05-04 found a problem if the value is a number like string
  * it will pass, so add a check if it's string before we pass to next
  */
 export function checkNumber(value: number) {
-  return typeof value === 'string' ? false : !isNaN( parseFloat(value + '') )
+  return trueTypeOf(value) !== 'number' ? false : !isNaN( parseFloat(value + '') )
 }
 
 // Add more number type / value checking
