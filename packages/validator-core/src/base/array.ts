@@ -53,7 +53,6 @@ export function checkArray(
   return false
 }
 
-
 /** Take the string type like array.<T> or Array<T> apart */
 function destructArrayStr(type: string, syntax = 'ts'): Array<string> | boolean {
   const left = STYLES[syntax]
@@ -69,7 +68,6 @@ function destructArrayStr(type: string, syntax = 'ts'): Array<string> | boolean 
     // return as array
     return [_type]
   }
-
   return false
 }
 

@@ -27,6 +27,8 @@ test('test the trueTypeOf method', t => {
   t.is(a6, 'array')
   const a7 = trueTypeOf(undefined)
   t.is(a7, 'undefined')
+  const a8 = trueTypeOf(null)
+  t.is(a8, 'null')
 })
 
 test('Test our DIY curry method', t => {
@@ -64,7 +66,7 @@ test(`Test the clone object which should detach from the original`, t => {
 
   t.is(obj.b.c, 3)
   t.is(obj.a, 1)
-  
+
   t.is(clone.b.c, 2)
 })
 

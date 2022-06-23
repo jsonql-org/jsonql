@@ -34,7 +34,7 @@ const merge = (target, ...sources) => {
 };
 exports.merge = merge;
 const isObject = (item) => {
-    return (item && typeof item === 'object' && !Array.isArray(item));
+    return (trueTypeOf(item) === 'object' && !Array.isArray(item));
 };
 exports.isObject = isObject;
 function flatMap(arr, callback) {
