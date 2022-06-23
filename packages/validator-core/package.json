@@ -33,7 +33,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^0.8.0"
+    "@jsonql/utils": "workspace:^0.9.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
