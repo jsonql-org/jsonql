@@ -1,17 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.curry = exports.merge = exports.isEqual = exports.isString = exports.isPlainObject = exports.flatMap = void 0;
-const tslib_1 = require("tslib");
-// group all the lodash import export in one place
-const lodash_merge_1 = tslib_1.__importDefault(require("lodash.merge"));
-exports.merge = lodash_merge_1.default;
-const lodash_curry_1 = tslib_1.__importDefault(require("lodash.curry"));
-exports.curry = lodash_curry_1.default;
+exports.isEqual = exports.isString = exports.isPlainObject = exports.flatMap = exports.isObject = exports.merge = exports.curry = void 0;
+// DIY curry method
+const curry = (fn, ...args) => (fn.length <= args.length) ?
+    fn(...args) :
+    (...more) => (0, exports.curry)(fn, ...args, ...more);
+exports.curry = curry;
 // import mapKeys from 'lodash-es/mapKeys'
 // import omitBy from 'lodash-es/omitBy'
-/// import isEqual from 'lodash-es/isEqual'
 // import findKey from 'lodash-es/findKey'
-// import flatMap from 'lodash-es/flatMap'
+const merge = (target, ...sources) => {
+    if (!sources.length)
+        return target;
+    const source = sources.shift();
+    if ((0, exports.isObject)(target) && (0, exports.isObject)(source)) {
+        for (const key in source) {
+            if ((0, exports.isObject)(source[key])) {
+                if (!target[key]) {
+                    Object.assign(target, {
+                        [key]: {}
+                    });
+                }
+                (0, exports.merge)(target[key], source[key]);
+            }
+            else {
+                Object.assign(target, {
+                    [key]: source[key]
+                });
+            }
+        }
+    }
+    return (0, exports.merge)(target, ...sources);
+};
+exports.merge = merge;
+const isObject = (item) => {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+};
+exports.isObject = isObject;
 function flatMap(arr, callback) {
     if (!callback) {
         callback = n => n;

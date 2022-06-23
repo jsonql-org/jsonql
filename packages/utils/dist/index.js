@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isEqual = exports.flatMap = exports.curry = exports.merge = exports.isPlainObject = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeep = exports.isFunction = exports.arrToObj = exports.readOnly = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.toArray = exports.inArray = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = exports.accessByPath = void 0;
+exports.isObject = exports.isEqual = exports.flatMap = exports.curry = exports.merge = exports.isPlainObject = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeep = exports.isFunction = exports.arrToObj = exports.readOnly = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.toArray = exports.inArray = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = exports.accessByPath = void 0;
 // start your project here
 var access_1 = require("./access");
 Object.defineProperty(exports, "accessByPath", { enumerable: true, get: function () { return access_1.accessByPath; } });
@@ -61,3 +61,4 @@ Object.defineProperty(exports, "merge", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "curry", { enumerable: true, get: function () { return lodash_1.curry; } });
 Object.defineProperty(exports, "flatMap", { enumerable: true, get: function () { return lodash_1.flatMap; } });
 Object.defineProperty(exports, "isEqual", { enumerable: true, get: function () { return lodash_1.isEqual; } });
+Object.defineProperty(exports, "isObject", { enumerable: true, get: function () { return lodash_1.isObject; } });
