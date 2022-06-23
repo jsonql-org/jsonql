@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator-core",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "@jsonql/validator-core provide all core functions for @jsonql/validator and config-validator",
   "main": "dist/index.js",
   "module": "validator-core.esm.js",
