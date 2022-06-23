@@ -1,14 +1,15 @@
+import type { AnyType, AnyTypeArr } from './types';
 declare global {
     interface Window {
-        DEBUG?: any;
-        JSONQL_DEBUG?: any;
+        DEBUG?: AnyType;
+        JSONQL_DEBUG?: AnyType;
     }
 }
 /**
  * simple for browser console.info wrapper
  */
-export declare function logger(...args: any[]): void;
+export declare function logger(...args: AnyTypeArr): void;
 /**
  * generic logger method can control via global property
  */
-export declare const getLogger: (name: string) => (...args: any[]) => void;
+export declare const getLogger: (name: string) => (...args: AnyTypeArr) => void;

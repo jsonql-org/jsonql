@@ -1,4 +1,5 @@
-export declare const isEmptyObj: (obj: any) => boolean;
+import type { AnyType } from './types';
+export declare const isEmptyObj: (obj: AnyType) => boolean;
 /**
  * Check several parameter that there is something in the param
  */

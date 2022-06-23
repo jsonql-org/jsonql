@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = void 0;
-// a bunch of check if something is empty that was in the common.ts
-// check if an obj is empty, ported from Velocejs
 const lodash_1 = require("./lodash");
 const isEmptyObj = (obj) => (obj && obj.constructor === Object && Object.keys(obj).length === 0);
 exports.isEmptyObj = isEmptyObj;

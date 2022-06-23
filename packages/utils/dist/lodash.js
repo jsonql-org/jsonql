@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isEqual = exports.isString = exports.isPlainObject = exports.flatMap = exports.isObject = exports.merge = exports.curry = void 0;
+exports.isEqual = exports.isEqualCheap = exports.isString = exports.isPlainObject = exports.flatMap = exports.isObject = exports.merge = exports.curry = void 0;
 const truetypeof_1 = require("./truetypeof");
 // DIY curry method
 const curry = (fn, ...args) => (fn.length <= args.length) ?
@@ -56,21 +56,19 @@ function isString(value) {
 }
 exports.isString = isString;
 // Poorman way ...
-/*
-export function isEqual(obj1: unknown, obj2: unknown): boolean {
-  try {
-    return JSON.stringify(obj1) === JSON.stringify(obj2)
-  } catch(e) {
-    return false
-  }
+function isEqualCheap(obj1, obj2) {
+    try {
+        return JSON.stringify(obj1) === JSON.stringify(obj2);
+    }
+    catch (e) {
+        return false;
+    }
 }
-*/
-/*!
+exports.isEqualCheap = isEqualCheap;
+/*
  * Check if two objects or arrays are equal
  * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- * @param  {*}       obj1 The first item
- * @param  {*}       obj2 The second item
- * @return {Boolean}       Returns true if they're equal in value
+ * (c) 2022 Joel Chu rewrite in Typescript and fix styling issues
  */
 function isEqual(obj1, obj2) {
     function getType(obj) {

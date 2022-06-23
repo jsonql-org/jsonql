@@ -34,6 +34,7 @@ function injectToFn(resolver, name, data, overwrite = false) {
         return resolver;
     }
     /* this will throw error! @TODO how to remove props?
+    @NOTE 2022 perhaps we could just overwrite this prop with undefined
     if (overwrite === true && check !== undefined) {
       delete resolver[name] // delete this property
     }

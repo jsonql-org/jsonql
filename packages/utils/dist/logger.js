@@ -10,21 +10,25 @@ function logger(...args) {
             Reflect.apply(console.log, console, args);
         }
     }
-    catch (e) { }
+    catch (e) {
+        return;
+    }
 }
 exports.logger = logger;
 /**
  * generic logger method can control via global property
  */
 const getLogger = (name) => {
-    let base = [name];
+    const base = [name];
     return (...args) => {
         try {
             if (window && window.JSONQL_DEBUG) {
                 Reflect.apply(console.info, console, base.concat(args));
             }
         }
-        catch (e) { }
+        catch (e) {
+            return;
+        }
     };
 };
 exports.getLogger = getLogger;

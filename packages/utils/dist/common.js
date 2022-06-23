@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatStr = exports.showDeep = exports.nil = exports.createEvtName = exports.parseJson = exports.toArray = exports.inArray = void 0;
-// bunch of generic helpers
-// import isArray from 'lodash-es/isArray'
 const lodash_1 = require("./lodash");
 /**
  * DIY in Array
@@ -45,7 +43,7 @@ const showDeep = (code) => {
 };
 exports.showDeep = showDeep;
 /** from https://www.tutorialstonight.com/javascript-string-format.php
-  change to a normal function
+  change to a standard function instead of prototype pollution
 */
 function formatStr(str, ...args) {
     return str.replace(/{([0-9]+)}/g, (match, index) => (typeof args[index] === 'undefined' ? match : args[index]));

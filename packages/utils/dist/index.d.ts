@@ -7,12 +7,12 @@ export { inArray, toArray, parseJson, nil, createEvtName, showDeep, formatStr } 
 export { isEmptyObj, isNotEmpty, notEmpty, isEmpty } from './empty';
 export { objectHasKey, getConfigValue, assign, readOnly, arrToObj } from './object';
 export { isFunction, isAsyncFunction } from './is-function';
-export { cloneDeep } from './clone-deep';
+export { cloneDeep, cloneDeepCheap } from './clone-deep';
 export { logger, getLogger } from './logger';
 export { objDefineProps, objHasProp, injectToFn } from './obj-define-props';
 export { isRegExp, getRegex } from './regex';
 export { timestamp } from './timestamp';
 export { urlParams, cacheBurstUrl, cacheBurst } from './urls';
-export { isPlainObject, merge, curry, flatMap, isEqual, isObject, isString } from './lodash';
+export { isPlainObject, merge, curry, flatMap, isEqual, isEqualCheap, isObject, isString } from './lodash';
 export { trueTypeOf } from './truetypeof';
 export { parseJWT } from './jwt';

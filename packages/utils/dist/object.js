@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = void 0;
-// bunch of object related methods
 const common_1 = require("./common");
 const lodash_1 = require("./lodash");
 /**
@@ -15,7 +14,7 @@ exports.getConfigValue = getConfigValue;
 const assign = (...args) => Reflect.apply(Object.assign, Object, args);
 exports.assign = assign;
 /**
-Array to object
+  Array to object
 */
 const arrToObj = (args, processor, initValue = {}) => args.map(processor).reduce((a, b) => (0, exports.assign)(a, b), initValue);
 exports.arrToObj = arrToObj;
