@@ -60,8 +60,6 @@ export {
 } from './urls'
 // also re-expor this for other project to use
 export {
-  isNaN,
-  isString,
   isPlainObject,
   merge,
   curry,

@@ -1,6 +1,4 @@
 // this is mainly for the string (via url) input then convert to other two primitive type
-import { isNaN } from './lodash'
-
 /** convert string to number, t = true then throw and hail it */
 export function strToNum(input: string, t = false) {
   const n = parseFloat(input)

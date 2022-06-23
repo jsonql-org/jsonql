@@ -1,12 +1,19 @@
 // combine test for many small functions
 import test from 'ava'
 import {
-  isNaN,
   strToNum,
   strToBool,
   isFunction,
   cloneDeep,
+  flatMap
 } from '../src'
+
+test('Testing the DIY flatMap method', t => {
+  const arr = [[1,2], [3, 4]]
+  const newArr = flatMap(arr)
+
+  t.deepEqual(newArr, [1,2,3,4])
+})
 
 test(`Test the clone object which should detach from the original`, t => {
   const obj = {a: 1, b: { c: 2} }
@@ -45,7 +52,7 @@ test("testing the problem with isFunction sometime report a [Function name] as o
 
 test(`Test how the isNaN works first`, t => {
   const input = '100'
-  t.false(isNaN(input))
+  t.false(isNaN(input as unknown as number))
   const input1 = parseFloat('ab20')
   t.true(isNaN(input1))
 })

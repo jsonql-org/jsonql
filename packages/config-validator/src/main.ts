@@ -114,12 +114,11 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
         }
       ))
     case paramNames[0].variable === true: // using spread syntax
-      const type = paramNames[0].type;
       return argValues.map((arg, i) => (
         {
           arg,
           index: i, // keep the index for reference
-          param: paramNames[i] || { type, name: '_' }
+          param: paramNames[i] || { type: paramNames[0].type, name: '_' }
         }
       ))
     // with optional defaultValue parameters
@@ -134,9 +133,6 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
       ))
     // this one pass more than it should have anything after the args.length will be cast as any type
     case argValues.length > paramNames.length:
-      let ctn = paramNames.length
-      // this happens when we have those array.<number> type
-      let _type = [ DEFAULT_TYPE ]
       // we only looking at the first one, this might be a @BUG
       /*
       if ((tmp = isArrayLike(params[0].type[0])) !== false) {
@@ -146,8 +142,11 @@ export const normalizeArgs = function(argValues: any[], paramNames: any[]) {
       // which is not what we want, instead, anything without the param
       // will get a any type and optional flag
       return argValues.map((arg, i) => {
-        let optional = i >= ctn ? true : !!paramNames[i].optional
-        let param = paramNames[i] || { type: _type, name: `_${i}` }
+        const ctn = paramNames.length
+        // this happens when we have those array.<number> type
+        const _type = [ DEFAULT_TYPE ]
+        const optional = i >= ctn ? true : !!paramNames[i].optional
+        const param = paramNames[i] || { type: _type, name: `_${i}` }
         return {
           arg: optional ? getOptionalValue(arg, param) : arg,
           index: i,
