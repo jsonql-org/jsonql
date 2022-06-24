@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = void 0;
-// validate object type
-const lodash_1 = require("../lib/lodash");
-// import filter from 'lodash-es/filter'
+const lodash_1 = require("@jsonql/utils/dist/lodash");
 const combine_1 = require("./combine");
 const array_1 = require("./array");
 /**

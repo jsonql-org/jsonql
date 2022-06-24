@@ -135,10 +135,6 @@ exports.isResultPackage = isResultPackage;
 /** If the plugin provide a pattern and we construct a function out of it */
 function patternPluginFanctory(pattern) {
     const regex = (0, regex_1.getRegex)(pattern);
-    return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-        return regex.test(value) ?
-            Promise.resolve(true) :
-            Promise.reject(false);
-    });
+    return (value) => tslib_1.__awaiter(this, void 0, void 0, function* () { return regex.test(value) ? Promise.resolve(true) : Promise.reject(false); });
 }
 exports.patternPluginFanctory = patternPluginFanctory;

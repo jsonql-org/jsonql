@@ -82,12 +82,14 @@ test(`Test checkObject with the in operator`, t => {
   t.false(checkObject(testObj, keys))
 })
 
-test('Should able to check basic object type', t => {
+test.only('Should able to check basic object type', t => {
   t.true(checkObject({}), 'Empty Object')
   t.true(checkObject({a: 1, b: 2}), 'Object with keys')
+
   const obj = function() {
     this.a = 1;
     this.b = 2;
+    this.fn = () => true
   }
   t.false(checkObject(new obj()), 'Init a function object')
 })

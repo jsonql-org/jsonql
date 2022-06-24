@@ -35,6 +35,21 @@ test('test the trueTypeOf method', t => {
   t.is(a10, 'asyncfunction')
 })
 
+test('further test the trueTypeOf with class and class instance', t => {
+  function someFn () {
+    this.id = 1
+  }
+  const newObj = new someFn()
+  const a11 = trueTypeOf(newObj)
+  t.is(a11, 'object')
+
+  class someCls {}
+  const someInstance = new someCls()
+  const a12 = trueTypeOf(someInstance)
+  t.is(a12, 'object')
+})
+
+
 test('Test our DIY curry method', t => {
   const fn = (a: number, b: number, c: number) => a + b + c
   const cFn = curry(fn, 1)

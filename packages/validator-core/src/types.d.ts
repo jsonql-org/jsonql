@@ -1,10 +1,12 @@
 // specify your types here
+import { AnyType, AnyTypeArr } from '@jsonql/utils/index'
 
 export declare type JsonqlGenericObject = {
-  [key: string]: any // for generic object still need to use any for now
+  [key: string]: AnyType // for generic object still need to use any for now
 }
-export declare type CallbackFunction<T> = (...args: T[]) => boolean
-export declare type AsyncCallbackFunction<T> = (...args: T[]) => Promise<boolean>
+
+export declare type CallbackFunction = (...args: AnyTypeArr) => boolean
+export declare type AsyncCallbackFunction = (...args: AnyTypeArr) => Promise<boolean>
 
 export type JsonqlCheckObjectKeys = {
   name: string
@@ -21,7 +23,7 @@ export type JsonqlPluginConfig = {
   name: string
   main: JsonqlValidateFn | CallbackFunction
   params?: string[]
-  external?: boolean 
+  external?: boolean
 }
 
 // this is the internal stucture of plugin stored in Map store

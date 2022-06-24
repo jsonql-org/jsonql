@@ -1,4 +1,5 @@
-
+// Union Type
+import type { AnyType, AnyTypeArr } from '@jsonql/utils/index'
 import { queuePromisesProcess } from '@jsonql/utils/dist/chain-promises'
 import { combineCheck } from './combine'
 import { checkArray } from './array'
@@ -20,9 +21,9 @@ so if one pass we throw Error and it will exist
 if it fail we resolve it therefore the then is actually failed
 */
 export function generateReversePromisesFn(
-  value: any,
+  value: AnyType,
   types: Array<string>,
-  extended?: Array<any> // this will be check keys
+  extended?: AnyTypeArr // this will be check keys
 ) {
   // we return it as a function therefore
   // if the last one fail the next one no need to get exeucte
@@ -56,9 +57,9 @@ export function generateReversePromisesFn(
   therefore it has to be check in one rule
 */
 export async function checkUnion(
-  value: any,
+  value: AnyType,
   types: Array<string>,
-  extended?: Array<any>
+  extended?: AnyTypeArr
 ): Promise<boolean> {
   const ps = generateReversePromisesFn(value, types, extended)
   // we wrap this in another promise to reverse the result
@@ -83,7 +84,10 @@ export async function checkUnion(
 /**
  * Create a sync version of checkUnion
  */
-export function checkUnionSync(value: any, types: Array<string>) {
+export function checkUnionSync(
+  value: AnyType,
+  types: Array<string>
+) {
   const ctn = types.length
   for (let i = 0; i < ctn; ++i) {
     const type = types[i]

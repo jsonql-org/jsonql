@@ -1,5 +1,6 @@
 // validate array type
-import { isPlainObject } from '../lib/lodash'
+import type { AnyType } from '@jsonql/utils/index'
+import { isPlainObject } from '@jsonql/utils/dist/lodash'
 import { combineCheck } from './combine'
 import {
   ARRAY_TYPE_LFT,
@@ -95,7 +96,7 @@ export function isArrayLike(type: string): boolean | string[] {
  * we might encounter something like array.<T> then we need to take it apart
  @TODO_deprecated This method is no longer needed here
  */
-export function arrayTypeHandler(p: any, type: unknown[]): boolean {
+export function arrayTypeHandler(p: AnyType, type: unknown[]): boolean {
   const { arg } = p
   // need a special case to handle the OR type
   // we need to test the args instead of the type(s)

@@ -24,6 +24,8 @@ export {
   isEmpty
 } from './empty'
 export {
+  isObject,
+  isPlainObject,
   objectHasKey,
   getConfigValue,
   assign,
@@ -45,15 +47,11 @@ export {
   cacheBurstUrl,
   cacheBurst
 } from './urls'
-// also re-export this for other project to use
+export { isEqual, isEqualCheap } from './is-equal'
 export {
-  isPlainObject,
   merge,
   curry,
   flatMap,
-  isEqual,
-  isEqualCheap,
-  isObject,
   isString
 } from './lodash'
 export { trueTypeOf } from './truetypeof'

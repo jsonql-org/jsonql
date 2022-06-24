@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = void 0;
-// validate array type
-const lodash_1 = require("../lib/lodash");
+const lodash_1 = require("@jsonql/utils/dist/lodash");
 const combine_1 = require("./combine");
 const constants_1 = require("../constants");
 const STYLES = {

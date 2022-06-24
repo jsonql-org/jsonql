@@ -1,3 +1,4 @@
+import type { AnyType } from '@jsonql/utils/index';
 /**
  * check if its array or array like
  * why the type is a not a boolean?
@@ -14,4 +15,4 @@ export declare function isArrayLike(type: string): boolean | string[];
  * we might encounter something like array.<T> then we need to take it apart
  @TODO_deprecated This method is no longer needed here
  */
-export declare function arrayTypeHandler(p: any, type: unknown[]): boolean;
+export declare function arrayTypeHandler(p: AnyType, type: unknown[]): boolean;

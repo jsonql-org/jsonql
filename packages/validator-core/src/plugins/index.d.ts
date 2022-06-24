@@ -1,8 +1,9 @@
 // here we define the type of the object that get pass to the createSchema
+import type { AnyTypeArr } from '@jsonql/utils/index'
 
 export declare type JsonqlValidatePlugin = {
   name: string,
-  main: (...args: any[]) => boolean
+  main: (...args: AnyTypeArr) => boolean
 }
 
 export declare type JsonqlNumberPlugin = {

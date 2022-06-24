@@ -1,7 +1,40 @@
 // bunch of object related methods
 import type { AnyType, MapCallback } from './types'
 import { inArray } from './common'
-import { isPlainObject } from './lodash'
+import { trueTypeOf } from './truetypeof'
+
+export function isObject(o: AnyType): boolean {
+  return trueTypeOf(o) === 'object'
+}
+
+// move the isPlainObject method here
+export function isPlainObject (o: AnyType) {
+  if (isObject(o)) {
+    // If has modified constructor
+    const constr = o.constructor
+    /* this check is pointless even {} has prototype
+    if (constr === undefined) {
+      return true
+    } */
+    const prot = constr.prototype
+    const nullType = '[Object: null prototype]'
+    if (prot.toString().substring(0, nullType.length) === nullType) {
+      return true
+    }
+    // If has modified prototype
+    if (isObject(prot) === false) {
+      return false
+    }
+    try {
+      // we could get a 'Cannot convert undefined or null to object' error
+      return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf'])
+    } catch(e) {
+      return true
+    }
+  }
+  return false
+}
+
 /**
  * simple util method to get the value from the config object
  */

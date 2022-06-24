@@ -1,6 +1,6 @@
 // validate string type
 
-import { isString } from '../lib/lodash'
+import { isString } from '@jsonql/utils/dist/lodash'
 /**
  * double check if its string
  */

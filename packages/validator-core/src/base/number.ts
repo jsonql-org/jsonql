@@ -1,6 +1,6 @@
 // validator numbers
 // import { NUMBER_TYPES } from './constants';
-import { trueTypeOf } from '@jsonql/utils/dist/common'
+import { trueTypeOf } from '@jsonql/utils/dist/truetypeof'
 /**
  * @2015-05-04 found a problem if the value is a number like string
  * it will pass, so add a check if it's string before we pass to next

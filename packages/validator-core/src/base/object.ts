@@ -1,16 +1,17 @@
 // validate object type
-import { isPlainObject } from '../lib/lodash'
-// import filter from 'lodash-es/filter'
+import type { JsonqlCheckObjectKeys } from '../types'
+import type { AnyType, AnyTypeArr } from '@jsonql/utils/index'
+
+import { isPlainObject } from '@jsonql/utils/dist/lodash'
 import { combineCheck } from './combine'
 import { checkArray, isArrayLike, arrayTypeHandler } from './array'
-import { JsonqlCheckObjectKeys } from '../types'
 
 /**
  * check if the input is object also able to check if key(s) existed in that object
  @TODO need to rethink about how this checkObject keys should be
  */
 export function checkObject(
-  value: any,
+  value: AnyType,
   keys?: string | Array<string> | Array<JsonqlCheckObjectKeys>
 ) {
   if (isPlainObject(value)) {
@@ -40,7 +41,7 @@ export function checkObject(
 
 /** check if the keys existed in the object */
 function checkIfKeysInObj(
-  value: any,
+  value: AnyType,
   keys: Array<string>
 ) {
   return !keys.filter((key: string) => {
@@ -50,7 +51,7 @@ function checkIfKeysInObj(
 
 /** check if JsonqlCheckObjectKeys is in the object */
 function checkIfNameTypeInObj(
-  value: any,
+  value: AnyType,
   keys: Array<JsonqlCheckObjectKeys>
 ) {
   // please note we DON'T care if some is optional
@@ -61,7 +62,7 @@ function checkIfNameTypeInObj(
       let tmp: unknown
       if (_value !== undefined) {
         if ((tmp = isArrayLike(type as string)) !== false) {
-          return !arrayTypeHandler({arg: _value}, tmp as any[])
+          return !arrayTypeHandler({arg: _value}, tmp as AnyTypeArr)
           // return tmp.filter(t => !checkArray(_value, t)).length;
           // @TODO there might be an object within an object with keys as well :S
         }
@@ -75,7 +76,7 @@ function checkIfNameTypeInObj(
 /**
  * fold this into it's own function to handler different object type
  */
-export const objectTypeHandler = function(p: any) {
+export const objectTypeHandler = function(p: AnyType) {
   const { arg, param } = p
   const _args = [arg]
   if (Array.isArray(param.keys) && param.keys.length) {
@@ -86,7 +87,7 @@ export const objectTypeHandler = function(p: any) {
 }
 
 /** check if an object is empty */
-export const isEmptyObject = function(value: any) {
+export const isEmptyObject = function(value: AnyType) {
   if (isPlainObject(value)) {
     const keys = Object.keys(value)
 

@@ -33,7 +33,7 @@
   "license": "MIT",
   "homepage": "https://jsonql.org",
   "dependencies": {
-    "@jsonql/utils": "workspace:^0.9.3",
+    "@jsonql/utils": "workspace:^0.10.0",
     "debug": "^4.3.4",
     "tslib": "^2.4.0"
   },
