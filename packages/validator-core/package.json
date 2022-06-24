@@ -26,7 +26,7 @@
     "update:version": "node ../../update-deps.js validator-core",
     "clean:dist": "rimraf ./dist",
     "test:browser": "pnpm build:browser:test && pnpm node ./tests/qunit/run-qunit.mjs",
-    "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./tests/qunit/webroot/lib/jsonql-validator-core.lib.js",
+    "build:browser:test": "rollup -c",
     "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap  --outfile=./browser.js",
     "build:esm": "esbuild ./src/index.ts --format=esm --bundle --minify --sourcemap --outfile=./esm.js",
     "build:esm:loader": "esbuild ./src/external-plugin-loader.ts --format=esm --bundle --minify --sourcemap --outfile=./loader.js",

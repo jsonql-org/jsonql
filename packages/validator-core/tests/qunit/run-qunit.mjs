@@ -1,4 +1,5 @@
 // start up for qunit
+import { join } from 'node:path'
 import { getConfigForQunit } from 'server-io-core/helper.mjs'
 import serverIoCore from 'server-io-core/index.mjs'
 // combine method
@@ -19,6 +20,7 @@ const config = {
   open: true,
   reload: true,
   testFilePattern: '*.qunit.js',
+  libFilePattern: join('lib', '*.lib.js'),
   baseDir: '/home/joel/Projects/jsonql-org/jsonql/packages/validator-core/tests'
 }
 
