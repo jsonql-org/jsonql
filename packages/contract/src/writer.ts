@@ -7,7 +7,6 @@ import type {
   JsonqlContractMetaEntry,
   JsonqlProcessedEntry,
   JsonqlRouteForContract,
-  // JsonqlValidationPlugin,
   JsonqlValidationRule,
   Validators,
 } from './types'
@@ -23,7 +22,7 @@ import {
 import {
   chainPromises,
   assign,
-  cloneDeep,
+  cloneDeepCheap,
   isFunction,
 } from '@jsonql/utils'
 import GeneralException from '@jsonql/errors/dist/general-exception'
@@ -62,7 +61,7 @@ export class ContractWriter {
   ) {
     // first we make a clone of the map because when we pass
     // it to more than one object it mutatated
-    const clone = cloneDeep(routeForContract)
+    const clone = cloneDeepCheap(routeForContract)
     //we are going to add props to it
     this.meta({ type })
     // @TODO jsonql
@@ -116,7 +115,7 @@ export class ContractWriter {
 
   /** make a shallow copy might not be enough */
   public meta(entry: JsonqlContractMetaEntry): void {
-    this._contract[META_KEY] = assign({}, cloneDeep(this._contract[META_KEY]), entry)
+    this._contract[META_KEY] = assign({}, cloneDeepCheap(this._contract[META_KEY]), entry)
   }
 
   /**

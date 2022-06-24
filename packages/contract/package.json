@@ -3,11 +3,13 @@
   "version": "0.11.0",
   "description": "@jsonql/contract for reading/writing contract for jsonql system",
   "main": "dist/index.js",
-  "module": "src/index.d.ts",
+  "module": "esm.js",
   "files": [
     "dist",
     "src",
-    "index.d.ts"
+    "index.d.ts",
+    "esm.js",
+    "esm.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -15,6 +17,7 @@
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build:tsc": "tsc -p tsconfig.json",
     "build:plugin": "esbuild ./tests/fixtures/plugins/year-compare.ts --outfile=./tests/fixtures/plugins/year-compare.js --format=cjs",
+    "build:esm": "esbuild ./src/writer.ts --format=esm --platform=node --bundle --minify --sourcemap --outfile=./esm.js",
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
