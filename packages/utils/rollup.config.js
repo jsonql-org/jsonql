@@ -10,7 +10,7 @@ export default {
     name: 'JsonqlUtils',
     plugins: [terser()]
   }, {
-    file: 'tests/qunit/webroot/jsonql-utils.lib.js',
+    file: 'tests/qunit/webroot/lib/jsonql-utils.lib.js',
     format: 'umd',
     name: 'JsonqlUtils'
   }],

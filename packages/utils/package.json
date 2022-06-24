@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/utils",
-  "version": "0.11.2",
+  "version": "1.0.0",
   "description": "@jsonql/utils utilities library for general purpose",
   "main": "dist/index.js",
   "module": "esm.js",
@@ -53,10 +53,9 @@
     "esbuild-register": "^3.3.3",
     "eslint": "^8.18.0",
     "nyc": "^15.1.0",
+    "qunit": "^2.19.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.4",
-    "server-io-core": "2.1.2",
-    "qunit": "^2.19.1"
+    "typescript": "^4.7.4"
   },
   "ava": {
     "verbose": true,
