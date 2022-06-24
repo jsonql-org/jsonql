@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = void 0;
-const lodash_1 = require("./lodash");
-const isEmptyObj = (obj) => (obj && obj.constructor === Object && Object.keys(obj).length === 0);
+const object_1 = require("./object");
+const isEmptyObj = (obj) => (obj && (0, object_1.isPlainObject)(obj) && Object.keys(obj).length === 0);
 exports.isEmptyObj = isEmptyObj;
 /**
  * Check several parameter that there is something in the param
@@ -23,7 +23,7 @@ function notEmpty(a, valueCheck = false) {
         // @NOTE we now check if its an empty array as well
         return valueCheck ? !!a.length : false;
     }
-    if ((0, lodash_1.isPlainObject)(a)) {
+    if ((0, object_1.isPlainObject)(a)) {
         return valueCheck ? !(0, exports.isEmptyObj)(a) : false;
     }
     return (0, exports.isNotEmpty)(a);

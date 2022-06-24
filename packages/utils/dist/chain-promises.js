@@ -5,6 +5,7 @@ exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromi
 // it's building from the lodash-es from scratch
 // according to this discussion https://github.com/lodash/lodash/issues/3298
 const lodash_1 = require("./lodash");
+const object_1 = require("./object");
 /**
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it
@@ -12,7 +13,7 @@ const lodash_1 = require("./lodash");
 function chainPromises(promises, asObject = false) {
     return promises.reduce((promiseChain, currentTask) => (promiseChain.then(chainResults => (currentTask.then(currentResult => (asObject === false ?
         [...chainResults, currentResult] :
-        (0, lodash_1.merge)(chainResults, currentResult)))))), Promise.resolve(asObject === false ? [] : ((0, lodash_1.isPlainObject)(asObject) ? asObject : {})));
+        (0, lodash_1.merge)(chainResults, currentResult)))))), Promise.resolve(asObject === false ? [] : ((0, object_1.isPlainObject)(asObject) ? asObject : {})));
 }
 exports.chainPromises = chainPromises;
 /**

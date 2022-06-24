@@ -1,12 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = void 0;
+exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = exports.isPlainObject = exports.isObject = void 0;
 const common_1 = require("./common");
-const lodash_1 = require("./lodash");
+const truetypeof_1 = require("./truetypeof");
+function isObject(o) {
+    return (0, truetypeof_1.trueTypeOf)(o) === 'object';
+}
+exports.isObject = isObject;
+// move the isPlainObject method here
+function isPlainObject(o) {
+    if (isObject(o)) {
+        // If has modified constructor
+        const constr = o.constructor;
+        /* this check is pointless even {} has prototype
+        if (constr === undefined) {
+          return true
+        } */
+        const prot = constr.prototype;
+        const nullType = '[Object: null prototype]';
+        if (prot.toString().substring(0, nullType.length) === nullType) {
+            return true;
+        }
+        // If has modified prototype
+        if (isObject(prot) === false) {
+            return false;
+        }
+        try {
+            // we could get a 'Cannot convert undefined or null to object' error
+            return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf']);
+        }
+        catch (e) {
+            return true;
+        }
+    }
+    return false;
+}
+exports.isPlainObject = isPlainObject;
 /**
  * simple util method to get the value from the config object
  */
-const getConfigValue = (name, obj) => (obj && (0, lodash_1.isPlainObject)(obj) ? ((name in obj) ? obj[name] : undefined) : undefined);
+const getConfigValue = (name, obj) => (obj && isPlainObject(obj) ? ((name in obj) ? obj[name] : undefined) : undefined);
 exports.getConfigValue = getConfigValue;
 /**
  * Shorthand method for Object.assign

@@ -1,4 +1,6 @@
 import type { AnyType, MapCallback } from './types';
+export declare function isObject(o: AnyType): boolean;
+export declare function isPlainObject(o: AnyType): any;
 /**
  * simple util method to get the value from the config object
  */

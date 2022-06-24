@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseJWT = exports.trueTypeOf = exports.isString = exports.isObject = exports.isEqualCheap = exports.isEqual = exports.flatMap = exports.curry = exports.merge = exports.isPlainObject = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeepCheap = exports.cloneDeep = exports.isAsyncFunction = exports.isFunction = exports.arrToObj = exports.readOnly = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.toArray = exports.inArray = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = exports.accessByPath = void 0;
+exports.parseJWT = exports.trueTypeOf = exports.isString = exports.flatMap = exports.curry = exports.merge = exports.isEqualCheap = exports.isEqual = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeepCheap = exports.cloneDeep = exports.isAsyncFunction = exports.isFunction = exports.arrToObj = exports.readOnly = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isPlainObject = exports.isObject = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.toArray = exports.inArray = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainFns = exports.accessByPath = void 0;
 // start your project here
 var access_1 = require("./access");
 Object.defineProperty(exports, "accessByPath", { enumerable: true, get: function () { return access_1.accessByPath; } });
@@ -29,6 +29,8 @@ Object.defineProperty(exports, "isNotEmpty", { enumerable: true, get: function (
 Object.defineProperty(exports, "notEmpty", { enumerable: true, get: function () { return empty_1.notEmpty; } });
 Object.defineProperty(exports, "isEmpty", { enumerable: true, get: function () { return empty_1.isEmpty; } });
 var object_1 = require("./object");
+Object.defineProperty(exports, "isObject", { enumerable: true, get: function () { return object_1.isObject; } });
+Object.defineProperty(exports, "isPlainObject", { enumerable: true, get: function () { return object_1.isPlainObject; } });
 Object.defineProperty(exports, "objectHasKey", { enumerable: true, get: function () { return object_1.objectHasKey; } });
 Object.defineProperty(exports, "getConfigValue", { enumerable: true, get: function () { return object_1.getConfigValue; } });
 Object.defineProperty(exports, "assign", { enumerable: true, get: function () { return object_1.assign; } });
@@ -56,15 +58,13 @@ var urls_1 = require("./urls");
 Object.defineProperty(exports, "urlParams", { enumerable: true, get: function () { return urls_1.urlParams; } });
 Object.defineProperty(exports, "cacheBurstUrl", { enumerable: true, get: function () { return urls_1.cacheBurstUrl; } });
 Object.defineProperty(exports, "cacheBurst", { enumerable: true, get: function () { return urls_1.cacheBurst; } });
-// also re-export this for other project to use
+var is_equal_1 = require("./is-equal");
+Object.defineProperty(exports, "isEqual", { enumerable: true, get: function () { return is_equal_1.isEqual; } });
+Object.defineProperty(exports, "isEqualCheap", { enumerable: true, get: function () { return is_equal_1.isEqualCheap; } });
 var lodash_1 = require("./lodash");
-Object.defineProperty(exports, "isPlainObject", { enumerable: true, get: function () { return lodash_1.isPlainObject; } });
 Object.defineProperty(exports, "merge", { enumerable: true, get: function () { return lodash_1.merge; } });
 Object.defineProperty(exports, "curry", { enumerable: true, get: function () { return lodash_1.curry; } });
 Object.defineProperty(exports, "flatMap", { enumerable: true, get: function () { return lodash_1.flatMap; } });
-Object.defineProperty(exports, "isEqual", { enumerable: true, get: function () { return lodash_1.isEqual; } });
-Object.defineProperty(exports, "isEqualCheap", { enumerable: true, get: function () { return lodash_1.isEqualCheap; } });
-Object.defineProperty(exports, "isObject", { enumerable: true, get: function () { return lodash_1.isObject; } });
 Object.defineProperty(exports, "isString", { enumerable: true, get: function () { return lodash_1.isString; } });
 var truetypeof_1 = require("./truetypeof");
 Object.defineProperty(exports, "trueTypeOf", { enumerable: true, get: function () { return truetypeof_1.trueTypeOf; } });

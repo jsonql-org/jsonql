@@ -2,7 +2,8 @@ import type { AnyType, AnyTypeArr, JsonqlPromiseChainFn } from './types'
 // break it out on its own because
 // it's building from the lodash-es from scratch
 // according to this discussion https://github.com/lodash/lodash/issues/3298
-import { isPlainObject, merge, flatMap } from './lodash'
+import { merge, flatMap } from './lodash'
+import { isPlainObject } from './object'
 /**
  * previously we already make sure the order of the namespaces
  * and attach the auth client to it

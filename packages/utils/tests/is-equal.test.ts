@@ -1,7 +1,6 @@
 import test from 'ava'
 
-import { isEqual } from '../src/lodash'
-
+import { isEqual } from '../src/is-equal'
 
 test(`Testing the lodash isEqual method`, t => {
 
