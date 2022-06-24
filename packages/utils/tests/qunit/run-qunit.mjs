@@ -19,6 +19,7 @@ const config = {
   open: true,
   reload: true,
   testFilePattern: '*.qunit.js',
+  libFilePattern: '*.dev.js',
   baseDir: '/home/joel/Projects/jsonql-org/jsonql/packages/utils/tests'
 }
 

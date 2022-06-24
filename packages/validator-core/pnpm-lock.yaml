@@ -14,7 +14,7 @@ specifiers:
   nyc: ^15.1.0
   qunit: ^2.19.1
   rimraf: ^3.0.2
-  server-io-core: 2.1.0
+  server-io-core: 2.1.2
   typescript: ^4.7.4
 
 dependencies:
@@ -33,7 +33,7 @@ devDependencies:
   nyc: 15.1.0
   qunit: 2.19.1
   rimraf: 3.0.2
-  server-io-core: 2.1.0
+  server-io-core: 2.1.2
   typescript: 4.7.4
 
 packages:
@@ -3264,8 +3264,8 @@ packages:
       type-fest: 0.13.1
     dev: true
 
-  /server-io-core/2.1.0:
-    resolution: {integrity: sha512-fVZgSUfVcXLEZY76+e2qCHVA3K8TOEGY8589x6BivZjfZORZ0+5W6+rFO6pZhWf7rU71Xl/yo0ZxPdlp5kNDMg==}
+  /server-io-core/2.1.2:
+    resolution: {integrity: sha512-c0R1y3o0KVxcYlOS7OCBnf5AwBfVy+n9AB9GZkcNR1D1qNs9BtnEzUgAkWvcOuyv5qoD9uE1/bmucZuXmlkWcw==}
     hasBin: true
     dependencies:
       '@to1source/event': 1.5.4

@@ -54,7 +54,7 @@
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "server-io-core": "2.1.0",
+    "server-io-core": "2.1.2",
     "qunit": "^2.19.1"
   },
   "ava": {
