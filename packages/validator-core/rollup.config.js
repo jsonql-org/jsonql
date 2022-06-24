@@ -10,7 +10,8 @@ export default {
   output: [{
     file: 'tests/qunit/webroot/lib/jsonql-validator-core.lib.js',
     format: 'umd',
-    name: 'JsonqlValidatorCore'
+    name: 'JsonqlValidatorCore',
+    globals: ['tty', 'util', 'os']
   }],
   plugins: [
     commonJs(),
