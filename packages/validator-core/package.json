@@ -4,15 +4,12 @@
   "description": "@jsonql/validator-core provide all core functions for @jsonql/validator and config-validator",
   "main": "dist/index.js",
   "module": "esm.js",
-  "browser": "browser.js",
   "files": [
     "dist",
     "src",
     "index.d.ts",
     "esm.js",
-    "esm.js.map",
-    "browser.js",
-    "browser.js.map"
+    "esm.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -29,7 +26,7 @@
     "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./tests/qunit/webroot/jsonql-validator-core.test.js",
     "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap  --outfile=./browser.js",
     "build:esm": "esbuild ./src/index.ts --format=esm --bundle --minify --sourcemap --outfile=./esm.js",
-    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm build:browser && pnpm prepare:types",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm prepare:types",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
