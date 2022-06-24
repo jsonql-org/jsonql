@@ -32,7 +32,8 @@
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
     "minor": "npm version minor",
-    "major": "npm version major"
+    "major": "npm version major",
+    "qunit": "node ./tests/qunit/run-qunit.mjs"
   },
   "author": "to1source <to1source@foxmail.com>",
   "license": "MIT",
@@ -51,12 +52,15 @@
     "eslint": "^8.17.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "server-io-core": "2.1.0",
+    "qunit": "^2.19.1"
   },
   "ava": {
     "verbose": true,
     "files": [
-      "tests/**/*.test.ts"
+      "tests/**/*.test.ts",
+      "!tests/qunit/*.*"
     ],
     "extensions": [
       "ts"
