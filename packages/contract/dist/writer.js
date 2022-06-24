@@ -22,7 +22,7 @@ class ContractWriter {
         this.$excludeValidation = new Set();
         // first we make a clone of the map because when we pass
         // it to more than one object it mutatated
-        const clone = (0, utils_1.cloneDeep)(routeForContract);
+        const clone = (0, utils_1.cloneDeepCheap)(routeForContract);
         //we are going to add props to it
         this.meta({ type });
         // @TODO jsonql
@@ -72,7 +72,7 @@ class ContractWriter {
     }
     /** make a shallow copy might not be enough */
     meta(entry) {
-        this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, (0, utils_1.cloneDeep)(this._contract[constants_1.META_KEY]), entry);
+        this._contract[constants_1.META_KEY] = (0, utils_1.assign)({}, (0, utils_1.cloneDeepCheap)(this._contract[constants_1.META_KEY]), entry);
     }
     /**
       generate the contract pub false then just the raw output for server use
