@@ -25,15 +25,14 @@ export function isPlainObject (o: AnyType) {
     if (isObject(prot) === false) {
       return false
     }
-    try {
-      // we could get a 'Cannot convert undefined or null to object' error
-      return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf'])
-    } catch(e) {
-      return true
-    }
+
+    return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf'])
   }
   return false
 }
+
+/** short hand of !isPlainObject */
+export const isClass = (o: AnyType) => !isPlainObject(o)
 
 /**
  * simple util method to get the value from the config object

@@ -4,7 +4,7 @@ import { isString } from './lodash'
 /**
  * DIY in Array
  */
-export const inArray = (arr: AnyTypeArr, value: AnyType) => !!arr.filter(a => a === value).length
+export const inArray = (arr: AnyTypeArr, value: AnyType) => arr.includes(value)
 
 // quick and dirty to turn non array to array
 export const toArray = (arg: AnyType) => Array.isArray(arg) ? arg : [arg]

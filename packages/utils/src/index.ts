@@ -26,6 +26,7 @@ export {
 export {
   isObject,
   isPlainObject,
+  isClass,
   objectHasKey,
   getConfigValue,
   assign,
