@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatStr = exports.showDeep = exports.nil = exports.createEvtName = exports.parseJson = exports.toArray = exports.inArray = void 0;
-const lodash_1 = require("./lodash");
+const truetypeof_1 = require("./truetypeof");
 /**
  * DIY in Array
  */
@@ -15,7 +15,7 @@ exports.toArray = toArray;
  */
 const parseJson = (n, t = true) => {
     try {
-        return (0, lodash_1.isString)(n) ?
+        return (0, truetypeof_1.trueTypeOf)(n) === 'string' ?
             JSON.parse(n) :
             JSON.parse(JSON.stringify(n));
     }

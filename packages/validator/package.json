@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^0.11.2",
+    "@jsonql/utils": "workspace:^1.0.0",
     "@jsonql/validator-core": "workspace:^0.11.2",
     "debug": "^4.3.4"
   }
