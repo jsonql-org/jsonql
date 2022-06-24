@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.trueTypeOf = void 0;
-/*!
+/*
  * More accurately check the type of a JavaScript object
  * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
  */

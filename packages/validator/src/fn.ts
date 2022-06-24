@@ -8,6 +8,7 @@ import type {
   JsonqlGenericObject,
   JsonqlValidationRule,
 } from '@jsonql/validator-core/index'
+import type { AnyTypeArr } from '@jsonql/utils/index'
 import {
   checkString,
   checkArray,
@@ -136,7 +137,7 @@ export function processValidateResultsAsArrOfObj(
 // then when we use in the velocejs we flatMap and all the Array inside get flattern
 // then again using spread with this wild open types is really BAD API design
 export async function unwrapPreparedValidateResult(
-  result: Array<any> // can not use unknown here
+  result: AnyTypeArr // can not use unknown here
 ) {
   debug('unwrapPreparedValidateResult', result)
   const ctn = result.length

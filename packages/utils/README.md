@@ -117,13 +117,15 @@ _These methods used to included from `lodash-es` now we implement them ourself, 
 
 - trueTypeOf
 
+*Special Thank you to (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com*
+
 #### dist/urls
 
 - urlParams
 - cacheBurstUrl
 - cacheBurst
 
---- 
+---
 
 Please check [jsonql](https://jsonql.js.org) for more information.
 

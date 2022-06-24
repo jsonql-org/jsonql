@@ -1,5 +1,6 @@
 import type { JsonqlPropertyParamMap } from './types';
 import type { JsonqlGenericObject, JsonqlValidationRule } from '@jsonql/validator-core/index';
+import type { AnyTypeArr } from '@jsonql/utils/index';
 /**
 The input is what the dev wrote in the validate
 The input has two styles
@@ -23,7 +24,7 @@ export declare function processValidateResults(argNames: Array<string>, validate
 /** step to process the return result as object */
 export declare function processValidateResultsAsArrOfObj(argNames: Array<string>, validateResult: JsonqlGenericObject): Array<JsonqlGenericObject>;
 /** final step to unwarp the pack result for spread arguments */
-export declare function unwrapPreparedValidateResult(result: Array<any>): Promise<any>;
+export declare function unwrapPreparedValidateResult(result: AnyTypeArr): Promise<any>;
 /** extract the default value if there is none */
 export declare function getOptionalValue(arg: unknown, param: JsonqlGenericObject): any;
 /** check if the rule contain duplicate rules that can not be resolve */

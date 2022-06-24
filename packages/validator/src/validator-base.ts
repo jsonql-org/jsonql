@@ -21,7 +21,7 @@ import GeneralException from '@jsonql/errors/dist/general-exception'
 import { notEmpty } from '@jsonql/utils/dist/empty'
 import { toArray } from '@jsonql/utils/dist/common'
 import { assign, arrToObj } from '@jsonql/utils/dist/object'
-import { isFunction } from '@jsonql/utils/dist/is-function'
+import { isFunction, isAsyncFunction } from '@jsonql/utils/dist/is-function'
 import {
   queuePromisesProcess,
 } from '@jsonql/utils/dist/chain-promises'
@@ -121,9 +121,10 @@ export class ValidatorBase {
 
   /** just put the function into the right key */
   private _updateInput(input: FunctionInput): JsonqlValidationRule {
-    // we just make it an async funtion regardless
+    // we just make it an async funtion
+    // @NOTE now we can check if it's async function or not
     return {
-      [VALIDATE_ASYNC_KEY]: promisify(input)
+      [VALIDATE_ASYNC_KEY]: isAsyncFunction(input) ? input : promisify(input)
     }
   }
 
@@ -152,7 +153,7 @@ export class ValidatorBase {
         if (execute === false) {
           return arrToObj(
             values,
-            (value: unknown, i: number) => ({ [params[i].name]: value })
+            (value: unknown, i?: number) => ({ [params[i as number].name]: value })
           )
         }
         return values.map((value, i) => (
@@ -163,8 +164,8 @@ export class ValidatorBase {
         if (execute === false) {
           return arrToObj(
             params,
-            (param: JsonqlPropertyParamMap, i: number) => {
-              const _value = getOptionalValue(values[i], param)
+            (param: JsonqlPropertyParamMap, i?: number) => {
+              const _value = getOptionalValue(values[i as number], param)
               return { [param.name]: _value }
             }
           )
@@ -191,7 +192,7 @@ export class ValidatorBase {
     const spreadParam = params.filter(p => p.tstype === SPREAD_ARG_TYPE)[0]
     // if this is just grabbing the values then it should be name: Array<values>
     if (execute === false) {
-      // @TODO there is couple more scenario that might break this fix as we go along 
+      // @TODO there is couple more scenario that might break this fix as we go along
       return values.map((value, i) => {
         if (!params[i]) {
           return { [spreadParam.name]: [value] }

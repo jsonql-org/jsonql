@@ -68,9 +68,10 @@ class ValidatorBase {
     }
     /** just put the function into the right key */
     _updateInput(input) {
-        // we just make it an async funtion regardless
+        // we just make it an async funtion
+        // @NOTE now we can check if it's async function or not
         return {
-            [validator_core_1.VALIDATE_ASYNC_KEY]: (0, validator_core_1.promisify)(input)
+            [validator_core_1.VALIDATE_ASYNC_KEY]: (0, is_function_1.isAsyncFunction)(input) ? input : (0, validator_core_1.promisify)(input)
         };
     }
     // ----------------- validate ------------------ //
@@ -123,7 +124,7 @@ class ValidatorBase {
         const spreadParam = params.filter(p => p.tstype === constants_1.SPREAD_ARG_TYPE)[0];
         // if this is just grabbing the values then it should be name: Array<values>
         if (execute === false) {
-            // @TODO there is couple more scenario that might break this fix as we go along 
+            // @TODO there is couple more scenario that might break this fix as we go along
             return values.map((value, i) => {
                 if (!params[i]) {
                     return { [spreadParam.name]: [value] };

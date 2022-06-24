@@ -3,7 +3,7 @@ import { trueTypeOf } from './truetypeof'
 // Poorman ...
 export const cloneDeepCheap = (obj: AnyType) => JSON.parse(JSON.stringify(obj))
 
-/*!
+/*
  * Create an immutable clone of data (an array, object, map, set, etc.)
  * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
  * (c) 2022 Joel Chu rewritten in Typescript and fix a lot of coding style
