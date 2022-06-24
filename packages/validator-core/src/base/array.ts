@@ -1,6 +1,6 @@
 // validate array type
 import type { AnyType } from '@jsonql/utils/index'
-import { isPlainObject } from '@jsonql/utils/dist/lodash'
+import { isPlainObject } from '@jsonql/utils/dist/object'
 import { combineCheck } from './combine'
 import {
   ARRAY_TYPE_LFT,

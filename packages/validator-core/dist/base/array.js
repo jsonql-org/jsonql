@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.arrayTypeHandler = exports.isArrayLike = exports.checkArray = void 0;
-const lodash_1 = require("@jsonql/utils/dist/lodash");
+const object_1 = require("@jsonql/utils/dist/object");
 const combine_1 = require("./combine");
 const constants_1 = require("../constants");
 const STYLES = {
@@ -29,7 +29,7 @@ function checkArray(value, type // @TODO more combination
                 for (let i = 0; i < ctn; ++i) {
                     const t = type[i];
                     if ((t === constants_1.ARRAY_TYPE && Array.isArray(v)) ||
-                        (t === constants_1.OBJECT_TYPE && (0, lodash_1.isPlainObject)(v)) ||
+                        (t === constants_1.OBJECT_TYPE && (0, object_1.isPlainObject)(v)) ||
                         (0, combine_1.combineCheck)(t)(v)) {
                         return false;
                     }

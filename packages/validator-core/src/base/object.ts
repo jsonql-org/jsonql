@@ -2,7 +2,7 @@
 import type { JsonqlCheckObjectKeys } from '../types'
 import type { AnyType, AnyTypeArr } from '@jsonql/utils/index'
 
-import { isPlainObject } from '@jsonql/utils/dist/lodash'
+import { isPlainObject } from '@jsonql/utils/dist/object'
 import { combineCheck } from './combine'
 import { checkArray, isArrayLike, arrayTypeHandler } from './array'
 

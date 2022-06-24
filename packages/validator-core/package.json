@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/validator-core",
-  "version": "0.10.4",
+  "version": "0.11.0",
   "description": "@jsonql/validator-core provide all core functions for @jsonql/validator and config-validator",
   "main": "dist/index.js",
   "module": "validator-core.esm.js",
@@ -36,7 +36,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^0.10.0"
+    "@jsonql/utils": "workspace:^0.11.0"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",

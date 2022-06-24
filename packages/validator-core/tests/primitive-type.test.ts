@@ -82,7 +82,7 @@ test(`Test checkObject with the in operator`, t => {
   t.false(checkObject(testObj, keys))
 })
 
-test.only('Should able to check basic object type', t => {
+test('Should able to check basic object type', t => {
   t.true(checkObject({}), 'Empty Object')
   t.true(checkObject({a: 1, b: 2}), 'Object with keys')
 

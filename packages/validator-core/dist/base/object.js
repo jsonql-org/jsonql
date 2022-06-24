@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isEmptyObject = exports.objectTypeHandler = exports.checkObject = void 0;
-const lodash_1 = require("@jsonql/utils/dist/lodash");
+const object_1 = require("@jsonql/utils/dist/object");
 const combine_1 = require("./combine");
 const array_1 = require("./array");
 /**
@@ -9,7 +9,7 @@ const array_1 = require("./array");
  @TODO need to rethink about how this checkObject keys should be
  */
 function checkObject(value, keys) {
-    if ((0, lodash_1.isPlainObject)(value)) {
+    if ((0, object_1.isPlainObject)(value)) {
         if (!keys) {
             return true;
         }
@@ -69,7 +69,7 @@ const objectTypeHandler = function (p) {
 exports.objectTypeHandler = objectTypeHandler;
 /** check if an object is empty */
 const isEmptyObject = function (value) {
-    if ((0, lodash_1.isPlainObject)(value)) {
+    if ((0, object_1.isPlainObject)(value)) {
         const keys = Object.keys(value);
         return !keys.length;
     }
