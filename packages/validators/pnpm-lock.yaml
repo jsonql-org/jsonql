@@ -4,9 +4,9 @@ specifiers:
   '@ava/typescript': ^3.0.1
   '@jsonql/ast': workspace:^0.8.6
   '@jsonql/errors': workspace:^0.8.0
-  '@jsonql/utils': workspace:^0.9.1
+  '@jsonql/utils': workspace:^0.11.2
   '@jsonql/validator': workspace:^0.10.1
-  '@jsonql/validator-core': workspace:^0.10.2
+  '@jsonql/validator-core': workspace:^0.11.1
   '@types/debug': ^4.1.7
   '@types/fs-extra': ^9.0.13
   '@types/glob': ^7.2.0
