@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = exports.isPlainObject = exports.isObject = void 0;
+exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = exports.isClass = exports.isPlainObject = exports.isObject = void 0;
 const common_1 = require("./common");
 const truetypeof_1 = require("./truetypeof");
 function isObject(o) {
@@ -25,17 +25,14 @@ function isPlainObject(o) {
         if (isObject(prot) === false) {
             return false;
         }
-        try {
-            // we could get a 'Cannot convert undefined or null to object' error
-            return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf']);
-        }
-        catch (e) {
-            return true;
-        }
+        return Reflect.apply(prot['hasOwnProperty'], prot, ['isPrototypeOf']);
     }
     return false;
 }
 exports.isPlainObject = isPlainObject;
+/** short hand of !isPlainObject */
+const isClass = (o) => !isPlainObject(o);
+exports.isClass = isClass;
 /**
  * simple util method to get the value from the config object
  */

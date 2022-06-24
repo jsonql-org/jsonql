@@ -21,5 +21,5 @@ exports.cacheBurstUrl = cacheBurstUrl;
 /**
  * return _cb as key with timestamp
  */
-const cacheBurst = () => ({ _cb: (0, timestamp_1.timestamp)() });
+const cacheBurst = (name = '_cb') => ({ [name]: (0, timestamp_1.timestamp)() });
 exports.cacheBurst = cacheBurst;

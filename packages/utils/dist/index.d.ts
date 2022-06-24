@@ -5,7 +5,7 @@ export { strToNum, strToBool } from './convert';
 export { dasherize } from './dasherize';
 export { inArray, toArray, parseJson, nil, createEvtName, showDeep, formatStr } from './common';
 export { isEmptyObj, isNotEmpty, notEmpty, isEmpty } from './empty';
-export { isObject, isPlainObject, objectHasKey, getConfigValue, assign, readOnly, arrToObj } from './object';
+export { isObject, isPlainObject, isClass, objectHasKey, getConfigValue, assign, readOnly, arrToObj } from './object';
 export { isFunction, isAsyncFunction } from './is-function';
 export { cloneDeep, cloneDeepCheap } from './clone-deep';
 export { logger, getLogger } from './logger';

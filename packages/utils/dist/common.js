@@ -5,7 +5,7 @@ const lodash_1 = require("./lodash");
 /**
  * DIY in Array
  */
-const inArray = (arr, value) => !!arr.filter(a => a === value).length;
+const inArray = (arr, value) => arr.includes(value);
 exports.inArray = inArray;
 // quick and dirty to turn non array to array
 const toArray = (arg) => Array.isArray(arg) ? arg : [arg];
