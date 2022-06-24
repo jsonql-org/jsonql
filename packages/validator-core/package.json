@@ -1,15 +1,18 @@
 {
   "name": "@jsonql/validator-core",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "@jsonql/validator-core provide all core functions for @jsonql/validator and config-validator",
   "main": "dist/index.js",
-  "module": "validator-core.esm.js",
+  "module": "esm.js",
+  "browser": "browser.js",
   "files": [
     "dist",
     "src",
     "index.d.ts",
-    "validator-core.esm.js",
-    "validator-core.esm.js.map"
+    "esm.js",
+    "esm.js.map",
+    "browser.js",
+    "browser.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -23,8 +26,9 @@
     "update:version": "node ../../update-deps.js validator-core",
     "clean:dist": "rimraf ./dist",
     "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./jsonql-validator-core.test.js",
-    "build:esm": "esbuild ./src/index.ts --format=esm --bundle --minify --sourcemap --outfile=./validator-core.esm.js",
-    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm prepare:types",
+    "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap  --outfile=./browser.js",
+    "build:esm": "esbuild ./src/index.ts --format=esm --bundle --minify --sourcemap --outfile=./esm.js",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm build:browser && pnpm prepare:types",
     "prepublishOnly": "pnpm build && pnpm test",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
@@ -36,7 +40,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^0.11.0"
+    "@jsonql/utils": "workspace:^0.11.1"
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
