@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/contract",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "@jsonql/contract for reading/writing contract for jsonql system",
   "main": "dist/index.js",
   "module": "esm.js",
@@ -24,7 +24,7 @@
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js contract",
     "clean:dist": "rimraf ./dist",
-    "build": "pnpm clean:dist && pnpm build:tsc && pnpm prepare:types",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm prepare:types",
     "prepublishOnly": "pnpm test",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
