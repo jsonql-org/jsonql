@@ -9,7 +9,9 @@
     "src",
     "index.d.ts",
     "esm.js",
-    "esm.js.map"
+    "esm.js.map",
+    "loader.js",
+    "loader.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -24,10 +26,11 @@
     "update:version": "node ../../update-deps.js validator-core",
     "clean:dist": "rimraf ./dist",
     "test:browser": "pnpm build:browser:test && pnpm node ./tests/qunit/run-qunit.mjs",
-    "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./tests/qunit/webroot/jsonql-validator-core.test.js",
+    "build:browser:test": "esbuild ./src/index.ts --bundle --outfile=./tests/qunit/webroot/lib/jsonql-validator-core.lib.js",
     "build:browser": "esbuild ./src/index.ts --bundle --minify --sourcemap  --outfile=./browser.js",
     "build:esm": "esbuild ./src/index.ts --format=esm --bundle --minify --sourcemap --outfile=./esm.js",
-    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm prepare:types",
+    "build:esm:loader": "esbuild ./src/external-plugin-loader.ts --format=esm --bundle --minify --sourcemap --outfile=./loader.js",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm build:esm:loader && pnpm prepare:types",
     "prepublishOnly": "pnpm build && pnpm test:coverage",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",

@@ -12,5 +12,4 @@ export class ExternalPluginLoader extends ValidatorPlugins {
   ) {
     this._registerExternalPlugin(name, pluginConfig)
   }
-
 }
