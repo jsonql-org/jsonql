@@ -32,7 +32,7 @@
     "build:browser:test": "esbuild ./src/validator-factory.ts --bundle --outfile=./jsonql-validator.test.js",
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm build:browser && pnpm prepare:types",
-    "prepublishOnly": "pnpm build && pnpm build:browser && pnpm test:nyc",
+    "prepublishOnly": "pnpm build && pnpm test:nyc",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
     "minor": "npm version minor",
