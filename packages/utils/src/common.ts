@@ -1,6 +1,6 @@
 // bunch of generic helpers
 import type { AnyType, AnyTypeArr } from './types'
-import { isString } from './lodash'
+import { trueTypeOf } from './truetypeof'
 /**
  * DIY in Array
  */
@@ -14,7 +14,7 @@ export const toArray = (arg: AnyType) => Array.isArray(arg) ? arg : [arg]
  */
 export const parseJson = (n: AnyType, t = true) => {
   try {
-    return isString(n) ?
+    return trueTypeOf(n) === 'string' ?
       JSON.parse(n) :
       JSON.parse(JSON.stringify(n))
   } catch(e) {
