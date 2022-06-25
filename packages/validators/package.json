@@ -4,15 +4,12 @@
   "description": "@velocejs/validators based off @jsonql/validator and @jsonql/validator-core",
   "main": "dist/index.js",
   "module": "esm.js",
-  "browser": "browser.js",
   "files": [
     "dist",
     "src",
     "index.d.ts",
     "esm.js",
-    "esm.js.map",
-    "browser.js",
-    "browser.js.map"
+    "esm.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
