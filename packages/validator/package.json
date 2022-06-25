@@ -19,14 +19,16 @@
     "test:ava": "ava",
     "test:nyc": "nyc ava",
     "test": "pnpm build && pnpm test:nyc",
+    "test:browser": "pnpm run build:rollup && pnpm qunit",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "build:tsc": "tsc -p tsconfig.json",
-    "build:base": "tsc ./base.ts",
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
     "update:version": "node ../../update-deps.js validator",
     "clean:dist": "rimraf ./dist",
+    "build:rollup": "rollup -c",
+    "build:tsc": "tsc -p tsconfig.json",
+    "build:base": "tsc ./base.ts",
     "build:browser": "esbuild ./src/validator-factory.ts --bundle --minify --sourcemap --outfile=./browser.js",
     "build:esm": "esbuild ./src/validator-factory.ts --format=esm --bundle --minify --sourcemap --outfile=./esm.js",
     "build:browser:test": "esbuild ./src/validator-factory.ts --bundle --outfile=./jsonql-validator.test.js",
@@ -36,7 +38,8 @@
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
     "minor": "npm version minor",
-    "major": "npm version major"
+    "major": "npm version major",
+    "qunit": "node ./tests/qunit/run-qunit.mjs"
   },
   "author": "to1source <to1source@foxmail.com>",
   "license": "MIT",
@@ -70,7 +73,7 @@
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
     "@jsonql/utils": "workspace:^1.0.0",
-    "@jsonql/validator-core": "workspace:^0.11.2",
+    "@jsonql/validator-core": "workspace:^0.12.0",
     "debug": "^4.3.4"
   }
 }

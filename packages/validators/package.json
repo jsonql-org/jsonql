@@ -42,7 +42,7 @@
     "@jsonql/errors": "workspace:^0.8.0",
     "@jsonql/utils": "workspace:^1.0.0",
     "@jsonql/validator": "workspace:^0.11.0",
-    "@jsonql/validator-core": "workspace:^0.11.2",
+    "@jsonql/validator-core": "workspace:^0.12.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3"
   },
