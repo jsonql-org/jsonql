@@ -883,6 +883,232 @@
 	}
 	getRegex_1 = regex.getRegex = getRegex;
 
+	var global$1 = (typeof global !== "undefined" ? global :
+	  typeof self !== "undefined" ? self :
+	  typeof window !== "undefined" ? window : {});
+
+	// shim for using process in browser
+	// based off https://github.com/defunctzombie/node-process/blob/master/browser.js
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	var cachedSetTimeout = defaultSetTimout;
+	var cachedClearTimeout = defaultClearTimeout;
+	if (typeof global$1.setTimeout === 'function') {
+	    cachedSetTimeout = setTimeout;
+	}
+	if (typeof global$1.clearTimeout === 'function') {
+	    cachedClearTimeout = clearTimeout;
+	}
+
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+	function nextTick(fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	}
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	var title = 'browser';
+	var platform = 'browser';
+	var browser$1 = true;
+	var env = {};
+	var argv = [];
+	var version = ''; // empty string to avoid regexp issues
+	var versions = {};
+	var release = {};
+	var config = {};
+
+	function noop() {}
+
+	var on = noop;
+	var addListener = noop;
+	var once = noop;
+	var off = noop;
+	var removeListener = noop;
+	var removeAllListeners = noop;
+	var emit = noop;
+
+	function binding(name) {
+	    throw new Error('process.binding is not supported');
+	}
+
+	function cwd () { return '/' }
+	function chdir (dir) {
+	    throw new Error('process.chdir is not supported');
+	}function umask() { return 0; }
+
+	// from https://github.com/kumavis/browser-process-hrtime/blob/master/index.js
+	var performance = global$1.performance || {};
+	var performanceNow =
+	  performance.now        ||
+	  performance.mozNow     ||
+	  performance.msNow      ||
+	  performance.oNow       ||
+	  performance.webkitNow  ||
+	  function(){ return (new Date()).getTime() };
+
+	// generate timestamp or delta
+	// see http://nodejs.org/api/process.html#process_process_hrtime
+	function hrtime(previousTimestamp){
+	  var clocktime = performanceNow.call(performance)*1e-3;
+	  var seconds = Math.floor(clocktime);
+	  var nanoseconds = Math.floor((clocktime%1)*1e9);
+	  if (previousTimestamp) {
+	    seconds = seconds - previousTimestamp[0];
+	    nanoseconds = nanoseconds - previousTimestamp[1];
+	    if (nanoseconds<0) {
+	      seconds--;
+	      nanoseconds += 1e9;
+	    }
+	  }
+	  return [seconds,nanoseconds]
+	}
+
+	var startTime = new Date();
+	function uptime() {
+	  var currentTime = new Date();
+	  var dif = currentTime - startTime;
+	  return dif / 1000;
+	}
+
+	var browser$1$1 = {
+	  nextTick: nextTick,
+	  title: title,
+	  browser: browser$1,
+	  env: env,
+	  argv: argv,
+	  version: version,
+	  versions: versions,
+	  on: on,
+	  addListener: addListener,
+	  once: once,
+	  off: off,
+	  removeListener: removeListener,
+	  removeAllListeners: removeAllListeners,
+	  emit: emit,
+	  binding: binding,
+	  cwd: cwd,
+	  chdir: chdir,
+	  umask: umask,
+	  hrtime: hrtime,
+	  platform: platform,
+	  release: release,
+	  config: config,
+	  uptime: uptime
+	};
+
 	var src = {exports: {}};
 
 	var browser = {exports: {}};
@@ -1340,8 +1566,6 @@
 		return common;
 	}
 
-	/* eslint-env browser */
-
 	var hasRequiredBrowser;
 
 	function requireBrowser () {
@@ -1571,8 +1795,8 @@
 				}
 
 				// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-				if (!r && typeof process !== 'undefined' && 'env' in process) {
-					r = process.env.DEBUG;
+				if (!r && typeof browser$1$1 !== 'undefined' && 'env' in browser$1$1) {
+					r = browser$1$1.env.DEBUG;
 				}
 
 				return r;
@@ -1628,7 +1852,7 @@
 		if (hasRequiredHasFlag) return hasFlag;
 		hasRequiredHasFlag = 1;
 
-		hasFlag = (flag, argv = process.argv) => {
+		hasFlag = (flag, argv = browser$1$1.argv) => {
 			const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
 			const position = argv.indexOf(prefix + flag);
 			const terminatorPosition = argv.indexOf('--');
@@ -1647,7 +1871,7 @@
 		const tty = require$$1__default["default"];
 		const hasFlag = requireHasFlag();
 
-		const {env} = process;
+		const {env} = browser$1$1;
 
 		let forceColor;
 		if (hasFlag('no-color') ||
@@ -1710,7 +1934,7 @@
 				return min;
 			}
 
-			if (process.platform === 'win32') {
+			if (browser$1$1.platform === 'win32') {
 				// Windows 10 build 10586 is the first Windows release that supports 256 colors.
 				// Windows 10 build 14931 is the first release that supports 16m/TrueColor.
 				const osRelease = os.release().split('.');
@@ -1779,10 +2003,6 @@
 		};
 		return supportsColor_1;
 	}
-
-	/**
-	 * Module dependencies.
-	 */
 
 	var hasRequiredNode;
 
@@ -1909,7 +2129,7 @@
 			 *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
 			 */
 
-			exports.inspectOpts = Object.keys(process.env).filter(key => {
+			exports.inspectOpts = Object.keys(browser$1$1.env).filter(key => {
 				return /^debug_/i.test(key);
 			}).reduce((obj, key) => {
 				// Camel-case
@@ -1921,7 +2141,7 @@
 					});
 
 				// Coerce string value into JS value
-				let val = process.env[key];
+				let val = browser$1$1.env[key];
 				if (/^(yes|on|true|enabled)$/i.test(val)) {
 					val = true;
 				} else if (/^(no|off|false|disabled)$/i.test(val)) {
@@ -1943,7 +2163,7 @@
 			function useColors() {
 				return 'colors' in exports.inspectOpts ?
 					Boolean(exports.inspectOpts.colors) :
-					tty.isatty(process.stderr.fd);
+					tty.isatty(browser$1$1.stderr.fd);
 			}
 
 			/**
@@ -1979,7 +2199,7 @@
 			 */
 
 			function log(...args) {
-				return process.stderr.write(util.format(...args) + '\n');
+				return browser$1$1.stderr.write(util.format(...args) + '\n');
 			}
 
 			/**
@@ -1990,11 +2210,11 @@
 			 */
 			function save(namespaces) {
 				if (namespaces) {
-					process.env.DEBUG = namespaces;
+					browser$1$1.env.DEBUG = namespaces;
 				} else {
 					// If you set a process.env field to null or undefined, it gets cast to the
 					// string 'null' or 'undefined'. Just delete instead.
-					delete process.env.DEBUG;
+					delete browser$1$1.env.DEBUG;
 				}
 			}
 
@@ -2006,7 +2226,7 @@
 			 */
 
 			function load() {
-				return process.env.DEBUG;
+				return browser$1$1.env.DEBUG;
 			}
 
 			/**
@@ -2053,13 +2273,8 @@
 		return node.exports;
 	}
 
-	/**
-	 * Detect Electron renderer / nwjs process, which is node, but we should
-	 * treat as a browser.
-	 */
-
 	(function (module) {
-		if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+		if (typeof browser$1$1 === 'undefined' || browser$1$1.type === 'renderer' || browser$1$1.browser === true || browser$1$1.__nwjs) {
 			module.exports = requireBrowser();
 		} else {
 			module.exports = requireNode();

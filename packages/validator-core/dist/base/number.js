@@ -4,24 +4,29 @@ exports.checkUnsigned = exports.checkFloat = exports.checkInteger = exports.chec
 // validator numbers
 // import { NUMBER_TYPES } from './constants';
 const truetypeof_1 = require("@jsonql/utils/dist/truetypeof");
+const expected = 'number';
 /**
+ * Historical library
  * @2015-05-04 found a problem if the value is a number like string
  * it will pass, so add a check if it's string before we pass to next
+ * @2022 completely rewritten from ground up
  */
 function checkNumber(value) {
-    return (0, truetypeof_1.trueTypeOf)(value) !== 'number' ? false : !isNaN(parseFloat(value + ''));
+    return (0, truetypeof_1.trueTypeOf)(value) !== expected ? false : !isNaN(parseFloat(value + ''));
 }
 exports.checkNumber = checkNumber;
 // Add more number type / value checking
 function checkInteger(value) {
-    console.log(`@TODO checkInteger`, value);
+    return (0, truetypeof_1.trueTypeOf)(value) === expected && Number.isInteger(value);
 }
 exports.checkInteger = checkInteger;
 function checkFloat(value) {
-    console.log(`@TODO checkFloat`, value);
+    return (0, truetypeof_1.trueTypeOf)(value) === expected
+        && !isNaN(value)
+        && !Number.isInteger(value);
 }
 exports.checkFloat = checkFloat;
 function checkUnsigned(value) {
-    console.log(`@TODO check unsigned`, value);
+    return checkInteger(value) && value >= 0;
 }
 exports.checkUnsigned = checkUnsigned;

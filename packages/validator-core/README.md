@@ -8,7 +8,7 @@ Also it has a plugin system, and some commonly use plugins to help with the vali
 As of version 0.8.0, we move all the plugins related methods into this module. And this will be able to share between many different
 `@jsonql/validator` instance to use, instead of every time we init a `ValidatorFactory` and have to load all the plugins again.
 
-More to come 
+More to come
 
 ## About the plugin system
 
@@ -52,7 +52,7 @@ function main(
   return lessThan.main(max, value) && moreThan.main(min, value)
 }
 
-// so when we register it, we know what param we should expect
+// Then when we register it, we know what `params` we should expect
 export default {
   main,
   name,
@@ -82,6 +82,14 @@ Check a number or string (length) is `< max` and `> min`
 ```
 
 Check if the input is email address
+
+### float
+
+```ts
+{ plugin: 'float' }
+```
+
+Check if the value is a float number
 
 ### int
 

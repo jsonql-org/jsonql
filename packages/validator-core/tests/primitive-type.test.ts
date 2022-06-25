@@ -4,6 +4,9 @@ import {
   checkArray,
   checkBoolean,
   checkNumber,
+  checkInteger,
+  checkFloat,
+  checkUnsigned,
   checkObject,
   checkString,
   isEmptyObject,
@@ -11,6 +14,24 @@ import {
 import { notEmpty } from '@jsonql/utils'
 // import debugFn from 'debug'
 // const debug = debugFn('jsonql-params-validator:test:primitive-type')
+
+test('Several number related test, integer, float, unsigned', t => {
+  t.true(checkInteger(1000))
+  t.false(checkInteger(10.02))
+  t.false(checkInteger('1000'))
+
+  t.true(checkFloat(200.5))
+  t.false(checkFloat(2000))
+  t.false(checkFloat('200.202'))
+
+  t.true(checkUnsigned(0))
+  t.true(checkUnsigned(3000))
+  t.false(checkUnsigned(-100))
+  
+  t.true(checkUnsigned(200.00)) // this worth checking
+  t.false(checkUnsigned(200.01))
+})
+
 
 test(`test the isEmptyObject method`, t => {
 

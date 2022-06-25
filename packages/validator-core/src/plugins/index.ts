@@ -5,6 +5,7 @@
 
 import between from './between'
 import email from './email'
+import float from './float'
 import int from './int'
 import lessThanEqual from './less-than-equal'
 import lessThan from './less-than'
@@ -16,6 +17,7 @@ import within from './within'
 export const plugins = [
   between,
   email,
+  float,
   int,
   lessThanEqual,
   lessThan,

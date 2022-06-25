@@ -1,10 +1,11 @@
 "use strict";
-// test for integer
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.name = void 0;
-exports.name = "int";
+// test for integer
+const number_1 = require("../base/number");
+exports.name = 'int';
 function main(value) {
-    return Number.isInteger(value);
+    return (0, number_1.checkInteger)(value);
 }
 exports.default = {
     name: exports.name,

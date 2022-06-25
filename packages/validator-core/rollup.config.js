@@ -3,6 +3,7 @@ import commonJs from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import bundleSize from 'rollup-plugin-bundle-size'
+import polyfill from 'rollup-plugin-polyfill-node'
 // import { terser } from 'rollup-plugin-terser'
 
 export default {
@@ -16,6 +17,7 @@ export default {
   plugins: [
     commonJs(),
     nodeResolve(),
+    polyfill(),
     typescript({
       compilerOptions: {
         module: 'esnext',

@@ -1,9 +1,9 @@
-
+import { checkUnsigned } from '../base/number'
 
 const name = "unit"
 
 function main(value: number): boolean {
-  return Number.isInteger(value) && value >= 0
+  return checkUnsigned(value)
 }
 
 export default {

@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.name = void 0;
+// test for float
 const number_1 = require("../base/number");
-const name = "unit";
+exports.name = 'float';
 function main(value) {
-    return (0, number_1.checkUnsigned)(value);
+    return (0, number_1.checkFloat)(value);
 }
 exports.default = {
-    name,
+    name: exports.name,
     main,
 };
