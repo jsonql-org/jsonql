@@ -4,12 +4,15 @@
   "description": "@velocejs/validators based off @jsonql/validator and @jsonql/validator-core",
   "main": "dist/index.js",
   "module": "esm.js",
+  "browser": "browser.js",
   "files": [
     "dist",
     "src",
     "index.d.ts",
     "esm.js",
-    "esm.js.map"
+    "esm.js.map",
+    "browser.js",
+    "browser.js.map"
   ],
   "scripts": {
     "test:ava": "ava",
@@ -21,13 +24,14 @@
     "ts:check": "tsc -noEmit",
     "docs": "typedoc --entryPoints src/main.ts",
     "ts": "node -r esbuild-register",
+    "build:rollup": "rollup -c",
     "build:esm": "esbuild ./src/validators-server.ts --format=esm --platform=node --bundle --minify --sourcemap --outfile=./esm.js",
     "build:browser": "esbuild ./src/validators-client.ts --bundle --minify --sourcemap --outfile=./browser.js",
     "build:browser:test": "esbuild ./src/validators-client.ts --bundle --outfile=./tests/qunit/webroot/jsonql-validators.test.js",
     "prepare:types": "cp ./src/types.d.ts ./index.d.ts && cp ./src/types.d.ts ./dist/types.d.ts",
     "update:version": "node ../../update-deps.js validators",
     "clean:dist": "rimraf ./dist",
-    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm prepare:types",
+    "build": "pnpm clean:dist && pnpm build:tsc && pnpm build:esm && pnpm build:browser && pnpm prepare:types",
     "prepublishOnly": "pnpm build && pnpm test:nyc",
     "postpublish": "pnpm update:version",
     "patch": "npm version patch",
@@ -41,7 +45,7 @@
   "dependencies": {
     "@jsonql/errors": "workspace:^0.8.0",
     "@jsonql/utils": "workspace:^1.0.0",
-    "@jsonql/validator": "workspace:^0.11.0",
+    "@jsonql/validator": "workspace:^0.11.1",
     "@jsonql/validator-core": "workspace:^0.12.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3"
@@ -64,9 +68,7 @@
     "nyc": "^15.1.0",
     "open": "^8.4.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.4",
-    "server-io-core": "2.1.2",
-    "qunit": "^2.19.1"
+    "typescript": "^4.7.4"
   },
   "ava": {
     "verbose": true,

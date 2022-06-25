@@ -18,7 +18,6 @@ export class ValidatorsClient extends Validators {
     super(astMap)
   }
 
-
   /** On the client side we don't need a map */
   public registerPlugins(
     pluginConfigs: ClientPluginConfigs
