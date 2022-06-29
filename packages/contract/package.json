@@ -37,7 +37,7 @@
   "dependencies": {
     "@jsonql/ast": "workspace:^0.8.6",
     "@jsonql/errors": "workspace:^0.8.0",
-    "@jsonql/utils": "workspace:^1.0.0",
+    "@jsonql/utils": "workspace:^1.0.1",
     "debug": "^4.3.4",
     "fs-extra": "^10.1.0",
     "tslib": "^2.4.0"
@@ -47,8 +47,8 @@
     "@types/debug": "^4.1.7",
     "@types/node": "^18.0.0",
     "@jsonql/validators": "workspace:^0.10.2",
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.29.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "ava": "^4.3.0",
     "esbuild": "^0.14.47",
     "esbuild-register": "^3.3.3",
