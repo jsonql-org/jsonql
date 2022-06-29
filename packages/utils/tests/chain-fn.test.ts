@@ -1,5 +1,5 @@
 // need to test the chain-fns because of the way we change the lodash import
-
+import type { AnyType } from '../src/types'
 import debugFn from 'debug'
 const debug = debugFn('jsonql:utils:test:chain-fn')
 
@@ -20,11 +20,11 @@ test(`Test the chainPromises and see if one fail and what happen`, async t => {
   t.plan(1)
 
   const errorMsg = 'FAIL AND EXIT'
-  const afn = async (x: any) => {
+  const afn = async (x: AnyType) => {
     return Promise.resolve(x)
   }
   // expect an object
-  const afn1 = async (x) => {
+  const afn1 = async (x: AnyType) => {
     debug('x', x)
     return Promise.reject(errorMsg)
     // return Promise.resolve({x: ++x, y: ++y, z: 1})
@@ -35,14 +35,8 @@ test(`Test the chainPromises and see if one fail and what happen`, async t => {
   }
 
   return chainPromises([afn(1), afn1(1), afn2()])
-    .then(result => {
-      // console.log(result)
-    })
     .catch(err => {
-      // console.log(err)
-    })
-    .finally(() => {
-      t.pass()
+      t.is('FAIL AND EXIT', err)
     })
 })
 
@@ -53,8 +47,8 @@ test(`Test to see if one of the promise fail and it should exit with queuePromis
     return Promise.resolve(x)
   }
   // expect an object
-  const fn1 = async (y: number) => {
-    console.log(y)
+  const fn1 = async (_) => {
+    // console.log(y)
     return Promise.reject(errorMsg)
     // return Promise.resolve({x: ++x, y: ++y, z: 1})
   }
@@ -64,9 +58,9 @@ test(`Test to see if one of the promise fail and it should exit with queuePromis
   }
 
   return queuePromisesProcess([fn, fn1, fn2], 101)
-            .then((result: number) => {
-              console.log(result)
-            })
+            // .then((result: number) => {
+              // console.log(result)
+            // })
             .catch((error: string) => {
               t.is(error, errorMsg)
             })
@@ -85,7 +79,7 @@ test('It should able to accept more than one functions after the first one', t =
   // using chainArrayFns should get the same result
   const arrayFns = [baseFn, add1, add2]
   const result2 = chainArrayFns(arrayFns)(10)
-  t.is(answer, result1)
+  t.is(answer, result2)
 })
 
 test(`It should able to accept the last array return as spread input`, t => {
@@ -118,7 +112,7 @@ test(`It should able to merge the promise result together as one object`, async 
 
 test(`It should able to take one promise result as the next promise result parameter and return one result`, async t => {
   // init function
-  const fn = async (x: any, y: any) => {
+  const fn = async (x: AnyType, y: AnyType) => {
     return Promise.resolve({x, y})
   }
   // expect an object
@@ -138,7 +132,7 @@ test(`It should able to take one promise result as the next promise result param
 
 test(`As above using queuePromisesProcess instead`, async t => {
   // init function
-  const fn = async (x: any, y: any) => {
+  const fn = async (x: AnyType, y: AnyType) => {
     return Promise.resolve({x, y})
   }
   // expect an object
