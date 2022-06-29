@@ -33,6 +33,7 @@ export {
   readOnly,
   arrToObj
 } from './object'
+export { promise } from './promise'
 export { isFunction, isAsyncFunction } from './is-function'
 export { cloneDeep, cloneDeepCheap } from './clone-deep'
 export { logger, getLogger } from './logger'

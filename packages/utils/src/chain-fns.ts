@@ -17,3 +17,8 @@ export const chainFns = (
     ), Reflect.apply(mainFn, null, args))
   )
 )
+
+/**
+ * pass an array of functions to call chainFns
+ */
+export const chainArrayFns = (fns: AnyTypeArr) => Reflect.apply(chainFns, null, fns)
