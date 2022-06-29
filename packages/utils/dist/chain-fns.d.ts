@@ -6,3 +6,7 @@ import type { AnyType, AnyTypeArr } from './types';
  * @_return {function} accept value for the mainFn
  */
 export declare const chainFns: (mainFn: AnyType, ...moreFns: AnyTypeArr) => (...args: AnyTypeArr) => AnyType;
+/**
+ * pass an array of functions to call chainFns
+ */
+export declare const chainArrayFns: (fns: AnyTypeArr) => any;

@@ -6,6 +6,7 @@ const debug = debugFn('jsonql:utils:test:chain-fn')
 import test from 'ava'
 import {
   chainFns,
+  chainArrayFns,
   chainPromises,
   chainProcessPromises,
   queuePromisesProcess,
@@ -73,13 +74,18 @@ test(`Test to see if one of the promise fail and it should exit with queuePromis
 
 
 test('It should able to accept more than one functions after the first one', t => {
+  const answer = 103
   const baseFn: testNumFn = (num) => num * 10;
   const add1: testNumFn = (num) => num + 1;
   const add2: testNumFn = (num) => num + 2;
 
   const fn = chainFns(baseFn, add1, add2)
-  const result = fn(10)
-  t.is(103, result)
+  const result1 = fn(10)
+  t.is(answer, result1)
+  // using chainArrayFns should get the same result
+  const arrayFns = [baseFn, add1, add2]
+  const result2 = chainArrayFns(arrayFns)(10)
+  t.is(answer, result1)
 })
 
 test(`It should able to accept the last array return as spread input`, t => {

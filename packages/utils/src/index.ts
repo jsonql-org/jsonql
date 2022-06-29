@@ -1,6 +1,6 @@
 // start your project here
 export { accessByPath } from './access'
-export { chainFns } from './chain-fns'
+export { chainFns, chainArrayFns } from './chain-fns'
 export {
   chainPromises,
   chainProcessPromises,

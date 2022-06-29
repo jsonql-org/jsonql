@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chainFns = void 0;
+exports.chainArrayFns = exports.chainFns = void 0;
 const common_1 = require("./common");
 /**
  * using just the map reduce to chain multiple functions together
@@ -12,3 +12,8 @@ const chainFns = (mainFn, ...moreFns) => ((...args) => (moreFns.reduce((value, n
 // change here to check if the return value is array then we spread it
 Reflect.apply(nextFn, null, (0, common_1.toArray)(value))), Reflect.apply(mainFn, null, args))));
 exports.chainFns = chainFns;
+/**
+ * pass an array of functions to call chainFns
+ */
+const chainArrayFns = (fns) => Reflect.apply(exports.chainFns, null, fns);
+exports.chainArrayFns = chainArrayFns;

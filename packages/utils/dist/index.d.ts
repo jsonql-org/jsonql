@@ -1,11 +1,12 @@
 export { accessByPath } from './access';
-export { chainFns } from './chain-fns';
+export { chainFns, chainArrayFns } from './chain-fns';
 export { chainPromises, chainProcessPromises, queuePromisesProcess } from './chain-promises';
 export { strToNum, strToBool } from './convert';
 export { dasherize } from './dasherize';
 export { inArray, toArray, parseJson, nil, createEvtName, showDeep, formatStr } from './common';
 export { isEmptyObj, isNotEmpty, notEmpty, isEmpty } from './empty';
 export { isObject, isPlainObject, isClass, objectHasKey, getConfigValue, assign, readOnly, arrToObj } from './object';
+export { promise } from './promise';
 export { isFunction, isAsyncFunction } from './is-function';
 export { cloneDeep, cloneDeepCheap } from './clone-deep';
 export { logger, getLogger } from './logger';
