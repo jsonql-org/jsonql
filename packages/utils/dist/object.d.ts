@@ -1,6 +1,6 @@
 import type { AnyType, MapCallback } from './types';
 export declare function isObject(o: AnyType): boolean;
-export declare function isPlainObject(o: AnyType): any;
+export declare function isPlainObject(o: AnyType): boolean;
 /** short hand of !isPlainObject */
 export declare const isClass: (o: AnyType) => boolean;
 /**
@@ -11,6 +11,7 @@ export declare const getConfigValue: (name: string, obj: object) => any;
  * Shorthand method for Object.assign
  */
 export declare const assign: (...args: unknown[]) => any;
+export declare const extend: (...args: unknown[]) => any;
 /**
   Array to object
 */

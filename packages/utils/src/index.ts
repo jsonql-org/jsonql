@@ -30,6 +30,7 @@ export {
   objectHasKey,
   getConfigValue,
   assign,
+  extend,
   readOnly,
   arrToObj
 } from './object'

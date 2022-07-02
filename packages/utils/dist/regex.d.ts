@@ -6,4 +6,4 @@ export declare function isRegExp(pat: AnyType): boolean;
 /**
  * Find from the array by matching the pattern
  */
-export declare function getRegex(pattern: string | RegExp): string | false | RegExp;
+export declare function getRegex(pattern: string | RegExp): RegExp | string | boolean;

@@ -26,7 +26,7 @@ export function objDefineProps(
 /**
  * check if the object has name property
  */
-export function objHasProp(obj: AnyType, name: string) {
+export function objHasProp (obj: AnyType, name: string) {
   const prop = Object.getOwnPropertyDescriptor(obj, name)
 
   return prop !== undefined && prop.value ? prop.value : prop

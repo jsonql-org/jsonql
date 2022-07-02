@@ -1,6 +1,6 @@
 // this is mainly for the string (via url) input then convert to other two primitive type
 /** convert string to number, t = true then throw and hail it */
-export function strToNum(input: string, t = false) {
+export function strToNum (input: string, t = false) {
   const n = parseFloat(input)
   if (!isNaN(n)) {
     return n
@@ -12,7 +12,7 @@ export function strToNum(input: string, t = false) {
 }
 
 /** convert string to boolean, same as above */
-export function strToBool(input: string, t = false) {
+export function strToBool (input: string, t = false) {
   const i = input.toLowerCase()
   if (i === 'false') {
     return false

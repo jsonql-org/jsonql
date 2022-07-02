@@ -17,69 +17,128 @@ Please reference which functions in what file below
 
 #### dist/access
 
-- accessByPath
+- accessByPath (obj: AnyType, path: string)
+
+```js
+const obj = { a: 1, b: { c: 2} }
+
+const c = accessByPath(obj, 'b.c')
+
+// c === 2
+```
 
 #### dist/chain-fns
 
-- chainFns
+- chainFns (mainFn: AnyType, ...moreFns: AnyType)
+
+It returns a function to accept parameter for the `mainFn`, then after execute the function will pass to the next function until we get the final result. This is a sync method.
+
+```js
+const fn1 = (a) => a + 1
+const fn2 = (b) => b + 2
+const fn3 = (c) => c + 4
+
+const fn = chainFns(fn1, fn2, fn3)
+
+const result = fn(1)
+
+// result === 8
+```
+
+You can also do this:
+
+```js
+const fn1 = (a) => a + 1
+const fn2 = (b) => [b, 2]
+const fn3 = (x, y) => x + y
+
+const fn = chainFns(fn1, fn2, fn3)
+const result = fn(1)
+
+// result === 4
+```
 
 #### dist/chain-promises
 
-- chainPromises
-- chainProcessPromises
-- queuePromisesProcess
+- chainPromises (promies: Array<Promise<AnyType>>, asObject: boolean | object = false)
+- chainProcessPromises (initPromise: JsonqlPromiseChainFn, ...promises: Array<JsonqlPromiseChainFn>)
+- queuePromisesProcess (queue: Array<JsonqlPromiseChainFn>,
+...initValue: AnyTypeArr)
+
+`chainPromises` will put every promises resolve result into an array (default) or if you set the `asObject` parameter to true or pass an object, it will merge into one object. In some way this is similar to `Promise.all`. The different is when one of the promise failed, it will stop and throw immediately. And it can config to return a merge object as result.
+
+`chainProcessPromises` will return a function that accept the argument for the first async function, then each result will pass to the next function as argument. This is the async version of the above `chainFns`.
+
+`queuePromisesProcess` is a wrapper of the `chainProcessPromises`, the call signature makes it easier to call with `Reflect.apply`
 
 #### dist/clone-deep
 
-- cloneDeepCheap
-- cloneDeep
+- cloneDeepCheap (obj: AnyType)
+- cloneDeep (obj: AnyType)
+
+`cloneDeepCheap` only able to clone object, internally using `JSON`
+`cloneDeep` will able to clone all kinds of deep structure object even a class instance (which could be expensive operation).
 
 #### dist/common
 
-- inArray
-- toArray
-- parseJson
-- createEvtName
-- nil
-- showDeep
-- formatStr
+- inArray (arr: AnyTypeArr, value: AnyType): boolean
+- toArray (arg: AnyType): Array<AnyType>
+- parseJson (json: AnyType, t = true): JSON | json | Error
+- createEvtName (...args: string[]): string
+- nil () => boolean (false)
+- showDeep (code: unknown): void
+- formatStr (str: string, ...args: Array<AnyType>): string
 
-### dist/convert
+`formatStr` example:
 
-- strToNum
-- strToBool
+```js
+const str = 'I want to go from {0} to {1}'
+
+const output = formatStr(str, 'zero', 'one')
+
+// I want to go from zero to one
+```
+
+#### dist/convert
+
+- strToNum (input: string, t = false): number
+- strToBool (input: string, t = false): boolean
 
 #### dist/dasherize
 
-- dasherize
+- dasherize (str: string): string
 
-### dist/empty
+#### dist/empty
 
-- isEmptyObj
-- isNotEmpty
-- notEmpty
-- isEmpty
+- isEmptyObj (obj: AnyType): boolean
+- isNotEmpty (param: unknown): boolean
+- notEmpty (a: unknown, valueCheck = false): boolean
+- isEmpty (value: unknown, valueCheck?: boolean): boolean
 
-### dist/is-equal
+#### dist/is-equal
 
-- isEqualCheap
-- isEqual
+- isEqualCheap (obj1: unknown, obj2: unknown): boolean
+- isEqual (obj1: unknown, obj2: unknown)
 
-### dist/is-function
+`isEqualCheap` can only compare two object, `isEqual` can compare anything
 
-- isFunction
-- isAsyncFunction
+#### dist/is-function
 
-### dist/jwt
+- isFunction (prop: unknown, debug = false): boolean
+- isAsyncFunction (prop: unknown): boolean
 
-- parseJWT
+#### dist/jwt
 
-### dist/lodash
+- parseJWT (token: string): unknown
 
-- curry
-- merge
-- flatMap
-- isString
+It returns typed as `unknown` is follow the standard, you have to cast it again when your own structure. In the future release, we might create our own type for a standard JWT decoded object type.
+
+#### dist/lodash
+
+- curry (fn: AnyType, ...args: AnyType[])
+- merge (target: AnyType, ...sources: AnyType[])
+- flatMap (arr: AnyType[], callback?: FlatMapCallback)
+- isString (value: unknown): boolean
 
 _These methods used to included from `lodash-es` now we implement them ourself, and cut down the library size to just 5kb_
 
@@ -89,41 +148,50 @@ _These methods used to included from `lodash-es` now we implement them ourself, 
 
 #### dist/obj-define-props
 
-- objDefineProps
-- objHasProp
-- injectToFn
+- objDefineProps (obj: AnyType, name: string, setter: AnyType, getter = null)
+- objHasProp (obj: AnyType, name: string)
+- injectToFn (resolver: JsonqlResolver | JsonqlAsyncResolver, name: string, data: AnyType, overwrite = false)
 
-### dist/object
+#### dist/object
 
-- isObject
-- isPlainObject
-- isClass
-- getConfigValue
-- assign
-- arrToObj
-- objectHasKey
-- readOnly
+- isObject (o: AnyType): boolean
+- isPlainObject (o: AnyType): boolean
+- isClass (o: AnyType): boolean
+- getConfigValue (name: string, obj: object)
+- assign (...args: unknown[]): unknown
+- extend (alias to `assign`)
+- arrToObj (args: unknown[], processor: MapCallback, initValue = {}): AnyType
+- objectHasKey (obj: object, key: string): boolean
+- readOnly (config: object): AnyType
 
-### regex
+#### dist/promise
 
-- isRegExp
-- getRegex
+- promsie async (cb: AnyType)
+
+`new Promise` wrapper save a bit typing
+
+#### dist/regex
+
+- isRegExp (pat: AnyType): boolean
+- getRegex (pattern: string | RegExp): RegExp | string | boolean
 
 #### dist/timestamp
 
-- timestamp
+- timestamp (sec = false): number
 
-### dist/truetypeof
+Default return mil-seconds
 
-- trueTypeOf
+#### dist/truetypeof
+
+- trueTypeOf (obj: AnyType): string
 
 *Special Thank you to (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com*
 
 #### dist/urls
 
-- urlParams
-- cacheBurstUrl
-- cacheBurst
+- urlParams (url: string, params: AnyType): string
+- cacheBurstUrl (url: string): string
+- cacheBurst (name = '_cb')
 
 ---
 

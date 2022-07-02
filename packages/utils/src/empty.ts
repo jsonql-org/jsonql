@@ -23,7 +23,7 @@ export const isNotEmpty = (param: unknown): boolean => (
  and we should check if its array is it empty array
  if it's object then if its empty object
  */
-export function notEmpty(a: unknown, valueCheck = false): boolean {
+export function notEmpty (a: unknown, valueCheck = false): boolean {
   if (Array.isArray(a)) {
     // @NOTE we now check if its an empty array as well
     return valueCheck ? !!a.length : false

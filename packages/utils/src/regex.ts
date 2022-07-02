@@ -5,14 +5,14 @@ import { isString } from './lodash'
 /**
  * Just check if a pattern is an RegExp object
  */
-export function isRegExp(pat: AnyType): boolean {
+export function isRegExp (pat: AnyType): boolean {
   return pat instanceof RegExp
 }
 
 /**
  * Find from the array by matching the pattern
  */
-export function getRegex(pattern: string | RegExp) {
+export function getRegex (pattern: string | RegExp): RegExp | string | boolean {
   switch (true) {
     case isRegExp(pattern):
       return pattern

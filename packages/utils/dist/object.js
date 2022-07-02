@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.assign = exports.getConfigValue = exports.isClass = exports.isPlainObject = exports.isObject = void 0;
+exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.extend = exports.assign = exports.getConfigValue = exports.isClass = exports.isPlainObject = exports.isObject = void 0;
 const common_1 = require("./common");
 const truetypeof_1 = require("./truetypeof");
 function isObject(o) {
@@ -43,6 +43,7 @@ exports.getConfigValue = getConfigValue;
  */
 const assign = (...args) => Reflect.apply(Object.assign, Object, args);
 exports.assign = assign;
+exports.extend = exports.assign; // alias
 /**
   Array to object
 */

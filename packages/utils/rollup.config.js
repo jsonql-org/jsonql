@@ -6,10 +6,6 @@ import { terser } from 'rollup-plugin-terser'
 export default {
   input: 'src/index.ts',
   output: [
-    /* {
-      dir: 'lib',
-      format: 'es'
-    }, */
     {
       file: 'browser.js',
       format: 'umd',
@@ -24,7 +20,6 @@ export default {
   plugins: [
     typescript({
       compilerOptions: {
-        // outDir: 'lib',
         module: 'esnext',
         target: 'es6'
       }

@@ -37,7 +37,7 @@ export const merge = (target: AnyType, ...sources: AnyType[]) => {
 }
 
 // flatMap native
-export function flatMap(arr: AnyType[], callback?: FlatMapCallback) {
+export function flatMap (arr: AnyType[], callback?: FlatMapCallback) {
   if (!callback) {
     callback = n => n
   }
@@ -46,6 +46,6 @@ export function flatMap(arr: AnyType[], callback?: FlatMapCallback) {
 
 // the lodash-es ESM module can not import from commonjs etc etc etc bug
 // so we get rip of most of them
-export function isString(value: unknown): boolean {
+export function isString (value: unknown): boolean {
   return trueTypeOf(value) === 'string'
 }

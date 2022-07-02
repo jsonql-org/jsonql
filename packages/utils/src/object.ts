@@ -3,12 +3,12 @@ import type { AnyType, MapCallback } from './types'
 import { inArray } from './common'
 import { trueTypeOf } from './truetypeof'
 
-export function isObject(o: AnyType): boolean {
+export function isObject (o: AnyType): boolean {
   return trueTypeOf(o) === 'object'
 }
 
 // move the isPlainObject method here
-export function isPlainObject (o: AnyType) {
+export function isPlainObject (o: AnyType): boolean {
   if (isObject(o)) {
     // If has modified constructor
     const constr = o.constructor
@@ -32,7 +32,7 @@ export function isPlainObject (o: AnyType) {
 }
 
 /** short hand of !isPlainObject */
-export const isClass = (o: AnyType) => !isPlainObject(o)
+export const isClass = (o: AnyType): boolean => !isPlainObject(o)
 
 /**
  * simple util method to get the value from the config object
@@ -45,7 +45,7 @@ export const getConfigValue = (name: string, obj: object) => (
  * Shorthand method for Object.assign
  */
 export const assign = (...args: unknown[]) => Reflect.apply(Object.assign, Object, args)
-
+export const extend = assign // alias
 /**
   Array to object
 */
