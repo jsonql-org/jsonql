@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "@jsonql/utils utilities library for general purpose",
   "main": "dist/index.js",
   "module": "esm.js",
