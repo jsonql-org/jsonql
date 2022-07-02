@@ -149,6 +149,7 @@
      * Shorthand method for Object.assign
      */
     const assign = (...args) => Reflect.apply(Object.assign, Object, args);
+    const extend = assign; // alias
     /**
       Array to object
     */
@@ -636,6 +637,7 @@
     exports.createEvtName = createEvtName;
     exports.curry = curry;
     exports.dasherize = dasherize;
+    exports.extend = extend;
     exports.flatMap = flatMap;
     exports.formatStr = formatStr;
     exports.getConfigValue = getConfigValue;
