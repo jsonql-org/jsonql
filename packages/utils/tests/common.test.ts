@@ -14,7 +14,7 @@ import {
 } from '../src'
 
 test('testing the compact method', t => {
-  const arr = [null, 1, 'x', false, 'y', 3, undefined]
+  const arr = [0, null, 1, 'x', false, 'y', 3, undefined]
 
   const arr1 = compact(arr)
 

@@ -27,6 +27,22 @@ const c = accessByPath(obj, 'b.c')
 // c === 2
 ```
 
+#### dist/array (V1.2.0 breaking)
+
+- inArray (arr: AnyTypeArr, value: AnyType): boolean
+- toArray (arg: AnyType): Array<AnyType>
+- compact (arg: Array<unkonwn>): Array<AnyType>
+
+example for compact:
+
+```js
+const result = compcat([0, 1, 2, null, false, 3])
+
+// [ 1, 2, null, false ]
+```
+
+Basically compact will remove any non-truthy value from the value, **even 0**!
+
 #### dist/chain-fns
 
 - chainFns (mainFn: AnyType, ...moreFns: AnyType)
@@ -81,8 +97,6 @@ const result = fn(1)
 
 #### dist/common
 
-- inArray (arr: AnyTypeArr, value: AnyType): boolean
-- toArray (arg: AnyType): Array<AnyType>
 - parseJson (json: AnyType, t = true): JSON | json | Error
 - createEvtName (...args: string[]): string
 - nil () => boolean (false)

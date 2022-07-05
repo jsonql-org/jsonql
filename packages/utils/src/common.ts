@@ -2,7 +2,6 @@
 import type { AnyType, AnyTypeArr } from './types'
 import { trueTypeOf } from './truetypeof'
 
-
 /**
  * parse string to json or just return the original value if error happened
  */
@@ -23,8 +22,6 @@ export const parseJson = (n: AnyType, t = true) => {
  * create an event name
  */
 export const createEvtName = (...args: string[]) => args.join('_')
-
-
 
 /**
  * generic placeholder function
