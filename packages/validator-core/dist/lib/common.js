@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const constants_1 = require("../constants");
-const common_1 = require("@jsonql/utils/dist/common");
+const array_1 = require("@jsonql/utils/dist/array");
 const object_1 = require("@jsonql/utils/dist/object");
 const is_function_1 = require("@jsonql/utils/dist/is-function");
 const regex_1 = require("@jsonql/utils/dist/regex");
@@ -109,13 +109,13 @@ function successThen(argName, value, lastResult, pos // for internal debug use o
                 }
             }
             else if (lr[constants_1.IDX_KEY] !== idx) {
-                lastResult[argName] = (0, common_1.toArray)(lastResult[argName]).concat([newResult]);
+                lastResult[argName] = (0, array_1.toArray)(lastResult[argName]).concat([newResult]);
             }
             // if it's the same then do nothing
             return lastResult;
         }
         // return the argument name with the value
-        return (0, object_1.assign)(lastResult, { [argName]: newResult });
+        return (0, object_1.extend)(lastResult, { [argName]: newResult });
     };
 }
 exports.successThen = successThen;

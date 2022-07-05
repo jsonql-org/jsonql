@@ -14,8 +14,8 @@ import {
   PARAMS_KEY,
   RESERVED_WORD_ERR,
 } from '../constants'
-import { toArray } from '@jsonql/utils/dist/common'
-import { assign } from '@jsonql/utils/dist/object'
+import { toArray } from '@jsonql/utils/dist/array'
+import { extend } from '@jsonql/utils/dist/object'
 import { isFunction } from '@jsonql/utils/dist/is-function'
 import { getRegex } from '@jsonql/utils/dist/regex'
 
@@ -145,7 +145,7 @@ export function successThen (
       return lastResult
     }
     // return the argument name with the value
-    return assign(lastResult, { [argName]: newResult })
+    return extend(lastResult, { [argName]: newResult })
   }
 }
 
