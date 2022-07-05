@@ -13,7 +13,7 @@ import {
   ExternalPluginLoader as ValidatorPlugins
 } from '@jsonql/validator-core/dist/external-plugin-loader'
 import ValidationError from '@jsonql/errors/dist/validation-error'
-import { toArray } from '@jsonql/utils/dist/common'
+import { toArray } from '@jsonql/utils/dist/array'
 import { cloneDeep } from '@jsonql/utils/dist/clone-deep'
 import { RULES_KEY, SCHEMA_KEY } from './constants'
 

@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const validator_1 = require("@jsonql/validator");
 const external_plugin_loader_1 = require("@jsonql/validator-core/dist/external-plugin-loader");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
-const common_1 = require("@jsonql/utils/dist/common");
+const array_1 = require("@jsonql/utils/dist/array");
 const clone_deep_1 = require("@jsonql/utils/dist/clone-deep");
 const constants_1 = require("./constants");
 const debug_1 = tslib_1.__importDefault(require("debug"));
@@ -95,7 +95,7 @@ class Validators {
             for (const propName in existingRules) {
                 if (input[propName]) {
                     // we are going to just store everything and let the contract decided what to pick
-                    existingRules[propName] = existingRules[propName].concat((0, common_1.toArray)(input[propName]));
+                    existingRules[propName] = existingRules[propName].concat((0, array_1.toArray)(input[propName]));
                 }
             }
             this._validationRules.set(propertyName, existingRules);
@@ -103,7 +103,7 @@ class Validators {
         else {
             const cleanInput = {};
             for (const argName in input) {
-                cleanInput[argName] = (0, common_1.toArray)(input[argName]);
+                cleanInput[argName] = (0, array_1.toArray)(input[argName]);
             }
             debug('adding new rule', input, cleanInput);
             this._validationRules.set(propertyName, cleanInput);
