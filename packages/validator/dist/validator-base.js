@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const validation_error_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/validation-error"));
 const general_exception_1 = tslib_1.__importDefault(require("@jsonql/errors/dist/general-exception"));
 const empty_1 = require("@jsonql/utils/dist/empty");
-const common_1 = require("@jsonql/utils/dist/common");
+const array_1 = require("@jsonql/utils/dist/array");
 const object_1 = require("@jsonql/utils/dist/object");
 const is_function_1 = require("@jsonql/utils/dist/is-function");
 const chain_promises_1 = require("@jsonql/utils/dist/chain-promises");
@@ -55,7 +55,7 @@ class ValidatorBase {
         const clearInput = {};
         for (const propName in input) {
             // we convert this to array here now
-            clearInput[propName] = (0, common_1.toArray)(input[propName])
+            clearInput[propName] = (0, array_1.toArray)(input[propName])
                 .map((inp) => {
                 if ((0, is_function_1.isFunction)(inp)) {
                     return this._updateInput(inp);
@@ -139,7 +139,7 @@ class ValidatorBase {
                 }
                 const k2 = (0, fn_1.getKey)(b);
                 if (!a[k2]) {
-                    return (0, object_1.assign)({}, a, b);
+                    return (0, object_1.extend)({}, a, b);
                 }
                 a[k2] = a[k2].concat(b[k2]);
                 return a;
@@ -148,8 +148,8 @@ class ValidatorBase {
         // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
         // the problem is the type is any after the first param
         return values.map((value, i) => {
-            // @NOTE the assign need to create new object otherwise we will polluate the params
-            const param = params[i] || (0, object_1.assign)({}, spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
+            // @NOTE the extend need to create new object otherwise we will polluate the params
+            const param = params[i] || (0, object_1.extend)({}, spreadParam, { name: `${constants_1.SPREAD_PREFIX}${i}` });
             // this getOptionalValue is pointless
             // const _value = getOptionalValue(value, param)
             debug('spread param', value, param.name);

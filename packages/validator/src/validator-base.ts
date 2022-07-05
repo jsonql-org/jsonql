@@ -19,8 +19,8 @@ import type {
 import ValidationError from '@jsonql/errors/dist/validation-error'
 import GeneralException from '@jsonql/errors/dist/general-exception'
 import { notEmpty } from '@jsonql/utils/dist/empty'
-import { toArray } from '@jsonql/utils/dist/common'
-import { assign, arrToObj } from '@jsonql/utils/dist/object'
+import { toArray } from '@jsonql/utils/dist/array'
+import { extend, arrToObj } from '@jsonql/utils/dist/object'
 import { isFunction, isAsyncFunction } from '@jsonql/utils/dist/is-function'
 import {
   queuePromisesProcess,
@@ -207,7 +207,7 @@ export class ValidatorBase {
         }
         const k2 = getKey(b) as string
         if (!a[k2]) {
-          return assign({}, a, b)
+          return extend({}, a, b)
         }
         a[k2] = a[k2].concat(b[k2])
         return a
@@ -216,8 +216,8 @@ export class ValidatorBase {
     // now search for the mixedRule - there should only be one, if not this idiot doesn't know what is doing
     // the problem is the type is any after the first param
     return values.map((value, i) => {
-      // @NOTE the assign need to create new object otherwise we will polluate the params
-      const param = params[i] || assign({}, spreadParam, { name: `${SPREAD_PREFIX}${i}`})
+      // @NOTE the extend need to create new object otherwise we will polluate the params
+      const param = params[i] || extend({}, spreadParam, { name: `${SPREAD_PREFIX}${i}`})
       // this getOptionalValue is pointless
       // const _value = getOptionalValue(value, param)
       debug('spread param', value, param.name)

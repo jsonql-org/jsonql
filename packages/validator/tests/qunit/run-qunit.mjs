@@ -1,6 +1,6 @@
 // start up for qunit
 import { getConfigForQunit } from 'server-io-core/helper.mjs'
-import serverIoCore from 'server-io-core/index.mjs'
+import { serverIoCore } from 'server-io-core/index.mjs'
 // combine method
 async function runQunitSetup (userConfig) {
   return getConfigForQunit(userConfig)

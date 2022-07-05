@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@ava/typescript': ^3.0.1
-  '@jsonql/utils': workspace:^1.0.1
+  '@jsonql/utils': workspace:^1.2.0
   '@types/debug': ^4.1.7
   '@types/node': ^18.0.0
   '@typescript-eslint/eslint-plugin': ^5.29.0
