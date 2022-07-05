@@ -1,10 +1,5 @@
 import type { AnyType, AnyTypeArr } from './types';
 /**
- * DIY in Array
- */
-export declare const inArray: (arr: AnyTypeArr, value: AnyType) => boolean;
-export declare const toArray: (arg: AnyType) => any[];
-/**
  * parse string to json or just return the original value if error happened
  */
 export declare const parseJson: (n: AnyType, t?: boolean) => any;

@@ -51,54 +51,14 @@
         return obj[path];
     }
 
-    /*
-     * More accurately check the type of a JavaScript object
-     * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
-     */
-    function trueTypeOf(obj) {
-        return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-    }
-
     /**
      * DIY in Array
      */
     const inArray = (arr, value) => arr.includes(value);
     // quick and dirty to turn non array to array
     const toArray = (arg) => Array.isArray(arg) ? arg : [arg];
-    /**
-     * parse string to json or just return the original value if error happened
-     */
-    const parseJson = (n, t = true) => {
-        try {
-            return trueTypeOf(n) === 'string' ?
-                JSON.parse(n) :
-                JSON.parse(JSON.stringify(n));
-        }
-        catch (e) {
-            if (t) {
-                return n;
-            }
-            throw e; // just rethrow it
-        }
-    };
-    /**
-     * create an event name
-     */
-    const createEvtName = (...args) => args.join('_');
-    /**
-     * generic placeholder function
-     */
-    const nil = () => false;
-    /** handy method to show deep json structure */
-    const showDeep = (code) => {
-        console.dir(code, { depth: null });
-    };
-    /** from https://www.tutorialstonight.com/javascript-string-format.php
-      change to a standard function instead of prototype pollution
-    */
-    function formatStr(str, ...args) {
-        return str.replace(/{([0-9]+)}/g, (match, index) => (typeof args[index] === 'undefined' ? match : args[index]));
-    }
+    /**  remove nil-like-value from array */
+    const compact = (arr) => arr.filter(Boolean);
 
     /**
      * using just the map reduce to chain multiple functions together
@@ -113,6 +73,14 @@
      * pass an array of functions to call chainFns
      */
     const chainArrayFns = (fns) => Reflect.apply(chainFns, null, fns);
+
+    /*
+     * More accurately check the type of a JavaScript object
+     * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
+     */
+    function trueTypeOf(obj) {
+        return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+    }
 
     function isObject(o) {
         return trueTypeOf(o) === 'object';
@@ -260,6 +228,41 @@
         const fc = str.substring(0, 1);
         return (fc !== '_' && fc !== '-') ? str : str.substring(1);
     };
+
+    /**
+     * parse string to json or just return the original value if error happened
+     */
+    const parseJson = (n, t = true) => {
+        try {
+            return trueTypeOf(n) === 'string' ?
+                JSON.parse(n) :
+                JSON.parse(JSON.stringify(n));
+        }
+        catch (e) {
+            if (t) {
+                return n;
+            }
+            throw e; // just rethrow it
+        }
+    };
+    /**
+     * create an event name
+     */
+    const createEvtName = (...args) => args.join('_');
+    /**
+     * generic placeholder function
+     */
+    const nil = () => false;
+    /** handy method to show deep json structure */
+    const showDeep = (code) => {
+        console.dir(code, { depth: null });
+    };
+    /** from https://www.tutorialstonight.com/javascript-string-format.php
+      change to a standard function instead of prototype pollution
+    */
+    function formatStr(str, ...args) {
+        return str.replace(/{([0-9]+)}/g, (match, index) => (typeof args[index] === 'undefined' ? match : args[index]));
+    }
 
     const isEmptyObj = (obj) => (obj && isPlainObject(obj) && Object.keys(obj).length === 0);
     /**
@@ -634,6 +637,7 @@
     exports.chainPromises = chainPromises;
     exports.cloneDeep = cloneDeep;
     exports.cloneDeepCheap = cloneDeepCheap;
+    exports.compact = compact;
     exports.createEvtName = createEvtName;
     exports.curry = curry;
     exports.dasherize = dasherize;

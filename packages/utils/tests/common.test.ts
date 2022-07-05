@@ -18,9 +18,7 @@ test('testing the compact method', t => {
 
   const arr1 = compact(arr)
 
-  console.log(arr1)
-
-  t.pass()
+  t.deepEqual(arr1, [1, 'x', 'y', 3])
 })
 
 

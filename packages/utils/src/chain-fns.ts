@@ -1,5 +1,5 @@
 import type { AnyType, AnyTypeArr } from './types'
-import { toArray } from './common'
+import { toArray } from './array'
 /**
  * using just the map reduce to chain multiple functions together
  * @_param {function} mainFn the init function

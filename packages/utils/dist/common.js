@@ -1,15 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatStr = exports.showDeep = exports.nil = exports.createEvtName = exports.parseJson = exports.toArray = exports.inArray = void 0;
+exports.formatStr = exports.showDeep = exports.nil = exports.createEvtName = exports.parseJson = void 0;
 const truetypeof_1 = require("./truetypeof");
-/**
- * DIY in Array
- */
-const inArray = (arr, value) => arr.includes(value);
-exports.inArray = inArray;
-// quick and dirty to turn non array to array
-const toArray = (arg) => Array.isArray(arg) ? arg : [arg];
-exports.toArray = toArray;
 /**
  * parse string to json or just return the original value if error happened
  */

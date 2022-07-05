@@ -1,6 +1,6 @@
 // bunch of object related methods
 import type { AnyType, MapCallback } from './types'
-import { inArray } from './common'
+import { inArray } from './array'
 import { trueTypeOf } from './truetypeof'
 
 export function isObject (o: AnyType): boolean {

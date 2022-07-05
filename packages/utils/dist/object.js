@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readOnly = exports.objectHasKey = exports.arrToObj = exports.extend = exports.assign = exports.getConfigValue = exports.isClass = exports.isPlainObject = exports.isObject = void 0;
-const common_1 = require("./common");
+const array_1 = require("./array");
 const truetypeof_1 = require("./truetypeof");
 function isObject(o) {
     return (0, truetypeof_1.trueTypeOf)(o) === 'object';
@@ -55,7 +55,7 @@ exports.arrToObj = arrToObj;
 const objectHasKey = (obj, key) => {
     try {
         const keys = Object.keys(obj);
-        return (0, common_1.inArray)(keys, key);
+        return (0, array_1.inArray)(keys, key);
     }
     catch (e) {
         // @_BUG when the obj is not an OBJECT we got some weird output

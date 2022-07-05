@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.flatMap = exports.curry = exports.merge = exports.isEqualCheap = exports.isEqual = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeepCheap = exports.cloneDeep = exports.isAsyncFunction = exports.isFunction = exports.promise = exports.arrToObj = exports.readOnly = exports.extend = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isClass = exports.isPlainObject = exports.isObject = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.toArray = exports.inArray = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainArrayFns = exports.chainFns = exports.accessByPath = void 0;
-exports.parseJWT = exports.trueTypeOf = exports.isString = void 0;
+exports.curry = exports.merge = exports.isEqualCheap = exports.isEqual = exports.cacheBurst = exports.cacheBurstUrl = exports.urlParams = exports.timestamp = exports.getRegex = exports.isRegExp = exports.injectToFn = exports.objHasProp = exports.objDefineProps = exports.getLogger = exports.logger = exports.cloneDeepCheap = exports.cloneDeep = exports.isAsyncFunction = exports.isFunction = exports.promise = exports.arrToObj = exports.readOnly = exports.extend = exports.assign = exports.getConfigValue = exports.objectHasKey = exports.isClass = exports.isPlainObject = exports.isObject = exports.isEmpty = exports.notEmpty = exports.isNotEmpty = exports.isEmptyObj = exports.formatStr = exports.showDeep = exports.createEvtName = exports.nil = exports.parseJson = exports.dasherize = exports.strToBool = exports.strToNum = exports.queuePromisesProcess = exports.chainProcessPromises = exports.chainPromises = exports.chainArrayFns = exports.chainFns = exports.compact = exports.toArray = exports.inArray = exports.accessByPath = void 0;
+exports.parseJWT = exports.trueTypeOf = exports.isString = exports.flatMap = void 0;
 // start your project here
 var access_1 = require("./access");
 Object.defineProperty(exports, "accessByPath", { enumerable: true, get: function () { return access_1.accessByPath; } });
+var array_1 = require("./array");
+Object.defineProperty(exports, "inArray", { enumerable: true, get: function () { return array_1.inArray; } });
+Object.defineProperty(exports, "toArray", { enumerable: true, get: function () { return array_1.toArray; } });
+Object.defineProperty(exports, "compact", { enumerable: true, get: function () { return array_1.compact; } });
 var chain_fns_1 = require("./chain-fns");
 Object.defineProperty(exports, "chainFns", { enumerable: true, get: function () { return chain_fns_1.chainFns; } });
 Object.defineProperty(exports, "chainArrayFns", { enumerable: true, get: function () { return chain_fns_1.chainArrayFns; } });
@@ -18,8 +22,6 @@ Object.defineProperty(exports, "strToBool", { enumerable: true, get: function ()
 var dasherize_1 = require("./dasherize");
 Object.defineProperty(exports, "dasherize", { enumerable: true, get: function () { return dasherize_1.dasherize; } });
 var common_1 = require("./common");
-Object.defineProperty(exports, "inArray", { enumerable: true, get: function () { return common_1.inArray; } });
-Object.defineProperty(exports, "toArray", { enumerable: true, get: function () { return common_1.toArray; } });
 Object.defineProperty(exports, "parseJson", { enumerable: true, get: function () { return common_1.parseJson; } });
 Object.defineProperty(exports, "nil", { enumerable: true, get: function () { return common_1.nil; } });
 Object.defineProperty(exports, "createEvtName", { enumerable: true, get: function () { return common_1.createEvtName; } });
