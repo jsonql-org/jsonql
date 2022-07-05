@@ -1,6 +1,6 @@
 {
   "name": "@jsonql/contract",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "@jsonql/contract for reading/writing contract for jsonql system",
   "main": "dist/index.js",
   "module": "esm.js",
@@ -46,7 +46,7 @@
     "@ava/typescript": "^3.0.1",
     "@types/debug": "^4.1.7",
     "@types/node": "^18.0.1",
-    "@jsonql/validators": "workspace:^0.10.2",
+    "@jsonql/validators": "workspace:^0.10.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "ava": "^4.3.0",
