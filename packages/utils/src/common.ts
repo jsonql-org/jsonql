@@ -1,13 +1,7 @@
 // bunch of generic helpers
 import type { AnyType, AnyTypeArr } from './types'
 import { trueTypeOf } from './truetypeof'
-/**
- * DIY in Array
- */
-export const inArray = (arr: AnyTypeArr, value: AnyType) => arr.includes(value)
 
-// quick and dirty to turn non array to array
-export const toArray = (arg: AnyType) => Array.isArray(arg) ? arg : [arg]
 
 /**
  * parse string to json or just return the original value if error happened
@@ -29,6 +23,8 @@ export const parseJson = (n: AnyType, t = true) => {
  * create an event name
  */
 export const createEvtName = (...args: string[]) => args.join('_')
+
+
 
 /**
  * generic placeholder function

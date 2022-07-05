@@ -9,8 +9,20 @@ import {
   merge,
   curry,
   isEqual,
-  trueTypeOf
+  trueTypeOf,
+  compact
 } from '../src'
+
+test('testing the compact method', t => {
+  const arr = [null, 1, 'x', false, 'y', 3, undefined]
+
+  const arr1 = compact(arr)
+
+  console.log(arr1)
+
+  t.pass()
+})
+
 
 test('test the trueTypeOf method', t => {
   const a1 = trueTypeOf(true)

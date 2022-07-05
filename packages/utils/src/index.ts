@@ -1,5 +1,6 @@
 // start your project here
 export { accessByPath } from './access'
+export { inArray, toArray, compact } from './array'
 export { chainFns, chainArrayFns } from './chain-fns'
 export {
   chainPromises,
@@ -9,8 +10,6 @@ export {
 export { strToNum, strToBool } from './convert'
 export { dasherize } from './dasherize'
 export {
-  inArray,
-  toArray,
   parseJson,
   nil,
   createEvtName,
