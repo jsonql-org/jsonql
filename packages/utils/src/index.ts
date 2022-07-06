@@ -22,6 +22,7 @@ export {
   notEmpty,
   isEmpty
 } from './empty'
+export { getDirname } from './get-dirname'
 export {
   isObject,
   isPlainObject,
