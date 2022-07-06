@@ -1,6 +1,6 @@
 {
   "name": "jsonql",
-  "version": "2.0.0-alpha",
+  "version": "2.0.0",
   "description": "JSONQL main mono repo",
   "main": "index.js",
   "directories": {
