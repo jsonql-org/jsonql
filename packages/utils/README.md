@@ -129,6 +129,17 @@ const output = formatStr(str, 'zero', 'one')
 - notEmpty (a: unknown, valueCheck = false): boolean
 - isEmpty (value: unknown, valueCheck?: boolean): boolean
 
+#### dist/get-dirname (node.js only!)
+
+- getDirname (url: string): string
+
+This is only use in ESM env in node.js
+
+```js
+// there is no __dirname in ESM env
+const __dirname = getDirname(import.meta.url)
+```
+
 #### dist/is-equal
 
 - isEqualCheap (obj1: unknown, obj2: unknown): boolean
