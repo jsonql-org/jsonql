@@ -133,11 +133,17 @@ const output = formatStr(str, 'zero', 'one')
 
 - getDirname (url: string): string
 
-This is only use in ESM env in node.js
+This is only use in `ESM` env in `node.js`
 
 ```js
 // there is no __dirname in ESM env
 const __dirname = getDirname(import.meta.url)
+```
+
+_THIS IS NOT INCLUDED IN THE EXPORT LIST_, you need to import it like so:
+
+```js
+import { getDirname } from '@jsonql/dist/get-dirname'
 ```
 
 #### dist/is-equal
