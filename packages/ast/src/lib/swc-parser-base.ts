@@ -2,6 +2,7 @@
 // and we extract the method's argument along with their type
 // for validation
 // import * as swc from '@swc/core'
+import type { AnyType } from '../types'
 import {
   parse,
   parseSync,
@@ -16,14 +17,14 @@ import {
 */
 export async function swcParserBase(
   infile: string,
-  options: any // @TODO
-): Promise<any> { // @TODO
+  options: AnyType // @TODO
+): Promise<AnyType> { // @TODO
   return parseFile(infile, options)
 }
 /** sync version of above method */
 export function swcParserSync(
   infile: string,
-  options: any
+  options: AnyType
 ) {
   return parseFileSync(infile, options)
 }
@@ -62,14 +63,14 @@ Type 'SwcParserOptions' is not assignable to type 'EsParserConfig'.
 /** breaking this out to create a api using just the file */
 export async function swcParseFileBase(
     code: string,
-    options: any
+    options: AnyType
   ) {
   return parse(code, options)
 }
 /** parse file sync version */
 export function swcParseFileSync(
   code: string,
-  options: any
+  options: AnyType
 ) {
   return parseSync(code, options)
 }
