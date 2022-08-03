@@ -18,7 +18,7 @@ import {
   TS_TYPE_NAME
 } from '../src/lib/constants'
 
-const show = (s: any) => console.dir(s, { depth: null })
+// const show = (s: any) => console.dir(s, { depth: null })
 const fixture = join(__dirname, 'fixtures')
 const tsFile = join(fixture, 'test-file-1.ts')
 const tsFuncFile = join(fixture, 'test-file-2.ts')
@@ -35,7 +35,7 @@ test(`Should able to get the correct parser`, async t => {
 
 test.only(`Should able to generate AST from a ts class file`, async t => {
   const result = await tsClassParser(tsFile)
-  show(result)
+  // show(result)
   t.truthy(result)
 })
 

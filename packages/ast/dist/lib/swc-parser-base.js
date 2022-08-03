@@ -2,11 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.swcParseFileSync = exports.swcParseFileBase = exports.swcParserSync = exports.swcParserBase = void 0;
 const tslib_1 = require("tslib");
-// Using the swc/core to parse the TS file into AST
-// and we extract the method's argument along with their type
-// for validation
-// import * as swc from '@swc/core'
 const core_1 = require("@swc/core");
+/*
+declare type SwcLocalOptions = {
+  syntax: string // "ecmascript" | "typescript"
+  comments: boolean
+  script: boolean
+  // Defaults to es3
+  target: string
+  // Input source code are treated as module by default
+  isModule: boolean
+}
+*/
 /*
 import {
   SwcParserOptions,

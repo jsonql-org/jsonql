@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOptions = exports.pickInputFile = exports.stripAllTypeParams = exports.stripTypeParams = exports.stripSpan = void 0;
-// take out some of the common methods to keep the processor files size down
 const constants_1 = require("./constants");
 /** remove all the span props they are no use to us */
 function stripSpan(obj) {

@@ -1,5 +1,7 @@
 // specify your types here
 // Need to take the original swc types here - its kick itself in the teeth
+// cheat
+export type AnyType = any
 
 export type SwcSpanObject = {
   [key: string]: number
@@ -13,31 +15,31 @@ export type SwcProcessedBody = {
     value: string
     optional: boolean
   }
-  params: Array<any>
-  decorators: Array<any>
+  params: Array<AnyType>
+  decorators: Array<AnyType>
   span: SwcSpanObject
-  body: any
+  body: AnyType
   generator?: boolean,
   async?: boolean,
-  typeParameters?: any,
-  returnType?: any
+  typeParameters?: AnyType,
+  returnType?: AnyType
 }
 
 export type SwcParameterEntry = {
   type: string
   span: SwcSpanObject
-  decorators: Array<any>
-  pat: any
+  decorators: Array<AnyType>
+  pat: AnyType
 }
 
 export type SwcGenericSubEntry = {
   type: string
   span: SwcSpanObject
   value: string
-  left: any
-  right: any
+  left: AnyType
+  right: AnyType
   optional?: boolean
-  typeAnnotation?: any
+  typeAnnotation?: AnyType
 }
 
 export type SwcPatEntry = {
@@ -45,25 +47,25 @@ export type SwcPatEntry = {
   span: SwcSpanObject,
   left: SwcGenericSubEntry
   right: SwcGenericSubEntry
-  argument?: any
+  argument?: AnyType
   optional?: boolean
-  typeAnnotation?: any
-  elements?: any
-  properties?: any
-  value?: any
+  typeAnnotation?: AnyType
+  elements?: AnyType
+  properties?: AnyType
+  value?: AnyType
 }
 
 export declare type SwcProcessedModule = {
   type: string
   span: SwcSpanObject
-  body: { [key: string]: any }
+  body: { [key: string]: AnyType }
   interpreter: null
 }
 
 
 // @TODO
 export type SwcDeclObject = {
-  function: any // @TODO
+  function: AnyType // @TODO
   kind: string
   isStatic: boolean
   accessibility: string // @NOTE only take the `public` method
@@ -76,13 +78,13 @@ export type SwcParsedBodyResult = {
   type: string
   span: SwcSpanObject
   key: {[key: string]: string | boolean | SwcSpanObject }
-  decl: any // @TODO
+  decl: AnyType // @TODO
 }
 
 export type SwcParsedResult = {
   type: string
   span: Array<SwcSpanObject>
-  body: any // @TODO
+  body: AnyType // @TODO
   interpreter: null
 }
 
@@ -124,7 +126,7 @@ export type JsonqlParamInfo = {
   name: string
   required: boolean
   // dynanic fields
-  [key: string]: any
+  [key: string]: AnyType
 }
 
 export type JsonqlAstMap = {
