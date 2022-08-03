@@ -10,6 +10,18 @@ import {
   parseFileSync,
 } from '@swc/core'
 /*
+declare type SwcLocalOptions = {
+  syntax: string // "ecmascript" | "typescript"
+  comments: boolean
+  script: boolean
+  // Defaults to es3
+  target: string
+  // Input source code are treated as module by default
+  isModule: boolean
+}
+*/
+
+/*
 import {
   SwcParserOptions,
   SwcParsedResult,

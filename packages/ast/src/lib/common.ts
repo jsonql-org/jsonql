@@ -1,13 +1,14 @@
 // take out some of the common methods to keep the processor files size down
+import type { AnyType } from '../types'
 import { SYNTAXS, TYPE_PARAMS } from './constants'
 import { JsonqlProcessedEntry } from '../types'
 /** remove all the span props they are no use to us */
-export function stripSpan(obj: any) {
+export function stripSpan(obj: AnyType) {
   const tmp = {}
   for (const key in obj) {
     if (key !== 'span') {
       if (Array.isArray(obj[key])) {
-        tmp[key] = obj[key].map((o: any) => {
+        tmp[key] = obj[key].map((o: AnyType) => {
           if (typeof o === 'object') {
             return stripSpan(o)
           }
@@ -35,7 +36,7 @@ export function stripTypeParams(astMap: Array<JsonqlProcessedEntry>) {
 }
 
 /** clean up the unused options for contract */
-export function stripAllTypeParams(obj: any) {
+export function stripAllTypeParams(obj: AnyType) {
   const cleanResult = {}
   for (const methodName in obj) {
     cleanResult[methodName] = stripTypeParams(obj[methodName])
