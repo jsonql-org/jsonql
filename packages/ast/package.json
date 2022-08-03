@@ -34,6 +34,7 @@
   "homepage": "https://jsonql.org",
   "dependencies": {
     "@jsonql/utils": "workspace:^1.2.1",
+    "@swc/core": "^1.2.209",
     "debug": "^4.3.4",
     "tslib": "^2.4.0"
   },
