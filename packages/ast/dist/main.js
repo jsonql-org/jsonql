@@ -1,16 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = exports.tsClassParserSync = exports.tsBasicParserSync = exports.swcParserSync = exports.swcParseFileSync = exports.swcParseFileBase = exports.swcParserBase = void 0;
+exports.getParser = exports.tsClassParser = exports.tsFunctionParser = exports.tsFileParserSync = exports.tsFileParser = exports.tsClassParserSync = exports.tsBasicParserSync = void 0;
 const tslib_1 = require("tslib");
 // ast index export
 const swc_parser_base_1 = require("./lib/swc-parser-base");
-Object.defineProperty(exports, "swcParserBase", { enumerable: true, get: function () { return swc_parser_base_1.swcParserBase; } });
-Object.defineProperty(exports, "swcParseFileBase", { enumerable: true, get: function () { return swc_parser_base_1.swcParseFileBase; } });
-Object.defineProperty(exports, "swcParseFileSync", { enumerable: true, get: function () { return swc_parser_base_1.swcParseFileSync; } });
-Object.defineProperty(exports, "swcParserSync", { enumerable: true, get: function () { return swc_parser_base_1.swcParserSync; } });
 const processors_1 = require("./lib/processors");
 const common_1 = require("./lib/common");
 const constants_1 = require("./lib/constants");
+// import { chainFns } from '@jsonql/utils'
 /** just the core parser sync version */
 function tsBasicParserSync(filePath) {
     const options = (0, common_1.getOptions)('ts');

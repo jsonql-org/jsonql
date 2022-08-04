@@ -1,5 +1,3 @@
-import { swcParserBase, swcParseFileBase, swcParseFileSync, swcParserSync } from './lib/swc-parser-base';
-export { swcParserBase, swcParseFileBase, swcParseFileSync, swcParserSync };
 /** just the core parser sync version */
 export declare function tsBasicParserSync(filePath: string): import("@swc/core").Script;
 /** parse ts file sync */
