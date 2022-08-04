@@ -17,13 +17,6 @@ import {
 } from './lib/common'
 import { IS_DEBUG } from './lib/constants'
 // import { chainFns } from '@jsonql/utils'
-// also export the core parsers
-export {
-  swcParserBase,
-  swcParseFileBase,
-  swcParseFileSync,
-  swcParserSync
-}
 /** just the core parser sync version */
 export function tsBasicParserSync(filePath: string) {
   const options = getOptions('ts')
