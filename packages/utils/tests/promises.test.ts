@@ -8,12 +8,12 @@ test('Try out the array of promises', async t => {
     Promise.reject(2),
     Promise.resolve(3)
   ]
-  t.plan(1)
+  t.plan(2)
   return promise(resolve => {
     processAll(tasks)
       .then(result => {
-        console.log(result)
-        t.pass()
+        t.is(result[0].length, 2)
+        t.is(result[1].length, 1)
         resolve(true)
       })
   })

@@ -198,8 +198,27 @@ _These methods used to included from `lodash-es` now we implement them ourself, 
 #### @jsonql/utils/dist/promise
 
 - `promsie` async (cb: AnyType)
+- `processAll` async (promises: Array<Promise<AnyType>>)
 
-`new Promise` wrapper save a bit typing
+promise is just a `new Promise` wrapper save a bit typing
+
+processAll return Array of Array of results, see example below
+
+```js
+const tasks = [
+  Promise.resolve(1),
+  Promise.reject(2),
+  Promise.resolve(3)
+]
+// this will not throw instead put into the result array
+processAll(tasks)
+  .then(result => {
+    const done = result[0]
+    const fail = result[1] // if there is no fail then this won't exist
+    // done --> [1,3]
+    // fail --> [2]
+  })
+```
 
 #### @jsonql/utils/dist/regex
 

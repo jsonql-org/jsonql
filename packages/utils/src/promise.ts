@@ -11,7 +11,7 @@ export const promise = async (cb: AnyType) => new Promise(cb)
   we will not throw it and exit, instead we put that in the
   fail result array
 */
-export async function processAll(
+async function _processAll(
   promises: Array<Promise<AnyType>>
 ): Promise<ProcessAllResult> {
 
@@ -32,4 +32,21 @@ export async function processAll(
   ), Promise.resolve(
     { done: [], fail: [] }
   ))
+}
+
+/** we unwrap the result to make it more generic */
+export async function processAll(
+  promises: Array<Promise<AnyType>>
+) {
+
+  return _processAll(promises)
+    .then((result: ProcessAllResult) => {
+      const { done, fail } = result
+      const res: Array<AnyType> = []
+      res.push(done)
+      if (fail.length) {
+        res.push(fail)
+      }
+      return res
+    })
 }

@@ -12,7 +12,7 @@ exports.promise = promise;
   we will not throw it and exit, instead we put that in the
   fail result array
 */
-function processAll(promises) {
+function _processAll(promises) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         return promises.reduce((promiseChain, currentTask) => (promiseChain.then(chainResults => (currentTask
             .then(currentResult => ((0, lodash_1.merge)(chainResults, {
@@ -21,6 +21,21 @@ function processAll(promises) {
             .catch(err => ((0, lodash_1.merge)(chainResults, {
             fail: [...chainResults.fail, err]
         })))))), Promise.resolve({ done: [], fail: [] }));
+    });
+}
+/** we unwrap the result to make it more generic */
+function processAll(promises) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return _processAll(promises)
+            .then((result) => {
+            const { done, fail } = result;
+            const res = [];
+            res.push(done);
+            if (fail.length) {
+                res.push(fail);
+            }
+            return res;
+        });
     });
 }
 exports.processAll = processAll;
