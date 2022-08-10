@@ -19,3 +19,8 @@ export declare type FlatMapCallback = (n: AnyType, i: number, arr: AnyType[]) =>
 export declare type MapCallback = (n: AnyType, i?: number) => AnyType
 
 export declare type JsonqlPromiseChainFn = (...args: AnyTypeArr) => Promise<AnyType>
+
+export declare type ProcessAllResult = {
+  done: Array<AnyType>
+  fail: Array<AnyType>
+}

@@ -316,7 +316,7 @@
         });
     }
 
-    /* looks silly but save a lot of typing */
+    /* looks silly but save a lot of typing in ava async test */
     const promise = (cb) => __awaiter(void 0, void 0, void 0, function* () { return new Promise(cb); });
 
     const expected = ['asyncfunction', 'function'];
