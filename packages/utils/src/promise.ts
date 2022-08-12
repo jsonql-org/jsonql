@@ -37,7 +37,7 @@ async function _processAll(
 /** we unwrap the result to make it more generic */
 export async function processAll(
   promises: Array<Promise<AnyType>>
-) {
+): Promise<Array<AnyType>> { // annoying TS add a Promise<void> crap in downstream
 
   return _processAll(promises)
     .then((result: ProcessAllResult) => {
@@ -45,7 +45,7 @@ export async function processAll(
       const res: Array<AnyType> = []
       // 1.3.1 always return the fail for easier checking
       res.push(done, fail)
-      
+
       return res
     })
 }
