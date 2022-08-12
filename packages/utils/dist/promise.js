@@ -30,10 +30,8 @@ function processAll(promises) {
             .then((result) => {
             const { done, fail } = result;
             const res = [];
-            res.push(done);
-            if (fail.length) {
-                res.push(fail);
-            }
+            // 1.3.1 always return the fail for easier checking
+            res.push(done, fail);
             return res;
         });
     });
