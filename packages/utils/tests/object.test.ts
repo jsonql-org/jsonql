@@ -4,8 +4,20 @@ import test from 'ava'
 import {
   arrToObj,
   isPlainObject,
-  isClass
+  isClass,
+  trueTypeOf
 } from '../src'
+
+test('A test of a primitive object checking method not in use here', t => {
+  const emptyObj = {}
+  const notEmptyObj = {a: 1}
+  const _isEmptyObject = (obj: unknown) => trueTypeOf(obj) === 'object' && Object.keys(obj).length === 0
+
+  t.true(_isEmptyObject(emptyObj))
+  t.false(_isEmptyObject(notEmptyObj))
+  
+})
+
 
 test('Should able to check basic object type', t => {
   t.true(isPlainObject({}), 'Empty Object')
